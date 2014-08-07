@@ -10,12 +10,13 @@ require('functions')
 require('runes')
 
 function Precache( context )
-	
+	    print("hello")
 --		Precache things we know we'll use.  Possible file types include (but not limited to):
 	    PrecacheResource( "model", "*.vmdl", context )
 	    PrecacheResource( "soundfile", "*.vsndevts", context )
 	    PrecacheResource( "particle", "*.vpcf", context )
 	    PrecacheResource( "particle_folder", "particles/folder", context )
+	    PrecacheUnitByNameSync("npc_dota_hero_pudge", context)
 end
 
 --[[
