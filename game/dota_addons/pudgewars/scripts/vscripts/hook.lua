@@ -404,7 +404,7 @@ function LaunchHook( keys )
             
 	    if (string.find(hooked:GetClassname(),"creature") and string.find(hooked:GetUnitName(),"rune")) or ( string.find(hooked:GetClassname(), "creep" ) and string.find(hooked:GetUnitName(), "mine") and not hooked:IsAlive() ) then
 		--Remove the rune as soon as it has return to the caster
-		hooked:Remove()
+		hooked:RemoveSelf()
 	    else
 		-- Prevent getting stuck
 		FindClearSpaceForUnit(hooked, hooked:GetAbsOrigin(), true)

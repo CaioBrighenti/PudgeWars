@@ -217,22 +217,22 @@ function PudgeWarsMode:OnDamageTaken( keys )
         
     elseif string.find(unit:GetUnitName(),"dummy_rune_haste") then
         PudgeWarsMode:RuneHooked(unit,caster,1)
-        unit:Remove()
+        unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(),"dummy_rune_gold") then
         PudgeWarsMode:RuneHooked(unit,caster,2)
-        unit:Remove()
+        unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(),"dummy_rune_ion") then
         PudgeWarsMode:RuneHooked(unit,caster,3)
-        unit:Remove()
+        unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(),"dummy_rune_fire") then 
         PudgeWarsMode:RuneHooked(unit,caster,4)
-        unit:Remove()
+        unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(), "dummy_rune_dynamite") then
         PudgeWarsMode:RuneHooked(unit, caster,5)
-        unit:Remove()
+        unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(), "dummy_rune_lightning") then
 	PudgeWarsMode:RuneHooked(unit, caster, 6)
-	unit:Remove()
+	unit:RemoveSelf()
     else 
         --Check if caster has barathrums level 5 and roll bash chance
         for i=0,5 do
@@ -658,7 +658,7 @@ function PudgeWarsMode:OnEntityKilled( keys )
 	    useGameTime = true,
 	    callback = function(reflex, args)
 		if killedUnit and IsValidEntity(killedUnit) then
-		    killedUnit:Remove()
+		    killedUnit:RemoveSelf()
 		end
 		return
 	    end
@@ -671,7 +671,7 @@ function PudgeWarsMode:OnEntityKilled( keys )
 	    useGameTime = true,
 	    callback = function(reflex, args)
 		if killedUnit and IsValidEntity(killedUnit) then
-		    killedUnit:Remove()
+		    killedUnit:RemoveSelf()
 		end
 		return
 	    end
