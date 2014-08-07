@@ -22,5 +22,9 @@ game/dota_addons/addon_template/
 game/dota_addons/dota_pvp/
 game/dota_addons/holdout_example/
 game/dota_addons/dota2cfg.cfg
+game/dota_addons/dota_pvp_test/
+game/dota_addons/vpks/
+content/_toolsautosave/
+content/dota_addons/dota_pvp_test/
 *~
 *.swp
