@@ -252,6 +252,7 @@ function PudgeWarsMode:StartVoting()
 	    GameRules:SendCustomMessage("Mods hosted on \"http://d2modd.in\"", 0, 0)
 
 	    FireGameEvent('pwgm_start_win_vote', {})
+	    print("Fired startWinVote")
 
 	    for key,ply in pairs(PudgeArray) do 
 		ply.pudgeunit:AddNewModifier(ply.pudgeunit,nil,"modifier_stunned", {})

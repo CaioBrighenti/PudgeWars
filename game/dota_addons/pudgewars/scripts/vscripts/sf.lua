@@ -36,7 +36,7 @@ function PudgeWarsMode:InitScaleForm()
 		self.vote_50_votes = self.vote_50_votes + 1
 	    end    
 
-	    PudgeArray[ plyId ].has_voted = true
+	    --PudgeArray[ plyId ].has_voted = true
 	    FireGameEvent('pwgm_cf_player_voted', { player_ID = cmdPlayer:GetPlayerID(), vote_type = "winVote", vote_value = tonumber(p) })
 
 	    FireGameEvent('pwgm_update_vote_score', { votes_on_50 = self.vote_50_votes, votes_on_75 = self.vote_75_votes, votes_on_100 = self.vote_100_votes, })
