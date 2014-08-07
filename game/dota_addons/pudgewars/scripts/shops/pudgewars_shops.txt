@@ -1,0 +1,84 @@
+"dota_shops"
+{
+	"consumables"
+	{
+		"item"		"item_greater_salve"
+		"item"		"item_greater_salve_instant"
+		"item"		"item_ward_observer"
+		"item"		"item_pudge_wars_reveal"
+	}
+
+	"attributes"
+	{
+		"item"		"item_tiny_arm"
+		"item"		"item_grappling_hook"
+		"item"		"item_lycan_paw"
+		"item"		"item_naix_jaw"
+		"item"		"item_barathrum_lantern"
+		"item"		"item_techies_explosive_barrel"
+		"item"		"item_strygwyr_claw"
+		"item"		"item_ricochet_turbine"
+		"item"		"item_pudgewars_earthshaker_totem"
+	}
+
+	"weapons_armor"
+	{
+		"item"		"item_tome_of_wisdom"
+		"item"		"item_tome_of_damage"
+		"item"		"item_tome_of_health"
+	}
+
+	"misc"
+	{
+
+	}	
+
+	// Level 1 - Green Recipes
+	"basics"
+	{
+
+	}
+
+	// Level 2 - Blue Recipes
+	"support"
+	{
+
+	}
+
+	"magics"
+	{
+
+	}
+
+	// Level 3 - Purple Recipes
+	"defense"
+	{
+
+	}
+
+	"weapons"
+	{
+
+	}
+
+	// Level 4 - Orange / Orb / Artifacts
+	"artifacts"
+	{
+
+	}
+
+	"sideshop1"
+	{
+
+	}
+
+	"sideshop2"
+	{
+
+	}
+
+	"secretshop"
+	{
+
+	}
+}
