@@ -530,9 +530,9 @@ function LaunchHook( keys )
           diff.z = 0
           local direction = diff:Normalized()
           local particle = ParticleManager:CreateParticle("particles/custom_chains.vpcf", PATTACH_ABSORIGIN, hero) --
-          --local position = hero:GetAbsOrigin() + Vector(0,0,70)
-          --local endPosition = hero:GetAbsOrigin() + direction * 75 + Vector(0,0,140)
-          --local pu = ParticleUnit.new(particle, position, endPosition) --cpStart, cpEnd, cpDelete)
+          local position = hero:GetAbsOrigin() + Vector(0,0,70)
+          local endPosition = hero:GetAbsOrigin() + direction * 75 + Vector(0,0,140)
+          local pu = ParticleUnit.new(particle, position, endPosition) --cpStart, cpEnd, cpDelete)
           
           hooks[hookCount] = pu
           
