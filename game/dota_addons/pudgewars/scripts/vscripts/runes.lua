@@ -22,7 +22,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
 	    useGameTime = true,
             callback = function(reflex, args)
 		haste_rune_dummy_unit:ForceKill(false)
-		haste_rune_dummy_unit:Remove()
+		haste_rune_dummy_unit:RemoveSelf()
 		haste_rune_dummy_unit = nil
 		return
             end
@@ -138,7 +138,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
     PudgeWarsMode:RuneHookedParticle(caster)
     dealDamage(caster, unit, 12000)
  
-    --unit:Remove()
+    --unit:RemoveSelf()
 end
 
 function PudgeWarsMode:RuneHookedParticle(unit)

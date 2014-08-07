@@ -134,19 +134,19 @@ function PudgeWarsMode:UpgradeItem(itemname,item,itempurchased, hero)
 end
 
 function PudgeWarsMode:CreateVisionUnit(unitname, unitOrigin, team)
-    --[[ ToDo: Add KV-files
+    --ToDo: Add KV-files
     VisionDummy = CreateUnitByName( unitname, unitOrigin, false, nil, nil, team )
     VisionDummy:AddAbility('vision_dummy_passive')
     VisionDummy:AddNewModifier(VisionDummy, nil, 'modifier_invulnerable', {})
     VisionDummy:AddNewModifier(VisionDummy, nil, 'modifier_phased', {})
     local VisionDummyPassive = VisionDummy:FindAbilityByName('vision_dummy_passive')
     VisionDummyPassive:SetLevel(1)
-    --]]
+    
 end
 
 function PudgeWarsMode:SpawnFuntainDummy()
     print("[FUNCTIONS] SpawnFuntainDummy")
-    --[[ToDo: Add KV-files
+    --ToDo: Add KV-files
     VisionDummy = CreateUnitByName( "npc_funtain_dummy", Vector(0,0,0), false, nil, nil, DOTA_TEAM_BADGUYS )
     VisionDummy:AddAbility('vision_dummy_passive')
     VisionDummy:AddNewModifier(VisionDummy, nil, 'modifier_invulnerable', {})
@@ -154,8 +154,6 @@ function PudgeWarsMode:SpawnFuntainDummy()
     VisionDummyPassive:SetLevel(1)
     local VisionDummyPassive2 = VisionDummy:FindAbilityByName('vision_dummy_passive')
     VisionDummyPassive:SetLevel(1)
-
-    --]]
 end
 
 function PudgeWarsMode:SpawnVisionDummies()
@@ -187,7 +185,7 @@ function PudgeWarsMode:SpawnRuneSpellCasters()
     local hyper_particle = nil
     local lightning_effect = nil
 
-    --[[ ToDo: Add KV-files
+    -- ToDo: Add KV-files
 
     _G.rune_spell_caster_good = CreateUnitByName( "npc_ion_dummy", Vector(0,0,0), false, nil, nil, DOTA_TEAM_GOODGUYS )
     _G.rune_spell_caster_good:AddNewModifier(_G.rune_spell_caster_good , nil, 'modifier_invulnerable', {})
@@ -200,7 +198,7 @@ function PudgeWarsMode:SpawnRuneSpellCasters()
 
     lightning_effect = _G.rune_spell_caster_good:FindAbilityByName("pudge_wars_lightning_effect")
     lightning_effect:SetLevel(1)
-    --]]
+    
 end
 
 function PudgeWarsMode:StartTimers()
