@@ -1,6 +1,6 @@
 print ('[PUDGEWARS] pudgewars.lua' )
 
-USE_LOBBY=true
+USE_LOBBY=false
 THINK_TIME = 0.01
 
 STARTING_GOLD = 0
@@ -369,10 +369,9 @@ function PudgeWarsMode:OnNPCSpawned( keys )
             end
           })
     elseif spawnedUnit:GetUnitName() == "npc_dota_hero_pudge" then
-        --spawnedUnit:SetModelScale(1.150,0)
         if spawnedUnit:GetPlayerOwnerID() ~= -1 then
             if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
-		PudgeWarsMode:InitPudge( spawnedUnit )
+		--PudgeWarsMode:InitPudge( spawnedUnit )
 	    end
         end
     end
@@ -441,27 +440,27 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
   print ('[PUDGEWARS] AutoAssignPlayer')
   PudgeWarsMode:CaptureGameMode()
 
-  --[[
+  
   
   local entIndex = keys.index+1
   local ply = EntIndexToHScript(entIndex)
   local playerID = ply:GetPlayerID()
-  
+  print("1")
   self.vUserIds[keys.userid] = ply
   self.vSteamIds[PlayerResource:GetSteamAccountID(playerID)] = ply
-  
+  print("2")
   -- If the player is a broadcaster flag it in the Broadcasters table
   if PlayerResource:IsBroadcaster(playerID) then
     self.vBroadcasters[keys.userid] = 1
     return
   end
-  
+  print("3")
   -- If this player is a bot (spectator) flag it and continue on
   if self.vBots[keys.userid] ~= nil then
     return
   end
 
-  
+  print("4")
   playerID = ply:GetPlayerID()
   -- Figure out if this player is just reconnecting after a disconnect
   if self.vPlayers[playerID] ~= nil then
@@ -471,16 +470,16 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
     pudge:RemoveModifierByName('modifier_stunned')
     return
   end
-  
+  print("5")
   -- If we're not on D2MODD.in, assign players round robin to teams
   if not USE_LOBBY and playerID == -1 then
     if #self.vRadiant > #self.vDire then
       ply:SetTeam(DOTA_TEAM_BADGUYS)
-      ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
+      --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
       table.insert (self.vDire, ply)
     else
       ply:SetTeam(DOTA_TEAM_GOODGUYS)
-      ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
+      --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
       table.insert (self.vRadiant, ply)
     end
     playerID = ply:GetPlayerID()
@@ -488,7 +487,8 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
   self.vPlayers[playerID] = ply
   -- give them Pudge
   CreateHeroForPlayer('npc_dota_hero_pudge', ply)
-  --]]
+  print("6")
+  
 end
 
 function PudgeWarsMode:OnItemPurchased( keys )
@@ -516,7 +516,6 @@ end
 
 function PudgeWarsMode:Think()
   -- If the game's over, it's over.
-  print("thinking")
   if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
     return
   end
