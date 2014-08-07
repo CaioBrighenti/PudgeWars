@@ -177,7 +177,7 @@ function PudgeWarsMode:CaptureGameMode()
     GameRules:SetHeroMinimapIconSize( 300 )
 
     print( '[PUDGEWARS] NOT Beginning Think' ) 
-    --GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( PudgeWarsMode, 'Think' ), THINK_TIME )
+    GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( PudgeWarsMode, 'Think' ), THINK_TIME )
   end 
 end
 
@@ -439,8 +439,9 @@ end
 
 function PudgeWarsMode:AutoAssignPlayer(keys)
   print ('[PUDGEWARS] AutoAssignPlayer')
-  --[[
   PudgeWarsMode:CaptureGameMode()
+
+  --[[
   
   local entIndex = keys.index+1
   local ply = EntIndexToHScript(entIndex)
@@ -515,6 +516,7 @@ end
 
 function PudgeWarsMode:Think()
   -- If the game's over, it's over.
+  print("thinking")
   if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
     return
   end
