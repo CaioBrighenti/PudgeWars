@@ -371,7 +371,7 @@ function PudgeWarsMode:OnNPCSpawned( keys )
     elseif spawnedUnit:GetUnitName() == "npc_dota_hero_pudge" then
         if spawnedUnit:GetPlayerOwnerID() ~= -1 then
             if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
-		--PudgeWarsMode:InitPudge( spawnedUnit )
+		        PudgeWarsMode:InitPudge( spawnedUnit )
 	    end
         end
     end
