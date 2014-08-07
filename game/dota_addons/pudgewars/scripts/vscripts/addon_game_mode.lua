@@ -1,13 +1,13 @@
 -- Generated from template
 require('pudgewars')
---require('hook')
---require('sf')
---require('util')
+require('hook')
+require('sf')
+require('util')
 --require('physics')
---require('abilities')
---require('pudge')
+require('abilities')
+require('pudge')
 require('functions')
---require('runes')
+require('runes')
 
 function Precache( context )
 	--[[

@@ -149,7 +149,7 @@ function PudgeWarsMode:InitGameMode()
   print('[PUDGEWARS] values set')
 
   print('[PUDGEWARS] Precaching stuff...')
-  PrecacheUnitByName('npc_precache_everything')
+  --PrecacheUnitByName('npc_precache_everything')
   print('[PUDGEWARS] Done precaching!') 
 
   print('[PUDGEWARS] Done loading Pudgewars gamemode!\n\n')
@@ -176,8 +176,8 @@ function PudgeWarsMode:CaptureGameMode()
     -- Chage the minimap icon size
     GameRules:SetHeroMinimapIconSize( 300 )
 
-    print( '[PUDGEWARS] Beginning Think' ) 
-    GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( PudgeWarsMode, 'Think' ), THINK_TIME )
+    print( '[PUDGEWARS] NOT Beginning Think' ) 
+    --GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( PudgeWarsMode, 'Think' ), THINK_TIME )
   end 
 end
 
@@ -439,6 +439,7 @@ end
 
 function PudgeWarsMode:AutoAssignPlayer(keys)
   print ('[PUDGEWARS] AutoAssignPlayer')
+  --[[
   PudgeWarsMode:CaptureGameMode()
   
   local entIndex = keys.index+1
@@ -486,6 +487,7 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
   self.vPlayers[playerID] = ply
   -- give them Pudge
   CreateHeroForPlayer('npc_dota_hero_pudge', ply)
+  --]]
 end
 
 function PudgeWarsMode:OnItemPurchased( keys )
