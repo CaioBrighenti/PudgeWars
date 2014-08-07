@@ -1,9 +1,9 @@
 pudgewars
 {
 	material materials/overviews/pudgewars.vmat
-	pos_x -8192
-	pos_y 8192
-	scale 16.000
+	pos_x -2048
+	pos_y 2048
+	scale 4.000
 	zoom 1.050
 }
 

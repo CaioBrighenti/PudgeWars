@@ -12,6 +12,8 @@ require('runes')
 function Precache( context )
     print("hello")
     --Precache things we know we'll use.  Possible file types include (but not limited to):
+    PrecacheResource( "particle", "particles/basic_trail/basic_trail.vpcf", context )
+    PrecacheResource( "particle", "particles/custom_chain.vpcf", context )
     PrecacheUnitByNameSync("npc_dota_hero_pudge", context)
     PrecacheModel("models/heroes/pudge/weapon.vmdl", context ) -- Manually precache a single model
 end
