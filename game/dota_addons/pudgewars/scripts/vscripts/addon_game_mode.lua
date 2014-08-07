@@ -1,8 +1,13 @@
 -- Generated from template
-
-if CAddonTemplateGameMode == nil then
-	CAddonTemplateGameMode = class({})
-end
+require('pudgewars')
+--require('hook')
+--require('sf')
+--require('util')
+--require('physics')
+--require('abilities')
+--require('pudge')
+require('functions')
+--require('runes')
 
 function Precache( context )
 	--[[
@@ -14,23 +19,15 @@ function Precache( context )
 	]]
 end
 
+--[[
+if PudgeWarsMode == nil then
+	PudgeWarsMode = class({})
+	print("created PW")
+end --]]
+
 -- Create the game mode when we activate
 function Activate()
-	GameRules.AddonTemplate = CAddonTemplateGameMode()
-	GameRules.AddonTemplate:InitGameMode()
+	GameRules.PW = PudgeWarsMode()
+	GameRules.PW:InitGameMode()
 end
 
-function CAddonTemplateGameMode:InitGameMode()
-	print( "Template addon is loaded." )
-	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
-end
-
--- Evaluate the state of the game
-function CAddonTemplateGameMode:OnThink()
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		--print( "Template addon script is running." )
-	elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-		return nil
-	end
-	return 1
-end
