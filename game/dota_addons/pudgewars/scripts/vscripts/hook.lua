@@ -317,7 +317,7 @@ function LaunchHook( keys )
   dir = dir:Normalized()
  
   hooks[hookCount] = CreateUnitByName("npc_reflex_hook_test", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
-  hooks[hookCount]:SetModelScale(modelScale, .1)
+  hooks[hookCount]:SetModelScale(modelScale)
   if modelName ~= "none" then
     hooks[hookCount]:SetOriginalModel(modelName)
     hooks[hookCount]:SetModel(modelName)
