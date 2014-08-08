@@ -110,7 +110,7 @@ function findEntity(entities, vars_table, forward, bounces)
       --if string.find(v:GetClassname(), "pudge") or string.find(v:GetClassname(), "mine") then
       if vars_table[0] == nil then
         if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((_G.shield_carrier == nil) or (_G.shield_carrier ~= v)) then        
-          vars_table[1]:EmitSound('pudgewars_hook_hit')        
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact')        
           vars_table[2] = true
           if v:HasModifier("modifier_rooted") and (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
             --HEADSHOT
@@ -124,7 +124,7 @@ function findEntity(entities, vars_table, forward, bounces)
           elseif v:HasModifier("modifier_rooted") and (vars_table[1]:GetTeamNumber() == v:GetTeamNumber()) then
             --DENY
             dealDamage(vars_table[1], v, 9000) 
-            EmitGlobalSound( "HeadShot" ) -- change to DENY SOUND
+            EmitGlobalSound( "Pudgewars.Headshot" ) -- change to DENY SOUND
             sendAMsg('DENIED!')
             local headshotParticle = ParticleManager:CreateParticle( 'axe_culling_blade_kill', PATTACH_OVERHEAD_FOLLOW, v)
             local headshotPos = v:GetOrigin()
@@ -157,7 +157,7 @@ function findEntity(entities, vars_table, forward, bounces)
 		if IsValidEntity(arc_unit) then
 		    castSpell(vars_table[1],arc_unit,"pudge_wars_arc_lightning", 1, 10)
 		    castSpell(vars_table[1],arc_unit, "pudge_wars_lightning_bolt", 1, 2)
-		    v:EmitSound("pudgewars_thunder")
+		    v:EmitSound("Hero_Zuus.LightningBolt")
 		else
 		    return
 		end
@@ -197,7 +197,7 @@ function findEntity(entities, vars_table, forward, bounces)
 		if IsValidEntity(arc_unit) then
 		    castSpell(vars_table[1],arc_unit,"pudge_wars_arc_lightning", 1, 10)
 		    castSpell(vars_table[1],arc_unit, "pudge_wars_lightning_bolt", 1, 2)
-		    v:EmitSound("pudgewars_thunder")
+		    v:EmitSound("Hero_Zuus.LightningBolt")
 		else
 		    return
 		end
@@ -215,38 +215,38 @@ function findEntity(entities, vars_table, forward, bounces)
           end
 	elseif string.find(v:GetClassname(),"creep") and string.find(v:GetUnitName(),"mine") and v:IsAlive() then
           --Only do v:GetUnitName() if its a creep so we know its a unit and doesnt throw an error
-          vars_table[1]:EmitSound('pudgewars_hook_hit')  
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact')  
           vars_table[2] = true
           vars_table[0] = v
           v:AddNewModifier(vars_table[1], nil, "modifier_rooted", {})
           v:AddNewModifier(vars_table[1], nil, "modifier_pudge_meat_hook", {})
         elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"dummy_rune_haste") and v:IsAlive() then
-          vars_table[1]:EmitSound('pudgewars_hook_hit') 
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
           PudgeWarsMode:RuneHooked(v,vars_table[1],1)
           vars_table[2] = true
           vars_table[0] = v
         elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"dummy_rune_gold") and v:IsAlive() then
-          vars_table[1]:EmitSound('pudgewars_hook_hit') 
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
           PudgeWarsMode:RuneHooked(v,vars_table[1],2)
           vars_table[2] = true
           vars_table[0] = v
         elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"dummy_rune_ion") and v:IsAlive() then
-          vars_table[1]:EmitSound('pudgewars_hook_hit') 
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
           PudgeWarsMode:RuneHooked(v,vars_table[1],3)
           vars_table[2] = true
           vars_table[0] = v
         elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"npc_dummy_rune_fire") and v:IsAlive() then
-          vars_table[1]:EmitSound('pudgewars_hook_hit') 
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
           PudgeWarsMode:RuneHooked(v,vars_table[1],4)
           vars_table[2] = true
           vars_table[0] = v
         elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"rune_dynamite") and v:IsAlive() then
-          vars_table[1]:EmitSound('pudgewars_hook_hit') 
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
           PudgeWarsMode:RuneHooked(v,vars_table[1],5)
           vars_table[2] = true
           vars_table[0] = v   
         elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"rune_lightning") and v:IsAlive() then
-          vars_table[1]:EmitSound('pudgewars_hook_hit') 
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
           PudgeWarsMode:RuneHooked(v,vars_table[1],6)
           vars_table[2] = true
           vars_table[0] = v   
@@ -292,7 +292,7 @@ function LaunchHook( keys )
     return
   else
     pudge.is_throwing_hook = true
-    hero:EmitSound("pudgewars_hook_start")
+    hero:EmitSound("Hero_Pudge.AttackHookExtend")
   end
 
   -- only load pudge hook first time
@@ -643,7 +643,7 @@ function LaunchHook( keys )
           end
           bounces = bounces + 1
           dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-          hooks[1]:EmitSound("pudgewars_shield_barrier_bounce")
+          hooks[1]:EmitSound("Hero_Sven.Attack.Impact")
           vars_table[5] = false
         elseif ((vars_table[5] == true) and ((rebounceTolerance )< 1) and (vars_table[7]) and (IsValidEntity(vars_table[7])) ) then
           --Bounce on ES totems
@@ -671,7 +671,7 @@ function LaunchHook( keys )
 
 
 
-          hooks[1]:EmitSound("pudgewars_hook_bounce_totem")
+          hooks[1]:EmitSound("Hero_WitchDoctor.Attack")
           vars_table[5] = false
           vars_table[7] = nil
         end

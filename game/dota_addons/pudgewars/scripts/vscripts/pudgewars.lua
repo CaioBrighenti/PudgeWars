@@ -246,7 +246,7 @@ function PudgeWarsMode:OnDamageTaken( keys )
 
 		    unit:AddNewModifier( caster, nil, "modifier_stunned", {duration=1.2})
 
-                    unit:EmitSound('pudgewars_bara_bash')
+                    unit:EmitSound('Hero_Spirit_Breaker.GreaterBash')
                 end 
                 break
             end

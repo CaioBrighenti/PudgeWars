@@ -650,7 +650,7 @@ function OnTechiesExplosiveBarrelDetonate( keys )
     useGameTime = true,
     callback = function(reflex, args)
 	    sendAMsg("3")
-	    caster:EmitSound('pudgewars_ticker')
+	    caster:EmitSound('Ability.XMark.Target_Movement')
 	    return
 	end
 	})
@@ -659,7 +659,7 @@ function OnTechiesExplosiveBarrelDetonate( keys )
     useGameTime = true,
     callback = function(reflex, args)
 	    sendAMsg("2")
-	    caster:EmitSound('pudgewars_ticker')
+	    caster:EmitSound('Ability.XMark.Target_Movement')
 	    return
 	end
 	})
@@ -668,7 +668,7 @@ function OnTechiesExplosiveBarrelDetonate( keys )
     useGameTime = true,
     callback = function(reflex, args)
 	    sendAMsg("1")
-	    caster:EmitSound('pudgewars_ticker')
+	    caster:EmitSound('Ability.XMark.Target_Movement')
 	    
 	    return
 	end
@@ -703,5 +703,5 @@ end
 function MineSuicide( keys )
     local casterUnit = keys.caster
     casterUnit:ForceKill(false)
-    casterUnit:EmitSound('pudgewars_mine_explode')
+    casterUnit:EmitSound('Hero_Alchemist.UnstableConcoction.Stun')
 end
