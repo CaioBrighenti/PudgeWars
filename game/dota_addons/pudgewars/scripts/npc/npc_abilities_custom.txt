@@ -4063,13 +4063,7 @@
 
         "precache"
         {
-            "particlefile"              "particles/units/heroes/hero_witchdoctor.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_persistent_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_explosion_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_buff_1.pcf"
-            "particlefile"              "particles/test_particle.pcf"
-            "particlefile"              "particles/units/heroes/hero_batrider.pcf"
-            "soundfile"                 "scripts/game_sounds_heroes/game_sounds_alchemist.txt"
+            "particlefolder"              "particles/econ/generic/generic_aoe_persistent_sphere_1"
         }
 
         "OnSpellStart"
@@ -4127,7 +4121,7 @@
                     "FireEffect"
                     {
                         "Target"                "CASTER"
-                        "EffectName"            "generic_aoe_explosion_sphere_1"
+                        "EffectName"            "particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
                         "EffectAttachType"      "follow_origin"
                         "EffectRadius"          "200"
                         "EffectDurationScale"   "1"

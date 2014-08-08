@@ -1382,12 +1382,20 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models\heroes\techies\fx_techiesfx_mine.mdl"	// Model.
-		"BaseClass"					"npc_dota_creep"
-		"SoundSet"					"0"			// Name of sound set.
+		"Model"						 "models/heroes/techies/fx_techiesfx_mine.vmdl"	// Model.
+		"BaseClass"					      "npc_dota_creep"
+		"SoundSet"					       "0"			// Name of sound set.
 		"Level"						"1"
 		"ModelScale"				".75"
 		"SelectionGroup"			"Mines"
+
+            // Precache
+            //-------------------------------------------------------------------------------------------------------------
+            "precache"
+            {
+                  "model"                             "models/heroes/techies/fx_techiesfx_mine.vmdl"
+            }
+            
 
 
 		// Abilities
