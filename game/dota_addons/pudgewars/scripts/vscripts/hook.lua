@@ -333,7 +333,7 @@ function LaunchHook( keys )
   hookCount = hookCount + 1
   
   -- Create special chain link attached to Hook
-  local particle = ParticleManager:CreateParticle("custom_chain.vpcf", PATTACH_RENDERORIGIN_FOLLOW, hooks[1])
+  local particle = ParticleManager:CreateParticle("particles/pw/ref_pudge_meathook_chain.vpcf", PATTACH_RENDERORIGIN_FOLLOW, hooks[1])
   local position = hero:GetAbsOrigin()
   local endPosition = hooks[1]:GetAbsOrigin()
   local pu = ParticleUnit.new(particle, position, endPosition, 6, 0, 10) --cpStart, cpEnd, cpDelete)
@@ -529,7 +529,7 @@ function LaunchHook( keys )
         if diff:Length() > linkCreationTolerance then
           diff.z = 0
           local direction = diff:Normalized()
-          local particle = ParticleManager:CreateParticle("particles/custom_chains.vpcf", PATTACH_ABSORIGIN, hero) --
+          local particle = ParticleManager:CreateParticle("particles/pw/ref_pudge_meathook_chain.vpcf", PATTACH_ABSORIGIN, hero) --
           local position = hero:GetAbsOrigin() + Vector(0,0,70)
           local endPosition = hero:GetAbsOrigin() + direction * 75 + Vector(0,0,140)
           local pu = ParticleUnit.new(particle, position, endPosition) --cpStart, cpEnd, cpDelete)
