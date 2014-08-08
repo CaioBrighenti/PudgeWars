@@ -10,31 +10,31 @@ function calcDamage(hero,v, damage, speed)
         item = hero:GetItemInSlot(i)
         if item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw' then
             hero:SetHealth(hero:GetHealth() + hookdamage * .20)
-            lifestealParticle = ParticleManager:CreateParticle( 'generic_lifesteal', PATTACH_OVERHEAD_FOLLOW, hero)
+            lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
             lifestealPos = hero:GetOrigin()
             ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
             break
         elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_2' then
             hero:SetHealth(hero:GetHealth() + hookdamage * .25)
-            lifestealParticle = ParticleManager:CreateParticle( 'generic_lifesteal', PATTACH_OVERHEAD_FOLLOW, hero)
+            lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
             lifestealPos = hero:GetOrigin()
             ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
             break
         elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_3' then
             hero:SetHealth(hero:GetHealth() + hookdamage * .30)
-            lifestealParticle = ParticleManager:CreateParticle( 'generic_lifesteal', PATTACH_OVERHEAD_FOLLOW, hero)
+            lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
             lifestealPos = hero:GetOrigin()
             ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
             break
         elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_4' then
             hero:SetHealth(hero:GetHealth() + hookdamage * .35)
-            lifestealParticle = ParticleManager:CreateParticle( 'generic_lifesteal', PATTACH_OVERHEAD_FOLLOW, hero)
+            lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
             lifestealPos = hero:GetOrigin()
             ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
             break
         elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_5' then
             hero:SetHealth(hero:GetHealth() + hookdamage * .40)
-            lifestealParticle = ParticleManager:CreateParticle( 'generic_lifesteal', PATTACH_OVERHEAD_FOLLOW, hero)
+            lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
             lifestealPos = hero:GetOrigin()
             ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
             break
@@ -46,31 +46,31 @@ function calcDamage(hero,v, damage, speed)
       item = hero:GetItemInSlot(i)
       if item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern' then
           hookdamage = hookdamage + hookspeed * .25
-          baraParticle = ParticleManager:CreateParticle( 'phase_boots', PATTACH_OVERHEAD_FOLLOW, v)
+          baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
           baraPos = v:GetOrigin()
           ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
           break
       elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_2' then
           hookdamage = hookdamage + hookspeed * .30
-          baraParticle = ParticleManager:CreateParticle( 'phase_boots', PATTACH_OVERHEAD_FOLLOW, v)
+          baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
           baraPos = v:GetOrigin()
           ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
           break
       elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_3' then
           hookdamage = hookdamage + hookspeed * .35
-          baraParticle = ParticleManager:CreateParticle( 'phase_boots', PATTACH_OVERHEAD_FOLLOW, v)
+          baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
           baraPos = v:GetOrigin()
           ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
           break
       elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_4' then
           hookdamage = hookdamage + hookspeed * .40
-          baraParticle = ParticleManager:CreateParticle( 'phase_boots', PATTACH_OVERHEAD_FOLLOW, v)
+          baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
           baraPos = v:GetOrigin()
           ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
           break
       elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_5' then
           hookdamage = hookdamage + hookspeed * .45
-          baraParticle = ParticleManager:CreateParticle( 'phase_boots', PATTACH_OVERHEAD_FOLLOW, v)
+          baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
           baraPos = v:GetOrigin()
           ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
           break
@@ -117,7 +117,7 @@ function findEntity(entities, vars_table, forward, bounces)
             dealDamage(vars_table[1], v, 9000) 
             EmitGlobalSound( "Pudgewars.Headshot" )
             sendAMsg('HEADSHOT!')
-            local headshotParticle = ParticleManager:CreateParticle( 'axe_culling_blade_kill', PATTACH_OVERHEAD_FOLLOW, v)
+            local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf', PATTACH_ABSORIGIN, v)
             local headshotPos = v:GetOrigin()
             ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
             ScreenShake( v:GetOrigin(), 100, 100, 1, 9999, 0, true)       
@@ -126,7 +126,7 @@ function findEntity(entities, vars_table, forward, bounces)
             dealDamage(vars_table[1], v, 9000) 
             EmitGlobalSound( "Pudgewars.Headshot" ) -- change to DENY SOUND
             sendAMsg('DENIED!')
-            local headshotParticle = ParticleManager:CreateParticle( 'axe_culling_blade_kill', PATTACH_OVERHEAD_FOLLOW, v)
+            local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf', PATTACH_ABSORIGIN, v)
             local headshotPos = v:GetOrigin()
             ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
             ScreenShake( v:GetOrigin(), 100, 100, 1, 9999, 0, true)  
