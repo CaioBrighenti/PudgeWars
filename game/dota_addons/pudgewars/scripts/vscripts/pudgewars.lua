@@ -1,6 +1,6 @@
 print ('[PUDGEWARS] pudgewars.lua' )
 
-USE_LOBBY=true
+USE_LOBBY=false
 THINK_TIME = 0.01
 
 STARTING_GOLD = 0
@@ -56,7 +56,7 @@ PudgeArray = {}
 --Rune globals
 shield_carrier = nil
 rune_spell_caster_good = nil
-
+has_been_in_wait_for_players = false
 if PudgeWarsMode == nil then
     PudgeWarsMode = class({})
     print("created PW")
@@ -87,7 +87,9 @@ function PudgeWarsMode:InitGameMode()
   GameRules:SetGoldPerTick(0)
   GameRules:SetHeroMinimapIconSize(300)
   GameRules:SetCreepMinimapIconScale(0)
-  GameRules:SetRuneMinimapIconScale(0.7);
+  GameRules:SetRuneMinimapIconScale(0.7)
+  GameRules:SetSameHeroSelectionEnabled(true)
+  
   
   print('[PUDGEWARS] Rules set')
 

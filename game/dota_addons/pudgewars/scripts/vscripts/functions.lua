@@ -210,9 +210,8 @@ function PudgeWarsMode:StartTimers()
 	    endTime = GameRules:GetGameTime() + 1,
 	    useGameTime = true,
 	    callback = function(reflex, args)
-
 	    	--wait for the game to be in progress
-	    	if not ((GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME) or (GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS)) then
+		if not ((GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME) or (GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS)) or not(has_been_in_wait_for_players)then
 		    return GameRules:GetGameTime() + 1 
 		end
 	       
@@ -220,6 +219,21 @@ function PudgeWarsMode:StartTimers()
 	   return -- stop wait for game to being timer
 	end
     })
+
+    
+    PudgeWarsMode:CreateTimer(DoUniqueString("waitforgamestartdebug"), {
+	endTime = GameRules:GetGameTime() + 0.1,
+	useGameTime = true,
+	callback = function(reflex, args)
+	    if (GameRules:State_Get() == DOTA_GAMERULES_STATE_WAIT_FOR_PLAYERS_TO_LOAD) or not (USE_LOBBY) then
+		has_been_in_wait_for_players = true 
+		return
+	    end
+	   
+	    return GameRules:GetGameTime() + 0.1
+	end
+    })
+
 end
 
 function PudgeWarsMode:StartVoting()
