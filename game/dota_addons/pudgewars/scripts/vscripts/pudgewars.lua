@@ -1,6 +1,6 @@
 print ('[PUDGEWARS] pudgewars.lua' )
 
-USE_LOBBY=false
+USE_LOBBY=true
 THINK_TIME = 0.01
 
 STARTING_GOLD = 0
@@ -486,7 +486,7 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
   end  
   self.vPlayers[playerID] = ply
   -- give them Pudge
-  CreateHeroForPlayer('npc_dota_hero_pudge', ply)
+  --CreateHeroForPlayer('npc_dota_hero_pudge', ply)
   print("6")
   
 end
