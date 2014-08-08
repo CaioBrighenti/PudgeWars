@@ -684,7 +684,7 @@ function OnTechiesExplosiveBarrelDetonate( keys )
 		for k,v in pairs(units) do
 		if IsValidEntity(v) and string.find(v:GetClassname(), "pudge") and v ~= caster then
 		    dealDamage(caster,v,v:GetMaxHealth() + 1000)
-		    local headshotParticle = ParticleManager:CreateParticle( 'tinker_missle_explosion', PATTACH_OVERHEAD_FOLLOW, v)
+		    local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_ABSORIGIN, v)
 		    local headshotPos = v:GetOrigin()
 		    ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
 			end
@@ -692,7 +692,7 @@ function OnTechiesExplosiveBarrelDetonate( keys )
 	    --Kill pudge last to give him all EXP and stuff
 	    caster:EmitSound('pudgewars_mine_explode')
 	    dealDamage(caster,caster,caster:GetMaxHealth() + 1000)
-	    local headshotParticle = ParticleManager:CreateParticle( 'tinker_missle_explosion', PATTACH_OVERHEAD_FOLLOW, caster)
+	    local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_ABSORIGIN, caster)
 	    local headshotPos = caster:GetOrigin()
 	    ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
 	    return

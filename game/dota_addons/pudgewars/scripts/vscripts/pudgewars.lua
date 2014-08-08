@@ -240,7 +240,7 @@ function PudgeWarsMode:OnDamageTaken( keys )
             if item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_5' then
                 if PudgeWarsMode:RollBash(17) then
                     unit:SetHealth(unit:GetHealth() - (300))
-                    bashParticle = ParticleManager:CreateParticle( 'spirit_breaker_greater_bash', PATTACH_OVERHEAD_FOLLOW, unit)
+                    bashParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf', PATTACH_ABSORIGIN, unit)
                     bashPos = unit:GetOrigin()
                     ParticleManager:SetParticleControl( bashParticle, 4, Vector( bashPos.x, bashPos.y, bashPos.z) )
 
