@@ -115,7 +115,7 @@ function findEntity(entities, vars_table, forward, bounces)
           if v:HasModifier("modifier_rooted") and (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
             --HEADSHOT
             dealDamage(vars_table[1], v, 9000) 
-            EmitGlobalSound( "HeadShot" )
+            EmitGlobalSound( "Pudgewars.Headshot" )
             sendAMsg('HEADSHOT!')
             local headshotParticle = ParticleManager:CreateParticle( 'axe_culling_blade_kill', PATTACH_OVERHEAD_FOLLOW, v)
             local headshotPos = v:GetOrigin()
