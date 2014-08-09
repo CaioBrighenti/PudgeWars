@@ -178,7 +178,7 @@ C_OP_Decay C_OP_Decay_0
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
 	float m_flOpStartFadeOutTime = 10.000000
-	float m_flOpEndFadeOutTime = 10.500000
+	float m_flOpEndFadeOutTime = 10.000000
 	float m_flOpFadeOscillatePeriod = 0.000000
 	float m_flOpTimeOffsetMin = 0.000000
 	float m_flOpTimeOffsetMax = 0.000000

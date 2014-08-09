@@ -148,7 +148,7 @@ function PudgeWarsMode:RuneHookedParticle(unit)
 end
 
 function PudgeWarsMode:SpawnRune()
-    local rune_type = 6--RandomInt(1,6)
+    local rune_type = RandomInt(1,6)
     if rune_type==1 then   
         local rune = CreateUnitByName( "npc_dummy_rune_haste", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
         rune:AddNewModifier(rune,nil,"modifier_phased", {})
