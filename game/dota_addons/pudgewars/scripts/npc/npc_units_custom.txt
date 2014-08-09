@@ -1382,7 +1382,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						 	"models/heroes/techies/fx_techiesfx_mine.vmdl"	// Model.
+		"Model"						 	"models\heroes\rattletrap\rattletrap_cog.vmdl"	// Model.
 		"BaseClass"					      "npc_dota_creep"
 		"SoundSet"					       "0"			// Name of sound set.
 		"Level"						"1"
@@ -1393,7 +1393,7 @@
             //-------------------------------------------------------------------------------------------------------------
             "precache"
             {
-                  "model"                             "models/heroes/techies/fx_techiesfx_mine.vmdl"
+                  
             }
             
 
@@ -1456,7 +1456,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models\heroes\techies\fx_techiesfx_mine.mdl"	// Model.
+		"Model"						"models\heroes\rattletrap\rattletrap_cog.vmdl"	// Model.
 		"BaseClass"					"npc_dota_creep"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"
@@ -1522,7 +1522,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models\heroes\techies\fx_techiesfx_mine.mdl"	// Model.
+		"Model"						"models\heroes\rattletrap\rattletrap_cog.vmdl"	// Model.
 		"BaseClass"					"npc_dota_creep"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"
@@ -1588,7 +1588,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models\heroes\techies\fx_techiesfx_mine.mdl"	// Model.
+		"Model"						"models\heroes\rattletrap\rattletrap_cog.vmdl"	// Model.
 		"BaseClass"					"npc_dota_creep"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"
@@ -1654,7 +1654,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						"models\heroes\techies\fx_techiesfx_mine.mdl"	// Model.
+		"Model"						"models\heroes\rattletrap\rattletrap_cog.vmdl"	// Model.
 		"BaseClass"					"npc_dota_creep"
 		"SoundSet"					"0"			// Name of sound set.
 		"Level"						"1"

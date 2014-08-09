@@ -1,0 +1,30 @@
+"itembuilds/test_pudge.txt"
+{
+	"author"		"Kobb & Aderum"
+	"hero"			"npc_dota_hero_pudge"
+	"Title"			"Pudge Wars Items"
+	
+	"Items"
+	{		
+		"#DOTA_Item_Build_Starting_Items"
+		{
+			//"item"		"item_greater_salve"
+			//"item"		"item_greater_salve_instant"
+			//"item"		"item_pudge_wars_reveal"
+		}
+		
+		"#DOTA_Item_Build_Early_Game"
+		{	
+			//"item"		"item_grappling_hook"
+		}
+		
+		"#DOTA_Item_Build_Core_Items"
+		{
+
+		}
+		
+		"#DOTA_Item_Build_Luxury"
+		{
+		}
+	}
+}

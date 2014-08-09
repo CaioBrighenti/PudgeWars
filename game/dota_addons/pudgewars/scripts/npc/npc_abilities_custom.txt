@@ -4059,7 +4059,7 @@
         //-------------------------------------------------------------------------------------------------------------
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "BaseClass"                     "ability_datadriven"
-        "AbilityTextureName"            "techies_suicide"
+        "AbilityTextureName"            "techies_land_mines"
 
         "precache"
         {
@@ -4204,17 +4204,11 @@
         //-------------------------------------------------------------------------------------------------------------
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "BaseClass"                     "ability_datadriven"
-        "AbilityTextureName"            "techies_suicide"
+        "AbilityTextureName"            "techies_land_mines"
 
         "precache"
         {
-            "particlefile"              "particles/units/heroes/hero_witchdoctor.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_persistent_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_explosion_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_buff_1.pcf"
-            "particlefile"              "particles/test_particle.pcf"
-            "particlefile"              "particles/units/heroes/hero_batrider.pcf"
-            "soundfile"                 "scripts/game_sounds_heroes/game_sounds_alchemist.txt"
+            "particlefolder"              "particles/econ/generic/generic_aoe_persistent_sphere_1"
         }
 
         "OnSpellStart"
@@ -4269,16 +4263,11 @@
                 "OnCreated"
                 {
 
-                    "FireSound"
-                    {
-                        "EffectName"        "Hero_Alchemist.UnstableConcoction.Stun"
-                        "Target"            "CASTER"
-                    }
 
                     "FireEffect"
                     {
                         "Target"                "CASTER"
-                        "EffectName"            "generic_aoe_explosion_sphere_1"
+                        "EffectName"            "particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
                         "EffectAttachType"      "follow_origin"
                         "EffectRadius"          "200"
                         "EffectDurationScale"   "1"
@@ -4355,17 +4344,11 @@
         //-------------------------------------------------------------------------------------------------------------
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "BaseClass"                     "ability_datadriven"
-        "AbilityTextureName"            "techies_suicide"
+        "AbilityTextureName"            "techies_land_mines"
 
         "precache"
         {
-            "particlefile"              "particles/units/heroes/hero_witchdoctor.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_persistent_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_explosion_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_buff_1.pcf"
-            "particlefile"              "particles/test_particle.pcf"
-            "particlefile"              "particles/units/heroes/hero_batrider.pcf"
-            "soundfile"                 "scripts/game_sounds_heroes/game_sounds_alchemist.txt"
+            "particlefolder"              "particles/econ/generic/generic_aoe_persistent_sphere_1"
         }
 
         "OnSpellStart"
@@ -4420,16 +4403,11 @@
                 "OnCreated"
                 {
 
-                    "FireSound"
-                    {
-                        "EffectName"        "Hero_Alchemist.UnstableConcoction.Stun"
-                        "Target"            "CASTER"
-                    }
 
                     "FireEffect"
                     {
                         "Target"                "CASTER"
-                        "EffectName"            "generic_aoe_explosion_sphere_1"
+                        "EffectName"            "particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
                         "EffectAttachType"      "follow_origin"
                         "EffectRadius"          "200"
                         "EffectDurationScale"   "1"
@@ -4506,17 +4484,11 @@
         //-------------------------------------------------------------------------------------------------------------
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "BaseClass"                     "ability_datadriven"
-        "AbilityTextureName"            "techies_suicide"
+        "AbilityTextureName"            "techies_land_mines"
 
         "precache"
         {
-            "particlefile"              "particles/units/heroes/hero_witchdoctor.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_persistent_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_explosion_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_buff_1.pcf"
-            "particlefile"              "particles/test_particle.pcf"
-            "particlefile"              "particles/units/heroes/hero_batrider.pcf"
-            "soundfile"                 "scripts/game_sounds_heroes/game_sounds_alchemist.txt"
+            "particlefolder"              "particles/econ/generic/generic_aoe_persistent_sphere_1"
         }
 
         "OnSpellStart"
@@ -4571,16 +4543,11 @@
                 "OnCreated"
                 {
 
-                    "FireSound"
-                    {
-                        "EffectName"        "Hero_Alchemist.UnstableConcoction.Stun"
-                        "Target"            "CASTER"
-                    }
 
                     "FireEffect"
                     {
                         "Target"                "CASTER"
-                        "EffectName"            "generic_aoe_explosion_sphere_1"
+                        "EffectName"            "particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
                         "EffectAttachType"      "follow_origin"
                         "EffectRadius"          "200"
                         "EffectDurationScale"   "1"
@@ -4657,17 +4624,11 @@
         //-------------------------------------------------------------------------------------------------------------
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
         "BaseClass"                     "ability_datadriven"
-        "AbilityTextureName"            "techies_suicide"
+        "AbilityTextureName"            "techies_land_mines"
 
         "precache"
         {
-            "particlefile"              "particles/units/heroes/hero_witchdoctor.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_persistent_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_aoe_explosion_sphere_1.pcf"
-            "particlefile"              "particles/econ/generic/generic_buff_1.pcf"
-            "particlefile"              "particles/test_particle.pcf"
-            "particlefile"              "particles/units/heroes/hero_batrider.pcf"
-            "soundfile"                 "scripts/game_sounds_heroes/game_sounds_alchemist.txt"
+            "particlefolder"              "particles/econ/generic/generic_aoe_persistent_sphere_1"
         }
 
         "OnSpellStart"
@@ -4722,16 +4683,11 @@
                 "OnCreated"
                 {
 
-                    "FireSound"
-                    {
-                        "EffectName"        "Hero_Alchemist.UnstableConcoction.Stun"
-                        "Target"            "CASTER"
-                    }
 
                     "FireEffect"
                     {
                         "Target"                "CASTER"
-                        "EffectName"            "generic_aoe_explosion_sphere_1"
+                        "EffectName"            "particles/econ/generic/generic_aoe_explosion_sphere_1/generic_aoe_explosion_sphere_1.vpcf"
                         "EffectAttachType"      "follow_origin"
                         "EffectRadius"          "200"
                         "EffectDurationScale"   "1"
@@ -4809,8 +4765,9 @@
                 "BaseClass"             "ability_datadriven"
                	"AbilityType"			"DOTA_ABILITY_TYPE_BASIC"
 			   	"AbilityBehavior"       "DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NOT_LEARNABLE"
-                "AbilityTextureName"	"techies_focused_detonate"
+                "AbilityTextureName"	"techies_suicide"
                 "MaxLevel"                      "1"
+
 
                 // Casting
                 //-------------------------------------------------------------------------------------------------------------
@@ -4845,6 +4802,7 @@
         "BaseClass"             "antimage_blink"
         "MaxLevel"				"1"
         "AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_ROOT_DISABLES"
+
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------

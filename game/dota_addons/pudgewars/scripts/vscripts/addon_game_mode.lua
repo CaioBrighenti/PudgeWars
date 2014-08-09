@@ -37,7 +37,7 @@ function Precache( context )
     PrecacheUnitByNameSync("npc_dota_hero_alchemist", context)
     PrecacheUnitByNameSync("npc_precache_everything", context)
     PrecacheModel("models/heroes/pudge/weapon.vmdl", context ) -- Manually precache a single model
-    PrecacheModel("models/heroes/techies/fx_techiesfx_mine.vmdl", context)
+    PrecacheModel("models/heroes/rattletrap/rattletrap_cog.vmdl", context)
     PrecacheModel("models/heroes/brewmaster/brewmaster_windspirit.vmdl", context)
     PrecacheModel("models/heroes/brewmaster/brewmaster_firespirit.vmdl", context)
     PrecacheModel("models/props_destruction/lava_flow_clump.vmdl", context)

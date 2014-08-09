@@ -357,6 +357,10 @@ function PudgeWarsMode:OnNPCSpawned( keys )
     local spawnedUnit = EntIndexToHScript( keys.entindex )
     if spawnedUnit:GetUnitName() == "npc_vision_dummy" then
         spawnedUnit:AddNewModifier( spawnedUnit, nil, "modifier_tower_truesight_aura", { duration = 30   } )
+    elseif string.find(spawnedUnit:GetUnitName(), "npc_dota_mine") then
+      spawnedUnit:AddAbility('vision_dummy_passive')
+      local spawnedUnitPassive = spawnedUnit:FindAbilityByName('vision_dummy_passive')
+      spawnedUnitPassive:SetLevel(1)
     elseif spawnedUnit:GetUnitName() == "npc_dummy_rune_lightning" or spawnedUnit:GetUnitName() == "npc_dummy_rune_haste" or spawnedUnit:GetUnitName() == "npc_dummy_rune_gold" or spawnedUnit:GetUnitName() == "npc_dummy_rune_ion" or spawnedUnit:GetUnitName() == "npc_dummy_rune_fire" or spawnedUnit:GetUnitName() == "npc_dummy_rune_dynamite" then
         PudgeWarsMode:MoveRune(spawnedUnit)
     elseif string.find(spawnedUnit:GetUnitName(), "barrier") then
