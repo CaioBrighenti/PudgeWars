@@ -690,7 +690,7 @@ function OnTechiesExplosiveBarrelDetonate( keys )
 			end
 	    end
 	    --Kill pudge last to give him all EXP and stuff
-	    caster:EmitSound('pudgewars_mine_explode')
+	    caster:EmitSound('Hero_Alchemist.UnstableConcoction.Stun')
 	    dealDamage(caster,caster,caster:GetMaxHealth() + 1000)
 	    local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_ABSORIGIN, caster)
 	    local headshotPos = caster:GetOrigin()

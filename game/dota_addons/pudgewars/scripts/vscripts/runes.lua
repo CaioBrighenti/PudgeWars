@@ -93,7 +93,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
 			end
                     end
                     --Kill pudge last to give him all EXP and stuff
-                    caster:EmitSound('pudgewars_mine_explode')
+                    caster:EmitSound('Hero_Alchemist.UnstableConcoction.Stun')
                     dealDamage(caster,caster,10000)
                     local headshotParticle = ParticleManager:CreateParticle( 'tinker_missle_explosion', PATTACH_OVERHEAD_FOLLOW, caster)
                     local headshotPos = caster:GetOrigin()
@@ -107,7 +107,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
 	    useGameTime = true,
             callback = function(reflex, args)
                     sendAMsg("3")
-                    caster:EmitSound('pudgewars_ticker')
+                    caster:EmitSound('Ability.XMark.Target_Movement')
                     return
 		end
 		})
@@ -116,7 +116,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
 	    useGameTime = true,
             callback = function(reflex, args)
                     sendAMsg("2")
-                    caster:EmitSound('pudgewars_ticker')
+                    caster:EmitSound('Ability.XMark.Target_Movement')
                     return
 		end
 		})
@@ -125,7 +125,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
 	    useGameTime = true,
             callback = function(reflex, args)
                     sendAMsg("1")
-                    caster:EmitSound('pudgewars_ticker')
+                    caster:EmitSound('Ability.XMark.Target_Movement')
                     return
 		end
 		})
