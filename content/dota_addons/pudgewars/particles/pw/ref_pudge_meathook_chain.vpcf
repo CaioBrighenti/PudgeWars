@@ -57,8 +57,7 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	]
 	CParticleOperatorInstance*[] m_Initializers = 
 	[
-		&C_INIT_CreateSequentialPath_0,
-		&C_INIT_RandomLifeTime_0
+		&C_INIT_CreateSequentialPath_0
 	]
 	CParticleOperatorInstance*[] m_Emitters = 
 	[
@@ -283,32 +282,6 @@ C_INIT_CreateSequentialPath C_INIT_CreateSequentialPath_0
 		float m_flBulge = 0.000000
 		float m_flMidPoint = 0.500000
 	}
-	bool m_bRunForParentApplyKillList = true
-	bool m_bDisableOperator = false
-	float m_flOpStartFadeInTime = 0.000000
-	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 0.000000
-	float m_flOpEndFadeOutTime = 0.000000
-	float m_flOpFadeOscillatePeriod = 0.000000
-	float m_flOpTimeOffsetMin = 0.000000
-	float m_flOpTimeOffsetMax = 0.000000
-	int m_nOpTimeOffsetSeed = 0
-	int m_nOpStrengthScaleSeed = 0
-	float m_flOpStrengthMinScale = 1.000000
-	float m_flOpStrengthMaxScale = 1.000000
-	int m_nOpTimeScaleSeed = 0
-	float m_flOpTimeScaleMin = 1.000000
-	float m_flOpTimeScaleMax = 1.000000
-	int m_nOpEndCapState = -1
-	int m_nOpScaleCP = -1
-	string m_Notes = ""
-}
-
-C_INIT_RandomLifeTime C_INIT_RandomLifeTime_0
-{
-	float m_fLifetimeMin = 9.000000
-	float m_fLifetimeMax = 10.100000
-	float m_fLifetimeRandExponent = 1.000000
 	bool m_bRunForParentApplyKillList = true
 	bool m_bDisableOperator = false
 	float m_flOpStartFadeInTime = 0.000000
