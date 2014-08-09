@@ -49,7 +49,8 @@ CParticleSystemDefinition CParticleSystemDefinition_0
 	[
 		&C_OP_BasicMovement_0,
 		&C_OP_StopAfterCPDuration_0,
-		&C_OP_MaintainSequentialPath_0
+		&C_OP_MaintainSequentialPath_0,
+		&C_OP_Decay_0
 	]
 	CParticleOperatorInstance*[] m_Renderers = 
 	[
@@ -156,6 +157,28 @@ C_OP_MaintainSequentialPath C_OP_MaintainSequentialPath_0
 	float m_flOpEndFadeInTime = 0.000000
 	float m_flOpStartFadeOutTime = 0.000000
 	float m_flOpEndFadeOutTime = 0.000000
+	float m_flOpFadeOscillatePeriod = 0.000000
+	float m_flOpTimeOffsetMin = 0.000000
+	float m_flOpTimeOffsetMax = 0.000000
+	int m_nOpTimeOffsetSeed = 0
+	int m_nOpStrengthScaleSeed = 0
+	float m_flOpStrengthMinScale = 1.000000
+	float m_flOpStrengthMaxScale = 1.000000
+	int m_nOpTimeScaleSeed = 0
+	float m_flOpTimeScaleMin = 1.000000
+	float m_flOpTimeScaleMax = 1.000000
+	int m_nOpEndCapState = -1
+	int m_nOpScaleCP = -1
+	string m_Notes = ""
+}
+
+C_OP_Decay C_OP_Decay_0
+{
+	bool m_bDisableOperator = false
+	float m_flOpStartFadeInTime = 0.000000
+	float m_flOpEndFadeInTime = 0.000000
+	float m_flOpStartFadeOutTime = 10.000000
+	float m_flOpEndFadeOutTime = 10.500000
 	float m_flOpFadeOscillatePeriod = 0.000000
 	float m_flOpTimeOffsetMin = 0.000000
 	float m_flOpTimeOffsetMax = 0.000000

@@ -409,6 +409,7 @@ function LaunchHook( keys )
 		-- Prevent getting stuck
 		FindClearSpaceForUnit(hooked, hooked:GetAbsOrigin(), true)
 	    end
+
             hooked = nil
             dropped = true
           end

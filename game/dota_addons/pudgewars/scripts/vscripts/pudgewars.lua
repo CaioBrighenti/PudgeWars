@@ -1,6 +1,6 @@
 print ('[PUDGEWARS] pudgewars.lua' )
 
-USE_LOBBY=true
+USE_LOBBY=false
 THINK_TIME = 0.01
 
 STARTING_GOLD = 0
