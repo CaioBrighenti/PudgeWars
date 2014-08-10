@@ -57,6 +57,7 @@ PudgeArray = {}
 shield_carrier = nil
 rune_spell_caster_good = nil
 has_been_in_wait_for_players = false
+
 if PudgeWarsMode == nil then
     PudgeWarsMode = class({})
     print("created PW")
