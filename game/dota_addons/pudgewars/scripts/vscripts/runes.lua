@@ -66,8 +66,8 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
                 PudgeArray[ caster:GetPlayerOwnerID() ].use_flame = false
                 for key,flame in pairs(self.all_flame_hooks) do
                    if flame then
-		       print("destroy flame")
-                      flame:Destroy()
+		      print("destroy flame")
+                      flame:RemoveSelf()
 		    end
 		    self.all_flame_hooks[key] = nil
                 end

@@ -177,8 +177,8 @@ C_OP_Decay C_OP_Decay_0
 	bool m_bDisableOperator = false
 	float m_flOpStartFadeInTime = 0.000000
 	float m_flOpEndFadeInTime = 0.000000
-	float m_flOpStartFadeOutTime = 10.000000
-	float m_flOpEndFadeOutTime = 10.000000
+	float m_flOpStartFadeOutTime = 0.000000
+	float m_flOpEndFadeOutTime = 0.000000
 	float m_flOpFadeOscillatePeriod = 0.000000
 	float m_flOpTimeOffsetMin = 0.000000
 	float m_flOpTimeOffsetMax = 0.000000

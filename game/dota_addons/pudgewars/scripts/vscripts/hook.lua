@@ -286,6 +286,9 @@ function LaunchHook( keys )
   local linkFollowDistance = 150 -- Chain follow distance.  This determines the size of linear links in the chain.
   local linkDeletionTolerance = 100 -- Chain deletion distance.  This determines how close a chain/hook has to be to the hero to be deleted on retract.
 
+  local fire_dummy = nil
+  local stop_flame_hook = false
+
   if pudge.is_throwing_hook then
     local abil = hero:FindAbilityByName("pudge_wars_custom_hook")
     abil:EndCooldown()
@@ -318,15 +321,32 @@ function LaunchHook( keys )
  
   hooks[hookCount] = CreateUnitByName("npc_reflex_hook_test", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
   hooks[hookCount]:SetModelScale(modelScale)
+  hooks[hookCount]:SetAbsOrigin(hero:GetAbsOrigin() + Vector(0,0,125))
   if modelName ~= "none" then
     hooks[hookCount]:SetOriginalModel(modelName)
     hooks[hookCount]:SetModel(modelName)
   end
   if pudge.use_flame then
-    hooks[hookCount]:AddAbility("pudge_wars_firefly")
-    local abil = hooks[hookCount]:FindAbilityByName("pudge_wars_firefly")  
+    
+    fire_dummy = CreateUnitByName("npc_firefly_hook_dummy", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
+    fire_dummy:FindAbilityByName("reflex_dummy_unit"):SetLevel(1)
+    fire_dummy:AddAbility("pudge_wars_firefly")
+    local abil = fire_dummy:FindAbilityByName("pudge_wars_firefly")  
     abil:SetLevel(1)
-    hooks[hookCount]:CastAbilityImmediately(abil,0)
+    fire_dummy:CastAbilityImmediately(abil,0)
+    PudgeWarsMode:CreateTimer(DoUniqueString("fireflydummy"), {
+	endTime = GameRules:GetGameTime(),
+	useGameTime = true,
+	callback = function(reflex, args)
+	    if not stop_flame_hook and hooks[1] and IsValidEntity(hooks[1]) then
+		fire_dummy:SetAbsOrigin(hooks[1]:GetAbsOrigin() + Vector(0,0,-200))	   
+		return GameRules:GetGameTime()
+	    end
+            fire_dummy:SetOrigin(Vector(-2368, 2368,0))
+            table.insert(PudgeWarsMode.all_flame_hooks,fire_dummy)
+	    return
+	end
+    })
   end
   
   hooks[hookCount]:FindAbilityByName("reflex_dummy_unit"):SetLevel(1)
@@ -372,7 +392,7 @@ function LaunchHook( keys )
       speed = vars_table[4]
       if complete then
         if hooked ~= nil and IsValidEntity(hooked) and IsValidEntity(hooks[1]) then
-          hooked:SetAbsOrigin(hooks[1]:GetAbsOrigin())
+          hooked:SetAbsOrigin(hooks[1]:GetAbsOrigin() + Vector(0,0,-125))
           local diff = hero:GetAbsOrigin() - hooked:GetAbsOrigin()
           if diff:Length() < 150 then
             hooked:RemoveModifierByName("modifier_rooted")
@@ -458,9 +478,7 @@ function LaunchHook( keys )
         diff.z = 0
         if diff:Length() < linkDeletionTolerance then
           if hasFire then
-            hooks[#hooks]:SetOrigin(Vector(0,-2000,0))
-            table.insert(PudgeWarsMode.all_flame_hooks,hooks[#hooks])
-            hooks[#hooks] = nil
+	    stop_flame_hook = true
           else
             hooks[#hooks]:Destroy()
             hooks[#hooks] = nil
@@ -482,13 +500,13 @@ function LaunchHook( keys )
         --print(tostring(hooks[#hooks]:GetAbsOrigin()) .. " -- " .. tostring(dir) .. " -- " .. speed .. " -- " .. tostring(#hooks))
         if hooked == nil and not dropped then
           --BACKWARDS
-          local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin(), radius / 2)
+          local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-100), radius / 2)
           findEntity(entities,vars_table, false,bounces)
           local entities = nil
           if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
-            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-128), radius / 2)
+            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-200), radius / 2)
           else
-            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,128), radius / 2)
+            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,0), radius / 2)
           end
           findEntity(entities,vars_table, false,bounces)
           hooked = vars_table[0]
@@ -539,19 +557,19 @@ function LaunchHook( keys )
           
           hookCount = hookCount + 1
         elseif #hooks > 1 then
-          hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,70))
+          hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,120))
         end
        
         --Collision detection
         if hooked == nil and vars_table[5] == false then
           --FORWARD
-          local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin(), radius / 2)
+          local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-100), radius / 2)
           findEntity(entities,vars_table, true,bounces)
           local entities = nil
           if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
-            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-128), radius / 2)
+            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-200), radius / 2)
           else
-            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,128), radius / 2)
+            entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,100), radius / 2)
           end
           findEntity(entities,vars_table, true,bounces)
           hooked = vars_table[0]
