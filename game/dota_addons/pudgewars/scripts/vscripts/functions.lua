@@ -176,6 +176,22 @@ function PudgeWarsMode:SpawnVisionDummies()
     PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(0, 0, 196), DOTA_TEAM_BADGUYS)
     PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(0, -1500, 196), DOTA_TEAM_BADGUYS)
     PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(0, 1500, 196), DOTA_TEAM_BADGUYS) 
+    
+    local y_pos = -1500
+    local start_x = 145
+    for i=0,30 do
+	if i == 12 then
+	    start_x = start_x + 60
+	elseif i == 18 then
+	    start_x = 145
+	end
+	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(start_x, y_pos, 128), DOTA_TEAM_BADGUYS)
+	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-start_x, y_pos, 128), DOTA_TEAM_BADGUYS)
+	
+	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(start_x,y_pos, 128), DOTA_TEAM_GOODGUYS)
+	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-start_x, y_pos, 128), DOTA_TEAM_GOODGUYS)
+	y_pos = y_pos + 100
+    end
 
 end
 

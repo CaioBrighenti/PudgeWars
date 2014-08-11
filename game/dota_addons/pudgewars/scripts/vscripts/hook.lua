@@ -548,7 +548,7 @@ function LaunchHook( keys )
         if diff:Length() > linkCreationTolerance then
           diff.z = 0
           local direction = diff:Normalized()
-          local particle = ParticleManager:CreateParticle("particles/pw/ref_pudge_meathook_chain.vpcf", PATTACH_ABSORIGIN, hero) --
+          local particle = ParticleManager:CreateParticle("particles/pw/ref_pudge_meathook_chain.vpcf", PATTACH_ABSORIGIN, hooks[1]) --
           local position = hero:GetAbsOrigin() + Vector(0,0,70)
           local endPosition = hero:GetAbsOrigin() + direction * 75 + Vector(0,0,140)
           local pu = ParticleUnit.new(particle, position, endPosition) --cpStart, cpEnd, cpDelete)
