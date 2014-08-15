@@ -23,6 +23,8 @@ function PudgeWarsMode:UpdateUpgradePoints( unit )
 end
 
 function PudgeWarsMode:AssignHookModel(hero)
+    PudgeArray[hero:GetPlayerOwnerID()].modelName  = "none"
+    --[[
     local cur = hero:FirstMoveChild()
     local count = 0
     --find hook model
@@ -36,7 +38,7 @@ function PudgeWarsMode:AssignHookModel(hero)
     end
     if PudgeArray[hero:GetPlayerOwnerID()].modelName  == "" then
       PudgeArray[hero:GetPlayerOwnerID()].modelName  = "none"
-    end
+    end --]]
 end
 
 function PudgeWarsMode:UpgradeItem(itemname,item,itempurchased, hero)
