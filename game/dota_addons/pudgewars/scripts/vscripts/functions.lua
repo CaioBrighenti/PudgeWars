@@ -279,7 +279,6 @@ function PudgeWarsMode:StartVoting()
 	    GameRules:SendCustomMessage("Welcome to <font color='#CC6600'>Pudge Wars!</font>", 0, 0)
 	    GameRules:SendCustomMessage("Created by  <font color='#CC6600'>Kobb</font> and <font color='#CC6600'>Aderum</font>", 0, 0)
 	    GameRules:SendCustomMessage("For more information and credits go to  <font color='#CC6600'>\"http://d2pudgewars.com\"</font>", 0, 0)
-	    GameRules:SendCustomMessage("Mods hosted on \"http://d2modd.in\"", 0, 0)
 
 	    FireGameEvent('pwgm_start_win_vote', {})
 	    print("Fired startWinVote")

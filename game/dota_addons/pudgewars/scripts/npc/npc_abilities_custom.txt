@@ -5015,7 +5015,7 @@
             "soundfile"                 "scripts/game_sounds_heroes/game_sounds_pudge.txt"
         }
 
-        "AbilityCooldown"               "7"    
+        "AbilityCooldown"               "3"    
         "AbilityCastPoint"              "0.3"           
         
         "OnSpellStart"
