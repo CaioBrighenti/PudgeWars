@@ -5,4 +5,9 @@
         "File"      "PudgeWars" //for example: "UI1", if your swf file is called UI1.swf
         "Depth"     "51"
     }
+    "2"
+    {
+        "File" "StatsCollection"
+        "Depth" "1"
+    }
 }

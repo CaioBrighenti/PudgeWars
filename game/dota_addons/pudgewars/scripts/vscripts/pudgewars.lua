@@ -90,6 +90,7 @@ function PudgeWarsMode:InitGameMode()
   GameRules:SetCreepMinimapIconScale(0)
   GameRules:SetRuneMinimapIconScale(0.7)
   GameRules:SetSameHeroSelectionEnabled(true)
+  GameRules:SetHideKillMessageHeaders(true)
   
   
   print('[PUDGEWARS] Rules set')
@@ -149,6 +150,11 @@ function PudgeWarsMode:InitGameMode()
   PudgeWarsMode:SpawnFuntainDummy()
   PudgeWarsMode:InitScaleForm()
 
+  print('[PUDGEWARS] Starting stats')
+  statcollection.addStats({
+    modID = '8a404b7c81ab60ec9bc9298e9b76b251'
+  })
+
   print('[PUDGEWARS] values set')
 
   print('[PUDGEWARS] Precaching stuff...')
@@ -176,6 +182,7 @@ function PudgeWarsMode:CaptureGameMode()
     GameMode:SetUseCustomHeroLevels ( true )
     GameMode:SetCustomHeroMaxLevel ( MAX_LEVEL )
     GameMode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+    GameMode:SetAnnouncerDisabled(true)
 
     print( '[PUDGEWARS] NOT Beginning Think' ) 
     GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( PudgeWarsMode, 'Think' ), THINK_TIME )
@@ -522,8 +529,24 @@ end
 function PudgeWarsMode:Think()
   -- If the game's over, it's over.
   if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
+    local plyCount = 0
+    for i=0,9 do
+      if PlayerResource:IsValidPlayer(i) then
+        plyCount = plyCount + 1
+      end
+    end
+    statcollection.addStats({
+      player_count = plyCount
+      })
+    statcollection.addStats({
+      modes = {"first_to_" .. PudgeWarsMode.kills_to_win}
+      })
+    print("[PUDGEWARS] SENDING STATS")
+    --send stats
+    statcollection.sendStats()
     return
   end
+            
 
   -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
   local now = GameRules:GetGameTime()

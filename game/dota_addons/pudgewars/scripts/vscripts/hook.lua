@@ -116,7 +116,8 @@ function findEntity(entities, vars_table, forward, bounces)
             --HEADSHOT
             dealDamage(vars_table[1], v, 9000) 
             EmitGlobalSound( "Pudgewars.Headshot" )
-            sendAMsg('HEADSHOT!')
+            --sendAMsg('HEADSHOT!')
+            ShowCustomHeaderMessage("#HeadshotMessage", hero:GetPlayerOwnerID(), -1, 5)
             local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf', PATTACH_ABSORIGIN, v)
             local headshotPos = v:GetOrigin()
             ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
@@ -124,8 +125,8 @@ function findEntity(entities, vars_table, forward, bounces)
           elseif v:HasModifier("modifier_rooted") and (vars_table[1]:GetTeamNumber() == v:GetTeamNumber()) then
             --DENY
             dealDamage(vars_table[1], v, 9000) 
-            EmitGlobalSound( "Pudgewars.Headshot" ) -- change to DENY SOUND
-            sendAMsg('DENIED!')
+            EmitGlobalSound( "Pudgewars.Headshot" ) -- change to DENY SOUND 
+            ShowCustomHeaderMessage("#DeniedMessage", hero:GetPlayerOwnerID(), -1, 5)
             local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf', PATTACH_ABSORIGIN, v)
             local headshotPos = v:GetOrigin()
             ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )

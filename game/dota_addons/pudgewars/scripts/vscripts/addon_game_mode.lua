@@ -8,6 +8,8 @@ require('abilities')
 require('pudge')
 require('functions')
 require('runes')
+--Stats
+require('lib.statcollection')
 
 function Precache( context )
     print("hello")
