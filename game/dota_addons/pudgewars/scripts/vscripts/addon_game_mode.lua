@@ -16,7 +16,7 @@ function Precache( context )
     --Precache things we know we'll use.  Possible file types include (but not limited to):
     PrecacheResource( "particle", "particles/basic_trail/basic_trail.vpcf", context )
     PrecacheResource( "particle", "particles/pw/ref_pudge_meathook_chain.vpcf", context )
-    PrecacheResource( "soundfile", "game_sounds_custom.vsndevts", context)
+    PrecacheResource( "soundfile", "soundevents/game_sounds_custom.vsndevts", context)
     PrecacheUnitByNameSync("npc_dota_hero_pudge", context)
     PrecacheUnitByNameSync("npc_dota_hero_life_stealer", context)
     PrecacheUnitByNameSync("npc_dota_hero_spirit_breaker", context)
