@@ -384,7 +384,7 @@ function PudgeWarsMode:OnNPCSpawned( keys )
         if spawnedUnit:GetPlayerOwnerID() ~= -1 then
             if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
 		        PudgeWarsMode:InitPudge( spawnedUnit )
-	    end
+	          end
         end
     end
 end

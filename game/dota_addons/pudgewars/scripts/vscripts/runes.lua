@@ -34,8 +34,9 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
     elseif rune_type == 3 then
         --Ion Rune
         sendAMsg("SHIELD BARRIER!")
-        local abil_ion = _G.rune_spell_caster_good:FindAbilityByName("pudge_wars_ion_shell")
-        _G.rune_spell_caster_good:CastAbilityOnTarget(caster,abil_ion,0)
+        --local abil_ion = _G.rune_spell_caster_good:FindAbilityByName("pudge_wars_ion_shell")
+       -- _G.rune_spell_caster_good:CastAbilityOnTarget(caster,abil_ion,0)
+        local shiled_bar = ParticleManager:CreateParticle("particles/pw/shield_barrier.vpcf", PATTACH_RENDERORIGIN_FOLLOW, caster)
         _G.shield_carrier = caster
         local start_time = GameRules:GetGameTime()
         PudgeWarsMode:CreateTimer(DoUniqueString("shiledbarrier"), {
@@ -51,6 +52,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
                 end
                 if GameRules:GetGameTime() - start_time >=12 then
                     _G.shield_carrier = nil
+                    ParticleManager:DestroyParticle(shiled_bar,true)
                     return
                 end
                 return GameRules:GetGameTime() + 0.1
@@ -165,8 +167,8 @@ function PudgeWarsMode:SpawnRune()
         local rune = CreateUnitByName( "npc_dummy_rune_dynamite", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM) 
         rune:AddNewModifier(rune,nil,"modifier_phased", {})
     elseif rune_type==6 then
-	local rune = CreateUnitByName( "npc_dummy_rune_lightning", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
-	rune:AddNewModifier(rune,nil,"modifier_phased",{})
+	   local rune = CreateUnitByName( "npc_dummy_rune_lightning", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
+	   rune:AddNewModifier(rune,nil,"modifier_phased",{})
     end
 end
 
