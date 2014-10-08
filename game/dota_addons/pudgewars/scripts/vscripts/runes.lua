@@ -89,7 +89,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
                     for k,v in pairs(units) do
                         if IsValidEntity(v) and string.find(v:GetClassname(), "pudge") and v ~= caster then
                             dealDamage(caster,v,10000)
-                            local headshotParticle = ParticleManager:CreateParticle( 'tinker_missle_explosion', PATTACH_OVERHEAD_FOLLOW, v)
+                            local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_OVERHEAD_FOLLOW, v)
                             local headshotPos = v:GetOrigin()
                             ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
 			end
@@ -97,7 +97,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
                     --Kill pudge last to give him all EXP and stuff
                     caster:EmitSound('Hero_Alchemist.UnstableConcoction.Stun')
                     dealDamage(caster,caster,10000)
-                    local headshotParticle = ParticleManager:CreateParticle( 'tinker_missle_explosion', PATTACH_OVERHEAD_FOLLOW, caster)
+                    local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_OVERHEAD_FOLLOW, caster)
                     local headshotPos = caster:GetOrigin()
                     ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
                     return
