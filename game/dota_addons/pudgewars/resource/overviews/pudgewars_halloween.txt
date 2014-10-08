@@ -1,0 +1,8 @@
+pudgewars_halloween
+{
+	material materials/overviews/pudgewars_halloween.vmat
+	pos_x -2047
+	pos_y 2048
+	scale 3.999
+}
+

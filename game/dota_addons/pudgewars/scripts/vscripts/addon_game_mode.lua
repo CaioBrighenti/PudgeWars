@@ -14,6 +14,7 @@ require('lib.statcollection')
 function Precache( context )
     print("hello")
     --Precache things we know we'll use.  Possible file types include (but not limited to):
+    --[[
     PrecacheResource( "particle", "particles/basic_trail/basic_trail.vpcf", context )
     PrecacheResource( "particle", "particles/pw/ref_pudge_meathook_chain.vpcf", context )
     PrecacheResource( "particle", "particles/pw/shield_barrier.vpcf", context )
@@ -50,6 +51,7 @@ function Precache( context )
     PrecacheResource( "particle_folder", "particles/econ/generic/generic_aoe_explosion_sphere_1", context )
     PrecacheResource( "particle_folder", "particles/units/heroes/hero_bloodseeker", context)
     PrecacheResource( "particle_folder", "particles/units/heroes/hero_spirit_brealer", context)
+    --]]
 end
 
 -- Create the game mode when we activate

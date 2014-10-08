@@ -1449,17 +1449,32 @@
                   "particlefile"		      "particles/units/heroes/hero_disruptor.pcf"		  
                   "particlefile"		      "particles/units/heroes/hero_razor.pcf"		  
                   "particlefile"		      "particles/units/heroes/hero_zuus.pcf"
-		  "particlefile"			"particles/units/heroes/hero_tiny.pcf"
-		"particlefile"				"particles/units/heroes/hero_batrider.pcf"
-		"particlefile"				"particles/units/heroes/hero_faceless_void.pcf"
-		"particlefile"				"particles/units/heroes/hero_sven.pcf"
-		"particlefile"				"particles/units/heroes/hero_earthshaker.pcf"
+      		"particlefile"			"particles/units/heroes/hero_tiny.pcf"
+      		"particlefile"				"particles/units/heroes/hero_batrider.pcf"
+      		"particlefile"				"particles/units/heroes/hero_faceless_void.pcf"
+      		"particlefile"				"particles/units/heroes/hero_sven.pcf"
+      		"particlefile"				"particles/units/heroes/hero_earthshaker.pcf"
 
 			
 			"soundfile"                 "scripts/game_sounds_heroes/game_sounds_spirit_breaker.txt"
 			"soundfile"                 "scripts/game_sounds_heroes/game_sounds_tiny.txt"
 			"soundfile"                 "scripts/game_sounds_heroes/game_sounds_shredder.txt"
 			"soundfile"					"scripts/game_sounds_heroes/game_sounds_antimage"
+
+                  "model"                 "models/heroes/pudge/weapon.vmdl"
+                  "model"                 "models/heroes/rattletrap/rattletrap_cog.vmdl"
+                  "model"                 "models/heroes/brewmaster/brewmaster_windspirit.vmdl"
+                  "model"                 "models/heroes/brewmaster/brewmaster_firespirit.vmdl"
+                  "model"                 "models/props_destruction/lava_flow_clump.vmdl"
+                  "model"                 "models/props_structures/wood_wall004.vmdl"
+
+                  "particle_folder"       "particles/econ/generic/generic_aoe_explosion_sphere_1"
+                  "particle_folder"       "particles/units/heroes/hero_bloodseeker"
+                  "particle_folder"       "particles/units/heroes/hero_spirit_breaker"
+
+                  "particle_folder"       "particles/basic_trail"
+                  "particle_folder"       "particles/pw"
+                  "soundfile"             "soundevents/game_sounds_custom.vsndevts"
 		}
 	}
 
