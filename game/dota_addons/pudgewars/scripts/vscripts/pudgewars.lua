@@ -590,8 +590,8 @@ function PudgeWarsMode:Think()
       modes = {"first_to_" .. PudgeWarsMode.kills_to_win}
       })
     print("[PUDGEWARS] SENDING STATS")
-    --send stats
-    statcollection.sendStats()
+    --send stats - Stats get sent automatically now
+    --statcollection.sendStats()
     return
   end
             
