@@ -284,8 +284,11 @@ function PudgeWarsMode:OnDamageTaken( keys )
         PudgeWarsMode:RuneHooked(unit, caster,5)
         unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(), "dummy_rune_lightning") then
-	PudgeWarsMode:RuneHooked(unit, caster, 6)
-	unit:RemoveSelf()
+    	PudgeWarsMode:RuneHooked(unit, caster, 6)
+    	unit:RemoveSelf()
+    elseif string.find(unit:GetUnitName(), "npc_dummy_rune_diretide") then
+      PudgeWarsMode:RuneHooked(unit, caster, 7)
+      unit:RemoveSelf()
     else 
         --Check if caster has barathrums level 5 and roll bash chance
         for i=0,5 do
@@ -412,7 +415,7 @@ function PudgeWarsMode:OnNPCSpawned( keys )
       spawnedUnit:AddAbility('vision_dummy_passive')
       local spawnedUnitPassive = spawnedUnit:FindAbilityByName('vision_dummy_passive')
       spawnedUnitPassive:SetLevel(1)
-    elseif spawnedUnit:GetUnitName() == "npc_dummy_rune_lightning" or spawnedUnit:GetUnitName() == "npc_dummy_rune_haste" or spawnedUnit:GetUnitName() == "npc_dummy_rune_gold" or spawnedUnit:GetUnitName() == "npc_dummy_rune_ion" or spawnedUnit:GetUnitName() == "npc_dummy_rune_fire" or spawnedUnit:GetUnitName() == "npc_dummy_rune_dynamite" then
+    elseif spawnedUnit:GetUnitName() == "npc_dummy_rune_diretide" or spawnedUnit:GetUnitName() == "npc_dummy_rune_lightning" or spawnedUnit:GetUnitName() == "npc_dummy_rune_haste" or spawnedUnit:GetUnitName() == "npc_dummy_rune_gold" or spawnedUnit:GetUnitName() == "npc_dummy_rune_ion" or spawnedUnit:GetUnitName() == "npc_dummy_rune_fire" or spawnedUnit:GetUnitName() == "npc_dummy_rune_dynamite" then
         PudgeWarsMode:MoveRune(spawnedUnit)
     elseif string.find(spawnedUnit:GetUnitName(), "barrier") then
         local owner = spawnedUnit:GetOwner()

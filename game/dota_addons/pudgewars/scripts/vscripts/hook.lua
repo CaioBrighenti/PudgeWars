@@ -251,7 +251,12 @@ function findEntity(entities, vars_table, forward, bounces)
           PudgeWarsMode:RuneHooked(v,vars_table[1],6)
           vars_table[2] = true
           vars_table[0] = v   
-        end        
+        elseif string.find(v:GetClassname(),"creature") and v:GetUnitName() == "npc_dummy_rune_diretide" and v:IsAlive() then
+          vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
+          PudgeWarsMode:RuneHooked(v,vars_table[1],7)
+          vars_table[2] = true
+          vars_table[0] = v   
+        end         
       end
     end
   end

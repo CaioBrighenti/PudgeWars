@@ -10,4 +10,9 @@
         "File" "StatsCollection"
         "Depth" "1"
     }
+    "3"
+    {
+        "File"      "loadhelper"
+        "Depth"     "253"
+    }
 }

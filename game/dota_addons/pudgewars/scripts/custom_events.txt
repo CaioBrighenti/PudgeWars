@@ -63,5 +63,9 @@
     "stat_collection_send"
     {
     }
+    "lh_hostid"
+    {
+        "hostID"       "byte"  // The ID of the player who is the host
+    }
 }
 

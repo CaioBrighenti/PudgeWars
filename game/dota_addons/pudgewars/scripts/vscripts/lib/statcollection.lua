@@ -16,7 +16,13 @@ You can call statcollection.addStats() with a table at any stage to add new stat
 old stats will still remain, if you provide new values, the new values will override
 the old values.
 
-When you're ready to store the stats (only call this once!)
+Note: Stats will be automatically sent to the server when the game is detected as completed!
+
+You can turn the auto sending off by calling
+
+statcollection.disableAutoSend()
+
+Then when you're ready to store the stats (only call this once!)
 
 statcollection.sendStats({
     anyExtraStats = 'WhatEver'
@@ -44,6 +50,9 @@ local collectedStats = {}
 
 -- Makes sure we don't call the stat collection multiple times
 local alreadySubmitted = false
+
+-- Should we auto send stats?
+local autoSendStats = true
 
 -- This function should be called with a table of stats to add
 function addStats(toSearch)
@@ -145,7 +154,20 @@ function getPlayerSnapshot(playerID)
                 denies = PlayerResource:GetDenies(playerID),
 
                 -- The total last hits this player has
-                lastHits = PlayerResource:GetLastHits(playerID)
+                lastHits = PlayerResource:GetLastHits(playerID),
+				
+				
+
+				stunAmount = PlayerResource:GetStuns(playerID),
+
+				goldSpentBuyBack = PlayerResource:GetGoldSpentOnBuybacks(playerID),
+				goldSpentConsumables = PlayerResource:GetGoldSpentOnConsumables(playerID),
+				goldSpentItems = PlayerResource:GetGoldSpentOnItems(playerID),
+				goldSpentSupport = PlayerResource:GetGoldSpentOnSupport(playerID),
+				numPurchasedConsumables = PlayerResource:GetNumConsumablesPurchased(playerID),
+				numPurchasedItems = PlayerResource:GetNumItemsPurchased(playerID),
+				totalEarnedGold = PlayerResource:GetTotalEarnedGold(playerID),
+				totalEarnedXP = PlayerResource:GetTotalEarnedXP(playerID)
             }
         end
 
@@ -154,7 +176,7 @@ function getPlayerSnapshot(playerID)
 
         -- Attempt to find their slotID
         local slotID
-        for i = 0, maxPlayers do
+        for i = 0, maxPlayers-1 do
             if PlayerResource:GetNthPlayerIDOnTeam(teamID, i) == playerID then
                 slotID = i
                 break
@@ -169,7 +191,8 @@ function getPlayerSnapshot(playerID)
             steamID32 = PlayerResource:GetSteamAccountID(playerID),
             hero = heroData,
             items = itemData,
-            abilities = abilityData
+            abilities = abilityData,
+            leaverStatus = PlayerResource:GetConnectionState(playerID),
         }
     end
 
@@ -205,6 +228,9 @@ function sendStats(extraFields)
     -- Build common stats
     addStatsSafe('duration', GameRules:GetGameTime())
 
+    -- Attempt to add the winner
+    addStatsSafe('winner', findWinnerUsingForts())
+
     -- Build player array
     local playersData = {}
     for i = 0, maxPlayers - 1 do
@@ -221,6 +247,9 @@ function sendStats(extraFields)
         players = playersData
     })
 
+    -- Store if this is a dedi server or not
+    addStatsSafe('dedicated', IsDedicatedServer())
+
     -- Tell the user the stats are being sent
     print('Sending stats...')
 
@@ -229,9 +258,12 @@ function sendStats(extraFields)
 
     -- Grab useful info to make a 'unique' hash
     local currentTime = GetSystemTime()
-    local ip = Convars:GetStr('hostip')
+    local ip = intToIP(Convars:GetStr('hostip'))
     local port = Convars:GetStr('hostport')
     local randomness = RandomFloat(0, 1) .. '/' .. RandomFloat(0, 1) .. '/' .. RandomFloat(0, 1) .. '/' .. RandomFloat(0, 1) .. '/' .. RandomFloat(0, 1)
+
+    -- Add server address
+    addStatsSafe('serverAddress', ip..':'..port)
 
     -- Setup the string to be hashed
     local toHash = ip .. ':' .. port .. ' @ ' .. currentTime .. ' + ' .. randomness .. ' + '
@@ -263,4 +295,100 @@ function sendStats(extraFields)
 
     -- Tell the client the message is over
     FireGameEvent("stat_collection_send", {})
+end
+
+-- Sexy function to convert an integer to an IP
+function intToIP(int)
+    local ip
+
+    for j=0,3 do
+        local useful = bit.rshift(int, j*8)
+
+        local ipPart = 0
+        for i=0,7 do
+            ipPart = ipPart + bit.band(useful, bit.lshift(1, i))
+        end
+
+        if not ip then
+            ip = ipPart
+        else
+            ip = ipPart..'.'..ip
+        end
+    end
+
+    return ip
+end
+
+-- This function is called to prevent stats from being auto sent
+function disableAutoSend()
+    autoSendStats = false
+end
+
+-- This function attempts to detect the winner based on the status for forts
+-- If no forts are found, 0 is returned, if more than one fort is found, -1 is returned
+function findWinnerUsingForts()
+    local winners = 0
+
+    local forts = Entities:FindAllByClassname('npc_dota_fort')
+    for k,v in pairs(forts) do
+        -- Check it's HP level
+        if v:GetHealth() > 0 then
+            local team = v:GetTeam()
+
+            if winners == 0 then
+                winners = team
+            else
+                winners = -1
+            end
+        end
+    end
+
+    -- Return our estimate
+    return winners
+end
+
+-- Auto hook sending stats
+local states = {}
+local autoSent = false
+ListenToGameEvent('game_rules_state_change', function(keys)
+    local state = GameRules:State_Get()
+
+    -- Add to our states
+    table.insert(states, {
+        state = state,
+        time = Time()
+    })
+
+    -- Update our stats
+    addStats({
+        states = states
+    })
+
+    -- Check if the game is over
+    if autoSendStats and state >= DOTA_GAMERULES_STATE_POST_GAME and not autoSent then
+        -- We have now auto sent stats
+        autoSent = true
+
+        -- Send the stats
+        sendStats()
+    end
+end, nil)
+
+-- Hook winner function
+local oldSetGameWinner = GameRules.SetGameWinner
+GameRules.SetGameWinner = function(gameRules, team)
+    -- Store the stats
+    addStatsSafe('winner', team)
+
+    -- Run the rael setGameWinner function
+    oldSetGameWinner(gameRules, team)
+
+    -- Report stats if the user wants us to
+    if autoSendStats and not autoSent then
+        -- We have now auto sent stats
+        autoSent = true
+
+        -- Send the stats
+        sendStats()
+    end
 end
