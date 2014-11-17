@@ -1630,7 +1630,7 @@
                   "particle_folder"       "particles/basic_trail"
                   "particle_folder"       "particles/pw"
                   "soundfile"             "soundevents/game_sounds_custom.vsndevts"
-                  "soundfile"             "soundevents/game_sounds_stingers_diretide.vsndevts""
+                  "soundfile"             "soundevents/game_sounds_stingers_diretide.vsndevts"
 		}
 	}
 
@@ -1642,21 +1642,12 @@
 	{
 		// General
 		//----------------------------------------------------------------
-		"Model"						 	"models\heroes\rattletrap\rattletrap_cog.vmdl"	// Model.
-		"BaseClass"					      "npc_dota_creep"
-		"SoundSet"					       "0"			// Name of sound set.
+            "BaseClass"                               "npc_dota_creature"
+		"Model"						 	"models/heroes/rattletrap/rattletrap_cog.vmdl"	// Model.
+		"SoundSet"					       "Hero_Rattletrap"			// Name of sound set.
 		"Level"						"1"
 		"ModelScale"				".75"
-		"SelectionGroup"			"Mines"
-
-            // Precache
-            //-------------------------------------------------------------------------------------------------------------
-            "precache"
-            {
-                  
-            }
-            
-
+		"SelectionGroup"			"Mines"  
 
 		// Abilities
 		//----------------------------------------------------------------
