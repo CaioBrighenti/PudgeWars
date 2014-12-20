@@ -4,7 +4,7 @@
 	{
 		"update_stack"
 		{
-			"update_operator"
+			"reference_operator"
 			{
 				"operator"		"sos_reference_stack"
 				"reference_stack"		"src1_3d"
