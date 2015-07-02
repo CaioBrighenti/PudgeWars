@@ -1,6 +1,6 @@
 print ('[PUDGEWARS] pudgewars.lua' )
 
-USE_LOBBY=true
+USE_LOBBY=false
 THINK_TIME = 0.01
 
 STARTING_GOLD = 0
@@ -111,6 +111,7 @@ function PudgeWarsMode:InitGameMode()
   ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap( PudgeWarsMode, 'OnLevelUp'), self)
   ListenToGameEvent('player_info_updated', Dynamic_Wrap( PudgeWarsMode, 'OnInventoryChange'), self)
   ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(PudgeWarsMode, 'OnGameRulesStateChange'), self)
+  ListenToGameEvent('player_stats_updated', Dynamic_Wrap(PudgeWarsMode, 'OnPlayerStatsUpdated'), self)
 
   -- Change random seed
   local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
@@ -151,10 +152,10 @@ function PudgeWarsMode:InitGameMode()
   PudgeWarsMode:SpawnFuntainDummy()
   PudgeWarsMode:InitScaleForm()
 
-  print('[PUDGEWARS] Starting stats')
-  statcollection.addStats({
-    modID = '8a404b7c81ab60ec9bc9298e9b76b251'
-  })
+ -- print('[PUDGEWARS] Starting stats')
+ -- statcollection.addStats({
+ --   modID = '8a404b7c81ab60ec9bc9298e9b76b251'
+ -- })
 
   print('[PUDGEWARS] values set')
 
@@ -235,23 +236,36 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 end
 
 function PudgeWarsMode:AbilityUsed(keys)
-    --Do nothing here for now...
+  local playerID = keys.PlayerID
+  local abilityName = keys.abilityname
+  local hero = PudgeArray[playerID].pudgeunit
+  if abilityName == "item_tome_of_health" then
+    local modifier_item = CreateItem("item_health_tome_modifiers", hero, hero) 
+    modifier_item:ApplyDataDrivenModifier(hero, hero, "modifier_health_tome", { duration = -1 }) 
+  end
+  if abilityName == "item_tome_of_damage" then
+    PudgeArray[playerID].damagetomes = PudgeArray[playerID].damagetomes + 1
+  end
+end
+
+function PudgeWarsMode:OnPlayerStatsUpdated(keys)
+  print('yo')
 end
 
 -- Cleanup a player when they leave
 function PudgeWarsMode:CleanupPlayer(keys)
     print('[PUDGEWARS] Player Disconnected ' .. tostring(keys.userid))
-    local ply = self.vUserIds[keys.userid]
-    if ply then
-        local pudge = PudgeArray[ ply:GetPlayerID() ].pudgeunit
-        PudgeArray[ply:GetPlayerID()].pos_before_dc = pudge:GetAbsOrigin()
-	if pudge:GetTeam() == 2 then
-            pudge:SetOrigin(Vector(-2368, 2368, 0))
-	else 
-	    pudge:SetOrigin(Vector(2368, -2368, 0))
-	end
-        pudge:AddNewModifier(pudge, nil, 'modifier_stunned', {})
-    end
+--    local ply = self.vUserIds[keys.userid]
+--    if ply then
+--        local pudge = PudgeArray[ ply:GetPlayerID() ].pudgeunit
+--        PudgeArray[ply:GetPlayerID()].pos_before_dc = pudge:GetAbsOrigin()
+--	if pudge:GetTeam() == 2 then
+--            pudge:SetOrigin(Vector(-2368, 2368, 0))
+--	else 
+--	    pudge:SetOrigin(Vector(2368, -2368, 0))
+--	end
+--        pudge:AddNewModifier(pudge, nil, 'modifier_stunned', {})
+--    end
 end
 
 function PudgeWarsMode:CloseServer()
@@ -270,25 +284,25 @@ function PudgeWarsMode:OnDamageTaken( keys )
         
     elseif string.find(unit:GetUnitName(),"dummy_rune_haste") then
         PudgeWarsMode:RuneHooked(unit,caster,1)
-        unit:RemoveSelf()
+     --   unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(),"dummy_rune_gold") then
         PudgeWarsMode:RuneHooked(unit,caster,2)
-        unit:RemoveSelf()
+     --   unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(),"dummy_rune_ion") then
         PudgeWarsMode:RuneHooked(unit,caster,3)
-        unit:RemoveSelf()
+       -- unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(),"dummy_rune_fire") then 
         PudgeWarsMode:RuneHooked(unit,caster,4)
-        unit:RemoveSelf()
+        --unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(), "dummy_rune_dynamite") then
         PudgeWarsMode:RuneHooked(unit, caster,5)
-        unit:RemoveSelf()
+        --unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(), "dummy_rune_lightning") then
     	PudgeWarsMode:RuneHooked(unit, caster, 6)
-    	unit:RemoveSelf()
+    	--unit:RemoveSelf()
     elseif string.find(unit:GetUnitName(), "npc_dummy_rune_diretide") then
       PudgeWarsMode:RuneHooked(unit, caster, 7)
-      unit:RemoveSelf()
+      --unit:RemoveSelf()
     else 
         --Check if caster has barathrums level 5 and roll bash chance
         for i=0,5 do
@@ -411,6 +425,7 @@ function PudgeWarsMode:OnNPCSpawned( keys )
     local spawnedUnit = EntIndexToHScript( keys.entindex )
     if spawnedUnit:GetUnitName() == "npc_vision_dummy" then
         spawnedUnit:AddNewModifier( spawnedUnit, nil, "modifier_tower_truesight_aura", { duration = 30   } )
+        spawnedUnit:AddNewModifier( spawnedUnit, nil, "modifier_invisible", {}  )
     elseif string.find(spawnedUnit:GetUnitName(), "npc_dota_mine") then
       spawnedUnit:AddAbility('vision_dummy_passive')
       local spawnedUnitPassive = spawnedUnit:FindAbilityByName('vision_dummy_passive')
@@ -497,7 +512,7 @@ function PudgeWarsMode:PlayerSay(keys)
 end
 
 function PudgeWarsMode:AutoAssignPlayer(keys)
-  print ('[PUDGEWARS] AutoAssignPlayer')
+  print ('[PUDGEWARS] AutoAssignPlayer FIXED')
   PudgeWarsMode:CaptureGameMode()
 
   
@@ -522,23 +537,23 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
 
   print("4")
   playerID = ply:GetPlayerID()
-  -- Figure out if this player is just reconnecting after a disconnect
-  if self.vPlayers[playerID] ~= nil then
-    self.vUserIds[keys.userid] = ply
-    local pudge = PudgeArray[ply:GetPlayerID()].pudgeunit
-    pudge:SetAbsOrigin(PudgeArray[ply:GetPlayerID()].pos_before_dc)
-    pudge:RemoveModifierByName('modifier_stunned')
-    return
-  end
+ -- -- Figure out if this player is just reconnecting after a disconnect
+ -- if self.vPlayers[playerID] ~= nil then
+ --   self.vUserIds[keys.userid] = ply
+ --   local pudge = PudgeArray[ply:GetPlayerID()].pudgeunit
+ --   pudge:SetAbsOrigin(PudgeArray[ply:GetPlayerID()].pos_before_dc)
+ --   pudge:RemoveModifierByName('modifier_stunned')
+ --   return
+ -- end
   print("5")
   -- If we're not on D2MODD.in, assign players round robin to teams
   if not USE_LOBBY and playerID == -1 then
     if #self.vRadiant > #self.vDire then
-      ply:SetTeam(DOTA_TEAM_BADGUYS)
+     -- ply:SetTeam(DOTA_TEAM_BADGUYS)
       --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
       table.insert (self.vDire, ply)
     else
-      ply:SetTeam(DOTA_TEAM_GOODGUYS)
+     -- ply:SetTeam(DOTA_TEAM_GOODGUYS)
       --ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
       table.insert (self.vRadiant, ply)
     end
@@ -564,13 +579,23 @@ function PudgeWarsMode:OnItemPurchased( keys )
         if item then
             if item:GetAbilityName() == itemname then
                 local itempurchased = item
+                if itemname == "item_tome_of_damage" then
+                  if PudgeArray[playerID].damagetomes >= 10 then
+                    local cost  = itempurchased:GetCost()
+                    if itempurchased:GetCurrentCharges() == 1 then
+                      UTIL_RemoveImmediate(itempurchased)
+                    else
+                      itempurchased:SetCurrentCharges(itempurchased:GetCurrentCharges() - 1)
+                    end
+                    hero:ModifyGold(cost, true, 1)
+                  end
+                end
                 if itemname == 'item_lycan_paw' or itemname == 'item_naix_jaw' or itemname == 'item_grappling_hook' or itemname == 'item_tiny_arm' or itemname == 'item_barathrum_lantern' or itemname == 'item_techies_explosive_barrel' or itemname == 'item_strygwyr_claw' or itemname == 'item_ricochet_turbine' or itemname == 'item_pudgewars_earthshaker_totem' then
                     PudgeWarsMode:UpgradeItem(itemname,item,itempurchased,hero)
                 end
             end
         end
     end
-  
 end
 
 
@@ -583,18 +608,18 @@ function PudgeWarsMode:Think()
         plyCount = plyCount + 1
       end
     end
-    statcollection.addStats({
-      player_count = plyCount
-      })
-    statcollection.addStats({
-      modes = {"first_to_" .. PudgeWarsMode.kills_to_win}
-      })
-    print("[PUDGEWARS] SENDING STATS")
+  --  statcollection.addStats({
+  --    player_count = plyCount
+  --    })
+  --  statcollection.addStats({
+  --    modes = {"first_to_" .. PudgeWarsMode.kills_to_win}
+  --    })
+  --  print("[PUDGEWARS] SENDING STATS")
     --send stats - Stats get sent automatically now
     --statcollection.sendStats()
     return
   end
-            
+    
 
   -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
   local now = GameRules:GetGameTime()

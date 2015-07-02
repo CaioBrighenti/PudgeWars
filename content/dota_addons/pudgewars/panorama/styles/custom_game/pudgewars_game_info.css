@@ -1,0 +1,163 @@
+.OverthrowGameInfo
+{
+    width:100%;
+    flow-children: down;
+}
+ 
+Label
+{
+    font-size: 18px;
+    color: #999999;
+    vertical-align: top;
+}
+ 
+#Title
+{
+    flow-children: right;
+}
+
+#TitleIcon
+{
+    width: 64px;
+    height: 64px;
+    vertical-align: center;
+}
+
+#TitleName
+{
+    color: #cccccc;
+    font-size: 64px;
+    margin-left: 16px;
+    margin-top: 16px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    vertical-align: center;
+}
+
+#BriefDescription
+{
+    text-align: left;
+    margin-bottom: 20px;
+    width: 85%;
+
+}
+
+#ThroneText,
+#CoinsText,
+#ItemsText
+{
+    width: 50%;
+}
+
+.Header
+{
+	font-size: 18px;
+    font-weight: bold;
+	margin-top: 36px;
+	text-transform: uppercase;
+}
+
+#ObjectiveHeader
+{
+	margin-top: 18px;
+}
+
+#ThroneRow
+{
+    margin-top: -40px;
+}
+
+#ThroneText
+{
+    margin-top: 40px;
+	text-align: right;
+}
+
+#ThroneImage
+{
+    margin-top: -20px;
+    margin-left: -75px;
+    width: 323px;
+    height: 212px;
+}
+
+#CoinsRow
+{
+    margin-top: -100px;
+}
+
+#CoinsImage
+{
+    margin-top: 40px;
+    margin-left: -15px;
+    margin-right: 10px;
+    width: 120px;
+    height: 128px;
+}
+
+#CoinsText
+{
+    margin-top: 100px;
+    margin-left: 5px;
+}
+
+#ItemsRow
+{
+    margin-top: 0px;
+}
+
+#ItemsImage
+{
+    width: 94.15px;
+    height: 208.6px;
+    margin-left: 40px;
+    margin-top: -25px;
+}
+
+#ItemsText
+{
+    margin-top: 90px;
+    margin-left: 80px;
+	text-align: right;
+}
+
+#TipsHeader
+{
+	margin-top: 35px;
+}
+
+#TipsRow
+{
+	flow-children: down;
+	margin-right: 92px;
+	margin-top: 18px;
+}
+
+.TipText
+{
+	margin-left: 16px;
+    margin-top: 0px;
+}
+
+.InfoRow
+{
+    flow-children: right;
+    width: 100%;
+}
+
+
+Label .midas_throne,
+Label .overboss,
+Label .treasure
+{
+    color: #cccccc;
+    font-weight: bold;
+}
+
+Label .items,
+Label .gold,
+Label .xp
+{
+    color: #fcaf3d;
+    font-weight: bold;
+}

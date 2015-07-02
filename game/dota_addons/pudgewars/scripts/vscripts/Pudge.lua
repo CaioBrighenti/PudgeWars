@@ -26,6 +26,7 @@ function PudgeClass.create(playerId)
   pudge.is_throwing_hook = false
   pudge.pos_before_dc = nil
   pudge.has_max_level_timer = false
+  pudge.damagetomes = 0
   --ENUMS
   pudge.grappleint = 0
   pudge.tinysarmint = 1

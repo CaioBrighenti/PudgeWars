@@ -18,7 +18,9 @@ function PudgeWarsMode:UpdateUpgradePoints( unit )
         end
         unit:AddAbility('pudge_wars_upgrade_points_' .. PudgeArray[unit:GetPlayerOwnerID()].upgradePoints)
         local upgradeSkill = unit:FindAbilityByName('pudge_wars_upgrade_points_' .. PudgeArray[unit:GetPlayerOwnerID()].upgradePoints)
-        upgradeSkill:SetLevel(1)
+        if upgradeSkill then
+            upgradeSkill:SetLevel(1)
+        end
     end
 end
 
@@ -267,9 +269,9 @@ function PudgeWarsMode:StartVoting()
 	end
     })
 
-    for key,ply in pairs(PudgeArray) do 
-	ply.pudgeunit:AddNewModifier(ply.pudgeunit,nil,"modifier_stunned", {})
-    end
+    --for key,ply in pairs(PudgeArray) do 
+	--ply.pudgeunit:AddNewModifier(ply.pudgeunit,nil,"modifier_stunned", {})
+    --end
     
     --wait two seconds to let stuff get ready..
     PudgeWarsMode:CreateTimer(DoUniqueString("waitforsf"), {
@@ -284,7 +286,7 @@ function PudgeWarsMode:StartVoting()
 	    print("Fired startWinVote")
 
 	    for key,ply in pairs(PudgeArray) do 
-		ply.pudgeunit:AddNewModifier(ply.pudgeunit,nil,"modifier_stunned", {})
+		--ply.pudgeunit:AddNewModifier(ply.pudgeunit,nil,"modifier_stunned", {})
 		local pudge = ply.pudgeunit
 		--Assign modelName if it hasnt been done to stop model bug.
 		if PudgeArray[pudge:GetPlayerOwnerID()].modelName == "" then

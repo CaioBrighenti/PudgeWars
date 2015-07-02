@@ -44,6 +44,7 @@ function PudgeWarsMode:RuneHooked(unit,caster,rune_type)
             endTime = GameRules:GetGameTime(),
 	        useGameTime = true,
             callback = function(reflex, args)
+                _G.shield_carrier = caster
                 local center_vec = _G.shield_carrier:GetAbsOrigin()
                 local units = Entities:FindAllInSphere(center_vec, 400)
                 for k,v in pairs(units) do
@@ -205,7 +206,7 @@ function PudgeWarsMode:RuneHookedParticle(unit)
 end
 
 function PudgeWarsMode:SpawnRune()
-    local rune_type = RandomInt(1,6)
+    local rune_type = RandomInt(1,5)
     if rune_type==1 then   
         local rune = CreateUnitByName( "npc_dummy_rune_haste", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
         rune:AddNewModifier(rune,nil,"modifier_phased", {})

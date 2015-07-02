@@ -11,6 +11,33 @@
 		}
 	}
 
+	"item_health_tome_modifiers"
+	{
+   		// General
+   		//-------------------------------------------------------------------------------------------------------------
+   		"ID"                            "1132"  // unique ID number for this item.  Do not change this once 
+   		"BaseClass"                     "item_datadriven"
+   		"ItemBaseLevel"                 "1"
+		   		// Stats
+   		//-------------------------------------------------------------------------------------------------------------
+   		"AbilityCastRange"              "9999"
+   		"AbilityCastPoint"                      "0.0"    
+
+   		"Modifiers"
+    	{
+             "modifier_health_tome"
+             {
+                "Passive"               "1"
+                "IsHidden"				"1"
+                "Attributes"       "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT" 
+                "Properties"
+                {
+                         "MODIFIER_PROPERTY_HEALTH_BONUS" 			"100"
+                }
+             }
+        }   
+
+	}
 
 	//=================================================================================================================
 	// Deal Damage
@@ -234,7 +261,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2000"
+		"ItemCost"						"200"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemStackable"					"1"
@@ -249,7 +276,7 @@
 			{
 				"ScriptFile"			"scripts/vscripts/abilities.lua"
 				"Function"				"WisdomTomeUsed"
-				"Target"				"TARGET"
+				"Target"				"CASTER"
 				"Caster"				"CASTER"
 			}
 			"SpendCharge"
@@ -270,7 +297,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2000"
+		"ItemCost"						"150"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemStackable"					"1"
@@ -285,11 +312,9 @@
 			{
 				"ScriptFile"			"scripts/vscripts/abilities.lua"
 				"Function"				"DamageTomeUsed"
-				"Target"				"TARGET"
+				"Target"				"CASTER"
 				"Caster"				"CASTER"
 			}
-			"SpendCharge"
-			{}
 		}
 
 	}
@@ -306,7 +331,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"2000"
+		"ItemCost"						"125"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemStackable"					"1"
@@ -321,7 +346,7 @@
 			{
 				"ScriptFile"			"scripts/vscripts/abilities.lua"
 				"Function"				"HealthTomeUsed"
-				"Target"				"TARGET"
+				"Target"				"CASTER"
 				"Caster"				"CASTER"
 			}
 			"SpendCharge"
@@ -354,7 +379,7 @@
 		
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"100"
+		"ItemCost"						"75"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemStackable"					"1"
@@ -442,7 +467,7 @@
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityManaCost"							"0"
-		"ItemCost"						"150"
+		"ItemCost"						"50"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
 		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
@@ -502,7 +527,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"90"
+		"ItemCost"						"40"
 		"ItemStackable"					"1"
 		"ItemInitialCharges"			"1"
 		"ItemQuality"					"common"
@@ -538,7 +563,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"242"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"1129"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 
 		"BaseClass"						"item_datadriven"
@@ -564,7 +589,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"600"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -641,7 +666,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"600"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -718,7 +743,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"600"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -795,7 +820,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"600"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -872,7 +897,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"600"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
@@ -974,7 +999,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"450"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -998,7 +1023,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"450"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1020,7 +1045,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"450"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1042,7 +1067,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"450"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1064,7 +1089,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"450"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1099,7 +1124,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"246"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"1131"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
 
 		"BaseClass"						"item_datadriven"
@@ -1122,7 +1147,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"400"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1175,7 +1200,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"400"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1228,7 +1253,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"400"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1281,7 +1306,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"400"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1334,7 +1359,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"400"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1375,7 +1400,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1397,7 +1422,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1420,7 +1445,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1443,7 +1468,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1466,7 +1491,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1486,7 +1511,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"248"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"1128"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
@@ -1495,7 +1520,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
+		"ItemCost"						"500"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
 		"SideShop"						"1"
@@ -1548,7 +1573,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"180"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -1614,7 +1639,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"180"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -1680,7 +1705,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"180"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -1746,7 +1771,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"180"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -1822,7 +1847,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"350"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1844,7 +1869,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"350"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1865,7 +1890,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"350"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1886,7 +1911,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"350"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1907,7 +1932,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"750"
+		"ItemCost"						"350"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1923,7 +1948,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"249"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"1130"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
@@ -1932,7 +1957,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1954,7 +1979,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1976,7 +2001,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -1998,7 +2023,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -2020,7 +2045,7 @@
 
 		 // Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"800"
+		"ItemCost"						"650"
 		"ItemQuality"					"common"
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
@@ -2047,7 +2072,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
+		"ItemCost"						"200"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2099,7 +2124,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
+		"ItemCost"						"200"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2151,7 +2176,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
+		"ItemCost"						"200"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2203,7 +2228,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
+		"ItemCost"						"200"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2255,7 +2280,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
+		"ItemCost"						"200"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2310,7 +2335,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"700"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2358,7 +2383,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"700"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2405,7 +2430,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"700"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2452,7 +2477,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"700"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
@@ -2499,7 +2524,7 @@
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"700"
+		"ItemCost"						"500"
 		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"

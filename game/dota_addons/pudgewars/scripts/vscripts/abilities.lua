@@ -2,20 +2,30 @@ print("[ABILITIES] abilities loading")
 -- A helper function for dealing damage from a source unit to a target unit.  Damage dealt is pure damage
 function dealDamage(source, target, damage)
     if damage <= 0 or source == nil or target == nil then
-	return
+	   return
     end
-    local dmgTable = {8192,4096,2048,1024,512,256,128,64,32,16,8,4,2,1}
-    local item = CreateItem( "item_deal_damage", source, source) --creates an item
-    for i=1,#dmgTable do
-	local val = dmgTable[i]
-	local count = math.floor(damage / val)
-	if count >= 1 then
-	    item:ApplyDataDrivenModifier( source, target, "dealDamage" .. val, {duration=0} )
-	    damage = damage - val
-	end
-    end
-    UTIL_RemoveImmediate(item)
-    item = nil
+
+    --local dmgTable = {8192,4096,2048,1024,512,256,128,64,32,16,8,4,2,1}
+    --local item = CreateItem( "item_deal_damage", source, source) --creates an item
+    --
+    --for i=1,#dmgTable do
+	--   local val = dmgTable[i]
+	--   local count = math.floor(damage / val)
+	--   if count >= 1 then
+	--       item:ApplyDataDrivenModifier( source, target, "dealDamage" .. val, {duration=0} )
+	--       damage = damage - val
+	--   end
+    --end
+    --UTIL_RemoveImmediate(item)
+    --item = nil
+    local damageTable = {
+        victim = target,
+        attacker = source,
+        damage = damage,
+        damage_type = DAMAGE_TYPE_PURE,
+    }
+ 
+    ApplyDamage(damageTable)
 end
 
 function castSpell(source, target, spell, spell_level, time_out)
@@ -96,7 +106,9 @@ function castInstantSpell(caster, spell, spell_level, time_out)
     useGameTime = true,
     callback = function(reflex, args)
 	--Cast ability on target, wait time_out seconds and check if spell was scuccesfull
-	caster:CastAbilityImmediately(ability, 0)
+    if ability then
+        caster:CastAbilityImmediately(ability, 0)
+    end
 
 	  PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
 	    endTime = GameRules:GetGameTime() + time_out,
@@ -185,33 +197,47 @@ end
 function WisdomTomeUsed( keys )
     local casterUnit = keys.caster
     local casterLevel = casterUnit:GetLevel()
-    casterUnit:AddExperience(_G.XP_PER_LEVEL_TABLE[casterLevel + 1] - _G.XP_PER_LEVEL_TABLE[casterLevel], false)
+    casterUnit:AddExperience(_G.XP_PER_LEVEL_TABLE[casterLevel + 1] - _G.XP_PER_LEVEL_TABLE[casterLevel], false, false)
 end
 
 function DamageTomeUsed( keys )
     local casterUnit = keys.caster
     local casterLevel = casterUnit:GetLevel()
-    local minDamage = casterUnit:GetBaseDamageMin()
-    local maxDamage = casterUnit:GetBaseDamageMax()
-    casterUnit:SetBaseDamageMin( minDamage )
-    casterUnit:SetBaseDamageMax( maxDamage )
-    local newMinDamage = casterUnit:GetBaseDamageMin()
-    local newMaxDamage = casterUnit:GetBaseDamageMax()
-    local damageDiff = newMinDamage - minDamage
-    casterUnit:SetBaseDamageMin( newMinDamage - 2 * damageDiff )
-    casterUnit:SetBaseDamageMax( newMaxDamage - 2 * damageDiff )
-    local newNewMinDamage = casterUnit:GetBaseDamageMin()
-    local newNewMaxDamage = casterUnit:GetBaseDamageMax()
-    casterUnit:SetBaseDamageMin( newNewMinDamage - (damageDiff - 25))
-    casterUnit:SetBaseDamageMax( newNewMaxDamage - (damageDiff - 25))
+    local playerID = casterUnit:GetPlayerOwnerID()
+
+    if PudgeArray[playerID].damagetomes < 11 then
+        local minDamage = casterUnit:GetBaseDamageMin()
+        local maxDamage = casterUnit:GetBaseDamageMax()
+        casterUnit:SetBaseDamageMin( minDamage )
+        casterUnit:SetBaseDamageMax( maxDamage )
+        local newMinDamage = casterUnit:GetBaseDamageMin()
+        local newMaxDamage = casterUnit:GetBaseDamageMax()
+        local damageDiff = newMinDamage - minDamage
+        casterUnit:SetBaseDamageMin( newMinDamage - 2 * damageDiff )
+        casterUnit:SetBaseDamageMax( newMaxDamage - 2 * damageDiff )
+        local newNewMinDamage = casterUnit:GetBaseDamageMin()
+        local newNewMaxDamage = casterUnit:GetBaseDamageMax()
+        casterUnit:SetBaseDamageMin( newNewMinDamage - (damageDiff - 25))
+        casterUnit:SetBaseDamageMax( newNewMaxDamage - (damageDiff - 25))
+
+        for i=0,5 do
+            local item = casterUnit:GetItemInSlot(i)
+            if item then
+            if item:GetAbilityName() == 'item_tome_of_damage' then
+                if item:GetCurrentCharges() == 1 then
+                    UTIL_RemoveImmediate(item)
+                else
+                    item:SetCurrentCharges(item:GetCurrentCharges() - 1)
+                end
+            end
+            end
+        end
+    end
 
 end
 
 function HealthTomeUsed( keys )
-    local casterUnit = keys.caster
-    local casterLevel = casterUnit:GetLevel()
-    casterUnit:SetMaxHealth( casterUnit:GetMaxHealth() + 100 )
-    casterUnit:SetHealth(casterUnit:GetHealth() + 100)
+
 end
 
 function SpawnBarrier( keys )

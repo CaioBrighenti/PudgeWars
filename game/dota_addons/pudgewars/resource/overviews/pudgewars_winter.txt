@@ -1,0 +1,8 @@
+pudgewars_winter
+{
+	material materials/overviews/pudgewars_winter.vmat
+	pos_x -2047
+	pos_y 2048
+	scale 3.999
+}
+

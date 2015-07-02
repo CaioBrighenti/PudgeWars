@@ -1,0 +1,10 @@
+<root>
+	<script>
+	</script>
+	<Panel>
+		<CustomUIElement type="GameInfo" 			layoutfile="file://{resources}/layout/custom_game/pudgewars_game_info.xml" />
+		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/pudgewars_tutorial.xml" />
+	</Panel>
+</root>
+
+

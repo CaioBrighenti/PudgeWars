@@ -1,0 +1,41 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/pudgewars_tutorial.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/pudgewars_tutorial.js" />
+	</scripts>
+	<Panel hittest="false" class="PudgeWarsTutorialMain">
+		<Panel hittest="false" class="PudgeWarsTutorialButton">
+			<Button id="ToggleTutorialButton" onactivate="OnToggleTutorialButton()">
+				<Label id="ToggleTutorialButtonLabel" class="TitleFont" text="Info UI" />
+			</Button>
+		</Panel>
+
+		<Panel hittest="false" class="PudgeWarsTutorial">
+			<Label id="PudgeWarsLabel" class="TitleFont" text="Find your upgrades here!" />
+		</Panel>
+		<Image id="ArrowImage" src="file://{images}/custom_game/spectate_heroselection_iee.png" />
+
+		<Panel hittest="false" class="PudgeWarsTutorialPoints">
+			<Label id="PudgeWarsLabelPoints" class="TitleFont" text="Your upgrade points are here!" />
+		</Panel>
+		<Image id="ArrowImagePoints" src="file://{images}/custom_game/spectate_heroselection_iee_left.png" />
+
+		<Panel hittest="false" class="PudgeWarsTutorialShop">
+			<Label id="PudgeWarsLabelShop" class="TitleFont" text="Purchase items in the shop here!" />
+		</Panel>
+		<Image id="ArrowImageShop" src="file://{images}/custom_game/spectate_heroselection_iee_bottom_right.png" />
+
+		<Panel hittest="false" class="PudgeWarsTutorialToggle">
+			<Label id="PudgeWarsLabelToggle" class="TitleFont" text="Toggle the informational UI here!" />
+		</Panel>
+		<Image id="ArrowImageToggle" src="file://{images}/custom_game/spectate_heroselection_iee_up.png" />
+
+		<Panel hittest="false" class="PudgeWarsTutorialGameinfo">
+			<Label id="PudgeWarsLabelGameinfo" class="TitleFont" text="Find the Game Info panel here!" />
+		</Panel>
+		<Image id="ArrowImageGameinfo" src="file://{images}/custom_game/spectate_heroselection_iee_left.png" />
+
+	</Panel>	
+</root>
