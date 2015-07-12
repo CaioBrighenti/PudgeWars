@@ -252,7 +252,6 @@ end
 function OnTinyArm( keys )
     local casterUnit = keys.caster
     local point = keys.target_points[1]
-    local targetUnit = CreateUnitByName("npc_tiny_arm_dummy", point, false, nil, nil, casterUnit:GetTeam()) 
     local hasLevel5 = casterUnit:HasItemInInventory("item_tiny_arm_5")
     
     if point.x < -1440 or point.x > 1440 then
@@ -265,10 +264,32 @@ function OnTinyArm( keys )
 	return
     end
 
-    --give them the abilit
+    -- don't go on cooldown if there aren't any units
+    local entities = Entities:FindAllInSphere(casterUnit:GetAbsOrigin(), 250)
+    local count = 0
+    for k,v in pairs(entities) do
+        if string.find(v:GetClassname(), "pudge") or string.find(v:GetClassname(), "creep") then
+            print(v:GetUnitName())
+            if string.find(v:GetUnitName(), "pudge") or string.find(v:GetUnitName(), "mine") then 
+                count = count + 1
+            end
+        end
+    end
+    if count <= 1 then
+        for i=0,5 do
+            local item = casterUnit:GetItemInSlot(i)
+            if item and IsValidEntity(item) and string.find(item:GetAbilityName(), "item_tiny") then
+                item:EndCooldown()
+            end
+        end
+        return
+    end
+
+    --give them the ability and spawn dummy
     casterUnit:AddAbility("tiny_arm")
     local abil = casterUnit:FindAbilityByName("tiny_arm")
     abil:SetLevel(4)
+    local targetUnit = CreateUnitByName("npc_tiny_arm_dummy", point, false, nil, nil, casterUnit:GetTeam()) 
 
     --start timer to remove ability
     PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {

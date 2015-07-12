@@ -1642,7 +1642,7 @@
 	{
 		// General
 		//----------------------------------------------------------------
-            "BaseClass"                               "npc_dota_creature"
+            "BaseClass"                               "npc_dota_creep"
 		"Model"						 	"models/heroes/rattletrap/rattletrap_cog.vmdl"	// Model.
 		"SoundSet"					       "Hero_Rattletrap"			// Name of sound set.
 		"Level"						"1"

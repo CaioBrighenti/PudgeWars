@@ -316,7 +316,7 @@ function Physics:Unit(unit)
       unit.vLastVelocity = unit.vVelocity
       
       if unit.bPreventDI and not unit:HasModifier("modifier_rooted") then
-        unit:AddNewModifier(unit, nil, "modifier_rooted", {})
+        --unit:AddNewModifier(unit, nil, "modifier_rooted", {})
       end
       
       if unit.bSlide then

@@ -112,7 +112,7 @@ function findEntity(entities, vars_table, forward, bounces)
         if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((_G.shield_carrier == nil) or (_G.shield_carrier ~= v)) then        
           vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact')        
           vars_table[2] = true
-          if v:HasModifier("modifier_rooted") and (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
+          if v:HasModifier("modifier_pudge_meat_hook") and (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
             --HEADSHOT
             dealDamage(vars_table[1], v, 9000) 
             EmitGlobalSound( "Pudgewars.Headshot" )
@@ -122,7 +122,7 @@ function findEntity(entities, vars_table, forward, bounces)
             local headshotPos = v:GetOrigin()
             ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
             ScreenShake( v:GetOrigin(), 100, 100, 1, 9999, 0, true)       
-          elseif v:HasModifier("modifier_rooted") and (vars_table[1]:GetTeamNumber() == v:GetTeamNumber()) then
+          elseif v:HasModifier("modifier_pudge_meat_hook") and (vars_table[1]:GetTeamNumber() == v:GetTeamNumber()) then
             --DENY
             dealDamage(vars_table[1], v, 9000) 
             EmitGlobalSound( "Pudgewars.Headshot" ) -- change to DENY SOUND 
@@ -164,7 +164,7 @@ function findEntity(entities, vars_table, forward, bounces)
 		end
 	      end
                                 
-            v:AddNewModifier(vars_table[1], nil, "modifier_rooted", {})
+            --v:AddNewModifier(vars_table[1], nil, "modifier_rooted", {})
             v:AddNewModifier(vars_table[1], nil, "modifier_pudge_meat_hook", {})
             if (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
               dealDamage(vars_table[1], v, hookdamage)
@@ -219,7 +219,7 @@ function findEntity(entities, vars_table, forward, bounces)
           vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact')  
           vars_table[2] = true
           vars_table[0] = v
-          v:AddNewModifier(vars_table[1], nil, "modifier_rooted", {})
+         -- v:AddNewModifier(vars_table[1], nil, "modifier_rooted", {})
           v:AddNewModifier(vars_table[1], nil, "modifier_pudge_meat_hook", {})
         elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"dummy_rune_haste") and v:IsAlive() then
           vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
@@ -401,7 +401,7 @@ function LaunchHook( keys )
           hooked:SetAbsOrigin(hooks[1]:GetAbsOrigin() + Vector(0,0,-125))
           local diff = hero:GetAbsOrigin() - hooked:GetAbsOrigin()
           if diff:Length() < 150 then
-            hooked:RemoveModifierByName("modifier_rooted")
+            --hooked:RemoveModifierByName("modifier_rooted")
             hooked:RemoveModifierByName("modifier_pudge_meat_hook")
 
 	    if hero:HasItemInInventory('item_strygwyr_claw_5') then
@@ -496,7 +496,7 @@ function LaunchHook( keys )
        
         if #hooks == 0 then
           if hooked ~= nil and IsValidEntity(hooked) then
-            hooked:RemoveModifierByName("modifier_rooted")
+            --hooked:RemoveModifierByName("modifier_rooted")
             hooked:RemoveModifierByName("modifier_pudge_meat_hook")
           end
           pudge.is_throwing_hook = false

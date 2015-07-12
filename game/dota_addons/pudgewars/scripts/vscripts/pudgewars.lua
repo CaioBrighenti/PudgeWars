@@ -112,6 +112,9 @@ function PudgeWarsMode:InitGameMode()
   ListenToGameEvent('player_info_updated', Dynamic_Wrap( PudgeWarsMode, 'OnInventoryChange'), self)
   ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(PudgeWarsMode, 'OnGameRulesStateChange'), self)
   ListenToGameEvent('player_stats_updated', Dynamic_Wrap(PudgeWarsMode, 'OnPlayerStatsUpdated'), self)
+  CustomGameEventManager:RegisterListener( "pudgewars_player_vote50", OnPlayerVote50 )
+  CustomGameEventManager:RegisterListener( "pudgewars_player_vote75", OnPlayerVote75 )
+  CustomGameEventManager:RegisterListener( "pudgewars_player_vote100", OnPlayerVote100 )
 
   -- Change random seed
   local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
@@ -139,9 +142,14 @@ function PudgeWarsMode:InitGameMode()
   self.vote_50_votes = 0
   self.vote_75_votes = 0
   self.vote_100_votes = 0
+  self.is_voting = false
+  self.vote_start_time = 0
 
   --runes
   self.all_flame_hooks = {}
+
+  --tomes
+  self.health_tome_modifier_item = nil
 
   -- Active Hero Map
   self.vPlayerHeroData = {}
@@ -150,7 +158,7 @@ function PudgeWarsMode:InitGameMode()
   PudgeWarsMode:SpawnRuneSpellCasters()
   PudgeWarsMode:SpawnVisionDummies()
   PudgeWarsMode:SpawnFuntainDummy()
-  PudgeWarsMode:InitScaleForm()
+  --PudgeWarsMode:InitScaleForm()
 
  -- print('[PUDGEWARS] Starting stats')
  -- statcollection.addStats({
@@ -235,12 +243,58 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
   end
 end
 
+function OnPlayerVote50( Index,keys )
+  print("Vote 50")
+  PudgeWarsMode .vote_50_votes = PudgeWarsMode.vote_50_votes + 1
+  local votes_for_50 = PudgeWarsMode.vote_50_votes
+  local votes_for_75 = PudgeWarsMode.vote_75_votes
+  local votes_for_100 = PudgeWarsMode.vote_100_votes
+  local vote_update_info = 
+        {
+            votes_50 = PudgeWarsMode.vote_50_votes,
+            votes_75 = PudgeWarsMode.vote_75_votes,
+            votes_100 = PudgeWarsMode.vote_100_votes,
+            vote_visible = true,
+        }
+  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
+end
+
+function OnPlayerVote75( Index,keys )
+  print("Vote 75")
+  PudgeWarsMode .vote_75_votes = PudgeWarsMode .vote_75_votes + 1
+  local vote_update_info = 
+        {
+            votes_50 = PudgeWarsMode.vote_50_votes,
+            votes_75 = PudgeWarsMode.vote_75_votes,
+            votes_100 = PudgeWarsMode.vote_100_votes,
+            vote_visible = true,
+        }
+  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
+end
+
+function OnPlayerVote100( Index,keys )
+  print("Vote 100")
+  PudgeWarsMode .vote_100_votes = PudgeWarsMode  .vote_100_votes + 1
+  local vote_update_info = 
+        {
+            votes_50 = PudgeWarsMode.vote_50_votes,
+            votes_75 = PudgeWarsMode.vote_75_votes,
+            votes_100 = PudgeWarsMode.vote_100_votes,
+            vote_visible = true,
+        }
+  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
+end
+
 function PudgeWarsMode:AbilityUsed(keys)
   local playerID = keys.PlayerID
   local abilityName = keys.abilityname
   local hero = PudgeArray[playerID].pudgeunit
   if abilityName == "item_tome_of_health" then
-    local modifier_item = CreateItem("item_health_tome_modifiers", hero, hero) 
+    if self.health_tome_modifier_item then
+    else
+      self.health_tome_modifier_item = CreateItem("item_health_tome_modifiers", hero, hero) 
+    end
+    local modifier_item = self.health_tome_modifier_item
     modifier_item:ApplyDataDrivenModifier(hero, hero, "modifier_health_tome", { duration = -1 }) 
   end
   if abilityName == "item_tome_of_damage" then
@@ -447,6 +501,17 @@ function PudgeWarsMode:OnNPCSpawned( keys )
         if spawnedUnit:GetPlayerOwnerID() ~= -1 then
             if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
 		        PudgeWarsMode:InitPudge( spawnedUnit )
+            if self.is_voting then
+              spawnedUnit:AddNewModifier(spawnedUnit,nil,"modifier_stunned", {})
+            end
+            local vote_update_info = 
+            {
+              votes_50 = self.vote_50_votes,
+              votes_75 = self.vote_75_votes,
+              votes_100 = self.vote_100_votes,
+              vote_visible = self.is_voting,
+            }
+            CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
 	          end
         end
     end
@@ -620,6 +685,14 @@ function PudgeWarsMode:Think()
     return
   end
     
+
+  if PudgeWarsMode.is_voting then
+    local vote_timer_table =
+    {
+      time_elapsed = GameRules:GetGameTime() - PudgeWarsMode.vote_start_time,
+    }
+    CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_timer_update", vote_timer_table )
+  end
 
   -- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
   local now = GameRules:GetGameTime()

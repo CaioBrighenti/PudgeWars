@@ -1,7 +1,7 @@
 -- Generated from template
 require('pudgewars')
 require('hook')
-require('sf')
+--require('sf')
 require('util')
 --require('physics')
 require('abilities')
