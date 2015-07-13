@@ -254,9 +254,8 @@ function OnPlayerVote50( Index,keys )
             votes_50 = PudgeWarsMode.vote_50_votes,
             votes_75 = PudgeWarsMode.vote_75_votes,
             votes_100 = PudgeWarsMode.vote_100_votes,
-            vote_visible = true,
         }
-  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
+  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
 end
 
 function OnPlayerVote75( Index,keys )
@@ -267,9 +266,8 @@ function OnPlayerVote75( Index,keys )
             votes_50 = PudgeWarsMode.vote_50_votes,
             votes_75 = PudgeWarsMode.vote_75_votes,
             votes_100 = PudgeWarsMode.vote_100_votes,
-            vote_visible = true,
         }
-  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
+  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
 end
 
 function OnPlayerVote100( Index,keys )
@@ -280,9 +278,8 @@ function OnPlayerVote100( Index,keys )
             votes_50 = PudgeWarsMode.vote_50_votes,
             votes_75 = PudgeWarsMode.vote_75_votes,
             votes_100 = PudgeWarsMode.vote_100_votes,
-            vote_visible = true,
         }
-  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
+  CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
 end
 
 function PudgeWarsMode:AbilityUsed(keys)
@@ -477,6 +474,7 @@ end
 
 function PudgeWarsMode:OnNPCSpawned( keys )
     local spawnedUnit = EntIndexToHScript( keys.entindex )
+     local player = spawnedUnit:GetPlayerOwner()
     if spawnedUnit:GetUnitName() == "npc_vision_dummy" then
         spawnedUnit:AddNewModifier( spawnedUnit, nil, "modifier_tower_truesight_aura", { duration = 30   } )
         spawnedUnit:AddNewModifier( spawnedUnit, nil, "modifier_invisible", {}  )
@@ -511,7 +509,7 @@ function PudgeWarsMode:OnNPCSpawned( keys )
               votes_100 = self.vote_100_votes,
               vote_visible = self.is_voting,
             }
-            CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
+            CustomGameEventManager:Send_ServerToPlayer( player,"pudgewars_vote_update", vote_update_info )
 	          end
         end
     end

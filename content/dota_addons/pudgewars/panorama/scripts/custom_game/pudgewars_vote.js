@@ -73,7 +73,30 @@ function OnVoteUpdate(data)
 	};
 }
 
+function OnVoteBlocksUpdate(data)
+{
+	var i = 0
+	for (i = 0; i < data.votes_50; i++) { 
+    	var count = i + 1
+    	var display_name = "#PudgeWarsVotePanelRows1Block" + count
+    	$( display_name ).visible = true
+	}
+	var i = 0
+	for (i = 0; i < data.votes_75; i++) { 
+    	var count = i + 1
+    	var display_name = "#PudgeWarsVotePanelRows2Block" + count
+    	$( display_name ).visible = true
+	}
+	var i = 0
+	for (i = 0; i < data.votes_100; i++) { 
+    	var count = i + 1
+    	var display_name = "#PudgeWarsVotePanelRows3Block" + count
+    	$( display_name ).visible = true
+	}
+}
+
 (function () {
 	GameEvents.Subscribe( "pudgewars_vote_update", OnVoteUpdate );
+	GameEvents.Subscribe( "pudgewars_vote_blocks_update", OnVoteBlocksUpdate );
 	GameEvents.Subscribe( "pudgewars_vote_timer_update", OnVoteTimerUpdate );
 })();
