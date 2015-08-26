@@ -4,7 +4,7 @@
 	<Panel>
 		<CustomUIElement type="GameInfo" 			layoutfile="file://{resources}/layout/custom_game/pudgewars_game_info.xml" />
 		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/pudgewars_tutorial.xml" />
-		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/pudgewars_vote.xml" />
+		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/pudgewars_team_select.xml" />
 	</Panel>
 </root>
 

@@ -260,7 +260,7 @@ function PudgeWarsMode:StartVoting()
     
     --Start voting when game is in progress. Wait 25  (vote time) seconds and start the game timers
     PudgeWarsMode:CreateTimer(DoUniqueString("voting"), {
-	endTime = GameRules:GetGameTime() + 60,
+	endTime = GameRules:GetGameTime() + 0,
 	useGameTime = true,
 	callback = function(reflex, args)
 	    PudgeWarsMode:StopVoting()
@@ -372,11 +372,10 @@ function PudgeWarsMode:StopVoting()
         }
     CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
 
-    GameRules:SendCustomMessage("Winner: " .. self.kills_to_win .. " kills to win!",0,0)
     GameRules:SendCustomMessage("50 kills: " .. self.vote_50_votes .. " votes" ,0,0)
     GameRules:SendCustomMessage("75 kills: " .. self.vote_75_votes.. " votes",0,0)
     GameRules:SendCustomMessage("100 kills: " .. self.vote_100_votes .. " votes",0,0)
-    sendAMsgTime("First to " .. self.kills_to_win .. " wins!", 3)
+    GameRules:SendCustomMessage("First to " .. self.kills_to_win .. " wins!", 0,0)
 end
 
 function sendAMsg(msg)

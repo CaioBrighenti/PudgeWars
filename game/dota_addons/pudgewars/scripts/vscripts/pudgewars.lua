@@ -115,6 +115,7 @@ function PudgeWarsMode:InitGameMode()
   CustomGameEventManager:RegisterListener( "pudgewars_player_vote50", OnPlayerVote50 )
   CustomGameEventManager:RegisterListener( "pudgewars_player_vote75", OnPlayerVote75 )
   CustomGameEventManager:RegisterListener( "pudgewars_player_vote100", OnPlayerVote100 )
+  CustomGameEventManager:RegisterListener( "pudgewars_vote_update", OnVoteUpdate )
 
   -- Change random seed
   local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
@@ -240,6 +241,17 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
           return GameRules:GetGameTime() + 0.1
         end
       })         
+  end
+end
+
+function OnVoteUpdate( Index,keys )
+  local killsVoted = keys.killsVoted
+  if killsVoted == 1 then
+    PudgeWarsMode .vote_50_votes = PudgeWarsMode.vote_50_votes + 1
+  elseif killsVoted == 2 then
+    PudgeWarsMode .vote_75_votes = PudgeWarsMode .vote_75_votes + 1
+  elseif killsVoted == 3 then
+    PudgeWarsMode .vote_100_votes = PudgeWarsMode  .vote_100_votes + 1
   end
 end
 
@@ -500,7 +512,7 @@ function PudgeWarsMode:OnNPCSpawned( keys )
             if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
 		        PudgeWarsMode:InitPudge( spawnedUnit )
             if self.is_voting then
-              spawnedUnit:AddNewModifier(spawnedUnit,nil,"modifier_stunned", {})
+              --spawnedUnit:AddNewModifier(spawnedUnit,nil,"modifier_stunned", {})
             end
             local vote_update_info = 
             {
