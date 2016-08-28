@@ -207,37 +207,7 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
         endTime = GameRules:GetGameTime() + 0.1,
         useGameTime = true,
         callback = function(reflex, args)
-          if PlayerResource:HaveAllPlayersJoined() then
-              print("starting precache")
-              PrecacheUnitByNameAsync("npc_dota_hero_pudge", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_life_stealer", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_spirit_breaker", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_axe", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_antimage", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_dark_seer", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_phoenix", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_ember_spirit", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_tinker", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_bloodseeker", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_tiny", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_shredder", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_earthshaker", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_zuus", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_razor", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_sven", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_witch_doctor", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_kunkka", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_disruptor", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_alchemist", function(...) end)
-              PrecacheUnitByNameAsync("npc_dota_hero_batrider", function(...) end)  
-              PrecacheUnitByNameAsync("npc_precache_everything", function(...) end)
-
-              --PrecacheItemByNameAsync("item_precache_dummy", function(...) end)
-
-              
-              print("ASYNCPRECACHE DONE!!")
-            return 
-          end
+          
           return GameRules:GetGameTime() + 0.1
         end
       })         
