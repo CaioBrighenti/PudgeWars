@@ -293,7 +293,7 @@ function OnTinyArm( keys )
 
     --start timer to remove ability
     PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-	    endTime = GameRules:GetGameTime() + 0.3,
+	    endTime = GameRules:GetGameTime() + .3,
 	    useGameTime = true,
 	    callback = function(reflex, args)
 		casterUnit:RemoveAbility("tiny_arm")
@@ -326,16 +326,7 @@ function OnTinyArm( keys )
 	  })   	
     end
     --Execute the ability
-    if targetUnit ~= null then
-        local order =
-        {
-            UnitIndex = casterUnit:entindex(),
-            OrderType = DOTA_UNIT_ORDER_CAST_TARGET,
-            AbilityIndex = abil:entindex(),
-            TargetIndex = targetUnit:entindex(),
-        }
-        ExecuteOrderFromTable(order)
-    end
+    casterUnit:CastAbilityOnTarget( targetUnit, abil, casterUnit:GetPlayerOwnerID() )
 end
 
 function OnGrapplingHook( keys )
