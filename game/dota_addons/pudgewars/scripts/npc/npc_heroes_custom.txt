@@ -13,11 +13,12 @@
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityLayout"				"5"
-		"Ability1"				"pudge_wars_custom_hook"							// Ability 1
-		"Ability2"				"pudge_wars_empty1"									// Ability 2
-		"Ability3"				"pudge_wars_empty2"							// Ability 3
-		"Ability4"				"pudge_wars_empty3"							// Ability 4
-		"Ability5"				"pudge_wars_abilities_up"				// Ability 5
+		"Ability1"				"pudge_wars_custom_hook"		// Ability 1
+		"Ability2"				"pudge_wars_empty1"				// Ability 2
+		"Ability3"				"pudge_wars_empty2"				// Ability 3
+		"Ability4"				"pudge_wars_empty3"				// Ability 4
+		"Ability5"				"pudge_wars_abilities_up"		// Ability 5
+		"Ability6"				"generic_hidden"				// Ability 6
 
 		"VisionNighttimeRange"		"600"
 		"VisionDaytimeRange"		"600"
@@ -37,5 +38,4 @@
 
 		"ArmorPhysical"				"-1.42"
 	}
-	
 }

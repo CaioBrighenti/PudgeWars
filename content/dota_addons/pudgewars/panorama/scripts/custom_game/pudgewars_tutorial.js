@@ -1,5 +1,5 @@
 "use strict";
-var TutorialButtonPressed = true;
+var TutorialButtonPressed = false;
 
 function OnToggleTutorialButton()
 {
