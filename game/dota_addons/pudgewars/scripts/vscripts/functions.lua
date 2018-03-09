@@ -348,7 +348,7 @@ end
 
 function PudgeWarsMode:StopVoting()
     for key,ply in pairs(PudgeArray) do 
-	   ply.pudgeunit:RemoveModifierByName("modifier_stunned")
+--	   ply.pudgeunit:RemoveModifierByName("modifier_stunned")
     end
     if self.vote_100_votes >= self.vote_75_votes and self.vote_100_votes >= self.vote_50_votes then
 	self.kills_to_win = 100

@@ -1,3 +1,22 @@
 "AddonInfo"
 {
+//	"addonSteamAppID"				"816"
+	"addontitle"					"Pudge Wars"
+	"addon_game_name"				"Pudge Wars"
+	"addonversion"					"1.0"
+	"addontagline"					"IMBA"
+	"addonauthor"					"Kobb and Aderum"
+	"addonSteamGroupName"			""
+	"addonauthorSteamID"			"fcalife"
+	"addonContent_Campaign"			"0"
+	"addonDescription"				"A remake of the classic Warcraft 3 Pudge Wars mod in Dota 2."
+	"HeroGuidesSupported"			"0"
+
+	"maps"							"pudgewars"
+	"IsPlayable"					"1"
+
+	"pudgewars"
+	{
+		"MaxPlayers"				"10"
+	}
 }

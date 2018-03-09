@@ -1,11 +1,25 @@
 <root>
 	<script>
+		//Fuck Scanner
+		var newUI = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements").FindChildTraverse("minimap_container");
+		newUI.FindChildTraverse("GlyphScanContainer").style.visibility = "collapse";
+
+		var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
+		var newUI = hudElements.FindChildTraverse("center_block");
+
+		newUI.FindChildTraverse("StatBranch").style.visibility = "collapse";
+		//you are not spawning the talent UI, fuck off (Disabling mouseover and onactivate)
+		//We also don't want to crash, valve plz
+		newUI.FindChildTraverse("StatBranch").SetPanelEvent("onmouseover", function(){});
+		newUI.FindChildTraverse("StatBranch").SetPanelEvent("onactivate", function(){});
+		//Fuck that levelup button
+		newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
 	</script>
+
 	<Panel>
-		<CustomUIElement type="GameInfo" 			layoutfile="file://{resources}/layout/custom_game/pudgewars_game_info.xml" />
-		<CustomUIElement type="Hud"					layoutfile="file://{resources}/layout/custom_game/pudgewars_tutorial.xml" />
-		<CustomUIElement type="GameSetup" layoutfile="file://{resources}/layout/custom_game/pudgewars_team_select.xml" />
+		<CustomUIElement type="GameInfo" 	layoutfile="file://{resources}/layout/custom_game/pudgewars_game_info.xml" />
+		<CustomUIElement type="GameSetup"	layoutfile="file://{resources}/layout/custom_game/pudgewars_team_select.xml" />
+		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/pudgewars_tutorial.xml" />
+		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" />
 	</Panel>
 </root>
-
-

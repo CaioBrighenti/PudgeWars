@@ -4,13 +4,13 @@
 
 Label
 {
-    font-size: 16.5px;
+	font-size: 16.5px;
 }
 
 .PudgeWarsTutorialMain
 {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 }
 
 #PudgeWarsLabel
@@ -18,11 +18,11 @@ Label
 	width: 100%;
 	padding: 10px;
 	color: white;
-    horizontal-align: center;
-    vertical-align: center;
-    text-align: center;
-    text-shadow: 4px 4px 4px #121212;
-    margin-top: 7.5px;
+	horizontal-align: center;
+	vertical-align: center;
+	text-align: center;
+	text-shadow: 4px 4px 4px #121212;
+	margin-top: 7.5px;
 }
 
 .toggle_tutorial_button #PudgeWarsLabel
@@ -44,12 +44,12 @@ Label
 {
 	width: 38.4px;
 	height: 76.8px;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 30.55%;
-    margin-bottom: 10.7%;
+	vertical-align: bottom;
+	horizontal-align: center;
+	margin-left: 7.8%;
+	margin-bottom: 14.5%;
 
-    animation-name: ArrowImage_anim;
+	animation-name: ArrowImage_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
@@ -73,26 +73,25 @@ Label
 	}
 }
 
-
 .PudgeWarsTutorial
 {
-    width: 11%;
-    height: 5%;
-    flow-children: down;
-    border: 0px solid red;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 26.5%;
-    margin-bottom: 17%;
+	width: 11%;
+	height: 5%;
+	flow-children: down;
+	border: 0px solid red;
+	vertical-align: bottom;
+	horizontal-align: center;
+	margin-left: 8%;
+	margin-bottom: 21%;
 
-    background-color: #111111;
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
+	background-color: #111111;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
 
-    animation-name: PudgeWarsTutorial_anim;
+	animation-name: PudgeWarsTutorial_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
-    
+	
 }
 
 @keyframes 'PudgeWarsTutorial_anim'
@@ -115,23 +114,24 @@ Label
 
 .PudgeWarsTutorialPoints
 {
-    width: 11%;
-    height: 5%;
-    flow-children: down;
-    border: 0px solid red;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 50%;
-    margin-bottom: 17%;
+	width: 11%;
+	height: 5%;
+	flow-children: down;
+	border: 0px solid red;
+	vertical-align: bottom;
+	horizontal-align: right;
+	margin-right: 50%;
+	margin-bottom: 17%;
 
-    background-color: #111111;
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
+	background-color: #111111;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
 
-    animation-name: PudgeWarsTutorialPoints_anim;
+	animation-name: PudgeWarsTutorialPoints_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
-    
+	visibility: collapse;
+	
 }
 
 @keyframes 'PudgeWarsTutorialPoints_anim'
@@ -157,26 +157,27 @@ Label
 	width: 100%;
 	padding: 3px;
 	color: white;
-    horizontal-align: center;
-    vertical-align: center;
-    text-align: center;
-    text-shadow: 4px 4px 4px #121212;
-    margin-top: 7.5px;
+	horizontal-align: center;
+	vertical-align: center;
+	text-align: center;
+	text-shadow: 4px 4px 4px #121212;
+	margin-top: 7.5px;
 }
 
 #ArrowImagePoints
 {
 	width: 76.8px;
 	height: 38.4px;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 59.5%;
-    margin-bottom: 16.7%;
+	vertical-align: bottom;
+	horizontal-align: right;
+	margin-right: 59.5%;
+	margin-bottom: 16.7%;
 
-    animation-name: ArrowImagePoints_anim;
+	animation-name: ArrowImagePoints_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
+	visibility: collapse;
 }
 
 .toggle_tutorial_button #PudgeWarsLabelPoints
@@ -214,23 +215,23 @@ Label
 
 .PudgeWarsTutorialShop
 {
-    width: 11%;
-    height: 5%;
-    flow-children: down;
-    border: 0px solid red;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 7.5%;
-    margin-bottom: 23%;
+	width: 11%;
+	height: 5%;
+	flow-children: down;
+	border: 0px solid red;
+	vertical-align: bottom;
+	horizontal-align: right;
+	margin-right: 15%;
+	margin-bottom: 10%;
 
-    background-color: #111111;
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
+	background-color: #111111;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
 
-    animation-name: PudgeWarsTutorialShop_anim;
+	animation-name: PudgeWarsTutorialShop_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
-    
+	
 }
 
 @keyframes 'PudgeWarsTutorialShop_anim'
@@ -256,22 +257,22 @@ Label
 	width: 100%;
 	padding: 3px;
 	color: white;
-    horizontal-align: center;
-    vertical-align: center;
-    text-align: center;
-    text-shadow: 4px 4px 4px #121212;
+	horizontal-align: center;
+	vertical-align: center;
+	text-align: center;
+	text-shadow: 4px 4px 4px #121212;
 }
 
 #ArrowImageShop
 {
 	width: 76.8px;
 	height: 76.8px;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 5%;
-    margin-bottom: 18%;
+	vertical-align: bottom;
+	horizontal-align: right;
+	margin-right: 13%;
+	margin-bottom: 5%;
 
-    animation-name: ArrowImageShop_anim;
+	animation-name: ArrowImageShop_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
@@ -312,23 +313,23 @@ Label
 
 .PudgeWarsTutorialToggle
 {
-    width: 11%;
-    height: 5%;
-    flow-children: down;
-    border: 0px solid red;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 16.3%;
-    margin-bottom: 84.5%;
+	width: 11%;
+	height: 5%;
+	flow-children: down;
+	border: 0px solid red;
+	vertical-align: bottom;
+	horizontal-align: right;
+	margin-right: 16.3%;
+	margin-bottom: 84.5%;
 
-    background-color: #111111;
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
+	background-color: #111111;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
 
-    animation-name: PudgeWarsTutorialToggle_anim;
+	animation-name: PudgeWarsTutorialToggle_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
-    
+	
 }
 
 @keyframes 'PudgeWarsTutorialToggle_anim'
@@ -353,23 +354,23 @@ Label
 {
 	width: 100%;
 	color: white;
-    horizontal-align: center;
-    vertical-align: center;
-    text-align: center;
-    text-shadow: 4px 4px 4px #121212;
-    margin-top: 0px;
+	horizontal-align: center;
+	vertical-align: center;
+	text-align: center;
+	text-shadow: 4px 4px 4px #121212;
+	margin-top: 0px;
 }
 
 #ArrowImageToggle
 {
 	width: 38.4px;
 	height: 76.8px;
-    vertical-align: bottom;
-    horizontal-align: right;
-    margin-right: 21%;
-    margin-bottom: 89%;
+	vertical-align: bottom;
+	horizontal-align: right;
+	margin-right: 21%;
+	margin-bottom: 89%;
 
-    animation-name: ArrowImageToggle_anim;
+	animation-name: ArrowImageToggle_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
@@ -410,23 +411,23 @@ Label
 
 .PudgeWarsTutorialGameinfo
 {
-    width: 11%;
-    height: 5%;
-    flow-children: down;
-    border: 0px solid red;
-    vertical-align: top;
-    horizontal-align: left;
-    margin-left: 4%;
-    margin-top: 6%;
+	width: 11%;
+	height: 5%;
+	flow-children: down;
+	border: 0px solid red;
+	vertical-align: top;
+	horizontal-align: left;
+	margin-left: 4%;
+	margin-top: 6%;
 
-    background-color: #111111;
-    background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
+	background-color: #111111;
+	background-color: gradient( linear, 0% 0%, 0% 100%, from( #2c3034 ), to( #1b1b1d ) );
 
-    animation-name: PudgeWarsTutorialGameinfo_anim;
+	animation-name: PudgeWarsTutorialGameinfo_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
-    
+	
 }
 
 @keyframes 'PudgeWarsTutorialGameinfo_anim'
@@ -451,23 +452,23 @@ Label
 {
 	width: 100%;
 	color: white;
-    horizontal-align: center;
-    vertical-align: center;
-    text-align: center;
-    text-shadow: 4px 4px 4px #121212;
-    margin-top: 0px;
+	horizontal-align: center;
+	vertical-align: center;
+	text-align: center;
+	text-shadow: 4px 4px 4px #121212;
+	margin-top: 0px;
 }
 
 #ArrowImageGameinfo
 {
 	width: 76.8px;
 	height: 38.4px;
-    vertical-align: top;
-    horizontal-align: left;
-    margin-left: 2.8%;
-    margin-top: 8%;
+	vertical-align: top;
+	horizontal-align: left;
+	margin-left: 2.8%;
+	margin-top: 8%;
 
-    animation-name: ArrowImageGameinfo_anim;
+	animation-name: ArrowImageGameinfo_anim;
 	animation-duration: TotalLength;
 	animation-timing-function: TimingFunc;
 	animation-iteration-count: IterationCount;
@@ -509,10 +510,10 @@ Label
 .PudgeWarsTutorialButton
 {
 	vertical-align: top;
-    horizontal-align: right;
-    margin-right: 20.20%;
-    margin-top: 6px;
-    background-color: #222222;
+	horizontal-align: right;
+	margin-right: 20.20%;
+	margin-top: 6px;
+	background-color: #222222;
 }
 
 .PudgeWarsTutorialButton:hover {
@@ -526,20 +527,20 @@ Label
 #ToggleTutorialButton
 {
 	horizontal-align: right;
-    width: 80px;
-    height: 30px;
-    border: 1px solid #5e686966;
-    box-shadow: #00000055 -2px -2px 1px 4px;
+	width: 80px;
+	height: 30px;
+	border: 1px solid #5e686966;
+	box-shadow: #00000055 -2px -2px 1px 4px;
 
 }
 
 #ToggleTutorialButtonLabel
 {
 	color: #F0F8FF;
-    horizontal-align: center;
-    vertical-align: center;
-    text-shadow: 4px 4px 4px #121212;
-    font-size: 16px;
-    font-weight: bold;
+	horizontal-align: center;
+	vertical-align: center;
+	text-shadow: 4px 4px 4px #121212;
+	font-size: 16px;
+	font-weight: bold;
 }
 
