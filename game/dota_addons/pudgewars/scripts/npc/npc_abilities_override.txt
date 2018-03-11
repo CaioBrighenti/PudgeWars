@@ -3,7 +3,6 @@
 "DOTAAbilities"
 {
 	"Version"		"1"
-	//Courier
 	
 	"item_kobbs_dagger"
 	{

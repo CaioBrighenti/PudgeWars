@@ -17,7 +17,14 @@ require('runes')
 
 function Precache(context)
 	print("starting precache")
-	PrecacheUnitByNameAsync("npc_dota_hero_pudge", context)
+
+	LinkLuaModifier("modifier_command_restricted", "modifiers/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_fire_rune", "modifiers/modifier_fire_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_shield_rune", "modifiers/modifier_shield_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_slow_rune", "modifiers/modifier_slow_rune.lua", LUA_MODIFIER_MOTION_NONE)
+
+	PrecacheUnitByNameSync("npc_dota_hero_pudge", context)
+
 	PrecacheUnitByNameAsync("npc_dota_hero_life_stealer", context)
 	PrecacheUnitByNameAsync("npc_dota_hero_spirit_breaker", context)
 	PrecacheUnitByNameAsync("npc_dota_hero_axe", context)

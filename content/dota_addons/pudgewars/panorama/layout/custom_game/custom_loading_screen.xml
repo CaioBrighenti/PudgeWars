@@ -2,12 +2,25 @@
 	<styles>
 		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css" />
 	</styles>
+
 	<Panel class="AddonLoadingRoot">
 		<Panel id="CustomBg" >
 			<Image id="bg" class="ProBg" src="file://{images}/custom_game/loading_screen/custom_bg.jpg" />
 		</Panel>
+
+		<Panel id="pw-social">
+			<Panel id="pw-social-title">
+				<Label class="LabelMid" text="Feel free to join the Discord server to find more players!" style="" />
+			</Panel>
+
+			<Panel id="pw-social-buttons">
+				<Button id="pw-social-button-discord-en" class="pw-social-button"
+					onactivate="DOTADisplayURL('https://discord.gg/gsywzVX');" />
+			</Panel>
+		</Panel>
+
 		<Panel id="TitlePanel">
-			<Label id="AddonTitle" text="Pudge Wars" style="" />
+			<Label id="AddonTitle" class="LabelBig" text="Pudge Wars" style="" />
 		</Panel>
 	</Panel>
 </root>

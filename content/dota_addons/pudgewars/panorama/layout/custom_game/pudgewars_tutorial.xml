@@ -2,9 +2,12 @@
 	<styles>
 		<include src="file://{resources}/styles/custom_game/pudgewars_tutorial.css" />
 	</styles>
+
 	<scripts>
 		<include src="file://{resources}/scripts/custom_game/pudgewars_tutorial.js" />
+		<include src="file://{resources}/scripts/custom_game/topbar_hack.js" />
 	</scripts>
+
 	<Panel hittest="false" class="PudgeWarsTutorialMain">
 		<Panel hittest="false" class="PudgeWarsTutorialButton">
 			<Button id="ToggleTutorialButton" onactivate="OnToggleTutorialButton()">

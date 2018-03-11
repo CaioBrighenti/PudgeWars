@@ -1,7 +1,7 @@
 print ('[PUDGEWARS] pudgewars.lua' )
 
 USE_LOBBY=false
-THINK_TIME = 0.01
+THINK_TIME = FrameTime()
 
 STARTING_GOLD = 0
 MAX_LEVEL = 40
@@ -49,6 +49,7 @@ XP_PER_LEVEL_TABLE[38] = 58000
 XP_PER_LEVEL_TABLE[39] = 62000
 XP_PER_LEVEL_TABLE[40] = 66000
 XP_PER_LEVEL_TABLE[41] = 70000
+XP_PER_LEVEL_TABLE[42] = 74000
 
 GameMode = nil
 PudgeArray = {}
@@ -83,6 +84,14 @@ function PudgeWarsMode:InitGameMode()
 	self.RESPAWN_TIME = 8.0
 	PRE_GAME_TIME = 10.0
 
+	-- Runes Variables
+	RUNE_SPAWN_TIME = 40.0
+	RUNE_TEXT_DURATION = 4.0
+	RUNE_SLOW = false
+	RUNE_SLOW_DURATION = 15.0
+	RUNE_SHIELD_DURATION = 12.0
+	RUNE_FIRE_DURATION = 24.0
+
 	-- Setup rules
 	GameRules:SetHeroRespawnEnabled(true)
 	GameRules:SetUseUniversalShopMode(false)
@@ -108,26 +117,21 @@ function PudgeWarsMode:InitGameMode()
 
     	return true
 	end, self)
-	
+
 	print('[PUDGEWARS] Rules set')
 
 	InitLogFile( "log/pudgewars.txt","")
 
 	-- Hooks
-	ListenToGameEvent('entity_killed', Dynamic_Wrap(PudgeWarsMode, 'OnEntityKilled'), self)
-	ListenToGameEvent('entity_hurt', Dynamic_Wrap( PudgeWarsMode, 'OnDamageTaken'), self)
-	ListenToGameEvent('player_connect_full', Dynamic_Wrap(PudgeWarsMode, 'AutoAssignPlayer'), self)
-	ListenToGameEvent('player_disconnect', Dynamic_Wrap(PudgeWarsMode, 'CleanupPlayer'), self)
-	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(PudgeWarsMode, 'OnItemPurchased'), self)
-	ListenToGameEvent('player_say', Dynamic_Wrap(PudgeWarsMode, 'PlayerSay'), self)
-	ListenToGameEvent('player_connect', Dynamic_Wrap(PudgeWarsMode, 'PlayerConnect'), self)
-	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(PudgeWarsMode, 'AbilityUsed'), self)
-	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap( PudgeWarsMode, 'ItemPickedUp' ), self )
-	ListenToGameEvent('npc_spawned', Dynamic_Wrap( PudgeWarsMode, 'OnNPCSpawned'), self)
-	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap( PudgeWarsMode, 'OnLevelUp'), self)
-	ListenToGameEvent('player_info_updated', Dynamic_Wrap( PudgeWarsMode, 'OnInventoryChange'), self)
-	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(PudgeWarsMode, 'OnGameRulesStateChange'), self)
-	ListenToGameEvent('player_stats_updated', Dynamic_Wrap(PudgeWarsMode, 'OnPlayerStatsUpdated'), self)
+	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, 'OnEntityKilled'), self)
+	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, 'AutoAssignPlayer'), self)
+	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(self, 'OnItemPurchased'), self)
+	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'AbilityUsed'), self)
+	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap( self, 'ItemPickedUp' ), self )
+	ListenToGameEvent('npc_spawned', Dynamic_Wrap( self, 'OnNPCSpawned'), self)
+	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap( self, 'OnLevelUp'), self)
+	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, 'OnGameRulesStateChange'), self)
+
 	CustomGameEventManager:RegisterListener( "pudgewars_player_vote50", OnPlayerVote50 )
 	CustomGameEventManager:RegisterListener( "pudgewars_player_vote75", OnPlayerVote75 )
 	CustomGameEventManager:RegisterListener( "pudgewars_player_vote100", OnPlayerVote100 )
@@ -143,15 +147,13 @@ function PudgeWarsMode:InitGameMode()
 	self.timers = {}
 
 	-- userID map
-	self.vUserNames = {}
 	self.vUserIds = {}
 	self.vSteamIds = {}
-	self.vBots = {}
-	self.vBroadcasters = {}
 
 	self.vPlayers = {}
 	self.vRadiant = {}
 	self.vDire = {}
+
 	--Score
 	self.scoreDire = 0
 	self.scoreRadiant = 0
@@ -163,13 +165,10 @@ function PudgeWarsMode:InitGameMode()
 	self.vote_start_time = 0
 
 	--runes
-	self.all_flame_hooks = {}
+	_G.all_flame_hooks = {}
 
 	--tomes
 	self.health_tome_modifier_item = nil
-
-	-- Active Hero Map
-	self.vPlayerHeroData = {}
 
 	PudgeWarsMode:StartTimers()
 	PudgeWarsMode:SpawnRuneSpellCasters()
@@ -177,16 +176,10 @@ function PudgeWarsMode:InitGameMode()
 	PudgeWarsMode:SpawnFuntainDummy()
 	--PudgeWarsMode:InitScaleForm()
 
- -- print('[PUDGEWARS] Starting stats')
- -- statcollection.addStats({
- --   modID = '8a404b7c81ab60ec9bc9298e9b76b251'
- -- })
-
-	print('[PUDGEWARS] values set')
-
-	print('[PUDGEWARS] Precaching stuff...')
-	--PrecacheUnitByName('npc_precache_everything')
-	print('[PUDGEWARS] Done precaching!') 
+	-- print('[PUDGEWARS] Starting stats')
+	-- statcollection.addStats({
+	--   modID = '8a404b7c81ab60ec9bc9298e9b76b251'
+	-- })
 
 	print('[PUDGEWARS] Done loading Pudgewars gamemode!\n\n')
 end
@@ -219,21 +212,48 @@ end
 function PudgeWarsMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
-	if newState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		PudgeWarsMode:CreateTimer(DoUniqueString("allconnnected"), {
-			endTime = GameRules:GetGameTime() + 0.1,
-			useGameTime = true,
-			callback = function(reflex, args)
-				
-				return GameRules:GetGameTime() + 0.1
-			end
-		})
---	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
---		for _, hero in pairs(HeroList:GetAllHeroes()) do
---			if hero:HasModifier("modifier_stunned") then
---				hero:RemoveModifierByName("modifier_stunned")
---			end
+	if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		-- start slower thinker to avoid lags
+		Timers:CreateTimer(function()
+			self:SlowThink()
+			return 1.0
+		end)
+
+		-- start spawn rune timer
+		Timers:CreateTimer(RUNE_SPAWN_TIME, function()
+			PudgeWarsMode:SpawnRune()
+			return RUNE_SPAWN_TIME
+		end)
+	end
+end
+
+function PudgeWarsMode:SlowThink()
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		-- model bug fix
+--		if PudgeArray[hero:GetPlayerID()].modelName == "" then
+--			PudgeWarsMode:AssignHookModel(hero)    
 --		end
+
+		if PlayerResource:GetConnectionState(hero:GetPlayerID()) <= 2 and hero.anti_afk ~= false then
+			hero.anti_afk = false
+			hero:RespawnHero(false, false)
+			hero:RemoveModifierByName("modifier_command_restricted")
+		elseif PlayerResource:GetConnectionState(hero:GetPlayerID()) > 2 and hero.anti_afk ~= true then
+			if hero:IsAlive() then
+				hero.anti_afk = true
+				FindClearSpaceForUnit(hero, Entities:FindByName(nil, "anti_afk_"..hero:GetTeamNumber()):GetAbsOrigin(), true)
+				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
+			end
+		end
+	end
+
+	-- handle the rune slow modifier duration
+	if RUNE_SLOW ~= false then
+		RUNE_SLOW = RUNE_SLOW - 1
+
+		if RUNE_SLOW <= 0 then
+			RUNE_SLOW = false
+		end
 	end
 end
 
@@ -256,9 +276,9 @@ function OnPlayerVote50( Index,keys )
 	local votes_for_100 = PudgeWarsMode.vote_100_votes
 	local vote_update_info = 
 	{
-			votes_50 = PudgeWarsMode.vote_50_votes,
-			votes_75 = PudgeWarsMode.vote_75_votes,
-			votes_100 = PudgeWarsMode.vote_100_votes,
+		votes_50 = PudgeWarsMode.vote_50_votes,
+		votes_75 = PudgeWarsMode.vote_75_votes,
+		votes_100 = PudgeWarsMode.vote_100_votes,
 	}
 
 	CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
@@ -269,9 +289,9 @@ function OnPlayerVote75( Index,keys )
 	PudgeWarsMode .vote_75_votes = PudgeWarsMode .vote_75_votes + 1
 	local vote_update_info = 
 	{
-			votes_50 = PudgeWarsMode.vote_50_votes,
-			votes_75 = PudgeWarsMode.vote_75_votes,
-			votes_100 = PudgeWarsMode.vote_100_votes,
+		votes_50 = PudgeWarsMode.vote_50_votes,
+		votes_75 = PudgeWarsMode.vote_75_votes,
+		votes_100 = PudgeWarsMode.vote_100_votes,
 	}
 
 	CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
@@ -279,7 +299,9 @@ end
 
 function OnPlayerVote100( Index,keys )
 	print("Vote 100")
-	PudgeWarsMode .vote_100_votes = PudgeWarsMode  .vote_100_votes + 1
+
+	PudgeWarsMode.vote_100_votes = PudgeWarsMode.vote_100_votes + 1
+
 	local vote_update_info = 
 	{
 		votes_50 = PudgeWarsMode.vote_50_votes,
@@ -294,92 +316,28 @@ function PudgeWarsMode:AbilityUsed(keys)
 	local playerID = keys.PlayerID
 	local abilityName = keys.abilityname
 	local hero = PudgeArray[playerID].pudgeunit
-	if abilityName == "item_tome_of_health" then
-		if self.health_tome_modifier_item then
-		else
-			self.health_tome_modifier_item = CreateItem("item_health_tome_modifiers", hero, hero) 
+
+	for _, hero in pairs(HeroList:GetAllHeroes()) do
+		if hero:GetPlayerID() == playerID then
+			if abilityName == "item_tome_of_health" then
+				if self.health_tome_modifier_item then
+				else
+					self.health_tome_modifier_item = CreateItem("item_health_tome_modifiers", hero, hero) 
+				end
+				local modifier_item = self.health_tome_modifier_item
+				modifier_item:ApplyDataDrivenModifier(hero, hero, "modifier_health_tome", { duration = -1 }) 
+			end
+
+			if abilityName == "item_tome_of_damage" then
+				PudgeArray[playerID].damagetomes = PudgeArray[playerID].damagetomes + 1
+			end
 		end
-		local modifier_item = self.health_tome_modifier_item
-		modifier_item:ApplyDataDrivenModifier(hero, hero, "modifier_health_tome", { duration = -1 }) 
 	end
-	if abilityName == "item_tome_of_damage" then
-		PudgeArray[playerID].damagetomes = PudgeArray[playerID].damagetomes + 1
-	end
-end
-
-function PudgeWarsMode:OnPlayerStatsUpdated(keys)
-	print('yo')
-end
-
--- Cleanup a player when they leave
-function PudgeWarsMode:CleanupPlayer(keys)
-		print('[PUDGEWARS] Player Disconnected ' .. tostring(keys.userid))
---    local ply = self.vUserIds[keys.userid]
---    if ply then
---        local pudge = PudgeArray[ ply:GetPlayerID() ].pudgeunit
---        PudgeArray[ply:GetPlayerID()].pos_before_dc = pudge:GetAbsOrigin()
---	if pudge:GetTeam() == 2 then
---            pudge:SetOrigin(Vector(-2368, 2368, 0))
---	else 
---	    pudge:SetOrigin(Vector(2368, -2368, 0))
---	end
---        pudge:AddNewModifier(pudge, nil, 'modifier_stunned', {})
---    end
 end
 
 function PudgeWarsMode:CloseServer()
 	-- Just exit
 	SendToServerConsole('exit')
-end
-
-function PudgeWarsMode:OnDamageTaken( keys )
-	if not (keys.entindex_attacker) or not (keys.entindex_killed) then
-		return
-	end
-		
-	local caster = EntIndexToHScript( keys.entindex_attacker )
-	local unit = EntIndexToHScript( keys.entindex_killed )
-	if keys.entindex_inflictor then
-
-	elseif string.find(unit:GetUnitName(),"dummy_rune_haste") then
-		PudgeWarsMode:RuneHooked(unit,caster,1)
-		--   unit:RemoveSelf()
-	elseif string.find(unit:GetUnitName(),"dummy_rune_gold") then
-		PudgeWarsMode:RuneHooked(unit,caster,2)
-		--   unit:RemoveSelf()
-	elseif string.find(unit:GetUnitName(),"dummy_rune_ion") then
-		PudgeWarsMode:RuneHooked(unit,caster,3)
-		-- unit:RemoveSelf()
-	elseif string.find(unit:GetUnitName(),"dummy_rune_fire") then 
-		PudgeWarsMode:RuneHooked(unit,caster,4)
-		--unit:RemoveSelf()
-	elseif string.find(unit:GetUnitName(), "dummy_rune_dynamite") then
-	PudgeWarsMode:RuneHooked(unit, caster,5)
-			--unit:RemoveSelf()
-	elseif string.find(unit:GetUnitName(), "dummy_rune_lightning") then
-		PudgeWarsMode:RuneHooked(unit, caster, 6)
-		--unit:RemoveSelf()
-	elseif string.find(unit:GetUnitName(), "npc_dummy_rune_diretide") then
-		PudgeWarsMode:RuneHooked(unit, caster, 7)
-		--unit:RemoveSelf()
-	else 
-		--Check if caster has barathrums level 5 and roll bash chance
-		for i=0,5 do
-			item = caster:GetItemInSlot(i)
-			if item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_5' then
-				if PudgeWarsMode:RollBash(17) then
-					unit:SetHealth(unit:GetHealth() - (300))
-					bashParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf', PATTACH_ABSORIGIN, unit)
-					bashPos = unit:GetOrigin()
-					ParticleManager:SetParticleControl( bashParticle, 4, Vector( bashPos.x, bashPos.y, bashPos.z) )
-					unit:AddNewModifier( caster, nil, "modifier_stunned", {duration=1.2})
-					unit:EmitSound('Hero_Spirit_Breaker.GreaterBash')
-				end 
-
-				break
-			end
-		end 
-	end
 end
 
 function PudgeWarsMode:ItemPickedUp( keys )
@@ -507,10 +465,6 @@ function PudgeWarsMode:OnNPCSpawned( keys )
 			if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
 				PudgeWarsMode:InitPudge( spawnedUnit )
 
-				if self.is_voting then
-					--spawnedUnit:AddNewModifier(spawnedUnit,nil,"modifier_stunned", {})
-				end
-
 				local vote_update_info = 
 				{
 					votes_50 = self.vote_50_votes,
@@ -526,149 +480,87 @@ function PudgeWarsMode:OnNPCSpawned( keys )
 end
 
 function PudgeWarsMode:OnLevelUp( keys )
-		local entIndex = keys.player
-		local ply = EntIndexToHScript(entIndex)
-		local playerID = ply:GetPlayerID()
+	local player = EntIndexToHScript(keys.player)
+	local hero = player:GetAssignedHero()
+	local hero_level = hero:GetLevel()
 
-		PudgeArray[playerID].upgradePoints = PudgeArray[playerID].upgradePoints + 1     -- Add an upgrade point to the hero
-		PudgeWarsMode:UpdateUpgradePoints( PlayerResource:GetSelectedHeroEntity(playerID))
-end
+	local extra_ab_points = {17, 19, 21, 22, 23, 24}
 
-function OnInventoryChange( keys )
-	print('INVENTORY CHANGE')
-end
-
-function PudgeWarsMode:PlayerConnect(keys)
-	print('[PUDGEWARS] PlayerConnect')
-	
-	-- Fill in the usernames for this userID
-	self.vUserNames[keys.userid] = keys.name
-	if keys.bot == 1 then
-		-- This user is a Bot, so add it to the bots table
-		self.vBots[keys.userid] = 1
-	end
-end
-
-local hook = nil
-local attach = 0
-local controlPoints = {}
-local particleEffect = ""
-
-function PudgeWarsMode:PlayerSay(keys)  
-	-- Get the player entity for the user speaking
-	local ply = self.vUserIds[keys.userid]
-	if ply == nil then
-		return
-	end
-	
-	-- Get the player ID for the user speaking
-	local plyID = ply:GetPlayerID()
-	if not PlayerResource:IsValidPlayer(plyID) then
-		return
+	for i = 0, #extra_ab_points do
+		if hero_level == extra_ab_points[i] then
+			hero:SetAbilityPoints(hero:GetAbilityPoints() + 1)
+		end
 	end
 
-	local text = keys.text
-	if not USE_LOBBY and string.find(text, "disconnect") then
-		if ply then
-				local pudge = PudgeArray[ ply:GetPlayerID() ].pudgeunit
-				PudgeArray[ply:GetPlayerID()].pos_before_dc = pudge:GetAbsOrigin()
-	if pudge:GetTeam() == 2 then
-						pudge:SetOrigin(Vector(-2368, 2368, 0))
-	else 
-			pudge:SetOrigin(Vector(2368, -2368, 0))
+	if hero_level > 40 then
+		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
 	end
-				pudge:AddNewModifier(pudge, nil, 'modifier_stunned', {})
-		end 
-	end
-	--Keep this for future uses...
-	
 end
 
 function PudgeWarsMode:AutoAssignPlayer(keys)
 	print ('[PUDGEWARS] AutoAssignPlayer FIXED')
 	PudgeWarsMode:CaptureGameMode()
 
-	
-	
 	local entIndex = keys.index+1
 	local ply = EntIndexToHScript(entIndex)
 	local playerID = ply:GetPlayerID()
-	print("1")
+
 	self.vUserIds[keys.userid] = ply
 	self.vSteamIds[PlayerResource:GetSteamAccountID(playerID)] = ply
-	print("2")
-	-- If the player is a broadcaster flag it in the Broadcasters table
-	if PlayerResource:IsBroadcaster(playerID) then
-		self.vBroadcasters[keys.userid] = 1
-		return
-	end
-	print("3")
-	-- If this player is a bot (spectator) flag it and continue on
-	if self.vBots[keys.userid] ~= nil then
-		return
-	end
 
-	print("4")
-	playerID = ply:GetPlayerID()
- -- -- Figure out if this player is just reconnecting after a disconnect
- -- if self.vPlayers[playerID] ~= nil then
- --   self.vUserIds[keys.userid] = ply
- --   local pudge = PudgeArray[ply:GetPlayerID()].pudgeunit
- --   pudge:SetAbsOrigin(PudgeArray[ply:GetPlayerID()].pos_before_dc)
- --   pudge:RemoveModifierByName('modifier_stunned')
- --   return
- -- end
-	print("5")
 	-- If we're not on D2MODD.in, assign players round robin to teams
 	if not USE_LOBBY and playerID == -1 then
 		if #self.vRadiant > #self.vDire then
-		 -- ply:SetTeam(DOTA_TEAM_BADGUYS)
+			-- ply:SetTeam(DOTA_TEAM_BADGUYS)
 			--ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_BADGUYS)
 			table.insert (self.vDire, ply)
 		else
-		 -- ply:SetTeam(DOTA_TEAM_GOODGUYS)
+			-- ply:SetTeam(DOTA_TEAM_GOODGUYS)
 			--ply:__KeyValueFromInt('teamnumber', DOTA_TEAM_GOODGUYS)
 			table.insert (self.vRadiant, ply)
 		end
+
 		playerID = ply:GetPlayerID()
 	end  
+
 	self.vPlayers[playerID] = ply
-	-- give them Pudge
-	--CreateHeroForPlayer('npc_dota_hero_pudge', ply)
-	print("6")
-	
 end
 
-function PudgeWarsMode:OnItemPurchased( keys )
-		-- The playerID of the hero who is buying something
-		local plyID = keys.PlayerID
-		if not plyID then return end
 
-		local playerID = keys.PlayerID
-		local itemname = keys.itemname
-		local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
-		for i=0,11 do
-				local item = hero:GetItemInSlot(i)
-				if item then
-						if item:GetAbilityName() == itemname then
-								local itempurchased = item
-								if itemname == "item_tome_of_damage" then
-									if PudgeArray[playerID].damagetomes >= 10 then
-										local cost  = itempurchased:GetCost()
-										if itempurchased:GetCurrentCharges() == 1 then
-											UTIL_RemoveImmediate(itempurchased)
-										else
-											itempurchased:SetCurrentCharges(itempurchased:GetCurrentCharges() - 1)
-										end
-										hero:ModifyGold(cost, true, 1)
-									end
-								end
-								if itemname == 'item_lycan_paw' or itemname == 'item_naix_jaw' or itemname == 'item_grappling_hook' or itemname == 'item_tiny_arm' or itemname == 'item_barathrum_lantern' or itemname == 'item_techies_explosive_barrel' or itemname == 'item_strygwyr_claw' or itemname == 'item_ricochet_turbine' or itemname == 'item_pudgewars_earthshaker_totem' then
-										PudgeWarsMode:UpgradeItem(itemname,item,itempurchased,hero)
-								end
+function PudgeWarsMode:OnItemPurchased(keys)
+	-- The playerID of the hero who is buying something
+	local plyID = keys.PlayerID
+	if not plyID then return end
+
+	local playerID = keys.PlayerID
+	local itemname = keys.itemname
+	local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
+
+	for i=0,11 do
+		local item = hero:GetItemInSlot(i)
+
+		if item then
+			if item:GetAbilityName() == itemname then
+				local itempurchased = item
+
+				if itemname == "item_tome_of_damage" then
+					if PudgeArray[playerID].damagetomes >= 10 then
+						local cost  = itempurchased:GetCost()
+						if itempurchased:GetCurrentCharges() == 1 then
+							UTIL_RemoveImmediate(itempurchased)
+						else
+							itempurchased:SetCurrentCharges(itempurchased:GetCurrentCharges() - 1)
 						end
+						hero:ModifyGold(cost, true, 1)
+					end
 				end
+
+				if itemname == 'item_lycan_paw' or itemname == 'item_naix_jaw' or itemname == 'item_grappling_hook' or itemname == 'item_tiny_arm' or itemname == 'item_barathrum_lantern' or itemname == 'item_techies_explosive_barrel' or itemname == 'item_strygwyr_claw' or itemname == 'item_ricochet_turbine' or itemname == 'item_pudgewars_earthshaker_totem' then
+					PudgeWarsMode:UpgradeItem(itemname,item,itempurchased,hero)
+				end
+			end
 		end
+	end
 end
 
 
@@ -676,11 +568,13 @@ function PudgeWarsMode:Think()
 	-- If the game's over, it's over.
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
 		local plyCount = 0
+
 		for i=0,9 do
 			if PlayerResource:IsValidPlayer(i) then
 				plyCount = plyCount + 1
 			end
 		end
+
 	--  statcollection.addStats({
 	--    player_count = plyCount
 	--    })
@@ -692,7 +586,6 @@ function PudgeWarsMode:Think()
 		--statcollection.sendStats()
 		return
 	end
-		
 
 	if PudgeWarsMode.is_voting then
 		local vote_timer_table =
@@ -739,6 +632,21 @@ function PudgeWarsMode:Think()
 			else
 				-- Nope, handle the error
 				PudgeWarsMode:HandleEventError('Timer', k, nextCall, v)
+			end
+		end
+	end
+
+	-- Apply slow modifier if slow rune is picked up
+	if RUNE_SLOW ~= false then
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if not hero:HasModifier("modifier_slow_rune") then
+				hero:AddNewModifier(hero, nil, "modifier_slow_rune", {})
+			end
+		end
+	else
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero:HasModifier("modifier_slow_rune") then
+				hero:RemoveModifierByName("modifier_slow_rune")
 			end
 		end
 	end
@@ -823,6 +731,7 @@ function PudgeWarsMode:RemoveTimers(killAll)
 	self.timers = timers
 end
 
+
 function PudgeWarsMode:OnEntityKilled(keys)
 	local killedUnit = EntIndexToHScript(keys.entindex_killed)
 	local killerEntity = nil
@@ -832,9 +741,6 @@ function PudgeWarsMode:OnEntityKilled(keys)
 	else
 		return
 	end
-
-	local killedTeam = killedUnit:GetTeam()
-	local killerTeam = killerEntity:GetTeam()
 
 	if string.find(killedUnit:GetClassname(), "creep") and string.find(killedUnit:GetUnitName(), "mine") and not killedUnit:HasModifier("modifier_pudge_meat_hook") then
 		Timers:CreateTimer(1.0, function()
@@ -856,30 +762,26 @@ function PudgeWarsMode:OnEntityKilled(keys)
 		return
 	end
 
-	if killedUnit:IsRealHero() == true then
+	if killedUnit:IsRealHero() then
 		killedUnit:SetTimeUntilRespawn(self.RESPAWN_TIME)
 
-		if killedTeam == DOTA_TEAM_BADGUYS then
-			if killerTeam == 2 then
+		if killedUnit:GetTeam() == DOTA_TEAM_BADGUYS then
+			if killerEntity:GetTeam() == 2 then
 				self.scoreRadiant = self.scoreRadiant + 1
+				CustomNetTables:SetTableValue("game_score", "team_score", {radiant_score = self.scoreRadiant, dire_score = self.scoreDire})
 			end
-		elseif killedTeam == DOTA_TEAM_GOODGUYS then
-			if killerTeam == 3 then
+		elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS then
+			if killerEntity:GetTeam() == 3 then
 				self.scoreDire = self.scoreDire + 1
+				CustomNetTables:SetTableValue("game_score", "team_score", {radiant_score = self.scoreRadiant, dire_score = self.scoreDire})
 			end
 		end
-
-		-- IIRC those doesn't work anymore
-		GameMode:SetTopBarTeamValue (DOTA_TEAM_BADGUYS, self.scoreDire)
-		GameMode:SetTopBarTeamValue (DOTA_TEAM_GOODGUYS, self.scoreRadiant)
 
 		if self.scoreDire >= self.kills_to_win then
 			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
 			GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS)
 			GameRules:Defeated()
-		end
-
-		if self.scoreRadiant >= self.kills_to_win  then
+		elseif self.scoreRadiant >= self.kills_to_win then
 			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 			GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
 			GameRules:Defeated()

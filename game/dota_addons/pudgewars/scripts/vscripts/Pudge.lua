@@ -8,11 +8,6 @@ function PudgeClass.create(playerId)
 	local pudge = {}
 	setmetatable(pudge,PudgeClass)
 	pudge.playerId = playerId
-	pudge.hookDamageLevel = 0
-	pudge.hookSpeedLevel = 0
-	pudge.hookSizeLevel = 0
-	pudge.hookDistanceLevel = 0
-	pudge.upgradePoints = 1
 	pudge.isHooked = false
 	pudge.hasspawned = false
 	pudge.abilityused = {}
@@ -27,6 +22,7 @@ function PudgeClass.create(playerId)
 	pudge.pos_before_dc = nil
 	pudge.has_max_level_timer = false
 	pudge.damagetomes = 0
+
 	--ENUMS
 	pudge.grappleint = 0
 	pudge.tinysarmint = 1
@@ -43,18 +39,20 @@ function PudgeWarsMode:InitPudge( spawnedUnit )
 	spawnedUnit:SetGold(0, false)
 
 	PudgeArray[spawnedUnit:GetPlayerOwnerID()].hasspawned = true
-	PudgeWarsMode:SetAbilToLevelOne( spawnedUnit , "pudge_wars_custom_hook")
-	PudgeWarsMode:SetAbilToLevelOne( spawnedUnit , "pudge_wars_abilities_up")
-	PudgeWarsMode:SetAbilToLevelOne( spawnedUnit , "pudge_wars_empty1")
-	PudgeWarsMode:SetAbilToLevelOne( spawnedUnit , "pudge_wars_empty2")
-	PudgeWarsMode:SetAbilToLevelOne( spawnedUnit , "pudge_wars_empty3")
-	PudgeWarsMode:UpdateUpgradePoints(spawnedUnit)
+	spawnedUnit:FindAbilityByName("pudge_wars_custom_hook"):SetLevel(1)
+	spawnedUnit:FindAbilityByName("pudge_wars_abilities_up"):SetLevel(1)
+	spawnedUnit:FindAbilityByName("pudge_wars_abilities_down"):SetLevel(1)
+	spawnedUnit:FindAbilityByName("pudge_wars_empty1"):SetLevel(1)
+	spawnedUnit:FindAbilityByName("pudge_wars_empty2"):SetLevel(1)
+	spawnedUnit:FindAbilityByName("pudge_wars_empty3"):SetLevel(1)
+--	spawnedUnit:FindAbilityByName("pudge_wars_upgrade_hook_damage"):SetLevel(1)
+--	spawnedUnit:FindAbilityByName("pudge_wars_upgrade_hook_speed"):SetLevel(1)
+--	spawnedUnit:FindAbilityByName("pudge_wars_upgrade_hook_range"):SetLevel(1)
+--	spawnedUnit:FindAbilityByName("pudge_wars_upgrade_hook_size"):SetLevel(1)
 
-	if spawnedUnit:GetPlayerID() ~= -1 then
-		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_stunned", {duration=PRE_GAME_TIME})
-	end
+	spawnedUnit.ab2 = "pudge_wars_empty1"
+	spawnedUnit.ab3 = "pudge_wars_empty2"
+	spawnedUnit.ab4 = "pudge_wars_empty3"
 
-	Timers:CreateTimer(0.1, function()
-		spawnedUnit:SetAbilityPoints(0)
-	end)
+	spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_command_restricted", {duration=PRE_GAME_TIME})
 end

@@ -1,42 +1,31 @@
 "DOTAAbilities"
 {
-
-	"item_precache_dummy"
-	{
-
-		"precache"
-		{
-
-
-		}
-	}
-
 	"item_health_tome_modifiers"
 	{
-   		// General
-   		//-------------------------------------------------------------------------------------------------------------
-   		"ID"                            "1132"  // unique ID number for this item.  Do not change this once 
-   		"BaseClass"                     "item_datadriven"
-   		"ItemBaseLevel"                 "1"
-		   		// Stats
-   		//-------------------------------------------------------------------------------------------------------------
-   		"AbilityCastRange"              "9999"
-   		"AbilityCastPoint"                      "0.0"    
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"1132"  // unique ID number for this item.  Do not change this once 
+		"BaseClass"						"item_datadriven"
+		"ItemBaseLevel"					"1"
 
-   		"Modifiers"
-    	{
-             "modifier_health_tome"
-             {
-                "Passive"               "1"
-                "IsHidden"				"1"
-                "Attributes"       "MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT" 
-                "Properties"
-                {
-                         "MODIFIER_PROPERTY_HEALTH_BONUS" 			"100"
-                }
-             }
-        }   
+		// Stats
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"				"9999"
+		"AbilityCastPoint"				"0.0"    
 
+		"Modifiers"
+		{
+			"modifier_health_tome"
+			{
+				"Passive"				"1"
+				"IsHidden"				"1"
+				"Attributes"			"MODIFIER_ATTRIBUTE_MULTIPLE | MODIFIER_ATTRIBUTE_PERMANENT" 
+				"Properties"
+				{
+					"MODIFIER_PROPERTY_HEALTH_BONUS" 			"100"
+				}
+			}
+		}   
 	}
 
 	//=================================================================================================================
@@ -48,7 +37,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"1124"	// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"                 "DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
 		"Model"							"models/props_gameplay/salve_blue.mdl"
 		"BaseClass"						"item_datadriven"
@@ -74,179 +63,177 @@
 		"ItemInitialCharges"			"1"
 		"SideShop"						"1"
 
-
-		
-	    "Modifiers"
-	    {
-		"dealDamage1"
+		"Modifiers"
 		{
-		    "OnCreated"
-		    {
-			"Damage"
+			"dealDamage1"
 			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"1"
-			    "Target"	"TARGET"
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"1"
+						"Target"	"TARGET"
+					}
+				}
 			}
-		    }
+			"dealDamage2"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"2"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage4"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"4"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage8"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"8"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage16"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"16"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage32"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"32"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage64"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"64"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage128"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"128"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage256"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"256"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage512"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"512"
+						"Target"	"TARGET"
+					}
+				}
+			}	
+			"dealDamage1024"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"1024"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage2048"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"2048"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage4096"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"4096"
+						"Target"	"TARGET"
+					}
+				}
+			}
+			"dealDamage8192"
+			{
+				"OnCreated"
+				{
+					"Damage"
+					{
+						"Type"	"DAMAGE_TYPE_PURE"
+						"Damage"	"8192"
+						"Target"	"TARGET"
+					}
+				}
+			}
 		}
-		"dealDamage2"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"2"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage4"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"4"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage8"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"8"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage16"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"16"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage32"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"32"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage64"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"64"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage128"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"128"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage256"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"256"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage512"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"512"
-			    "Target"	"TARGET"
-			}
-		    }
-		}	
-		"dealDamage1024"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"1024"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage2048"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"2048"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage4096"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"4096"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-		"dealDamage8192"
-		{
-		    "OnCreated"
-		    {
-			"Damage"
-			{
-			   "Type"	"DAMAGE_TYPE_PURE"
-			    "Damage"	"8192"
-			    "Target"	"TARGET"
-			}
-		    }
-		}
-	    }
 	}
 
 	"item_tome_of_wisdom"
@@ -282,7 +269,6 @@
 			"SpendCharge"
 			{}
 		}
-
 	}
 
 	"item_tome_of_damage"
@@ -316,7 +302,6 @@
 				"Caster"				"CASTER"
 			}
 		}
-
 	}
 
 	"item_tome_of_health"
@@ -352,9 +337,7 @@
 			"SpendCharge"
 			{}
 		}
-
 	}
-
 
 	//=================================================================================================================
 	// Healing Salve - 1000 over time
@@ -376,7 +359,7 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"100"
 		"AbilityCastPoint"				"0.0"
-		
+
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"75"
@@ -448,6 +431,7 @@
 			}
 		}
 	}
+
 	//=================================================================================================================
 	// Healing Salve - 750 instant
 	//=================================================================================================================
@@ -511,19 +495,19 @@
 		"ItemKillable"					"0"
 
 		 // Casting
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityCastRange"       "9999999999"
-                "AbilityCastPoint"       "0"
-                "AbilityCastAnimation"  "pudge_meat_hook"
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityCastRange"       "9999999999"
+				"AbilityCastPoint"       "0"
+				"AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-                "AbilityCooldown"        "1"
+		//-------------------------------------------------------------------------------------------------------------
+				"AbilityCooldown"        "1"
 
-        // Cost
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityManaCost"        "0"
+		// Cost
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -537,7 +521,7 @@
 
 
 		"OnSpellStart"
-        {
+		{
 			"SpawnUnit"
 			{
 				"UnitName"				"npc_vision_dummy"
@@ -572,20 +556,20 @@
 		"ItemSellable"					"0"
 
 		 // Casting
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCastRange"       "100"
-        "AbilityCastPoint"       ".1"
-        "AbilityChannelTime"			"1.5"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"       "100"
+		"AbilityCastPoint"       ".1"
+		"AbilityChannelTime"			"1.5"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"        
-                
+				
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-                "AbilityCooldown"        "30"
+		//-------------------------------------------------------------------------------------------------------------
+				"AbilityCooldown"        "30"
 
-        // Cost
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityManaCost"        "0"
+		// Cost
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -595,7 +579,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		"OnChannelSucceeded"
-                {
+				{
 
 						"SpawnUnit"
 						{
@@ -649,20 +633,20 @@
 		"ItemSellable"					"0"
 
 		 // Casting
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCastRange"       "100"
-        "AbilityCastPoint"       "0.1"
-        "AbilityChannelTime"			"1.5"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"       "100"
+		"AbilityCastPoint"       "0.1"
+		"AbilityChannelTime"			"1.5"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-                
+				
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-                "AbilityCooldown"        "30"
+		//-------------------------------------------------------------------------------------------------------------
+				"AbilityCooldown"        "30"
 
-        // Cost
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityManaCost"        "0"
+		// Cost
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -672,7 +656,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		"OnChannelSucceeded"
-                {
+				{
 
 						"SpawnUnit"
 						{
@@ -726,20 +710,20 @@
 		"ItemSellable"					"0"
 
 		 // Casting
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCastRange"       "100"
-        "AbilityCastPoint"       "0.1"
-        "AbilityChannelTime"			"1.5"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"       "100"
+		"AbilityCastPoint"       "0.1"
+		"AbilityChannelTime"			"1.5"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-                
+				
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-                "AbilityCooldown"        "30"
+		//-------------------------------------------------------------------------------------------------------------
+				"AbilityCooldown"        "30"
 
-        // Cost
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityManaCost"        "0"
+		// Cost
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -749,7 +733,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		"OnChannelSucceeded"
-                {
+				{
 
 						"SpawnUnit"
 						{
@@ -803,20 +787,20 @@
 		"ItemSellable"					"0"
 
 		 // Casting
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCastRange"       "100"
-        "AbilityCastPoint"       "0.1"
-        "AbilityChannelTime"			"1.5"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"       "100"
+		"AbilityCastPoint"       "0.1"
+		"AbilityChannelTime"			"1.5"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-                
+				
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-                "AbilityCooldown"        "30"
+		//-------------------------------------------------------------------------------------------------------------
+				"AbilityCooldown"        "30"
 
-        // Cost
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityManaCost"        "0"
+		// Cost
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -826,7 +810,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		"OnChannelSucceeded"
-                {
+				{
 
 						"SpawnUnit"
 						{
@@ -880,20 +864,20 @@
 		"ItemSellable"					"0"
 
 		 // Casting
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCastRange"       "100"
-        "AbilityCastPoint"       "0.1"
-        "AbilityChannelTime"			"1.5"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"       "100"
+		"AbilityCastPoint"       "0.1"
+		"AbilityChannelTime"			"1.5"
 		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-                
+				
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-                "AbilityCooldown"        "30"
+		//-------------------------------------------------------------------------------------------------------------
+				"AbilityCooldown"        "30"
 
-        // Cost
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityManaCost"        "0"
+		// Cost
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -903,7 +887,7 @@
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
 		"OnChannelSucceeded"
-                {
+				{
 
 						"SpawnUnit"
 						{
@@ -959,19 +943,19 @@
 		"ItemKillable"					"0"
 
 		 // Casting
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityCastRange"       "1200"
-                "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-                "AbilityCastAnimation"  "pudge_meat_hook"
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityCastRange"       "1200"
+				"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
+				"AbilityCastAnimation"  "pudge_meat_hook"
 				"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-                "AbilityCooldown"        "1"
+		//-------------------------------------------------------------------------------------------------------------
+				"AbilityCooldown"        "1"
 
-        // Cost
-                //-------------------------------------------------------------------------------------------------------------
-                "AbilityManaCost"        "0"
+		// Cost
+				//-------------------------------------------------------------------------------------------------------------
+				"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1132,18 +1116,18 @@
 		"ItemKillable"					"0"
 
 		 // Casting
-        "AbilityCastRange"       "1200"
-        "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-        "AbilityCastAnimation"  "pudge_meat_hook"
+		"AbilityCastRange"       "1200"
+		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
+		"AbilityCastAnimation"  "pudge_meat_hook"
 		"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCooldown"        "40"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "40"
 
-        // Cost
-        //-----------------------------------------------------------------------------------------------------
-        "AbilityManaCost"        "0"
+		// Cost
+		//-----------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1158,16 +1142,16 @@
 
 
 		"OnSpellStart"
-        {
+		{
 
-        	"RunScript"
+			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"SpellLevel"			"1"	
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "SpawnBarrier"				
-            }
+					"Function"           "SpawnBarrier"				
+			}
 
 		}
 
@@ -1185,18 +1169,18 @@
 		"ItemKillable"					"0"
 
 		 // Casting
-        "AbilityCastRange"       "1200"
-        "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-        "AbilityCastAnimation"  "pudge_meat_hook"
+		"AbilityCastRange"       "1200"
+		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
+		"AbilityCastAnimation"  "pudge_meat_hook"
 		"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCooldown"        "40"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "40"
 
-        // Cost
-        //-----------------------------------------------------------------------------------------------------
-        "AbilityManaCost"        "0"
+		// Cost
+		//-----------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1211,17 +1195,17 @@
 
 
 		"OnSpellStart"
-        {
+		{
 
-        	"RunScript"
+			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"SpellLevel"			"2"	
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "SpawnBarrier"				
-            }
-            
+					"Function"           "SpawnBarrier"				
+			}
+			
 		}
 
 	}
@@ -1238,18 +1222,18 @@
 		"ItemKillable"					"0"
 
 		 // Casting
-        "AbilityCastRange"       "1200"
-        "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-        "AbilityCastAnimation"  "pudge_meat_hook"
+		"AbilityCastRange"       "1200"
+		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
+		"AbilityCastAnimation"  "pudge_meat_hook"
 		"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCooldown"        "40"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "40"
 
-        // Cost
-        //-----------------------------------------------------------------------------------------------------
-        "AbilityManaCost"        "0"
+		// Cost
+		//-----------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1264,17 +1248,17 @@
 
 
 		"OnSpellStart"
-        {
+		{
 
-        	"RunScript"
+			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"SpellLevel"			"3"	
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "SpawnBarrier"				
-            }
-            
+					"Function"           "SpawnBarrier"				
+			}
+			
 		}
 
 	}
@@ -1291,18 +1275,18 @@
 		"ItemKillable"					"0"
 
 		 // Casting
-        "AbilityCastRange"       "1200"
-        "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-        "AbilityCastAnimation"  "pudge_meat_hook"
+		"AbilityCastRange"       "1200"
+		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
+		"AbilityCastAnimation"  "pudge_meat_hook"
 		"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCooldown"        "40"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "40"
 
-        // Cost
-        //-----------------------------------------------------------------------------------------------------
-        "AbilityManaCost"        "0"
+		// Cost
+		//-----------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1317,17 +1301,17 @@
 
 
 		"OnSpellStart"
-        {
+		{
 
-        	"RunScript"
+			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"SpellLevel"			"4"	
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "SpawnBarrier"				
-            }
-            
+					"Function"           "SpawnBarrier"				
+			}
+			
 		}
 
 	}
@@ -1344,18 +1328,18 @@
 		"ItemKillable"					"0"
 
 		 // Casting
-        "AbilityCastRange"       "1200"
-        "AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-        "AbilityCastAnimation"  "pudge_meat_hook"
+		"AbilityCastRange"       "1200"
+		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
+		"AbilityCastAnimation"  "pudge_meat_hook"
 		"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
-        //-------------------------------------------------------------------------------------------------------------
-        "AbilityCooldown"        "40"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"        "40"
 
-        // Cost
-        //-----------------------------------------------------------------------------------------------------
-        "AbilityManaCost"        "0"
+		// Cost
+		//-----------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1370,21 +1354,22 @@
 
 
 		"OnSpellStart"
-        {
+		{
 
-        	"RunScript"
+			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"SpellLevel"			"5"	
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "SpawnBarrier"				
-            }
-            
+					"Function"           "SpawnBarrier"				
+			}
+			
 		}
 
 	}
-			//=================================================================================================================
+
+	//=================================================================================================================
 	// Barathrum Lantern
 	//=================================================================================================================
 	"item_barathrum_lantern"
@@ -1394,7 +1379,8 @@
 		"ID"							"1133"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_barathrum_lantern"
 		"AbilityTextureName"			"item_barathrum_lantern"
 		"ItemKillable"					"0"
 
@@ -1407,8 +1393,8 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-
 	}
+
 	"item_barathrum_lantern_2"
 	{
 		// General
@@ -1416,7 +1402,8 @@
 		"ID"							"1134"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_barathrum_lantern"
 		"AbilityTextureName"			"item_barathrum_lantern"
 		"ItemKillable"					"0"
 
@@ -1429,7 +1416,6 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-
 	}
 
 	"item_barathrum_lantern_3"
@@ -1439,7 +1425,8 @@
 		"ID"							"1135"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_barathrum_lantern"
 		"AbilityTextureName"			"item_barathrum_lantern"
 		"ItemKillable"					"0"
 
@@ -1452,7 +1439,6 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-
 	}
 
 	"item_barathrum_lantern_4"
@@ -1462,7 +1448,8 @@
 		"ID"							"1136"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_barathrum_lantern"
 		"AbilityTextureName"			"item_barathrum_lantern"
 		"ItemKillable"					"0"
 
@@ -1475,7 +1462,6 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-
 	}
 
 	"item_barathrum_lantern_5"
@@ -1485,7 +1471,8 @@
 		"ID"							"1137"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_barathrum_lantern"
 		"AbilityTextureName"			"item_barathrum_lantern"
 		"ItemKillable"					"0"
 
@@ -1498,20 +1485,16 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-
 	}
-
-
-
 
 	//=================================================================================================================
 	// Lycan Paws
-	//================== ===============================================================================================
+	//=================================================================================================================
 	"item_lycan_paw"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1128"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"2000"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
@@ -1534,12 +1517,12 @@
 		{
 			"lycan_paws_speed"
 			{
-				"Passive" "1"
-				"IsHidden"  "1"
+				"Passive"	"1"
+				"IsHidden"	"1"
 
 				"Properties"
 				{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
 				}
 			}
 		}
@@ -1557,14 +1540,13 @@
 				"movespeed_bonus"		"75"
 			}
 		}
-
 	}
 
 	"item_lycan_paw_2"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1016"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"2001"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
@@ -1581,8 +1563,6 @@
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
 
-
-
 		"OnSpellStart"
 		{
 			"ApplyModifier"
@@ -1591,8 +1571,6 @@
 				"ModifierName"			"lycan_paws_speed_2"
 			}
 		}
-
-
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -1630,7 +1608,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1021"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"2002"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
@@ -1696,7 +1674,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1022"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"2003"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
@@ -1719,7 +1697,7 @@
 			"ApplyModifier"
 			{
 				"Target"			"CASTER"
-				"ModifierName"			"lycan_paws_speed_4"
+				"ModifierName"		"lycan_paws_speed_4"
 			}
 		}
 
@@ -1754,7 +1732,6 @@
 				"var_type"			"FIELD_INTEGER"
 				"movespeed_bonus"	"150"
 			}
-
 		}
 	}
 
@@ -1762,7 +1739,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1023"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"2004"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
@@ -2099,15 +2076,15 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnGrapplingHook"				
-            }
-        }
+					"Function"           "OnGrapplingHook"				
+			}
+		}
 	}
 
 	"item_grappling_hook_2"
@@ -2151,15 +2128,15 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnGrapplingHook_2"				
-            }
-        }
+					"Function"           "OnGrapplingHook_2"				
+			}
+		}
 	}
 
 	"item_grappling_hook_3"
@@ -2203,15 +2180,15 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnGrapplingHook_3"				
-            }
-        }
+					"Function"           "OnGrapplingHook_3"				
+			}
+		}
 	}
 
 	"item_grappling_hook_4"
@@ -2255,15 +2232,15 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnGrapplingHook_4"				
-            }
-        }
+					"Function"           "OnGrapplingHook_4"				
+			}
+		}
 	}
 
 	"item_grappling_hook_5"
@@ -2307,15 +2284,15 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			 "POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnGrapplingHook_5"				
-            }
-        }
+					"Function"           "OnGrapplingHook_5"				
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -2357,16 +2334,16 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			"POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnTinyArm"				
-            }
+					"Function"           "OnTinyArm"				
+			}
 
-        }
+		}
 	}
 
 	"item_tiny_arm_2"
@@ -2405,16 +2382,16 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			"POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnTinyArm"				
-            }
+					"Function"           "OnTinyArm"				
+			}
 
-        }
+		}
 	}
 	"item_tiny_arm_3"
 	{
@@ -2452,16 +2429,16 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			"POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnTinyArm"				
-            }
+					"Function"           "OnTinyArm"				
+			}
 
-        }
+		}
 	}
 	"item_tiny_arm_4"
 	{
@@ -2499,16 +2476,16 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			"POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnTinyArm"				
-            }
+					"Function"           "OnTinyArm"				
+			}
 
-        }
+		}
 	}
 	"item_tiny_arm_5"
 	{
@@ -2546,16 +2523,16 @@
 		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
-        {
+		{
 			"RunScript"
 			{
 					"Caster"			"CASTER"
 					"Target"			"POINT"
 					"ScriptFile"         "scripts/vscripts/abilities.lua"
-                  	"Function"           "OnTinyArm"				
-            }
+					"Function"           "OnTinyArm"				
+			}
 
-        }
+		}
 	}
 
 	//=================================================================================================================
@@ -2583,4 +2560,28 @@
 		"ItemKillable"					"0"
 	}
 
+	//=================================================================================================================
+	// Recipe: Lycan's Paw 2
+	//=================================================================================================================
+	"item_recipe_lycan_paw_2"
+	{
+		// General
+		//-------------------------------------------------------------------------------------------------------------
+		"ID"							"3000"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"Model"							"models/props_gameplay/recipe.vmdl"
+
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"ItemShopTags"					""
+
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_lycan_paw_2"
+		"ItemRequirements"
+		{
+			"01"						"item_lycan_paw;item_lycan_paw"
+		}
+	}
 }

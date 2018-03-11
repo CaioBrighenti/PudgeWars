@@ -9,16 +9,30 @@
 	"npc_dota_hero_pudge_wars_pudge"
 	{
 		"override_hero"			"npc_dota_hero_pudge"
-		
+
+		"ArmorPhysical"				"-1.42"
+		"MagicalResistance"			"0"
+
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityLayout"				"5"
 		"Ability1"				"pudge_wars_custom_hook"		// Ability 1
 		"Ability2"				"pudge_wars_empty1"				// Ability 2
 		"Ability3"				"pudge_wars_empty2"				// Ability 3
 		"Ability4"				"pudge_wars_empty3"				// Ability 4
 		"Ability5"				"pudge_wars_abilities_up"		// Ability 5
 		"Ability6"				"generic_hidden"				// Ability 6
+		"Ability7"				"pudge_wars_upgrade_hook_damage"
+		"Ability8"				"pudge_wars_upgrade_hook_range"
+		"Ability9"				"pudge_wars_upgrade_hook_speed"
+		"Ability10"				"pudge_wars_upgrade_hook_size"
+		"Ability11"				"pudge_wars_abilities_down"
+
+		"Ability12"				"generic_hidden"
+		"Ability13"				"generic_hidden"
+		"Ability14"				"generic_hidden"
+		"Ability15"				"generic_hidden"
+		"Ability16"				"generic_hidden"
+		"Ability17"				"generic_hidden"
 
 		"VisionNighttimeRange"		"600"
 		"VisionDaytimeRange"		"600"
@@ -27,15 +41,12 @@
 		"AttackDamageMax"			"70"
 		"StatusHealth"				"930"
 		"MovementSpeed"				"350"
-		"MagicalResistance"			"0"
-		
+
 		"AttributeBaseStrength"		"30"										// Base strength
 		"AttributeStrengthGain"		"3"
 		"AttributeBaseAgility"		"10"										// Base agility
 		"AttributeAgilityGain"		"0"
 		"AttributeBaseIntelligence"	"10"										// Base intelligence
 		"AttributeIntelligenceGain"	"0"
-
-		"ArmorPhysical"				"-1.42"
 	}
 }

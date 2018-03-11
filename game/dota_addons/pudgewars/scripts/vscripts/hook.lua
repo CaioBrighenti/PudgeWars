@@ -1,4 +1,5 @@
 print("[HOOK] hook loading")
+
 function calcDamage(hero,v, damage, speed)
 	--Additional damage mods
 	local hookdamage = damage
@@ -111,7 +112,7 @@ function findEntity(entities, vars_table, forward, bounces)
 		for k,v in pairs(entities) do
 			--if string.find(v:GetClassname(), "pudge") or string.find(v:GetClassname(), "mine") then
 			if vars_table[0] == nil then
-				if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((_G.shield_carrier == nil) or (_G.shield_carrier ~= v)) then        
+				if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((PudgeWarsMode.shield_carrier == nil) or (PudgeWarsMode.shield_carrier ~= v)) then        
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact')        
 					vars_table[2] = true
 					if v:HasModifier("modifier_pudge_meat_hook") and (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
@@ -173,7 +174,7 @@ function findEntity(entities, vars_table, forward, bounces)
 						end
 					end
 					vars_table[0] = v
-				elseif ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((_G.shield_carrier ~= nil) or (_G.shield_carrier == v)) or (string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(), "barrier") and v:IsAlive()) then 
+				elseif ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((PudgeWarsMode.shield_carrier ~= nil) or (PudgeWarsMode.shield_carrier == v)) or (string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(), "barrier") and v:IsAlive()) then 
 					if forward then
 						vars_table[5] = true --BOUNCE
 
@@ -267,15 +268,16 @@ end
 function LaunchHook(keys)  
 	local hero = keys.caster
 	local pudge = PudgeArray[hero:GetPlayerID()]
+	local hook_ab = hero:FindAbilityByName("pudge_wars_custom_hook")
 
 	local hooks = {}
-	local speed = 800 + 70 * pudge.hookSpeedLevel --800
-	local distance = 1500 + 175 * pudge.hookDistanceLevel
-	local radius = 100 + 15 * pudge.hookSizeLevel
+	local damage = hook_ab:GetSpecialValueFor("base_damage")
+	local distance = hook_ab:GetSpecialValueFor("base_range")
+	local speed = hook_ab:GetSpecialValueFor("base_speed")
+	local radius = hook_ab:GetSpecialValueFor("base_radius")
 	local hookCount = 1
 	local hooked = nil
-	local damage = 250 + 35 * pudge.hookDamageLevel
-	local modelScale = 0.9 + (.1 * pudge.hookSizeLevel)
+	local modelScale = 0.9
 
 	local dropped = false -- Has a hero been dropped from the hook? If so, don't rehook them or anyone
 	local topBound = 1600 -- Top wall y coordinate
@@ -297,6 +299,28 @@ function LaunchHook(keys)
 	local fire_dummy = nil
 	local stop_flame_hook = false
 
+	local hook_damage_ab = hero:FindAbilityByName("pudge_wars_upgrade_hook_damage")
+	local hook_range_ab = hero:FindAbilityByName("pudge_wars_upgrade_hook_range")
+	local hook_speed_ab = hero:FindAbilityByName("pudge_wars_upgrade_hook_speed")
+	local hook_size_ab = hero:FindAbilityByName("pudge_wars_upgrade_hook_size")
+
+	if hook_damage_ab then
+		damage = damage + hook_damage_ab:GetSpecialValueFor("bonus_damage")
+	end
+
+	if hook_range_ab then
+		distance = distance + hook_range_ab:GetSpecialValueFor("bonus_range")
+	end
+
+	if hook_speed_ab then
+		speed = speed + hook_speed_ab:GetSpecialValueFor("bonus_speed")
+	end
+
+	if hook_size_ab then
+		radius = radius + hook_size_ab:GetSpecialValueFor("bonus_radius")
+		modelScale = modelScale + hook_size_ab:GetSpecialValueFor("hook_radius")
+	end
+
 	if pudge.is_throwing_hook then
 		local abil = hero:FindAbilityByName("pudge_wars_custom_hook")
 		abil:EndCooldown()
@@ -309,16 +333,17 @@ function LaunchHook(keys)
 	-- only load pudge hook first time
 	if pudge.modelName == "" then
 		if PudgeArray[hero:GetPlayerOwnerID()].modelName == "" then
-				PudgeWarsMode:AssignHookModel(hero)    
+			PudgeWarsMode:AssignHookModel(hero)    
 		end
 	end
 
 	local modelName = pudge.modelName
 	local complete = false  
 
-	if hero:HasModifier("rune_slow_auro") then
+	if hero:HasModifier("modifier_slow_rune") then
 		speed = speed - 300
 	end
+
 	if hero:HasModifier("modifier_rune_haste") then
 		speed = speed + 400
 	end
@@ -330,12 +355,13 @@ function LaunchHook(keys)
 	hooks[hookCount] = CreateUnitByName("npc_reflex_hook_test", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
 	hooks[hookCount]:SetModelScale(modelScale)
 	hooks[hookCount]:SetAbsOrigin(hero:GetAbsOrigin() + Vector(0,0,125))
+
 	if modelName ~= "none" then
 		hooks[hookCount]:SetOriginalModel(modelName)
 		hooks[hookCount]:SetModel(modelName)
 	end
+
 	if pudge.use_flame then
-		
 		fire_dummy = CreateUnitByName("npc_firefly_hook_dummy", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
 		fire_dummy:FindAbilityByName("reflex_dummy_unit"):SetLevel(1)
 		fire_dummy:AddAbility("pudge_wars_firefly")
@@ -353,7 +379,7 @@ function LaunchHook(keys)
 			end
 
 			fire_dummy:SetOrigin(Vector(-2368, 2368,0))
-			table.insert(PudgeWarsMode.all_flame_hooks,fire_dummy)
+			table.insert(_G.all_flame_hooks,fire_dummy)
 			return
 		end})
 	end
@@ -391,12 +417,15 @@ function LaunchHook(keys)
 		endTime = GameRules:GetGameTime(),
 		useGameTime = true,
 		errorcallback = function(reflex, args)
-	pudge.is_throwing_hook = false -- if timer breaks, reset is_throwing_hook so they can keep throwing hooks
-	for key,val in pairs(hooks) do
-			hooks[key]:Destroy()
-						hooks[key] = nil
-	end
+			pudge.is_throwing_hook = false -- if timer breaks, reset is_throwing_hook so they can keep throwing hooks
+
+			for key,val in pairs(hooks) do
+				hooks[key]:Destroy()
+				hooks[key] = nil
+			end
+
 		end,
+		
 		callback = function(reflex, args)
 			hooked = vars_table[0]
 			hero = vars_table[1]
@@ -411,22 +440,25 @@ function LaunchHook(keys)
 						--hooked:RemoveModifierByName("modifier_rooted")
 						hooked:RemoveModifierByName("modifier_pudge_meat_hook")
 
-			if hero:HasItemInInventory('item_strygwyr_claw_5') then
-		--If the caster has max level strygwyrs, leave rupture for 3 seconds
-		local hooked_rupture = hooked
-		PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-			endTime = GameRules:GetGameTime() + 3,
-			useGameTime = true,
-			callback = function(reflex, args)
-					if hooked_rupture and IsValidEntity(hooked_rupture) then
-				hooked_rupture:RemoveModifierByName("modifier_bloodseeker_rupture")
-					end
-					if vars_table[6] ~= nil then
-				vars_table[6]:Destroy()
-					end
-					return
-			end
-					})   
+						if hero:HasItemInInventory('item_strygwyr_claw_5') then
+						--If the caster has max level strygwyrs, leave rupture for 3 seconds
+						local hooked_rupture = hooked
+						
+						PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
+							endTime = GameRules:GetGameTime() + 3,
+							useGameTime = true,
+							callback = function(reflex, args)
+								if hooked_rupture and IsValidEntity(hooked_rupture) then
+									hooked_rupture:RemoveModifierByName("modifier_bloodseeker_rupture")
+								end
+					
+								if vars_table[6] ~= nil then
+									vars_table[6]:Destroy()
+								end
+								
+								return
+							end
+						})
 			else
 		--Remove rupture unit
 		hooked:RemoveModifierByName("modifier_bloodseeker_rupture")
@@ -434,15 +466,13 @@ function LaunchHook(keys)
 				vars_table[6]:Destroy()
 		end
 			end
-						
-			if (string.find(hooked:GetClassname(),"creature") and string.find(hooked:GetUnitName(),"rune")) or ( string.find(hooked:GetClassname(), "creep" ) and string.find(hooked:GetUnitName(), "mine") and not hooked:IsAlive() ) then
-		--Remove the rune as soon as it has return to the caster
-		hooked:RemoveSelf()
-			else
-		-- Prevent getting stuck
-		FindClearSpaceForUnit(hooked, hooked:GetAbsOrigin(), true)
-
-		end
+				if (string.find(hooked:GetClassname(),"creature") and string.find(hooked:GetUnitName(),"rune")) or ( string.find(hooked:GetClassname(), "creep" ) and string.find(hooked:GetUnitName(), "mine") and not hooked:IsAlive() ) then
+					--Remove the rune as soon as it has return to the caster
+					hooked:RemoveSelf()
+				else
+					-- Prevent getting stuck
+					FindClearSpaceForUnit(hooked, hooked:GetAbsOrigin(), true)
+				end
 
 					hooked = nil
 					dropped = true
@@ -483,16 +513,19 @@ function LaunchHook(keys)
 
 			local diff = nil
 			local hasFire = false
+			
 			if #hooks > 1 then
 				diff = hooks[#hooks]:GetEnd() - hero:GetAbsOrigin()
 			else
 				diff = hooks[#hooks]:GetAbsOrigin() - hero:GetAbsOrigin()
 				hasFire = hooks[#hooks]:HasAbility("pudge_wars_firefly")
 			end
+			
 			diff.z = 0
+			
 			if diff:Length() < linkDeletionTolerance then
 				if hasFire then
-		stop_flame_hook = true
+					stop_flame_hook = true
 				else
 					hooks[#hooks]:Destroy()
 					hooks[#hooks] = nil
@@ -654,8 +687,8 @@ function LaunchHook(keys)
 			end
 
 			--Bounce on shiled barrier target
-			if ((vars_table[5] == true) and ((rebounceTolerance )< 1)) and (vars_table[7] == nil) and (_G.shield_carrier) then
-				diff = _G.shield_carrier:GetAbsOrigin() - hookPos
+			if ((vars_table[5] == true) and ((rebounceTolerance )< 1)) and (vars_table[7] == nil) and (PudgeWarsMode.shield_carrier) then
+				diff = PudgeWarsMode.shield_carrier:GetAbsOrigin() - hookPos
 				has_bounced_on_shield = true
 				rebounceTolerance = rebounceToleranceMax
 				diff = diff:Normalized()
@@ -777,4 +810,3 @@ end
 function ParticleUnit:Destroy()
 	ParticleManager:SetParticleControl(self.particle, self.cpDelete, Vector(0,0,0))
 end
-

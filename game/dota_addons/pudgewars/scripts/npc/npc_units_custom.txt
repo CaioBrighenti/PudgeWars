@@ -192,7 +192,7 @@
             //----------------------------------------------------------------
             
             "Ability1"                          "pudge_wars_ion_shell"              // Ability 1.
-            "Ability2"                          "pudge_wars_hyper_speed_particles"  //Ability 2
+//			"Ability2"                          "pudge_wars_hyper_speed_particles"  //Ability 2
 	    "Ability3"				"pudge_wars_lightning_effect"	    //Ability 3
        
 	    // Attack

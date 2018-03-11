@@ -1,29 +1,5 @@
 print("[FUNCTIONS] functions loading")
 
-function PudgeWarsMode:SetAbilToLevelOne( spawnedUnit , hookAbility)
-    if spawnedUnit:HasAbility(hookAbility) then
-        local ability = spawnedUnit:FindAbilityByName(hookAbility)
-        ability:SetLevel(1)
-    end
-end
-
-function PudgeWarsMode:UpdateUpgradePoints( unit )
-    if unit ~= nil then
-        for i = 0,40 do
-            if unit:HasAbility("pudge_wars_upgrade_points_" .. i) == true then
-                local upgradeSkill = unit:FindAbilityByName("pudge_wars_upgrade_points_" .. i)
-                unit:RemoveAbility("pudge_wars_upgrade_points_" .. i)
-                unit:RemoveModifierByName("pudge_wars_upgrade_points_" .. i .. "_modifier")
-            end
-        end
-        unit:AddAbility('pudge_wars_upgrade_points_' .. PudgeArray[unit:GetPlayerOwnerID()].upgradePoints)
-        local upgradeSkill = unit:FindAbilityByName('pudge_wars_upgrade_points_' .. PudgeArray[unit:GetPlayerOwnerID()].upgradePoints)
-        if upgradeSkill then
-            upgradeSkill:SetLevel(1)
-        end
-    end
-end
-
 function PudgeWarsMode:AssignHookModel(hero)
     PudgeArray[hero:GetPlayerOwnerID()].modelName  = "none"
     --[[
@@ -202,7 +178,6 @@ end
 function PudgeWarsMode:SpawnRuneSpellCasters()
     print("[FUNCTIONS] Spawn Spell Casters")
     local abil_ion_good = nil
-    local hyper_particle = nil
     local lightning_effect = nil
 
     -- ToDo: Add KV-files
@@ -212,9 +187,6 @@ function PudgeWarsMode:SpawnRuneSpellCasters()
     _G.rune_spell_caster_good:AddNewModifier(_G.rune_spell_caster_good , nil, 'modifier_phased', {})
     abil_ion_good = _G.rune_spell_caster_good:FindAbilityByName("pudge_wars_ion_shell")
     abil_ion_good:SetLevel(1)
-
-    hyper_particle = _G.rune_spell_caster_good:FindAbilityByName("pudge_wars_hyper_speed_particles")
-    hyper_particle:SetLevel(1)
 
     lightning_effect = _G.rune_spell_caster_good:FindAbilityByName("pudge_wars_lightning_effect")
     lightning_effect:SetLevel(1)
@@ -312,16 +284,6 @@ function PudgeWarsMode:StartVoting()
 end
 
 function PudgeWarsMode:LaunchTimers()
-	
-    --start spawn rune timer
-    PudgeWarsMode:CreateTimer(DoUniqueString("spawnrune"), {
-	endTime = GameRules:GetGameTime() + 40,
-	useGameTime = true,
-	callback = function(reflex, args)
-	    PudgeWarsMode:SpawnRune()
-	    return GameRules:GetGameTime() + 40
-	end
-    })
 
     --start give gold timer
     PudgeWarsMode:CreateTimer(DoUniqueString("goldtick"), {
