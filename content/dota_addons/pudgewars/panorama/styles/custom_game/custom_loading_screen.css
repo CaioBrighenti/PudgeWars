@@ -24,10 +24,12 @@
 .LabelBig,
 .LabelMid
 {
+	width: 100%;
 	text-transform: uppercase;
 	font-size: 80px;
 	color: #cccccc;
 	text-shadow: 2px 2px 2px #000000;
+	text-align: center;
 }
 
 .LabelMid
@@ -48,7 +50,7 @@
 	pre-transform-scale2d: 1, 1;
 }
 
-#pw-social {
+.pw-social {
 	width: 670px;
 	margin-left: 2%;
 	vertical-align: bottom;
@@ -57,22 +59,24 @@
 	flow-children: down;
 }
 
-#pw-social-title {
+.pw-social-title {
 	width: 100%;
+	margin-top: 20px;
 	margin-bottom: 20px;
 	margin-left: 2%;
 	vertical-align: bottom;
 	padding: 10px;
 	flow-children: down;
+	border-radius: 20px;
 	background-color: #000000da;
 }
 
-#pw-social-buttons {
+.pw-social-buttons {
 	width: 100%;
 	flow-children: right;
 }
 
-#pw-social-buttons Button {
+.pw-social-buttons Button {
 	width: 200px;
 	height: 65px;
 	box-shadow: #000 0 0 10px 0; 
@@ -80,23 +84,23 @@
 	background-position: center center;
 }
 
-.AspectRatio4x3 #pw-social-buttons Button {
+.AspectRatio4x3 .pw-social-buttons Button {
 	width: 180px;
 	height: 59px;
 	box-shadow: #000 0 0 10px 0; 
 	background-position: center center;
 }
 
-#pw-social-buttons Button:hover {
+.pw-social-buttons Button:hover {
 	box-shadow: #111 0 0 15px 0;
 }
 
-#pw-social-buttons Button:active {
+.pw-social-buttons Button:active {
 	box-shadow: #333 0 0 15px 0;
 	width: 198px; 
 }
 
-.AspectRatio4x3 #pw-social-buttons Button:active {
+.AspectRatio4x3 .pw-social-buttons Button:active {
 	width: 178px; 
 }
 
@@ -110,6 +114,12 @@
 	saturation: 1.0;
 }
 
+#pw-social-button-patreon-en {
+	background-image: url("file://{images}/custom_game/loading_screen/patreon.png");
+	background-size: cover;
+}
+
 #pw-social-button-discord-en {
 	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header.png"); 
+	background-size: cover;
 }

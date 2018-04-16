@@ -380,9 +380,8 @@
 		}
 	}
 
-
 	//// PUDGE WARS Strygwyr Claw Rupture
-	"pudge_wars_bloodseeker_rupture_1"
+	"pudge_wars_bloodseeker_rupture"
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
@@ -392,31 +391,11 @@
 		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
 		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"  
-		"MaxLevel"                      "1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"              "0"
-
-		// Time     
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"                 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "0"       
+		"MaxLevel"                      "5"
 		
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"              "9999"
-			
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"   "0.0"   // Only does damage
 
 		// Special
 		//-------------------------------------------------------------------------------------------------------------
@@ -430,259 +409,7 @@
 			"02"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"movement_damage_pct"       "15"
-			}
-			"03"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"damage_cap_amount"         "200"
-			}
-			"04"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"damage_cap_interval"       "0.25"
-			}
-		}
-	}
-
-	"pudge_wars_bloodseeker_rupture_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"                    "22106"                                                      // unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"BaseClass"                     "bloodseeker_rupture"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"  
-		"MaxLevel"                      "1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"              "0"
-
-		// Time     
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"                 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "0"       
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"              "9999"
-			
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"   "0.0"   // Only does damage
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "99"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"movement_damage_pct"       "20"
-			}
-			"03"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"damage_cap_amount"         "200"
-			}
-			"04"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"damage_cap_interval"       "0.25"
-			}
-		}
-	}
-
-	"pudge_wars_bloodseeker_rupture_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"                    "22107"                                                      // unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"BaseClass"                     "bloodseeker_rupture"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"  
-		"MaxLevel"                      "1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"              "0"
-
-		// Time     
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"                 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "0"       
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"              "9999"
-			
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"   "0.0"   // Only does damage
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "99"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"movement_damage_pct"       "25"
-			}
-			"03"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"damage_cap_amount"         "200"
-			}
-			"04"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"damage_cap_interval"       "0.25"
-			}
-		}
-	}
-
-	"pudge_wars_bloodseeker_rupture_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"                    "22108"                                                      // unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"BaseClass"                     "bloodseeker_rupture"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"  
-		"MaxLevel"                      "1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"              "0"
-
-		// Time     
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"                 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "0"       
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"              "9999"
-			
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"   "0.0"   // Only does damage
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "99"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"movement_damage_pct"       "30"
-			}
-			"03"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"damage_cap_amount"         "200"
-			}
-			"04"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"damage_cap_interval"       "0.25"
-			}
-		}
-	}
-
-	"pudge_wars_bloodseeker_rupture_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"                    "22109"                                                      // unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
-		"BaseClass"                     "bloodseeker_rupture"
-		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitTargetTeam"         "DOTA_UNIT_TARGET_TEAM_ENEMY"
-		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
-		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"  
-		"MaxLevel"                      "1"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"              "0"
-
-		// Time     
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"               "0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"                 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"               "0"       
-		
-		// Cast Range
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"              "9999"
-			
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityModifierSupportValue"   "0.0"   // Only does damage
-
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "99"
-			}
-			"02"
-			{
-				"var_type"                  "FIELD_INTEGER"
-				"movement_damage_pct"       "35"
+				"movement_damage_pct"       "15 20 25 30 35"
 			}
 			"03"
 			{
@@ -867,8 +594,6 @@
 				"Aura_Teams"            "DOTA_UNIT_TARGET_TEAM_BOTH"
 				"Aura_Types"            "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_CREEP"
 				"Aura_ApplyToCaster"    "0"
-
-
 			}
 
 			"fountain_regen"
@@ -878,13 +603,8 @@
 					"MODIFIER_PROPERTY_HEALTH_REGEN_PERCENTAGE"   "1"
 					"MODIFIER_PROPERTY_PHYSICAL_ARMOR_BONUS"    "0"
 				}
-
-   
 			}
-
 		}
-
-
 	}
 
 	"tiny_arm"
@@ -906,7 +626,7 @@
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"              "3000"
-		"AbilityCastPoint"              "0.0 0.0 0.0 0.0"
+		"AbilityCastPoint"              "0.0"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
@@ -927,41 +647,39 @@
 			"01"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"duration"              "1.0 1.0 1.0 1.0"
+				"duration"              "1.0"
 			}
 			"02"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"grab_radius"           "250 250 250 250"
+				"grab_radius"           "250"
 			}
 			"03"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"radius"                "275 275 275 275"
+				"radius"                "275"
 			}
 			"04"
 			{
 				"var_type"              "FIELD_INTEGER"
-				"bonus_damage_pct"      "0 0 0 0"
+				"bonus_damage_pct"      "0"
 			}
 			"05"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"grow_bonus_damage_pct"     "0 0 0 0"
+				"grow_bonus_damage_pct"     "0"
 			}
 			"06"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"tooltip_range"     "2500"
+				"tooltip_range"				"2500"
 			}
 			"07"
 			{
 				"var_type"                  "FIELD_INTEGER"
-				"toss_damage"               "0 0 0 0"
+				"toss_damage"               "0"
 			}
-
 		}
-
 	}
 
 	"vision_dummy_passive"
@@ -972,12 +690,11 @@
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_PASSIVE "
 		"AbilityTextureName"            "reveal"
 		"MaxLevel"                      "1"
-		
+
 		// Modifiers
 		//-------------------------------------------------------------------------------------------------------------
 		"Modifiers"
 		{
-		
 			// Vision Dummy Passive
 			//---------------------------------------------------------------------------------------------------------
 			"vision_dummy_modifier"
@@ -989,273 +706,35 @@
 					"MODIFIER_STATE_UNSELECTABLE" "MODIFIER_STATE_VALUE_ENABLED"
 				}
 			}
-			
 		}
-		
 	}
 
 	"pudge_wars_grappling_hook"
 	{
-		
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"BaseClass"                 "shredder_timber_chain"
 		"AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"      "2500"
 		"AbilityCastPoint"      "0.3"
+
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"       "10.0"
+		"AbilityCooldown"       "10.0 9.0 8.0 7.0 6.0"
 		
 		// Max Level
 		//-------------------------------------------------------------------------------------------------------------
-		"MaxLevel"      "1"
+		"MaxLevel"      "5"
 		
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"     "1"
 		// Cost
 		//-------------------------------------------------------------------------------------------------------------
-		
 		"AbilityManaCost"       "0"
+
 		// Special
 		//-------------------------------------------------------------------------------------------------------------    
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"chain_radius"      "40"
-			}
-			"02"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"range"             "2300"
-			}
-			"03"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"damage_radius"     "0"
-			}
-			"04"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"speed"             "1000"
-			}
-			"05"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"damage"            "0"
-			}
-		} 
-	}  
-
-	"pudge_wars_grappling_hook_2"
-	{
-		
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                 "shredder_timber_chain"
-		"AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"      "2500"
-		"AbilityCastPoint"      "0.3"
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"       "9.0"
-		
-		// Max Level
-		//-------------------------------------------------------------------------------------------------------------
-		"MaxLevel"      "1"
-		
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"     "1"
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		
-		"AbilityManaCost"       "0"
-		// Special
-		//-------------------------------------------------------------------------------------------------------------    
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"chain_radius"      "40"
-			}
-			"02"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"range"             "2300"
-			}
-			"03"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"damage_radius"     "0"
-			}
-			"04"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"speed"             "1000"
-			}
-			"05"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"damage"            "0"
-			}
-		} 
-	}   
-	"pudge_wars_grappling_hook_3"
-	{
-		
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                 "shredder_timber_chain"
-		"AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"      "2500"
-		"AbilityCastPoint"      "0.3"
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"       "8.0"
-		
-		// Max Level
-		//-------------------------------------------------------------------------------------------------------------
-		"MaxLevel"      "1"
-		
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"     "1"
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		
-		"AbilityManaCost"       "0"
-		// Special
-		//-------------------------------------------------------------------------------------------------------------    
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"chain_radius"      "40"
-			}
-			"02"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"range"             "2300"
-			}
-			"03"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"damage_radius"     "0"
-			}
-			"04"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"speed"             "1000"
-			}
-			"05"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"damage"            "0"
-			}
-		} 
-	}   
-	"pudge_wars_grappling_hook_4"
-	{
-		
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                 "shredder_timber_chain"
-		"AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"      "2500"
-		"AbilityCastPoint"      "0.3"
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"       "7.0"
-		
-		// Max Level
-		//-------------------------------------------------------------------------------------------------------------
-		"MaxLevel"      "1"
-		
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"     "1"
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		
-		"AbilityManaCost"       "0"
-		// Special
-		//-------------------------------------------------------------------------------------------------------------    
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"chain_radius"      "40"
-			}
-			"02"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"range"             "2300"
-			}
-			"03"
-			{
-				"var_type"          "FIELD_INTEGER"
-				"damage_radius"     "0"
-			}
-			"04"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"speed"             "1000"
-			}
-			"05"
-			{   
-				"var_type"          "FIELD_INTEGER"
-				"damage"            "0"
-			}
-		} 
-	}
-	"pudge_wars_grappling_hook_5"
-	{
-		
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"                 "shredder_timber_chain"
-		"AbilityBehavior"           "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"      "2500"
-		"AbilityCastPoint"      "0.3"
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"       "6.0"
-		
-		// Max Level
-		//-------------------------------------------------------------------------------------------------------------
-		"MaxLevel"      "1"
-		
-		// Damage
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"     "1"
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		
-		"AbilityManaCost"       "0"
-		// Special
-		//-------------------------------------------------------------------------------------------------------------    
-
 		"AbilitySpecial"
 		{
 			"01"
@@ -1293,7 +772,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
+		"ScriptFile"			"abilities/pudge_upgrades.lua"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"	"pudge_wars_upgrade_hook_damage"
 		"MaxLevel"				"10"
@@ -1316,7 +796,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
+		"ScriptFile"			"abilities/pudge_upgrades.lua"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"	"pudge_wars_upgrade_hook_range"
 		"MaxLevel"				"10"
@@ -1339,7 +820,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
+		"ScriptFile"			"abilities/pudge_upgrades.lua"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"	"pudge_wars_upgrade_hook_speed"
 		"MaxLevel"				"10"
@@ -1362,7 +844,8 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
+		"ScriptFile"			"abilities/pudge_upgrades.lua"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_PASSIVE | DOTA_ABILITY_BEHAVIOR_HIDDEN"
 		"AbilityTextureName"	"pudge_wars_upgrade_hook_size"
 		"MaxLevel"				"10"

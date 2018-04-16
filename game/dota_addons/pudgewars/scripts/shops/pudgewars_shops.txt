@@ -2,7 +2,6 @@
 {
 	"consumables"
 	{
-		"item"		"item_greater_salve"
 		"item"		"item_greater_salve_instant"
 		"item"		"item_ward_observer"
 		"item"		"item_pudge_wars_reveal"
@@ -13,10 +12,6 @@
 		"item"		"item_tiny_arm"
 		"item"		"item_grappling_hook"
 		"item"		"item_lycan_paw"
-		"item"		"item_lycan_paw_2"
-		"item"		"item_lycan_paw_3"
-		"item"		"item_lycan_paw_4"
-		"item"		"item_lycan_paw_5"
 		"item"		"item_naix_jaw"
 		"item"		"item_barathrum_lantern"
 		"item"		"item_techies_explosive_barrel"

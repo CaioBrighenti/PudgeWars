@@ -131,55 +131,48 @@ function PudgeWarsMode:KillTarget(caster,unit)
 end
 
 function applyRupture(source, target)
-  local hasStrygwyr = false
-  local ruptureLevel = nil
-  if source ~= nil and target ~= nil then
-	if source:GetTeam() ~= target:GetTeam() then 
-	  for i=0,5 do
-		item = source:GetItemInSlot(i)
-		if item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw' then
-		  hasStrygwyr = true
-		  ruptureLevel = "1"
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw_2' then
-		  hasStrygwyr = true
-		  ruptureLevel = "2"
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw_3' then
-		  hasStrygwyr = true
-		  ruptureLevel = "3"
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw_4' then
-		  hasStrygwyr = true
-		  ruptureLevel = "4"
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw_5' then
-		  hasStrygwyr = true
-		  ruptureLevel = "5"
-		end
-	  end
+	local hasStrygwyr = false
+	local ruptureLevel = nil
 
-	  if hasStrygwyr == true then
-		ruptureUnit =  CreateUnitByName("npc_pudgewars_rupture_dummy", target:GetAbsOrigin(), false, source, source, source:GetTeamNumber())
-		if ruptureUnit then
-		  ruptureUnit:AddNewModifier(ruptureUnit, nil, "modifier_invulnerable", {})
-		  ruptureUnit:AddNewModifier(ruptureUnit, nil, "modifier_phased", {})
-		  local ruptureAbilityName = "pudge_wars_bloodseeker_rupture_" .. ruptureLevel
-		  ruptureUnit:AddAbility(ruptureAbilityName)
-		  ruptureAbility = ruptureUnit:FindAbilityByName( ruptureAbilityName )
-		  if ruptureAbility then
-			ruptureAbility:SetLevel(1)
-			ruptureUnit:CastAbilityOnTarget(target, ruptureAbility, 0)
-		  end
-		  return ruptureUnit
+	if source ~= nil and target ~= nil then
+		if source:GetTeam() ~= target:GetTeam() then 
+			for i = 0, 5 do
+				local item = source:GetItemInSlot(i)
+
+				if item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw' then
+					ruptureLevel = item:GetLevel()
+				end
+			end
+
+			if hasStrygwyr == true then
+				ruptureUnit = CreateUnitByName("npc_pudgewars_rupture_dummy", target:GetAbsOrigin(), false, source, source, source:GetTeamNumber())
+
+				if ruptureUnit then
+					ruptureUnit:AddNewModifier(ruptureUnit, nil, "modifier_invulnerable", {})
+					ruptureUnit:AddNewModifier(ruptureUnit, nil, "modifier_phased", {})
+					local ruptureAbilityName = "pudge_wars_bloodseeker_rupture"
+					ruptureUnit:AddAbility(ruptureAbilityName)
+					ruptureAbility = ruptureUnit:FindAbilityByName( ruptureAbilityName )
+
+					if ruptureAbility then
+						ruptureAbility:SetLevel(ruptureLevel)
+						ruptureUnit:CastAbilityOnTarget(target, ruptureAbility, 0)
+					end
+
+					return ruptureUnit
+				end
+			end 
 		end
-	  end 
 	end
-  end
-  return nil
+
+	return nil
 end
 
 function RevealUsed( keys )
 	local targetUnit = keys.target_entities[1]
 	local caster = keys.caster
 
-	for i=0,5 do
+	for i = 0, 5 do
 		local item = caster:GetItemInSlot(i)
 		if item then
 			if item:GetAbilityName() == 'item_pudge_wars_reveal' then
@@ -244,28 +237,24 @@ function SpawnBarrier( keys )
 	local caster = keys.caster
 	local level = keys.SpellLevel
 
-	CreateUnitByName( "npc_pudge_wars_barrier_" .. level, point, false, caster, caster, caster:GetTeam() ) 
+	CreateUnitByName("npc_pudge_wars_barrier_" .. level, point, false, caster, caster, caster:GetTeam()) 
 end
-
 
 function OnTinyArm( keys )
 	local caster = keys.caster
 	local point = keys.target_points[1]
-	local hasLevel5 = caster:HasItemInInventory("item_tiny_arm_5")
-	
+	local damage = keys.ability:GetSpecialValueFor("damage")
+	local stun_duration = keys.ability:GetSpecialValueFor("stun_duration")
+
 	if point.x < -1440 or point.x > 1440 then
-	for i=0,5 do
-		local item = caster:GetItemInSlot(i)
-		if item and IsValidEntity(item) and string.find(item:GetAbilityName(), "item_tiny") then
-		item:EndCooldown()
-		end
-	end
-	return
+		keys.ability:EndCooldown()
+		return
 	end
 
 	-- don't go on cooldown if there aren't any units
 	local entities = Entities:FindAllInSphere(caster:GetAbsOrigin(), 250)
 	local count = 0
+
 	for k,v in pairs(entities) do
 		if string.find(v:GetClassname(), "pudge") or string.find(v:GetClassname(), "creep") then
 			print(v:GetUnitName())
@@ -274,203 +263,66 @@ function OnTinyArm( keys )
 			end
 		end
 	end
+
 	if count <= 1 then
-		for i=0,5 do
-			local item = caster:GetItemInSlot(i)
-			if item and IsValidEntity(item) and string.find(item:GetAbilityName(), "item_tiny") then
-				item:EndCooldown()
-			end
-		end
+		keys.ability:EndCooldown()
 		return
 	end
 
 	--give them the ability and spawn dummy
 	caster:AddAbility("tiny_arm")
 	local abil = caster:FindAbilityByName("tiny_arm")
-	abil:SetLevel(4)
+	abil:SetLevel(keys.ability:GetLevel())
 	local targetUnit = CreateUnitByName("npc_tiny_arm_dummy", point, false, nil, nil, caster:GetTeam()) 
 
-	--start timer to remove ability
-	PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-		endTime = GameRules:GetGameTime() + .3,
-		useGameTime = true,
-		callback = function(reflex, args)
+	Timers:CreateTimer(0.3, function()
 		caster:RemoveAbility("tiny_arm")
 		targetUnit:ForceKill(false)
-		end
-	  })   
+	end) 
 
-	if hasLevel5 then
+	if keys.ability:GetLevel() == 5 then
 		--start timer to stunf when target lands
-	local startTime = GameRules:GetGameTime()
-	PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-			endTime = GameRules:GetGameTime(),
-		useGameTime = true,
-		callback = function(reflex, args)
-		local entities = Entities:FindAllInSphere(point, 200)
-		for key,ent in pairs(entities) do
-		   if (string.find(ent:GetClassname(), "pudge")) and (ent:HasModifier("modifier_tiny_toss")) then
-			if ent:GetTeam() ~= caster:GetTeam() then
-				ent:AddNewModifier(caster, nil, "modifier_stunned", {duration=2})
-				dealDamage(caster,ent,100)
+		local startTime = GameRules:GetGameTime()
+		Timers:CreateTimer(function()
+			local entities = Entities:FindAllInSphere(point, 200)
+
+			for key,ent in pairs(entities) do
+				if (string.find(ent:GetClassname(), "pudge")) and (ent:HasModifier("modifier_tiny_toss")) then
+					if ent:GetTeam() ~= caster:GetTeam() then
+						ent:AddNewModifier(caster, nil, "modifier_stunned", {duration = stun_duration})
+						dealDamage(caster, ent, damage)
+					end
+
+					return
+				end
 			end
-			return
-		   end
-		end
-		if GameRules:GetGameTime() - startTime > 10 then
-			return
-		end
-		return GameRules:GetGameTime()
-		end
-	  })   	
+
+			if GameRules:GetGameTime() - startTime > 10 then
+				return
+			else
+				return 1.0
+			end
+		end) 	
 	end
 	--Execute the ability
 	caster:CastAbilityOnTarget( targetUnit, abil, caster:GetPlayerOwnerID() )
 end
 
-function OnGrapplingHook( keys )
+function OnGrapplingHook(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 
-	caster:AddAbility("pudge_wars_grappling_hook")
-	local abil = caster:FindAbilityByName("pudge_wars_grappling_hook")
-	abil:SetLevel(1)
-	
+	print(keys.ability:GetLevel())
+	caster:AddAbility("pudge_wars_grappling_hook"):SetLevel(keys.ability:GetLevel())
+	local ab = caster:FindAbilityByName("pudge_wars_grappling_hook")
+
+	local order = {UnitIndex = caster:entindex(), OrderType = DOTA_UNIT_ORDER_CAST_POSITION, Position = targetPoint, AbilityIndex = ab:entindex()}
+	ExecuteOrderFromTable(order)
+
 	--start timer to remove ability
-	PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-		endTime = GameRules:GetGameTime() + 5.5,
-		useGameTime = true,
-		callback = function(reflex, args)
-		caster:RemoveAbility("pudge_wars_grappling_hook")	
-		end
-	  }) 
-
-	if targetPoint ~= null then
-		local order =
-		{
-			UnitIndex = caster:entindex(),
-			OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
-			Position = targetPoint,
-			AbilityIndex = abil:entindex()
-		}
-		ExecuteOrderFromTable(order)
-	end
-end
-
-function OnGrapplingHook_2( keys )
-	local caster = keys.caster
-	local targetPoint = keys.target_points[1]
-	
-	caster:AddAbility("pudge_wars_grappling_hook_2")
-	local abil = caster:FindAbilityByName("pudge_wars_grappling_hook_2")
-	abil:SetLevel(1)
-	
-	--start timer to remove ability
-	PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-		endTime = GameRules:GetGameTime() + 5.5,
-		useGameTime = true,
-		callback = function(reflex, args)
-		caster:RemoveAbility("pudge_wars_grappling_hook_2")	
-		end
-	  })
-
-	if targetPoint ~= null then
-		local order =
-		{
-			UnitIndex = caster:entindex(),
-			OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
-			Position = targetPoint,
-			AbilityIndex = abil:entindex()
-		}
-		ExecuteOrderFromTable(order)
-	end
-end
-
-function OnGrapplingHook_3( keys )
-	local caster = keys.caster
-	local targetPoint = keys.target_points[1]
-
-	caster:AddAbility("pudge_wars_grappling_hook_3")
-	local abil = caster:FindAbilityByName("pudge_wars_grappling_hook_3")
-	abil:SetLevel(1)
-	
-	--start timer to remove ability
-	PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-		endTime = GameRules:GetGameTime() + 5.5,
-		useGameTime = true,
-		callback = function(reflex, args)
-		caster:RemoveAbility("pudge_wars_grappling_hook_3")	
-		end
-	  }) 
-
-	if targetPoint ~= null then
-		local order =
-		{
-			UnitIndex = caster:entindex(),
-			OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
-			Position = targetPoint,
-			AbilityIndex = abil:entindex()
-		}
-		ExecuteOrderFromTable(order)
-	end
-end
-
-function OnGrapplingHook_4( keys )
-	local caster = keys.caster
-	local targetPoint = keys.target_points[1]
-
-	caster:AddAbility("pudge_wars_grappling_hook_4")
-	local abil = caster:FindAbilityByName("pudge_wars_grappling_hook_4")
-	abil:SetLevel(1)
-	
-	--start timer to remove ability
-	PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-		endTime = GameRules:GetGameTime() + 5.5,
-		useGameTime = true,
-		callback = function(reflex, args)
-		caster:RemoveAbility("pudge_wars_grappling_hook_4")	
-		end
-	  }) 
-
-	if targetPoint ~= null then
-		local order =
-		{
-			UnitIndex = caster:entindex(),
-			OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
-			Position = targetPoint,
-			AbilityIndex = abil:entindex()
-		}
-		ExecuteOrderFromTable(order)
-	end
-end
-
-function OnGrapplingHook_5( keys )
-	local caster = keys.caster
-	local targetPoint = keys.target_points[1]
-
-	caster:AddAbility("pudge_wars_grappling_hook_5")
-	local abil = caster:FindAbilityByName("pudge_wars_grappling_hook_5")
-	abil:SetLevel(1)
-	
-	--start timer to remove ability
-	PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-		endTime = GameRules:GetGameTime() + 5.5,
-		useGameTime = true,
-		callback = function(reflex, args)
-		caster:RemoveAbility("pudge_wars_grappling_hook_5")	
-		end
-	  }) 
-
-	if targetPoint ~= null then
-		local order =
-		{
-			UnitIndex = caster:entindex(),
-			OrderType = DOTA_UNIT_ORDER_CAST_POSITION,
-			Position = targetPoint,
-			AbilityIndex = abil:entindex()
-		}
-		ExecuteOrderFromTable(order)
-	end
+	Timers:CreateTimer(5.5, function()
+		caster:RemoveAbility("pudge_wars_grappling_hook")
+	end)
 end
 
 function OnAbilitiesUp( keys )

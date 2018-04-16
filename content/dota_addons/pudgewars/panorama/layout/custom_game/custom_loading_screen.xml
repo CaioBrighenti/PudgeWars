@@ -8,12 +8,21 @@
 			<Image id="bg" class="ProBg" src="file://{images}/custom_game/loading_screen/custom_bg.jpg" />
 		</Panel>
 
-		<Panel id="pw-social">
-			<Panel id="pw-social-title">
-				<Label class="LabelMid" text="Feel free to join the Discord server to find more players!" style="" />
+		<Panel class="pw-social">
+			<Panel class="pw-social-title">
+				<Label class="LabelMid" text="Feel free to donate on Patreon to support me!" style="" />
 			</Panel>
 
-			<Panel id="pw-social-buttons">
+			<Panel class="pw-social-buttons">
+				<Button id="pw-social-button-patreon-en" class="pw-social-button"
+					onactivate="DOTADisplayURL('https://www.patreon.com/xherosiege');" />
+			</Panel>
+
+			<Panel class="pw-social-title">
+				<Label class="LabelMid" text="Join the Discord server to find more players, report bugs or suggest features!" style="" />
+			</Panel>
+
+			<Panel class="pw-social-buttons">
 				<Button id="pw-social-button-discord-en" class="pw-social-button"
 					onactivate="DOTADisplayURL('https://discord.gg/gsywzVX');" />
 			</Panel>

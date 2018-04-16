@@ -1,6 +1,11 @@
 -- Generated from template
 require('lib/notifications')
 require('lib/timers')
+
+require('internal/util')
+require('battlepass/battlepass')
+require('battlepass/experience')
+
 require('pudgewars')
 require('hook')
 --require('sf')
@@ -18,6 +23,7 @@ require('runes')
 function Precache(context)
 	print("starting precache")
 
+	LinkLuaModifier("modifier_ability_points", "modifiers/modifier_ability_points.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_command_restricted", "modifiers/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_fire_rune", "modifiers/modifier_fire_rune.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_shield_rune", "modifiers/modifier_shield_rune.lua", LUA_MODIFIER_MOTION_NONE)
@@ -47,6 +53,8 @@ function Precache(context)
 	PrecacheUnitByNameAsync("npc_dota_hero_batrider", context)  
 	PrecacheUnitByNameAsync("npc_precache_everything", context)
  
+	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)
+
 	print("ASYNCPRECACHE DONE!!")
 end
 

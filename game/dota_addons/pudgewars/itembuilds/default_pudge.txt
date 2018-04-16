@@ -8,14 +8,14 @@
 	{		
 		"#DOTA_Item_Build_Starting_Items"
 		{
-			//"item"		"item_greater_salve"
-			//"item"		"item_greater_salve_instant"
-			//"item"		"item_pudge_wars_reveal"
+			"item"		"item_greater_salve_instant"
+			"item"		"item_ward_observer"
+			"item"		"item_pudge_wars_reveal"
 		}
 		
 		"#DOTA_Item_Build_Early_Game"
 		{	
-			//"item"		"item_grappling_hook"
+			"item"		"item_grappling_hook"
 		}
 		
 		"#DOTA_Item_Build_Core_Items"

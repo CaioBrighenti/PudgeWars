@@ -1,0 +1,28 @@
+
+"addon"
+{
+//	"DOTA_GoodGuys"								"Light Forces"
+//	"DOTA_BadGuys"								"Dark Forces"
+
+	"kills_to_win"								"Score: "
+
+	"custom_end_screen_legend_imr"				"MMR"
+	"custom_end_screen_legend_imr10v10"			"MMR 10v10"
+
+	"battlepass"								"Pudge Wars Battlepass"
+	"battlepass_close"							"Close Battlepass"
+	"battlepass_level"							"Level: "
+	"battlepass_refresh"						"Refresh"
+	"battlepass_reward_locked"					"Locked"
+	"battlepass_streak_counter"					"Successful Hooks Counter"
+	"battlepass_hook"							"Broilers Hook"
+	"battlepass_hook2"							"Blood Drainer Hook"
+	"battlepass_hook3"							"Sorrowful Prey Hook"
+	"battlepass_hook4"							"Ol'Choppers Hook"
+	"battlepass_hook5"							"Force Hook"
+	"battlepass_hook6"							"Harpoon"
+	"battlepass_hook7"							"Whale Hook"
+	"battlepass_hook8"							"Dragonclaw Hook"
+	"battlepass_pudge_arcana"					"Pudge Arcana (red)"
+	"battlepass_pudge_arcana2"					"Pudge Arcana (green)"
+}

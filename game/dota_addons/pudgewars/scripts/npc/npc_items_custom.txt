@@ -7,11 +7,12 @@
 		"ID"							"1132"  // unique ID number for this item.  Do not change this once 
 		"BaseClass"						"item_datadriven"
 		"ItemBaseLevel"					"1"
+		"ItemPurchasable"				"0"
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"				"9999"
-		"AbilityCastPoint"				"0.0"    
+		"AbilityCastPoint"				"0.0"
 
 		"Modifiers"
 		{
@@ -43,6 +44,7 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_greater_clarity"
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 
 		"ItemBaseLevel"					"10"
 		"MaxUpgradeLevel"				"20"
@@ -334,101 +336,9 @@
 				"Target"				"CASTER"
 				"Caster"				"CASTER"
 			}
+
 			"SpendCharge"
 			{}
-		}
-	}
-
-	//=================================================================================================================
-	// Healing Salve - 1000 over time
-	//=================================================================================================================
-	"item_greater_salve"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1091"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_DONT_RESUME_ATTACK"
-		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_FRIENDLY"
-		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO"
-		"Model"							"models/props_gameplay/salve_red.mdl"
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_greater_salve"
-		"ItemKillable"					"0"
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"				"100"
-		"AbilityCastPoint"				"0.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"75"
-		"ItemShopTags"					"consumable"
-		"ItemQuality"					"consumable"
-		"ItemStackable"					"1"
-		"ItemShareability"				"ITEM_FULLY_SHAREABLE_STACKING"
-		"ItemPermanent"					"0"
-		"ItemInitialCharges"			"1"
-		"SideShop"						"1"
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target" "CURSOR_TARGET"
-				"ModifierName" "modifier_item_greater_salve"
-			}
-			"FireSound"
-			{
-				"Target" "UNIT"
-				"EffectName" "DOTA_Item.HealingSalve.Activate"
-			}
-			"SpendCharge"
-			{}
-		}
-
-		"Modifiers"
-		{
-			"modifier_item_greater_salve"
-			{
-				"TextureName" "item_greater_salve"
-				"EffectName" "healing_flask"
-				"EffectAttachType" "follow_origin"
-				"Duration" "%buff_duration"
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_HEALTH_REGEN_CONSTANT" "%hp_per_tick"
-				}
-				"OnTakeDamage"
-				{
-					"RemoveModifier"
-					{
-						"Target" "UNIT"
-						"ModifierName" "modifier_item_greater_salve"
-					}
-				}
-			}
-		}
-
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"buff_duration"			"60"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"total_hp"				"1000"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"hp_per_tick"			"16"  // %total_mana / %buff_duration
-			}
 		}
 	}
 
@@ -446,11 +356,10 @@
 		// Stats		
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCooldown"				"50.0"
-		
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"							"0"
+		"AbilityManaCost"				"0"
 		"ItemCost"						"50"
 		"ItemShopTags"					"consumable"
 		"ItemQuality"					"consumable"
@@ -463,22 +372,23 @@
 		"SideShop"						"1"
 
 		"OnSpellStart"
+		{
+			"Heal"
 			{
-				"Heal"
-				{
-					"Target" "CASTER"
-					"HealAmount"	"750"
-				}
-				"FireSound"
-				{
-					"Target" "UNIT"
-					"EffectName" "DOTA_Item.HealingSalve.Activate"
-				}
-				"SpendCharge"
-				{}
+				"Target"		"CASTER"
+				"HealAmount"	"750"
 			}
-	}
 
+			"FireSound"
+			{
+				"Target"		"UNIT"
+				"EffectName"	"DOTA_Item.HealingSalve.Activate"
+			}
+
+			"SpendCharge"
+			{}
+		}
+	}
 
 	//=================================================================================================================
 	// Reveal Thingy
@@ -494,20 +404,20 @@
 		"AbilityTextureName"			"item_reveal"
 		"ItemKillable"					"0"
 
-		 // Casting
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityCastRange"       "9999999999"
-				"AbilityCastPoint"       "0"
-				"AbilityCastAnimation"  "pudge_meat_hook"
-				"AbilityCastAnimation"  "pudge_meat_hook"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"       "9999999999"
+		"AbilityCastPoint"       "0"
+		"AbilityCastAnimation"  "pudge_meat_hook"
+		"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-				"AbilityCooldown"        "1"
+		"AbilityCooldown"        "1"
 
 		// Cost
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityManaCost"        "0"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -518,8 +428,6 @@
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
-
-
 		"OnSpellStart"
 		{
 			"SpawnUnit"
@@ -529,6 +437,7 @@
 				"UnitCount"				"1"
 				"Duration"				"30"
 			}
+
 			"RunScript"
 			{
 				"ScriptFile"			"scripts/vscripts/abilities.lua"
@@ -537,7 +446,6 @@
 				"Caster"				"CASTER"
 			}
 		}
-
 	}
 
 	//=================================================================================================================
@@ -547,29 +455,30 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1129"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
+		"ID"						"1129"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_CHANNELLED"
 
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_techies_explosive_barrel"
-		"ItemKillable"					"0"
-		"ItemSellable"					"0"
+		"BaseClass"					"item_lua"
+		"ScriptFile"				"items/item_techies_explosive_barrel.lua"
+		"AbilityTextureName"		"item_techies_explosive_barrel"
+		"ItemKillable"				"0"
+		"ItemSellable"				"0"
+		"MaxUpgradeLevel"			"5"
 
-		 // Casting
+		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"       "100"
-		"AbilityCastPoint"       ".1"
-		"AbilityChannelTime"			"1.5"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"        
-				
+		"AbilityCastRange"			"100"
+		"AbilityCastPoint"			".1"
+		"AbilityChannelTime"		"1.5"
+		"AbilityCastAnimation"		"ACT_DOTA_CAST_ABILITY_4"        
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-				"AbilityCooldown"        "30"
+		"AbilityCooldown"        "30.0"
 
 		// Cost
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityManaCost"        "0"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -578,352 +487,17 @@
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
 
-		"OnChannelSucceeded"
-				{
-
-						"SpawnUnit"
-						{
-								"UnitName"				"npc_dota_mine"
-								"Target" 				"POINT"
-								"UnitCount"				"1"
-								"OnSpawn"
-								{
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_item_buff_ward"
-									}
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_mine_stunned"
-									}
-
-								}
-						}
-
-
-
-				}
-
-		"Modifiers"
+		"AbilitySpecial"
 		{
-			"modifier_mine_stunned"
+			"01"
 			{
-				"Hidden"		"1"
-			"States"
-				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
-					///"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"500 575 650 725 800"
 			}
-		}
-	}
-
-	"item_techies_explosive_barrel_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1098"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_techies_explosive_barrel"
-		"ItemKillable"					"0"
-		"ItemSellable"					"0"
-
-		 // Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"       "100"
-		"AbilityCastPoint"       "0.1"
-		"AbilityChannelTime"			"1.5"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-				
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-				"AbilityCooldown"        "30"
-
-		// Cost
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		"OnChannelSucceeded"
-				{
-
-						"SpawnUnit"
-						{
-								"UnitName"				"npc_dota_mine_2"
-								"Target" 				"POINT"
-								"UnitCount"				"1"
-								"OnSpawn"
-								{
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_item_buff_ward"
-									}
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_mine_stunned"
-									}
-
-								}
-						}
-
-
-
-				}
-
-		"Modifiers"
-		{
-			"modifier_mine_stunned"
+			"02"
 			{
-				"Hidden"		"1"
-			"States"
-				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
-					///"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	"item_techies_explosive_barrel_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1099"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_techies_explosive_barrel"
-		"ItemKillable"					"0"
-		"ItemSellable"					"0"
-
-		 // Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"       "100"
-		"AbilityCastPoint"       "0.1"
-		"AbilityChannelTime"			"1.5"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-				
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-				"AbilityCooldown"        "30"
-
-		// Cost
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		"OnChannelSucceeded"
-				{
-
-						"SpawnUnit"
-						{
-								"UnitName"				"npc_dota_mine_3"
-								"Target" 				"POINT"
-								"UnitCount"				"1"
-								"OnSpawn"
-								{
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_item_buff_ward"
-									}
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_mine_stunned"
-									}
-
-								}
-						}
-
-
-
-				}
-
-		"Modifiers"
-		{
-			"modifier_mine_stunned"
-			{
-				"Hidden"		"1"
-			"States"
-				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
-					///"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	"item_techies_explosive_barrel_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1100"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_techies_explosive_barrel"
-		"ItemKillable"					"0"
-		"ItemSellable"					"0"
-
-		 // Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"       "100"
-		"AbilityCastPoint"       "0.1"
-		"AbilityChannelTime"			"1.5"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-				
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-				"AbilityCooldown"        "30"
-
-		// Cost
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		"OnChannelSucceeded"
-				{
-
-						"SpawnUnit"
-						{
-								"UnitName"				"npc_dota_mine_4"
-								"Target" 				"POINT"
-								"UnitCount"				"1"
-								"OnSpawn"
-								{
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_item_buff_ward"
-									}
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_mine_stunned"
-									}
-
-								}
-						}
-
-
-
-				}
-
-		"Modifiers"
-		{
-			"modifier_mine_stunned"
-			{
-				"Hidden"		"1"
-			"States"
-				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
-					///"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
-			}
-		}
-	}
-
-	"item_techies_explosive_barrel_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1101"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_techies_explosive_barrel"
-		"ItemKillable"					"0"
-		"ItemSellable"					"0"
-
-		 // Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"       "100"
-		"AbilityCastPoint"       "0.1"
-		"AbilityChannelTime"			"1.5"
-		"AbilityCastAnimation"			"ACT_DOTA_CAST_ABILITY_4"   
-				
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-				"AbilityCooldown"        "30"
-
-		// Cost
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"600"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
-		"OnChannelSucceeded"
-				{
-
-						"SpawnUnit"
-						{
-								"UnitName"				"npc_dota_mine_5"
-								"Target" 				"POINT"
-								"UnitCount"				"1"
-								"OnSpawn"
-								{
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_item_buff_ward"
-									}
-									"ApplyModifier"
-									{
-										"Target"			"TARGET"
-										"ModifierName"		"modifier_mine_stunned"
-									}
-
-								}
-						}
-
-
-
-				}
-
-		"Modifiers"
-		{
-			"modifier_mine_stunned"
-			{
-				"Hidden"		"1"
-			"States"
-				{
-					"MODIFIER_STATE_STUNNED" "MODIFIER_STATE_VALUE_ENABLED"
-					///"MODIFIER_STATE_INVULNERABLE"	"MODIFIER_STATE_VALUE_ENABLED"
-				}
+				"var_type"			"FIELD_INTEGER"
+				"radius"			"300"
 			}
 		}
 	}
@@ -941,21 +515,22 @@
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_phantom_lance"
 		"ItemKillable"					"0"
+		"ItemPurchasable"				"0"
 
-		 // Casting
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityCastRange"       "1200"
-				"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-				"AbilityCastAnimation"  "pudge_meat_hook"
-				"AbilityCastAnimation"  "pudge_meat_hook"
+		// Casting
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCastRange"       "1200"
+		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
+		"AbilityCastAnimation"  "pudge_meat_hook"
+		"AbilityCastAnimation"  "pudge_meat_hook"
 
 		// Time
 		//-------------------------------------------------------------------------------------------------------------
-				"AbilityCooldown"        "1"
+		"AbilityCooldown"        "1"
 
 		// Cost
-				//-------------------------------------------------------------------------------------------------------------
-				"AbilityManaCost"        "0"
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"        "0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -963,7 +538,6 @@
 		"ItemQuality"					"rare"
 		"SideShop"						"1"
 		"ItemDeclarations"				"DECLARE_PURCHASES_IN_SPEECH | DECLARE_PURCHASES_TO_SPECTATORS"
-
 	}
 
 	//=================================================================================================================
@@ -976,10 +550,10 @@
 		"ID"							"245"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_naix_jaw.lua"
 		"AbilityTextureName"			"item_naix_jaw"
-		"ItemKillable"					"0"
-
+		"MaxUpgradeLevel"				"5"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -990,117 +564,21 @@
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
 
-
-
-	}
-		"item_naix_jaw_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1094"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_naix_jaw"
-		"ItemKillable"					"0"
-
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"450"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-		"item_naix_jaw_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1095"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_naix_jaw"
-		"ItemKillable"					"0"
-
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"450"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-		"item_naix_jaw_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1096"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_naix_jaw"
-		"ItemKillable"					"0"
-
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"450"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-		"item_naix_jaw_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1097"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_naix_jaw"
-		"ItemKillable"					"0"
-
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"450"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-		"Modifiers"
+		"AbilitySpecial"
 		{
-			"naix_jaw_lifesteal"
+			"01"
 			{
-				"Passive" "1"
-				"IsHidden"  "0"
-
-
-				"OnAttackLanded"
-				{
-					"Lifesteal"
-					{
-						"Target"			"ATTACKER"
-						"LifestealPercent"		"15"
-					}
-				}
+				"var_type"			"FIELD_INTEGER"
+				"hook_lifesteal"	"20 25 30 35 40"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"lifesteal_pct"		"15"
 			}
 		}
-
 	}
+
 	//=================================================================================================================
 	// Earthshaker Totem
 	//=================================================================================================================
@@ -1113,9 +591,9 @@
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_earthshaker_totem"
-		"ItemKillable"					"0"
+		"MaxUpgradeLevel"				"5"
 
-		 // Casting
+		// Casting
 		"AbilityCastRange"       "1200"
 		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
 		"AbilityCastAnimation"  "pudge_meat_hook"
@@ -1139,234 +617,18 @@
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
 
-
-
 		"OnSpellStart"
 		{
 
 			"RunScript"
 			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"SpellLevel"			"1"	
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "SpawnBarrier"				
+				"Caster"			"CASTER"
+				"Target"			 "POINT"
+				"SpellLevel"		"1"	
+				"ScriptFile"		"scripts/vscripts/abilities.lua"
+				"Function"			"SpawnBarrier"				
 			}
-
 		}
-
-	}
-
-	"item_pudgewars_earthshaker_totem_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1111"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_earthshaker_totem"
-		"ItemKillable"					"0"
-
-		 // Casting
-		"AbilityCastRange"       "1200"
-		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"        "40"
-
-		// Cost
-		//-----------------------------------------------------------------------------------------------------
-		"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"400"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-
-		"OnSpellStart"
-		{
-
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"SpellLevel"			"2"	
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "SpawnBarrier"				
-			}
-			
-		}
-
-	}
-
-	"item_pudgewars_earthshaker_totem_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1112"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_earthshaker_totem"
-		"ItemKillable"					"0"
-
-		 // Casting
-		"AbilityCastRange"       "1200"
-		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"        "40"
-
-		// Cost
-		//-----------------------------------------------------------------------------------------------------
-		"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"400"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-
-		"OnSpellStart"
-		{
-
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"SpellLevel"			"3"	
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "SpawnBarrier"				
-			}
-			
-		}
-
-	}
-
-	"item_pudgewars_earthshaker_totem_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1113"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_earthshaker_totem"
-		"ItemKillable"					"0"
-
-		 // Casting
-		"AbilityCastRange"       "1200"
-		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"        "40"
-
-		// Cost
-		//-----------------------------------------------------------------------------------------------------
-		"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"400"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-
-		"OnSpellStart"
-		{
-
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"SpellLevel"			"4"	
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "SpawnBarrier"				
-			}
-			
-		}
-
-	}
-
-	"item_pudgewars_earthshaker_totem_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1114"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_earthshaker_totem"
-		"ItemKillable"					"0"
-
-		 // Casting
-		"AbilityCastRange"       "1200"
-		"AbilityCastPoint"       "0.3 0.3 0.3 0.3"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-		"AbilityCastAnimation"  "pudge_meat_hook"
-
-		// Time
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"        "40"
-
-		// Cost
-		//-----------------------------------------------------------------------------------------------------
-		"AbilityManaCost"        "0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"400"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-
-		"OnSpellStart"
-		{
-
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"SpellLevel"			"5"	
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "SpawnBarrier"				
-			}
-			
-		}
-
 	}
 
 	//=================================================================================================================
@@ -1382,7 +644,7 @@
 		"BaseClass"						"item_lua"
 		"ScriptFile"					"items/item_barathrum_lantern"
 		"AbilityTextureName"			"item_barathrum_lantern"
-		"ItemKillable"					"0"
+		"MaxUpgradeLevel"				"5"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -1393,98 +655,25 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-	}
 
-	"item_barathrum_lantern_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1134"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_barathrum_lantern"
-		"AbilityTextureName"			"item_barathrum_lantern"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-	}
-
-	"item_barathrum_lantern_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1135"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_barathrum_lantern"
-		"AbilityTextureName"			"item_barathrum_lantern"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-	}
-
-	"item_barathrum_lantern_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1136"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_barathrum_lantern"
-		"AbilityTextureName"			"item_barathrum_lantern"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-	}
-
-	"item_barathrum_lantern_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1137"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_lua"
-		"ScriptFile"					"items/item_barathrum_lantern"
-		"AbilityTextureName"			"item_barathrum_lantern"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_pct"				"25 30 35 40 45"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bash_chance"				"17"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"bash_damage"				"300"
+			}
+		}
 	}
 
 	//=================================================================================================================
@@ -1494,22 +683,50 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2000"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
+		"ID"							"2004"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_lycan_paw"
-		"ItemKillable"					"0"
+		"MaxUpgradeLevel"				"5"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"500"
+		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
 		"ItemShopTags"					""
 		"ItemQuality"					"common"
-		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_bonus"			"75 100 125 150 175"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"attackspeed_bonus"			"30"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movespeed_percent_bonus"	"12"
+			}
+		}
+
+		"OnSpellStart"
+		{
+			"ApplyModifier"
+			{
+				"Target"			"CASTER"
+				"ModifierName"		"lycan_paws_speed"
+			}
+		}
 
 		// Stats
 		//-------------------------------------------------------------------------------------------------------------
@@ -1523,291 +740,13 @@
 				"Properties"
 				{
 					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
+					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_percent_bonus"
+					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attackspeed_bonus"
 				}
-			}
-		}
-
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"item_level"			"1"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus"		"75"
 			}
 		}
 	}
 
-	"item_lycan_paw_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2001"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_lycan_paw"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"			"CASTER"
-				"ModifierName"			"lycan_paws_speed_2"
-			}
-		}
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"lycan_paws_speed_2"
-			{
-				"Passive" "1"
-				"IsHidden" "1"
-
-				"Properties"
-				{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
-				}
-			}
-		}
-
-		"AbilitySpecial"
-		{
-
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"item_level"			"2"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus"		"100"
-			}
-		}
-	}
-
-	"item_lycan_paw_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2002"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_lycan_paw"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"			"CASTER"
-				"ModifierName"			"lycan_paws_speed_3"
-			}
-		}
-
-
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"lycan_paws_speed_3"
-			{
-				"Passive" "1"
-				"IsHidden" "1"
-
-				"Properties"
-				{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
-				}
-			}
-		}
-
-		"AbilitySpecial"
-		{
-
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"item_level"			"3"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"movespeed_bonus"		"125"
-			}
-		}
-
-	}
-
-	"item_lycan_paw_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2003"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_lycan_paw"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"			"CASTER"
-				"ModifierName"		"lycan_paws_speed_4"
-			}
-		}
-
-
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"lycan_paws_speed_4"
-			{
-				"Passive" "1"
-				"IsHidden" "1"
-
-				"Properties"
-				{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
-				}
-			}
-		}
-
-		"AbilitySpecial"
-		{
-
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"item_level"		"4"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movespeed_bonus"	"150"
-			}
-		}
-	}
-
-	"item_lycan_paw_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"2004"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_lycan_paw"
-		"ItemKillable"					"0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"			"CASTER"
-				"ModifierName"			"lycan_paws_speed_5"
-			}
-		}
-
-
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"lycan_paws_speed_5"
-			{
-				"Passive" "1"
-				"IsHidden" "1"
-
-				"Properties"
-				{
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
-				"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"12"
-				"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"27"
-				}
-			}
-		}
-
-		"AbilitySpecial"
-		{
-
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"item_level"		"4"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"movespeed_bonus"	"175"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"moespeed_percent_bonus"		"12"
-			}
-
-		}
-
-	}
 	//=================================================================================================================
 	// Ricochet Turbine
 	//=================================================================================================================
@@ -1820,9 +759,9 @@
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_ricochet_turbine"
-		"ItemKillable"					"0"
+		"MaxUpgradeLevel"				"5"
 
-		 // Item Info
+		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"350"
 		"ItemQuality"					"common"
@@ -1830,92 +769,6 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-
-	}
-
-	"item_ricochet_turbine_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1107"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_ricochet_turbine"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"350"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-	"item_ricochet_turbine_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1108"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_ricochet_turbine"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"350"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-	"item_ricochet_turbine_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1109"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_ricochet_turbine"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"350"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-	"item_ricochet_turbine_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1110"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_ricochet_turbine"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"350"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
 	}
 
 	//=================================================================================================================
@@ -1930,9 +783,9 @@
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_strygwyr_claw"
-		"ItemKillable"					"0"
+		"MaxUpgradeLevel"				"5"
 
-		 // Item Info
+		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
 		"ItemCost"						"650"
 		"ItemQuality"					"common"
@@ -1940,97 +793,7 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-
 	}
-
-	"item_strygwyr_claw_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1102"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_strygwyr_claw"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-
-	"item_strygwyr_claw_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1103"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_strygwyr_claw"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-
-	"item_strygwyr_claw_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1104"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_strygwyr_claw"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-
-	"item_strygwyr_claw_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"1105"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_strygwyr_claw"
-		"ItemKillable"					"0"
-
-		 // Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"650"
-		"ItemQuality"					"common"
-		"SideShop"						"1"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-	}
-
 
 	//=================================================================================================================
 	// Grappling Hook
@@ -2044,8 +807,8 @@
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_grappling_hook"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"10.0"
+		"AbilityCooldown"				"10.0 9.0 8.0 7.0 6.0"
+		"MaxUpgradeLevel"				"5"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -2059,238 +822,30 @@
 
 		"precache"
 		{
-			"particlefile" "particles/units/heroes/hero_shredder.pcf"
+//			"particlefile"		"particles/units/heroes/hero_shredder.pcf"
 		}
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"	 "2500"
-		"AbilityCastPoint"	 "0.0"
 
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnGrapplingHook"				
+				"var_type"			"FIELD_INTEGER"
+				"cooldown_tooltip"	"10 9 8 7 6"
 			}
 		}
-	}
-
-	"item_grappling_hook_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"962"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_grappling_hook"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"9.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"200"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		"precache"
-		{
-			"particlefile" "particles/units/heroes/hero_shredder.pcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "2500"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnGrapplingHook_2"				
-			}
-		}
-	}
-
-	"item_grappling_hook_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"963"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_grappling_hook"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"8.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"200"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		"precache"
-		{
-			"particlefile" "particles/units/heroes/hero_shredder.pcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "2500"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnGrapplingHook_3"				
-			}
-		}
-	}
-
-	"item_grappling_hook_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"964"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_grappling_hook"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"7.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"200"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		"precache"
-		{
-			"particlefile" "particles/units/heroes/hero_shredder.pcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "2500"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnGrapplingHook_4"				
-			}
-		}
-	}
-
-	"item_grappling_hook_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"965"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_grappling_hook"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"6.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"200"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		"precache"
-		{
-			"particlefile" "particles/units/heroes/hero_shredder.pcf"
-		}
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "2500"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			 "POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnGrapplingHook_5"				
+				"Caster"			"CASTER"
+				"Target"			 "POINT"
+				"ScriptFile"         "scripts/vscripts/abilities.lua"
+				"Function"           "OnGrapplingHook"				
 			}
 		}
 	}
@@ -2303,60 +858,12 @@
 		// General
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"966"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
-		"BaseClass"				"item_datadriven"
-		"AbilityTextureName"			"item_tiny_arm"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"10.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "1000"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			"POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnTinyArm"				
-			}
-
-		}
-	}
-
-	"item_tiny_arm_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"967"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
+		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_tiny_arm"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"9.0"
+		"AbilityCooldown"				"10.0 9.0 8.0 7.0 6.0"
+		"MaxUpgradeLevel"				"5"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -2370,168 +877,41 @@
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "1500"
-		"AbilityCastPoint"	 "0.0"
+		"AbilityCastRange"	 "1000 1500 2000 2500 3000"
 
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
+		"AbilitySpecial"
 		{
-			"RunScript"
+			"01"
 			{
-					"Caster"			"CASTER"
-					"Target"			"POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnTinyArm"				
+				"var_type"			"FIELD_INTEGER"
+				"damage"			"200"
 			}
-
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"stun_duration"		"2"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"range_tooltip"		"1000 1500 2000 2500 3000"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"cooldown_tooltip"	"10 9 8 7 6"
+			}
 		}
-	}
-	"item_tiny_arm_3"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"968"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_tiny_arm"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"8.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "2000"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
 
 		"OnSpellStart"
 		{
 			"RunScript"
 			{
-					"Caster"			"CASTER"
-					"Target"			"POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnTinyArm"				
+				"Caster"			"CASTER"
+				"Target"			"POINT"
+				"ScriptFile"         "scripts/vscripts/abilities.lua"
+				"Function"           "OnTinyArm"				
 			}
-
-		}
-	}
-	"item_tiny_arm_4"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"969"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_tiny_arm"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"7.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "2500"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			"POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnTinyArm"				
-			}
-
-		}
-	}
-	"item_tiny_arm_5"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"970"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"AbilityBehavior"			"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-
-		"BaseClass"						"item_datadriven"
-		"AbilityTextureName"			"item_tiny_arm"
-		"ItemKillable"					"0"
-		"AbilityCooldown"				"6.0"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"500"
-		"ItemDisassembleRule"			"DOTA_ITEM_DISASSEMBLE_NEVER"
-		"ItemShopTags"					""
-		"ItemQuality"					"common"
-		"ItemShareability"				"ITEM_NOT_SHAREABLE"
-		"ItemSellable"					"0"
-		"ItemKillable"					"0"
-
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastRange"	 "3000"
-		"AbilityCastPoint"	 "0.0"
-
-		// Damage.
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityDamage"	 "0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"	 "0"
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-					"Caster"			"CASTER"
-					"Target"			"POINT"
-					"ScriptFile"         "scripts/vscripts/abilities.lua"
-					"Function"           "OnTinyArm"				
-			}
-
 		}
 	}
 
@@ -2547,7 +927,6 @@
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_kobbs_dagger"
-		"ItemKillable"					"0"
 
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
@@ -2558,30 +937,5 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"0"
-	}
-
-	//=================================================================================================================
-	// Recipe: Lycan's Paw 2
-	//=================================================================================================================
-	"item_recipe_lycan_paw_2"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"ID"							"3000"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
-		"Model"							"models/props_gameplay/recipe.vmdl"
-
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_lycan_paw_2"
-		"ItemRequirements"
-		{
-			"01"						"item_lycan_paw;item_lycan_paw"
-		}
 	}
 }

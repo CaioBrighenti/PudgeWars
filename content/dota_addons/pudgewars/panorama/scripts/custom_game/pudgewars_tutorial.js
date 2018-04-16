@@ -13,3 +13,10 @@ function OnToggleTutorialButton()
 		Game.EmitSound( "ui_team_select_lock_and_start" );
 	};
 }
+
+function SetTopBarScoreToWin(data) {
+	$.Msg(data.kills)
+	$("#LabelKillsToWin").text = $.Localize("#kills_to_win") + data.kills;
+}
+
+GameEvents.Subscribe( "pudgewars_set_score_topbar", SetTopBarScoreToWin );

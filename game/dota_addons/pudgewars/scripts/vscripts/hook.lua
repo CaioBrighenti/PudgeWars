@@ -1,40 +1,15 @@
 print("[HOOK] hook loading")
 
-function calcDamage(hero,v, damage, speed)
+function calcDamage(hero, v, damage, speed)
 	--Additional damage mods
 	local hookdamage = damage
 	local hookspeed = speed
-	
-	--If player owns Naix's Jaw
-	if (hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS and v:GetTeamNumber() == DOTA_TEAM_BADGUYS) or (hero:GetTeamNumber() == DOTA_TEAM_BADGUYS and v:GetTeamNumber() == DOTA_TEAM_GOODGUYS) then
-		for i = 0, 5 do
-			item = hero:GetItemInSlot(i)
-			if item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw' then
-				hero:SetHealth(hero:GetHealth() + hookdamage * .20)
-				lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
-				lifestealPos = hero:GetOrigin()
-				ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
-				break
-			elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_2' then
-				hero:SetHealth(hero:GetHealth() + hookdamage * .25)
-				lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
-				lifestealPos = hero:GetOrigin()
-				ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
-				break
-			elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_3' then
-				hero:SetHealth(hero:GetHealth() + hookdamage * .30)
-				lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
-				lifestealPos = hero:GetOrigin()
-				ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
-				break
-			elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_4' then
-				hero:SetHealth(hero:GetHealth() + hookdamage * .35)
-				lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
-				lifestealPos = hero:GetOrigin()
-				ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
-				break
-			elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_naix_jaw_5' then
-				hero:SetHealth(hero:GetHealth() + hookdamage * .40)
+
+	for i = 0, 5 do
+		local item = hero:GetItemInSlot(i)
+		if item then
+			if item:GetAbilityName() == "item_naix_jaw" then
+				hero:SetHealth(hero:GetHealth() + hookdamage / 100 * item:GetSpecialValueFor("hook_lifesteal"))
 				lifestealParticle = ParticleManager:CreateParticle( 'particles/generic_gameplay/generic_lifesteal.vpcf', PATTACH_ABSORIGIN, hero)
 				lifestealPos = hero:GetOrigin()
 				ParticleManager:SetParticleControl( lifestealParticle, 4, Vector( lifestealPos.x, lifestealPos.y, lifestealPos.z) )
@@ -43,39 +18,17 @@ function calcDamage(hero,v, damage, speed)
 		end
 	end
 
-	--If player owns Barathrums Lanter
 	for i = 0, 5 do
-		item = hero:GetItemInSlot(i)
-		if item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern' then
-			hookdamage = hookdamage + hookspeed * .25
-			baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
-			baraPos = v:GetOrigin()
-			ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
-			break
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_2' then
-			hookdamage = hookdamage + hookspeed * .30
-			baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
-			baraPos = v:GetOrigin()
-			ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
-			break
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_3' then
-			hookdamage = hookdamage + hookspeed * .35
-			baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
-			baraPos = v:GetOrigin()
-			ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
-			break
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_4' then
-			hookdamage = hookdamage + hookspeed * .40
-			baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
-			baraPos = v:GetOrigin()
-			ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
-			break
-		elseif item and IsValidEntity(item) and item:GetAbilityName() == 'item_barathrum_lantern_5' then
-			hookdamage = hookdamage + hookspeed * .45
-			baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
-			baraPos = v:GetOrigin()
-			ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
-			break
+		local item = hero:GetItemInSlot(i)
+		if item then
+			if item:GetAbilityName() == "item_barathrum_lantern" then
+				print(item:GetSpecialValueFor("damage_pct"))
+				hookdamage = hookdamage + hookspeed / 100 * item:GetSpecialValueFor("damage_pct")
+				baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
+				baraPos = v:GetOrigin()
+				ParticleManager:SetParticleControl( baraParticle, 4, Vector( baraPos.x, baraPos.y, baraPos.z) )
+				break
+			end
 		end
 	end
 
@@ -98,7 +51,8 @@ function bounceDamage(bounces, hero)
 	end
 	return 0
 end
-function findEntity(entities, vars_table, forward, bounces)
+
+function findEntity(entities, vars_table, forward, bounces, hero)
 	hooked = vars_table[0]
 	hero = vars_table[1]
 	complete = vars_table[2]
@@ -112,7 +66,22 @@ function findEntity(entities, vars_table, forward, bounces)
 		for k,v in pairs(entities) do
 			--if string.find(v:GetClassname(), "pudge") or string.find(v:GetClassname(), "mine") then
 			if vars_table[0] == nil then
-				if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((PudgeWarsMode.shield_carrier == nil) or (PudgeWarsMode.shield_carrier ~= v)) then        
+				if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((PudgeWarsMode.shield_carrier == nil) or (PudgeWarsMode.shield_carrier ~= v)) then
+					if HasPudgeHookStreakCounter(hero:GetPlayerID()) then
+						hero.successful_hooks = hero.successful_hooks + 1
+						EmitSoundOnLocationWithCaster(hero:GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", hero)
+						local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"
+						if hero.pudge_arcana == 1 then
+							pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_hook_streak.vpcf"
+						end
+						if hero.successful_hooks >= 2 then
+							local hook_counter = ParticleManager:CreateParticle(pfx, PATTACH_OVERHEAD_FOLLOW, hero)
+							local stack_10 = math.floor(hero.successful_hooks / 10)
+							ParticleManager:SetParticleControl(hook_counter, 2, Vector(stack_10, hero.successful_hooks - stack_10 * 10, hero.successful_hooks))
+							ParticleManager:ReleaseParticleIndex(hook_counter)
+						end
+					end
+
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact')        
 					vars_table[2] = true
 					if v:HasModifier("modifier_pudge_meat_hook") and (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
@@ -140,32 +109,32 @@ function findEntity(entities, vars_table, forward, bounces)
 						hookdamage = hookdamage + (bounceDamage(bounces,vars_table[1]) * vars_table[3])
 						vars_table[6] = applyRupture(hero,v)
 
-				if hero:HasModifier("modifier_disruptor_thunder_strike") then
-		--if the hero is under the effect of the lightning rune)  
-					local light_unit = CreateUnitByName("npc_lightning_dummy", v:GetOrigin(), false, hero, hero, hero:GetTeamNumber())
-		local arc_unit = nil
-		if (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
-				arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, v:GetTeamNumber())
-		elseif v:GetTeam() == DOTA_TEAM_GOODGUYS then
-				arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_BADGUYS)
-		else 
-				arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
-		end
+						if hero:HasModifier("modifier_disruptor_thunder_strike") then
+							--if the hero is under the effect of the lightning rune)  
+							local light_unit = CreateUnitByName("npc_lightning_dummy", v:GetOrigin(), false, hero, hero, hero:GetTeamNumber())
+							local arc_unit = nil
+							if (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
+								arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, v:GetTeamNumber())
+							elseif v:GetTeam() == DOTA_TEAM_GOODGUYS then
+								arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_BADGUYS)
+							else 
+								arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+							end
 		
-		if arc_unit == nil or light_unit == nil then
-			 return
-		end
+							if arc_unit == nil or light_unit == nil then
+								return
+							end
 
-		castInstantSpell(light_unit, "pudge_wars_lightning_field", 1, 10)
+							castInstantSpell(light_unit, "pudge_wars_lightning_field", 1, 10)
 
-		if IsValidEntity(arc_unit) then
-				castSpell(vars_table[1],arc_unit,"pudge_wars_arc_lightning", 1, 10)
-				castSpell(vars_table[1],arc_unit, "pudge_wars_lightning_bolt", 1, 2)
-				v:EmitSound("Hero_Zuus.LightningBolt")
-		else
-				return
-		end
-				end
+							if IsValidEntity(arc_unit) then
+								castSpell(vars_table[1],arc_unit,"pudge_wars_arc_lightning", 1, 10)
+								castSpell(vars_table[1],arc_unit, "pudge_wars_lightning_bolt", 1, 2)
+								v:EmitSound("Hero_Zuus.LightningBolt")
+							else
+								return
+							end
+						end
 																
 						--v:AddNewModifier(vars_table[1], nil, "modifier_rooted", {})
 						v:AddNewModifier(vars_table[1], nil, "modifier_pudge_meat_hook", {})
@@ -179,36 +148,34 @@ function findEntity(entities, vars_table, forward, bounces)
 						vars_table[5] = true --BOUNCE
 
 						if (string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(), "barrier") and v:IsAlive()) then
-							
-				if hero:HasModifier("modifier_disruptor_thunder_strike") then
-					--if the hero is under the effect of the lightning rune
-					local light_unit = CreateUnitByName("npc_lightning_dummy", v:GetOrigin(), false, hero, hero, hero:GetTeamNumber())
-		local arc_unit = nil
-		if (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
-				arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, v:GetTeamNumber())
-		elseif v:GetTeam() == DOTA_TEAM_GOODGUYS then
-				arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_BADGUYS)
-		else 
-				arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
-		end
+							if hero:HasModifier("modifier_disruptor_thunder_strike") then
+								--if the hero is under the effect of the lightning rune
+								local light_unit = CreateUnitByName("npc_lightning_dummy", v:GetOrigin(), false, hero, hero, hero:GetTeamNumber())
+								local arc_unit = nil
+								if (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
+									arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, v:GetTeamNumber())
+								elseif v:GetTeam() == DOTA_TEAM_GOODGUYS then
+									arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_BADGUYS)
+								else 
+									arc_unit = CreateUnitByName("npc_arc_dummy", v:GetOrigin(), false, nil, nil, DOTA_TEAM_GOODGUYS)
+								end
 		
-		if arc_unit == nil or light_unit == nil then
-			 return
-		end
+								if arc_unit == nil or light_unit == nil then
+									return
+								end
 
-		castInstantSpell(light_unit, "pudge_wars_lightning_field", 1, 10)
+								castInstantSpell(light_unit, "pudge_wars_lightning_field", 1, 10)
 
-		if IsValidEntity(arc_unit) then
-				castSpell(vars_table[1],arc_unit,"pudge_wars_arc_lightning", 1, 10)
-				castSpell(vars_table[1],arc_unit, "pudge_wars_lightning_bolt", 1, 2)
-				v:EmitSound("Hero_Zuus.LightningBolt")
-		else
-				return
-		end
-
-				end
+								if IsValidEntity(arc_unit) then
+									castSpell(vars_table[1],arc_unit,"pudge_wars_arc_lightning", 1, 10)
+									castSpell(vars_table[1],arc_unit, "pudge_wars_lightning_bolt", 1, 2)
+									v:EmitSound("Hero_Zuus.LightningBolt")
+								else
+									return
+								end
+							end
 		
-		--Deal damage as well if its a totem
+							--Deal damage as well if its a totem
 							vars_table[7] = v
 							local hookdamage = calcDamage(vars_table[1],v,vars_table[3], vars_table[4])
 							hookdamage = hookdamage + (bounceDamage(bounces,vars_table[1]) * vars_table[3])
@@ -217,7 +184,7 @@ function findEntity(entities, vars_table, forward, bounces)
 							end
 						end
 					end
-	elseif string.find(v:GetClassname(),"creep") and string.find(v:GetUnitName(),"mine") and v:IsAlive() then
+				elseif string.find(v:GetClassname(),"creep") and string.find(v:GetUnitName(),"mine") and v:IsAlive() then
 					--Only do v:GetUnitName() if its a creep so we know its a unit and doesnt throw an error
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact')  
 					vars_table[2] = true
@@ -351,8 +318,11 @@ function LaunchHook(keys)
 	local pos = keys.target_points[1]
 	local dir = pos - hero:GetAbsOrigin()
 	dir = dir:Normalized()
- 
+
+
 	hooks[hookCount] = CreateUnitByName("npc_reflex_hook_test", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
+	hooks[hookCount]:SetModel(hero.hook_model)
+	hooks[hookCount]:SetOriginalModel(hero.hook_model)
 	hooks[hookCount]:SetModelScale(modelScale)
 	hooks[hookCount]:SetAbsOrigin(hero:GetAbsOrigin() + Vector(0,0,125))
 
@@ -392,7 +362,7 @@ function LaunchHook(keys)
 	local vKillswitch = Vector(((distance / speed) * 2) + 10, 0, 0)
 
 	-- Create special chain link attached to Hook
-	local particle = ParticleManager:CreateParticle("particles/pw/ref_pudge_meathook_chain.vpcf", PATTACH_RENDERORIGIN_FOLLOW, hooks[1])
+	local particle = ParticleManager:CreateParticle(hero.hook_pfx, PATTACH_RENDERORIGIN_FOLLOW, hooks[1])
 	local position = hero:GetAbsOrigin()
 	local endPosition = hooks[1]:GetAbsOrigin()
 	local pu = ParticleUnit.new(particle, position, endPosition, 6, 0, 10) --cpStart, cpEnd, cpDelete)
@@ -423,27 +393,26 @@ function LaunchHook(keys)
 				hooks[key]:Destroy()
 				hooks[key] = nil
 			end
-
 		end,
 		
 		callback = function(reflex, args)
-			hooked = vars_table[0]
-			hero = vars_table[1]
-			complete = vars_table[2]
-			damage = vars_table[3]
-			speed = vars_table[4]
-			if complete then
-				if hooked ~= nil and IsValidEntity(hooked) and IsValidEntity(hooks[1]) then
-					hooked:SetAbsOrigin(hooks[1]:GetAbsOrigin() + Vector(0,0,-125))
-					local diff = hero:GetAbsOrigin() - hooked:GetAbsOrigin()
-					if diff:Length() < 150 then
-						--hooked:RemoveModifierByName("modifier_rooted")
-						hooked:RemoveModifierByName("modifier_pudge_meat_hook")
+		hooked = vars_table[0]
+		hero = vars_table[1]
+		complete = vars_table[2]
+		damage = vars_table[3]
+		speed = vars_table[4]
+		if complete then
+			if hooked ~= nil and IsValidEntity(hooked) and IsValidEntity(hooks[1]) then
+				hooked:SetAbsOrigin(hooks[1]:GetAbsOrigin() + Vector(0,0,-125))
+				local diff = hero:GetAbsOrigin() - hooked:GetAbsOrigin()
+				if diff:Length() < 150 then
+					--hooked:RemoveModifierByName("modifier_rooted")
+					hooked:RemoveModifierByName("modifier_pudge_meat_hook")
 
-						if hero:HasItemInInventory('item_strygwyr_claw_5') then
+					if hero:HasItemInInventory('item_strygwyr_claw_5') then
 						--If the caster has max level strygwyrs, leave rupture for 3 seconds
 						local hooked_rupture = hooked
-						
+
 						PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
 							endTime = GameRules:GetGameTime() + 3,
 							useGameTime = true,
@@ -451,21 +420,21 @@ function LaunchHook(keys)
 								if hooked_rupture and IsValidEntity(hooked_rupture) then
 									hooked_rupture:RemoveModifierByName("modifier_bloodseeker_rupture")
 								end
-					
+						
 								if vars_table[6] ~= nil then
 									vars_table[6]:Destroy()
 								end
-								
+									
 								return
 							end
 						})
-			else
-		--Remove rupture unit
-		hooked:RemoveModifierByName("modifier_bloodseeker_rupture")
-		if vars_table[6] ~= nil then
-				vars_table[6]:Destroy()
-		end
-			end
+					else
+						--Remove rupture unit
+						hooked:RemoveModifierByName("modifier_bloodseeker_rupture")
+						if vars_table[6] ~= nil then
+							vars_table[6]:Destroy()
+						end
+					end
 				if (string.find(hooked:GetClassname(),"creature") and string.find(hooked:GetUnitName(),"rune")) or ( string.find(hooked:GetClassname(), "creep" ) and string.find(hooked:GetUnitName(), "mine") and not hooked:IsAlive() ) then
 					--Remove the rune as soon as it has return to the caster
 					hooked:RemoveSelf()
@@ -478,7 +447,7 @@ function LaunchHook(keys)
 					dropped = true
 				end
 			end
-	 
+
 			--Move close chain
 			if #hooks > 1 then
 				local direction = hero:GetAbsOrigin() - hooks[#hooks]:GetEnd()
@@ -492,7 +461,7 @@ function LaunchHook(keys)
 				direction = direction:Normalized()
 				hooks[#hooks]:SetAbsOrigin(hooks[#hooks]:GetAbsOrigin() + direction * speed / 30)
 			end
-			
+
 			for i=#hooks - 1,2,-1 do
 				local diff = hooks[i+1]:GetEnd() - hooks[i]:GetEnd()
 				if diff:Length() > linkFollowDistance then
@@ -548,14 +517,14 @@ function LaunchHook(keys)
 			if hooked == nil and not dropped then
 				--BACKWARDS
 				local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-100), radius / 2)
-				findEntity(entities,vars_table, false,bounces)
+				findEntity(entities,vars_table, false,bounces,hero)
 				local entities = nil
 				if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
 					entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-200), radius / 2)
 				else
 					entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,0), radius / 2)
 				end
-				findEntity(entities,vars_table, false,bounces)
+				findEntity(entities,vars_table, false,bounces,hero)
 				hooked = vars_table[0]
 				hero = vars_table[1]
 				complete = vars_table[2]
@@ -611,21 +580,21 @@ function LaunchHook(keys)
 			if hooked == nil and vars_table[5] == false then
 				--FORWARD
 				local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-100), radius / 2)
-				findEntity(entities,vars_table, true,bounces)
+				findEntity(entities,vars_table, true,bounces,hero)
 				local entities = nil
 				if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
 					entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-200), radius / 2)
 				else
 					entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,100), radius / 2)
 				end
-				findEntity(entities,vars_table, true,bounces)
+				findEntity(entities,vars_table, true,bounces,hero)
 				hooked = vars_table[0]
 				hero = vars_table[1]
 				complete = vars_table[2]
 				damage = vars_table[3]
 				speed = vars_table[4]
 			end
-			
+
 			-- Bounce wall checks
 			local hookPos = hooks[1]:GetAbsOrigin()
 			local angx = (math.acos(dir.x)/ math.pi * 180)
@@ -659,7 +628,7 @@ function LaunchHook(keys)
 				bounces = bounces + 1
 				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
 			end
-			
+
 			-- Bounce center
 			hookPos.z = 0
 			diff = ancientPosition - hookPos
@@ -717,6 +686,7 @@ function LaunchHook(keys)
 				diff = vars_table[7]:GetAbsOrigin() - hookPos
 				rebounceTolerance = rebounceToleranceMax
 				diff = diff:Normalized()
+
 				local diffx = (math.acos(diff.x)/ math.pi * 180)
 				local diffy = (math.acos(diff.y)/ math.pi * 180)
 				local angx = (math.acos(dir.x)/ math.pi * 180)
@@ -732,6 +702,7 @@ function LaunchHook(keys)
 					(dx < 0 and dy > 0 and dir.x < 0 and dir.y < 0) then
 					rotAngle = 360 - rotAngle
 				end
+
 				bounces = bounces + 1
 				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
 
@@ -747,6 +718,12 @@ function LaunchHook(keys)
 				vars_table[2] = complete
 				vars_table[3] = damage
 				vars_table[4] = speed
+
+				if hooked == nil then
+					print("Hook counter reset")
+					hero.successful_hooks = 0
+				end
+
 				return GameRules:GetGameTime()
 			end
 		end

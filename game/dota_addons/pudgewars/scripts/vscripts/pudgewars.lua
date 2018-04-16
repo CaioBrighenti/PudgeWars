@@ -3,6 +3,7 @@ print ('[PUDGEWARS] pudgewars.lua' )
 USE_LOBBY=false
 THINK_TIME = FrameTime()
 
+PUDGEWARS_VERSION = 7.13
 STARTING_GOLD = 0
 MAX_LEVEL = 40
 
@@ -106,6 +107,10 @@ function PudgeWarsMode:InitGameMode()
 	GameRules:SetHideKillMessageHeaders(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_pudge")
 
+	if IsInToolsMode() then
+		GameRules:SetCustomGameSetupAutoLaunchDelay(2.0)
+	end
+
 	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(function(ctx, event)
 		local hero = EntIndexToHScript(event.inventory_parent_entindex_const)
 		local item = EntIndexToHScript(event.item_entindex_const)
@@ -199,10 +204,12 @@ function PudgeWarsMode:CaptureGameMode()
 		-- Override the top bar values to show your own settings instead of total deaths
 		GameMode:SetTopBarTeamValuesOverride ( true )
 		-- Use custom hero level maximum and your own XP per level
-		GameMode:SetUseCustomHeroLevels ( true )
-		GameMode:SetCustomHeroMaxLevel ( MAX_LEVEL )
+		GameMode:SetUseCustomHeroLevels( true )
+		GameMode:SetCustomHeroMaxLevel( MAX_LEVEL )
 		GameMode:SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
 		GameMode:SetAnnouncerDisabled(true)
+
+		FULL_ABANDON_TIME = 10.0
 
 		print( '[PUDGEWARS] NOT Beginning Think' ) 
 		GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( PudgeWarsMode, 'Think' ), THINK_TIME )
@@ -212,7 +219,10 @@ end
 function PudgeWarsMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
-	if newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		GetPlayerInfoXP()
+	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		CustomGameEventManager:Send_ServerToAllClients( "pudgewars_set_score_topbar", {kills = self.kills_to_win} )
 		-- start slower thinker to avoid lags
 		Timers:CreateTimer(function()
 			self:SlowThink()
@@ -228,6 +238,8 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 end
 
 function PudgeWarsMode:SlowThink()
+	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then return nil end
+
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		-- model bug fix
 --		if PudgeArray[hero:GetPlayerID()].modelName == "" then
@@ -245,6 +257,65 @@ function PudgeWarsMode:SlowThink()
 				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
 			end
 		end
+
+		local has_barrel_5 = false
+		local has_grappling_5 = false
+		local has_totem_5 = false
+
+		if hero:FindAbilityByName("pudge_wars_abilities_down"):IsHidden() then
+			for j = 0, 8 do
+				local item = hero:GetItemInSlot(j)
+				if item and IsValidEntity(item) then
+					if has_barrel_5 == false then
+						has_barrel_5 = item:GetAbilityName() == "item_techies_explosive_barrel" and item:GetLevel() == 5
+					end
+					if has_grappling_5 == false then
+						has_grappling_5 = item:GetAbilityName() == "item_grappling_hook" and item:GetLevel() == 5
+					end
+					if has_totem_5 == false then
+						has_totem_5 = item:GetAbilityName() == "item_pudgewars_earthshaker_totem" and item:GetLevel() == 5
+					end
+				end
+			end
+		end
+
+		if hero:FindAbilityByName("pudge_wars_abilities_down"):IsHidden() then
+			if has_barrel_5 then
+				if hero:HasAbility("pudge_wars_empty1") then
+					hero:RemoveAbility("pudge_wars_empty1")
+					hero:AddAbility("techies_explosive_barrel_detonate"):SetLevel(1)
+				end
+			elseif has_barrel_5 == false then
+				if hero:HasAbility("techies_explosive_barrel_detonate") then
+					hero:RemoveAbility("techies_explosive_barrel_detonate")
+					hero:AddAbility("pudge_wars_empty1"):SetLevel(1)
+				end
+			end
+
+			if has_grappling_5 then
+				if hero:HasAbility("pudge_wars_empty2") then
+					hero:RemoveAbility("pudge_wars_empty2")
+					hero:AddAbility("grappling_hook_blink"):SetLevel(1)
+				end
+			elseif has_grappling_5 == false then
+				if hero:HasAbility("grappling_hook_blink") then
+					hero:RemoveAbility("grappling_hook_blink")
+					hero:AddAbility("pudge_wars_empty2"):SetLevel(1)
+				end
+			end
+
+			if has_totem_5 then
+				if hero:HasAbility("pudge_wars_empty3") then
+					hero:RemoveAbility("pudge_wars_empty3")
+					hero:AddAbility("earthshaker_totem_fissure"):SetLevel(1)
+				end
+			elseif has_totem_5 == false then
+				if hero:HasAbility("earthshaker_totem_fissure") then
+					hero:RemoveAbility("earthshaker_totem_fissure")
+					hero:AddAbility("pudge_wars_empty3"):SetLevel(1)
+				end
+			end
+		end
 	end
 
 	-- handle the rune slow modifier duration
@@ -253,6 +324,49 @@ function PudgeWarsMode:SlowThink()
 
 		if RUNE_SLOW <= 0 then
 			RUNE_SLOW = false
+		end
+	end
+
+	if not IsInToolsMode() then
+		if not TEAM_ABANDON then
+			TEAM_ABANDON = {} -- 10 second to abandon, is_abandoning?, player_count.
+			TEAM_ABANDON[2] = {FULL_ABANDON_TIME, false, 0}
+			TEAM_ABANDON[3] = {FULL_ABANDON_TIME, false, 0}
+		end
+
+		TEAM_ABANDON[2][3] = PlayerResource:GetPlayerCountForTeam(2)
+		TEAM_ABANDON[3][3] = PlayerResource:GetPlayerCountForTeam(3)
+
+		for ID = 0, PlayerResource:GetPlayerCount() -1 do
+			local team = PlayerResource:GetTeam(ID)
+
+			if PlayerResource:GetConnectionState(ID) ~= 2 then -- if disconnected then
+				TEAM_ABANDON[team][3] = TEAM_ABANDON[team][3] -1
+			end
+
+			if TEAM_ABANDON[team][3] > 0 then
+				TEAM_ABANDON[team][2] = false
+			else
+				if TEAM_ABANDON[team][2] == false then
+					local abandon_text = "Radiant team has disconnected, game will end in "..FULL_ABANDON_TIME.." seconds..."
+					if team == 3 then
+						abandon_text = "Dire team has disconnected, game will end in "..FULL_ABANDON_TIME.." seconds..."
+					end
+
+					Notifications:BottomToAll({text = abandon_text, duration = TEAM_ABANDON[team][1], style = {color = "DodgerBlue"} })
+				end
+
+				TEAM_ABANDON[team][2] = true
+				TEAM_ABANDON[team][1] = TEAM_ABANDON[team][1] -1
+
+				if TEAM_ABANDON[2][1] <= 0 then
+					GAME_WINNER_TEAM = 3
+					GameRules:SetGameWinner(3)
+				elseif TEAM_ABANDON[3][1] <= 0 then
+					GAME_WINNER_TEAM = 2
+					GameRules:SetGameWinner(2)
+				end
+			end
 		end
 	end
 end
@@ -269,7 +383,9 @@ function OnVoteUpdate( Index,keys )
 end
 
 function OnPlayerVote50( Index,keys )
+
 	print("Vote 50")
+
 	PudgeWarsMode .vote_50_votes = PudgeWarsMode.vote_50_votes + 1
 	local votes_for_50 = PudgeWarsMode.vote_50_votes
 	local votes_for_75 = PudgeWarsMode.vote_75_votes
@@ -286,7 +402,9 @@ end
 
 function OnPlayerVote75( Index,keys )
 	print("Vote 75")
+
 	PudgeWarsMode .vote_75_votes = PudgeWarsMode .vote_75_votes + 1
+
 	local vote_update_info = 
 	{
 		votes_50 = PudgeWarsMode.vote_50_votes,
@@ -315,7 +433,6 @@ end
 function PudgeWarsMode:AbilityUsed(keys)
 	local playerID = keys.PlayerID
 	local abilityName = keys.abilityname
-	local hero = PudgeArray[playerID].pudgeunit
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		if hero:GetPlayerID() == playerID then
@@ -347,93 +464,22 @@ function PudgeWarsMode:ItemPickedUp( keys )
 	local item_ent = EntIndexToHScript( keys.ItemEntityIndex )
 	local hero = PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
 	local item_owner = item_ent:GetPurchaser()
-	local item_cost = item_ent:GetCost()
-	local item_level = nil
-	local item_short_name = nil
-	local inventory_item_level = nil
-	local result_level = nil
-	local new_item = nil
-	local combination_has_happened = false
-	local inventory_item_name = nil
 
 	-- Dissalow people from picking up other people's items
-	if hero == item_owner then
-	else
+	if hero ~= item_owner then
 		if string.find(itemname,"item_lycan_paw") or string.find(itemname,"item_naix_jaw") or string.find(itemname, "item_grappling_hook") or string.find(itemname, "item_tiny_arm") or string.find(itemname, "item_barathrum_lantern") or string.find(itemname, "item_techies_explosive_barrel") or string.find(itemname, "item_strygwyr_claw") or string.find(itemname, "item_ricochet_turbine") or string.find(itemname, "item_pudgewars_earthshaker_totem") then
 			UTIL_RemoveImmediate(item_ent)
+
 			local item_pos = hero:GetAbsOrigin()
 			local item = CreateItem(itemname, item_owner, nil)
 			local item_drop = CreateItemOnPosition(item_pos)
+
 			if item_drop then
-					item_drop:SetContainedItem( item )
+				item_drop:SetContainedItem( item )
 			end
+
 			item:SetPurchaser(item_owner)
 		end
-	end
-
-	if hero == item_owner then
-		-- Grab item level and short version of name
-		if string.find(itemname,"item_lycan_paw") or string.find(itemname,"item_naix_jaw") or string.find(itemname, "item_grappling_hook") or string.find(itemname, "item_tiny_arm") or string.find(itemname, "item_barathrum_lantern") or string.find(itemname, "item_techies_explosive_barrel") or string.find(itemname, "item_strygwyr_claw") or string.find(itemname, "item_ricochet_turbine") or string.find(itemname, "item_pudgewars_earthshaker_totem") then
-			if string.find(itemname, "2") then
-				item_level = 2
-				item_short_name = string.sub(itemname, 1, string.len(itemname) - 2)
-			elseif string.find(itemname, "3") then
-				item_level = 3
-				item_short_name = string.sub(itemname, 1, string.len(itemname) - 2)
-			elseif string.find(itemname, "4") then
-				item_level = 4
-				item_short_name = string.sub(itemname, 1, string.len(itemname) - 2)
-			elseif string.find(itemname, "5") then
-				item_level = 5
-				item_short_name = string.sub(itemname, 1, string.len(itemname) - 2)
-			else
-				item_level = 1
-				item_short_name = itemname
-			end
-
-			-- Look for repeated item in player inventory
-			for i = 0, 11 do
-				local item = hero:GetItemInSlot(i)
-				if item then
-					if string.find(item:GetAbilityName(), item_short_name) and item ~= item_ent and combination_has_happened == false then
-						print('has repeated item')
-						-- Store name in variable
-						inventory_item_name = item:GetAbilityName()
-
-						-- Remove old items
-						UTIL_RemoveImmediate(item)
-						UTIL_RemoveImmediate(item_ent)
-
-						-- Get inventory item level
-						inventory_item_level = string.sub(inventory_item_name, string.len(inventory_item_name), string.len(inventory_item_name))
-						if inventory_item_level ~= '2' and inventory_item_level ~= '3' and inventory_item_level ~= '4' and inventory_item_level ~= '5' then
-								inventory_item_level = '1'
-						end
-
-						-- Find the resultant level
-						print('inventory_item_level is ' .. inventory_item_level)
-						print('picked up item level is ' .. item_level)
-						result_level = inventory_item_level + item_level
-						print('result level is ' .. result_level)
-
-						-- Grant the player the appropriate level item and give him gold back if it is past 5
-						if result_level > 5 then
-							print('result larger than 5')
-							newItem = CreateItem(item_short_name .. '_5', hero, nil)
-							hero:AddItem(newItem)
-							hero:ModifyGold(item_cost * (result_level - 5), true, 1)
-						else
-							print('result smaller than 5')
-							newItem = CreateItem(item_short_name .. '_' .. result_level, hero, nil)
-							hero:AddItem(newItem)
-						end
-
-						-- Make sure nothing happens twice
-						combination_has_happened = true
-					end
-				end
-			end
-		end    
 	end
 end
 
@@ -475,6 +521,10 @@ function PudgeWarsMode:OnNPCSpawned( keys )
 				
 				CustomGameEventManager:Send_ServerToPlayer( player,"pudgewars_vote_update", vote_update_info )
 			end
+
+			if not spawnedUnit:HasModifier("modifier_ability_points") then
+				spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_ability_points", {}):SetStackCount(spawnedUnit:GetAbilityPoints())
+			end
 		end
 	end
 end
@@ -494,6 +544,11 @@ function PudgeWarsMode:OnLevelUp( keys )
 
 	if hero_level > 40 then
 		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
+	end
+
+	local modifier = hero:FindModifierByName("modifier_ability_points")
+	if modifier then
+		modifier:SetStackCount(hero:GetAbilityPoints())
 	end
 end
 
@@ -554,36 +609,58 @@ function PudgeWarsMode:OnItemPurchased(keys)
 						hero:ModifyGold(cost, true, 1)
 					end
 				end
-
-				if itemname == 'item_lycan_paw' or itemname == 'item_naix_jaw' or itemname == 'item_grappling_hook' or itemname == 'item_tiny_arm' or itemname == 'item_barathrum_lantern' or itemname == 'item_techies_explosive_barrel' or itemname == 'item_strygwyr_claw' or itemname == 'item_ricochet_turbine' or itemname == 'item_pudgewars_earthshaker_totem' then
-					PudgeWarsMode:UpgradeItem(itemname,item,itempurchased,hero)
-				end
 			end
 		end
 	end
 end
 
-
 function PudgeWarsMode:Think()
 	-- If the game's over, it's over.
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
-		local plyCount = 0
+		local players = {}
+		local xp_info = {}
 
-		for i=0,9 do
-			if PlayerResource:IsValidPlayer(i) then
-				plyCount = plyCount + 1
+		for i = 0, PlayerResource:GetPlayerCount() - 1 do
+			-- Placeholders
+			local player = PlayerResource:GetPlayer(i)
+			player.steamid = PlayerResource:GetSteamID(i)
+			players[i] = player
+
+			local level = 1
+			local title = "Rookie"
+			local color = "#FFFFFF"
+			local xp_shit = {}
+			xp_shit.xp = 0
+			xp_shit.max_xp = 100
+			local progress = xp_shit
+
+--			local level = GetXPLevelByXp(player.xp)
+--			local title = GetTitleIXP(level)
+--			local color = GetTitleColorIXP(title, true)
+--			local progress = GetXpProgressToNextLevel(player.xp)
+
+			if level and title and color and progress then
+				table.insert(xp_info, {
+					steamid = player.steamid,
+					level = level,
+					title = title,
+					color = color,
+					progress = progress
+				})
 			end
 		end
 
-	--  statcollection.addStats({
-	--    player_count = plyCount
-	--    })
-	--  statcollection.addStats({
-	--    modes = {"first_to_" .. PudgeWarsMode.kills_to_win}
-	--    })
-	--  print("[PUDGEWARS] SENDING STATS")
-		--send stats - Stats get sent automatically now
-		--statcollection.sendStats()
+		CustomGameEventManager:Send_ServerToAllClients("end_game", {
+			players = players,
+			xp_info = xp_info,
+			info = {
+				winner = GAME_WINNER_TEAM,
+				id = 0,
+				radiant_score = GetTeamHeroKills(2),
+				dire_score = GetTeamHeroKills(3),
+			},
+		})
+
 		return
 	end
 
@@ -731,7 +808,6 @@ function PudgeWarsMode:RemoveTimers(killAll)
 	self.timers = timers
 end
 
-
 function PudgeWarsMode:OnEntityKilled(keys)
 	local killedUnit = EntIndexToHScript(keys.entindex_killed)
 	local killerEntity = nil
@@ -778,10 +854,12 @@ function PudgeWarsMode:OnEntityKilled(keys)
 		end
 
 		if self.scoreDire >= self.kills_to_win then
+			GAME_WINNER_TEAM = 2
 			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
 			GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS)
 			GameRules:Defeated()
 		elseif self.scoreRadiant >= self.kills_to_win then
+			GAME_WINNER_TEAM = 3
 			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 			GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
 			GameRules:Defeated()
