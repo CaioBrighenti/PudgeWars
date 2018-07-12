@@ -16,7 +16,7 @@ If you'd like to contribute, simply send in a pull request. If your code is clea
 ## Authors
 
 * **Caio Brighenti** - *Inactive - Core Developer* - [CaioBrighenti](https://github.com/CaioBrighenti)
-* **Anton Aderum** - *Inactive - Core Develoepr* - [AntonAderum](https://github.com/AntonAderum)
+* **Anton Aderum** - *Inactive - Core Developer* - [AntonAderum](https://github.com/AntonAderum)
 * **EarthSalamander42** - *Current Developer* - [EarthSalamander42](https://github.com/EarthSalamander42)
 
 ## License
