@@ -131,6 +131,7 @@ function PudgeWarsMode:KillTarget(caster,unit)
 end
 
 function applyRupture(source, target)
+	print("applyRupture")
 	local hasStrygwyr = false
 	local ruptureLevel = nil
 
@@ -141,6 +142,8 @@ function applyRupture(source, target)
 
 				if item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw' then
 					ruptureLevel = item:GetLevel()
+					hasStrygwyr = true
+					print("item level:", ruptureLevel)
 				end
 			end
 

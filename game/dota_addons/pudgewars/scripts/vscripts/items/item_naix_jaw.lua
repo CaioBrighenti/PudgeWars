@@ -3,7 +3,7 @@
 item_naix_jaw = class({})
 
 function item_naix_jaw:GetAbilityTextureName()
-	return "lifesteal_mask"
+	return "item_naix_jaw"
 end
 
 function item_naix_jaw:GetIntrinsicModifierName()

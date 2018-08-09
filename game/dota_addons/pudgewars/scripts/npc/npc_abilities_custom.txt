@@ -392,7 +392,7 @@
 		"AbilityUnitTargetType"         "DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_PURE"  
 		"MaxLevel"                      "5"
-		
+
 		// Cast Range
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastRange"              "9999"
@@ -404,7 +404,7 @@
 			"01"
 			{
 				"var_type"                  "FIELD_FLOAT"
-				"duration"                  "99"
+				"duration"                  "3.0"
 			}
 			"02"
 			{

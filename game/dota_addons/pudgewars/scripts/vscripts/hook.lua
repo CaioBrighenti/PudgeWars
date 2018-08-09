@@ -408,7 +408,7 @@ function LaunchHook(keys)
 					--hooked:RemoveModifierByName("modifier_rooted")
 					hooked:RemoveModifierByName("modifier_pudge_meat_hook")
 
-					if hero:HasItemInInventory('item_strygwyr_claw_5') then
+					if hero:HasItemInInventory('item_strygwyr_claw'):GetLevel() == 5 then
 						--If the caster has max level strygwyrs, leave rupture for 3 seconds
 						local hooked_rupture = hooked
 
