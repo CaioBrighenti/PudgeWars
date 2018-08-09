@@ -29,40 +29,44 @@ function PudgeClass.create(playerId)
 	return pudge
 end
 
-function PudgeWarsMode:InitPudge( spawnedUnit )
-	print('Pudge Spawned for the first time, id=' .. spawnedUnit:GetPlayerOwnerID())
-	PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] = PudgeClass.create( spawnedUnit:GetPlayerOwnerID() )
+function PudgeWarsMode:InitPudge(pudge)
+	print('Pudge Spawned for the first time, id=' .. pudge:GetPlayerOwnerID())
+	PudgeArray[ pudge:GetPlayerOwnerID() ] = PudgeClass.create( pudge:GetPlayerOwnerID() )
 	--Add the unit for easy acces in other functions
-	PudgeArray[spawnedUnit:GetPlayerOwnerID()].pudgeunit = spawnedUnit
+	PudgeArray[pudge:GetPlayerOwnerID()].pudgeunit = pudge
 
 	--Set starting gold to 0
-	spawnedUnit:SetGold(0, false)
+	pudge:SetGold(0, false)
 
-	PudgeArray[spawnedUnit:GetPlayerOwnerID()].hasspawned = true
-	spawnedUnit:FindAbilityByName("pudge_wars_custom_hook"):SetLevel(1)
-	spawnedUnit:FindAbilityByName("pudge_wars_abilities_up"):SetLevel(1)
-	spawnedUnit:FindAbilityByName("pudge_wars_abilities_down"):SetLevel(1)
-	spawnedUnit:FindAbilityByName("pudge_wars_empty1"):SetLevel(1)
-	spawnedUnit:FindAbilityByName("pudge_wars_empty2"):SetLevel(1)
-	spawnedUnit:FindAbilityByName("pudge_wars_empty3"):SetLevel(1)
+	PudgeArray[pudge:GetPlayerOwnerID()].hasspawned = true
 
-	spawnedUnit.ab2 = "pudge_wars_empty1"
-	spawnedUnit.ab3 = "pudge_wars_empty2"
-	spawnedUnit.ab4 = "pudge_wars_empty3"
-
-	spawnedUnit.successful_hooks = 0
-	Battlepass:AddItemEffects(spawnedUnit)
-
-	local battlepass_level = Battlepass:GetRewardUnlocked(spawnedUnit:GetPlayerID())
-	local level_color = GetTitleColorIXP(GetTitleIXP(battlepass_level), false)
-
-	if IsDeveloper(spawnedUnit:GetPlayerID()) then
-		spawnedUnit:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Mod Developer)", level_color[1], level_color[2], level_color[3])
-	elseif IsDonator(spawnedUnit:GetPlayerID()) then
-		spawnedUnit:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Donator)", level_color[1], level_color[2], level_color[3])
-	else
-		spawnedUnit:SetCustomHealthLabel(GetTitleIXP(battlepass_level), level_color[1], level_color[2], level_color[3])
+	for i = 0, 5 do
+		pudge:GetAbilityByIndex(i):SetLevel(1)
 	end
 
-	spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_command_restricted", {duration=PRE_GAME_TIME})
+	pudge.ab2 = "pudge_wars_empty1"
+	pudge.ab3 = "pudge_wars_empty2"
+	pudge.ab4 = "pudge_wars_empty3"
+
+	pudge.successful_hooks = 0
+	Battlepass:AddItemEffects(pudge)
+
+	local battlepass_level = Battlepass:GetRewardUnlocked(pudge:GetPlayerID())
+	local level_color = GetTitleColorIXP(GetTitleIXP(battlepass_level), false)
+
+	if IsDonator(pudge:GetPlayerID()) == 1 or IsDeveloper(pudge:GetPlayerID()) then
+		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Mod Developer)", level_color[1], level_color[2], level_color[3])
+	elseif IsDonator(pudge:GetPlayerID()) == 4 then
+		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Ember Donator)", 200, 40, 40)
+	elseif IsDonator(pudge:GetPlayerID()) == 5 then
+		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Golden Donator)", 255, 200, 0)
+	elseif IsDonator(pudge:GetPlayerID()) == 6 then
+		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Donator)", 40, 200, 40)
+	elseif IsDonator(pudge:GetPlayerID()) == 7 then
+		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Salamander Donator)", 20, 86, 239)
+	else
+		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level), level_color[1], level_color[2], level_color[3])
+	end
+
+	pudge:AddNewModifier(pudge, nil, "modifier_command_restricted", {duration=PRE_GAME_TIME})
 end

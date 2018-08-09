@@ -241,21 +241,6 @@ function IsDeveloper(ID)
 	return false
 end
 
-function IsDonator(ID)
-	local donators = {
-		"",
-	}
-
-	for i = 1, #donators do
-		local steam_id = tostring(PlayerResource:GetSteamID(ID))
-		if steam_id == donators[i] then
-			return true
-		end
-	end
-
-	return false
-end
-
 function GetReductionFromArmor(armor)
 	local m = 0.06 * armor
 	return 100 * (1 - m/(1+math.abs(m)))

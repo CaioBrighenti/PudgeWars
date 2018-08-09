@@ -155,9 +155,9 @@ function GetPudgeArcanaEffect(hero)
 end
 
 function HasPudgeArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana2"] then
+	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana2"] or IsDonator(ID) == 4 or IsDonator(ID) == 7 then
 		return 1
-	elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana"] then
+	elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana"] or IsDonator(ID) == 5 or IsDonator(ID) == 6 then
 		return 0
 	else
 		return false

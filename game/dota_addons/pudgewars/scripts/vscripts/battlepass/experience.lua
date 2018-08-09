@@ -148,8 +148,16 @@ function GetPlayerInfoXP()
 		local level = 0
 		local global_xp = 0
 
-		if IsDeveloper(ID) then
+		if IsDonator(ID) == 1 or IsDeveloper(ID) then
 			global_xp = global_xp + 182700
+		elseif IsDonator(ID) == 4 then
+			global_xp = global_xp + 10000
+		elseif IsDonator(ID) == 5 then
+			global_xp = global_xp + 3000
+		elseif IsDonator(ID) == 6 then
+			global_xp = global_xp + 1000
+		elseif IsDonator(ID) == 7 then
+			global_xp = global_xp + 75000
 		end
 
 		for i = 1, #XP_level_table do

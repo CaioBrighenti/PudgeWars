@@ -7,8 +7,7 @@ end
 function item_techies_explosive_barrel:OnChannelFinish(bInterrupted)
 	local point = self:GetCursorPosition()
 
-	if bInterrupted then
-	else
+	if bInterrupted == false then
 		local mine = CreateUnitByName("npc_dota_mine_"..self:GetLevel(), point, true, self:GetCaster(), self:GetCaster(), self:GetCaster():GetTeamNumber())
 	end
 end

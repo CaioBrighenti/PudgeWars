@@ -111,18 +111,6 @@ function PudgeWarsMode:InitGameMode()
 		GameRules:SetCustomGameSetupAutoLaunchDelay(2.0)
 	end
 
-	GameRules:GetGameModeEntity():SetItemAddedToInventoryFilter(function(ctx, event)
-		local hero = EntIndexToHScript(event.inventory_parent_entindex_const)
-		local item = EntIndexToHScript(event.item_entindex_const)
-
-		-- remove tp given at the beginning
-		if item:GetAbilityName() == "item_tpscroll" and item:GetPurchaser() == nil then
-			return false
-		end
-
-    	return true
-	end, self)
-
 	print('[PUDGEWARS] Rules set')
 
 	InitLogFile( "log/pudgewars.txt","")
@@ -130,9 +118,9 @@ function PudgeWarsMode:InitGameMode()
 	-- Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, 'OnEntityKilled'), self)
 	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, 'AutoAssignPlayer'), self)
-	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(self, 'OnItemPurchased'), self)
+--	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(self, 'OnItemPurchased'), self)
 	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'AbilityUsed'), self)
-	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap( self, 'ItemPickedUp' ), self )
+--	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap( self, 'ItemPickedUp' ), self )
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap( self, 'OnNPCSpawned'), self)
 	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap( self, 'OnLevelUp'), self)
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, 'OnGameRulesStateChange'), self)
@@ -193,13 +181,9 @@ function PudgeWarsMode:CaptureGameMode()
 	if GameMode == nil then
 		-- Set GameMode parameters
 		GameMode = GameRules:GetGameModeEntity()		
-		-- Disables recommended items...though I don't think it works
-		GameMode:SetRecommendedItemsDisabled( true )
 		-- Override the normal camera distance.  Usual is 1134
 		GameMode:SetCameraDistanceOverride( 1134.0 )
 		-- Set Buyback options
-		GameMode:SetCustomBuybackCostEnabled( true )
-		GameMode:SetCustomBuybackCooldownEnabled( true )
 		GameMode:SetBuybackEnabled( false )
 		-- Override the top bar values to show your own settings instead of total deaths
 		GameMode:SetTopBarTeamValuesOverride ( true )
@@ -221,6 +205,9 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		GetPlayerInfoXP()
+		ApiLoad()
+	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
+		InitCampfires()
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		CustomGameEventManager:Send_ServerToAllClients( "pudgewars_set_score_topbar", {kills = self.kills_to_win} )
 		-- start slower thinker to avoid lags
@@ -228,6 +215,8 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 			self:SlowThink()
 			return 1.0
 		end)
+
+		GameRules:SendCustomMessage("Good luck, have fun! May the headshot be with you.", 0, 0)
 
 		-- start spawn rune timer
 		Timers:CreateTimer(RUNE_SPAWN_TIME, function()
@@ -456,7 +445,7 @@ function PudgeWarsMode:CloseServer()
 	-- Just exit
 	SendToServerConsole('exit')
 end
-
+--[[
 function PudgeWarsMode:ItemPickedUp( keys )
 	print("[PUDGEWARS] ItemPickedUp")
 	local playerID = keys.PlayerID
@@ -482,12 +471,14 @@ function PudgeWarsMode:ItemPickedUp( keys )
 		end
 	end
 end
-
+]]
 function PudgeWarsMode:OnNPCSpawned( keys )
 	local spawnedUnit = EntIndexToHScript( keys.entindex )
 	local player = spawnedUnit:GetPlayerOwner()
 
-	if spawnedUnit:GetUnitName() == "npc_vision_dummy" then
+	if spawnedUnit:GetUnitName() == "npc_dota_campfire" then
+		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_campfire", {})
+	elseif spawnedUnit:GetUnitName() == "npc_vision_dummy" then
 		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_tower_truesight_aura", {duration = 30})
 		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_invisible", {})
 	elseif string.find(spawnedUnit:GetUnitName(), "npc_dota_mine") then
@@ -580,8 +571,7 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
 
 	self.vPlayers[playerID] = ply
 end
-
-
+--[[
 function PudgeWarsMode:OnItemPurchased(keys)
 	-- The playerID of the hero who is buying something
 	local plyID = keys.PlayerID
@@ -613,7 +603,7 @@ function PudgeWarsMode:OnItemPurchased(keys)
 		end
 	end
 end
-
+]]
 function PudgeWarsMode:Think()
 	-- If the game's over, it's over.
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then

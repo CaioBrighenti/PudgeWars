@@ -22,7 +22,6 @@ function calcDamage(hero, v, damage, speed)
 		local item = hero:GetItemInSlot(i)
 		if item then
 			if item:GetAbilityName() == "item_barathrum_lantern" then
-				print(item:GetSpecialValueFor("damage_pct"))
 				hookdamage = hookdamage + hookspeed / 100 * item:GetSpecialValueFor("damage_pct")
 				baraParticle = ParticleManager:CreateParticle( 'particles/items2_fx/phase_boots.vpcf', PATTACH_ABSORIGIN, v)
 				baraPos = v:GetOrigin()
@@ -720,7 +719,6 @@ function LaunchHook(keys)
 				vars_table[4] = speed
 
 				if hooked == nil then
-					print("Hook counter reset")
 					hero.successful_hooks = 0
 				end
 

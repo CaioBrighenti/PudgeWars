@@ -1,0 +1,8 @@
+pudge_wars
+{
+	material materials/overviews/pudge_wars.vmat
+	pos_x -2816
+	pos_y 2816
+	scale 5.500
+}
+

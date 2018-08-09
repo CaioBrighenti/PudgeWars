@@ -287,13 +287,11 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 	var class_option_count = 1;
 	var plyData = CustomNetTables.GetTableValue("player_table", player);
 
-	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_"
-			+ player);
+	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 	reward_row.AddClass("BattlepassRow");
 
 	for (var i = 1; i <= 100; i++) {
 		if (BattlepassRewards[i] != undefined) {
-
 			i_count = i_count + 1;
 
 			if (i_count > 10) {
@@ -309,8 +307,8 @@ function GenerateBattlepassPanel(BattlepassRewards, player) {
 			// $.Msg(i + " " + BattlepassRewards[i])
 
 			var reward_icon = $.CreatePanel("Panel", reward, BattlepassRewards[i] + "_icon");
-			reward_icon.AddClass("BattlepassRewardIcon");
 			reward_icon.style.backgroundImage = 'url("file://{images}/custom_game/battlepass/' + BattlepassRewards[i] + '.png")';
+			reward_icon.AddClass("BattlepassRewardIcon");
 
 			var reward_label = $.CreatePanel("Label", reward, BattlepassRewards[i] + "_label");
 			reward_label.AddClass("BattlepassRewardLabel");

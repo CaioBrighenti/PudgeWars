@@ -16,11 +16,11 @@
 		// Abilities
 		//-------------------------------------------------------------------------------------------------------------
 		"Ability1"					"pudge_wars_custom_hook"		// Ability 1
-		"Ability2"					"pudge_wars_empty1"				// Ability 2
-		"Ability3"					"pudge_wars_empty2"				// Ability 3
-		"Ability4"					"pudge_wars_empty3"				// Ability 4
-		"Ability5"					"pudge_wars_abilities_up"		// Ability 5
-		"Ability6"					"generic_hidden"				// Ability 6
+		"Ability2"					"pudge_wars_cleaver"			// Ability 2
+		"Ability3"					"pudge_wars_empty1"				// Ability 3
+		"Ability4"					"pudge_wars_empty2"				// Ability 4
+		"Ability5"					"pudge_wars_empty3"		// Ability 5
+		"Ability6"					"pudge_wars_abilities_up"				// Ability 6
 		"Ability7"					"pudge_wars_upgrade_hook_damage"
 		"Ability8"					"pudge_wars_upgrade_hook_range"
 		"Ability9"					"pudge_wars_upgrade_hook_speed"

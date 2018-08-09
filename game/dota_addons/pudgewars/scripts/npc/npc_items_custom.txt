@@ -43,7 +43,7 @@
 		"Model"							"models/props_gameplay/salve_blue.mdl"
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_greater_clarity"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 		"ItemPurchasable"				"0"
 
 		"ItemBaseLevel"					"10"
@@ -402,7 +402,7 @@
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_reveal"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -514,7 +514,7 @@
 
 		"BaseClass"						"item_datadriven"
 		"AbilityTextureName"			"item_phantom_lance"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 		"ItemPurchasable"				"0"
 
 		// Casting
@@ -562,7 +562,7 @@
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 
 		"AbilitySpecial"
 		{
@@ -615,7 +615,7 @@
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 
 		"OnSpellStart"
 		{
@@ -654,7 +654,7 @@
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 
 		"AbilitySpecial"
 		{
@@ -686,7 +686,8 @@
 		"ID"							"2004"														// unique ID number for this item.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		"BaseClass"						"item_datadriven"
+		"BaseClass"						"item_lua"
+		"ScriptFile"					"items/item_lycan_paw.lua"
 		"AbilityTextureName"			"item_lycan_paw"
 		"MaxUpgradeLevel"				"5"
 
@@ -698,14 +699,14 @@
 		"ItemQuality"					"common"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 
 		"AbilitySpecial"
 		{
 			"01"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movespeed_bonus"			"75 100 125 150 175"
+				"movespeed_bonus"			"50 75 100 125 150"
 			}
 			"02"
 			{
@@ -716,33 +717,6 @@
 			{
 				"var_type"					"FIELD_INTEGER"
 				"movespeed_percent_bonus"	"12"
-			}
-		}
-
-		"OnSpellStart"
-		{
-			"ApplyModifier"
-			{
-				"Target"			"CASTER"
-				"ModifierName"		"lycan_paws_speed"
-			}
-		}
-
-		// Stats
-		//-------------------------------------------------------------------------------------------------------------
-		"Modifiers"
-		{
-			"lycan_paws_speed"
-			{
-				"Passive"	"1"
-				"IsHidden"	"1"
-
-				"Properties"
-				{
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT"		"%movespeed_bonus"
-					"MODIFIER_PROPERTY_MOVESPEED_BONUS_PERCENTAGE"		"%movespeed_percent_bonus"
-					"MODIFIER_PROPERTY_ATTACKSPEED_BONUS_CONSTANT"		"%attackspeed_bonus"
-				}
 			}
 		}
 	}
@@ -768,7 +742,7 @@
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 	}
 
 	//=================================================================================================================
@@ -792,7 +766,7 @@
 		"SideShop"						"1"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 	}
 
 	//=================================================================================================================
@@ -818,7 +792,7 @@
 		"ItemQuality"					"common"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 
 		"precache"
 		{
@@ -873,7 +847,7 @@
 		"ItemQuality"					"common"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -936,6 +910,6 @@
 		"ItemQuality"					"common"
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
-		"ItemKillable"					"0"
+		"ItemKillable"					"1"
 	}
 }

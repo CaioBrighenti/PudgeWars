@@ -2,6 +2,10 @@
 
 item_naix_jaw = class({})
 
+function item_naix_jaw:GetAbilityTextureName()
+	return "lifesteal_mask"
+end
+
 function item_naix_jaw:GetIntrinsicModifierName()
 	return "modifier_lifesteal"
 end
@@ -10,7 +14,7 @@ LinkLuaModifier("modifier_lifesteal", "items/item_naix_jaw.lua", LUA_MODIFIER_MO
 
 modifier_lifesteal = class({})
 
-function modifier_lifesteal:GetAbilityTextureName()
+function modifier_lifesteal:GetTexture()
 	return "modifiers/lifesteal_mask"
 end
 
