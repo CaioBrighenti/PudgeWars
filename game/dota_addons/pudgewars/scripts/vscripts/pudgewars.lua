@@ -1,11 +1,5 @@
-print ('[PUDGEWARS] pudgewars.lua' )
-
-USE_LOBBY=false
+USE_LOBBY = false
 THINK_TIME = FrameTime()
-
-PUDGEWARS_VERSION = 7.13
-STARTING_GOLD = 0
-MAX_LEVEL = 40
 
 -- Fill this table up with the required XP per level if you want to change it
 XP_PER_LEVEL_TABLE = {}
@@ -61,14 +55,7 @@ rune_spell_caster_good = nil
 has_been_in_wait_for_players = false
 
 if PudgeWarsMode == nil then
-		PudgeWarsMode = class({})
-		print("created PW")
-		--[[
-	print ( '[PUDGEWARS] creating pudgewars game mode' )
-	PudgeWarsMode = {}
-	PudgeWarsMode.szEntityClassName = "pudgewars"
-	PudgeWarsMode.szNativeClassName = "dota_base_game_mode"
-	PudgeWarsMode.__index = PudgeWarsMode --]]
+	PudgeWarsMode = class({})
 end
 
 function PudgeWarsMode:new( o )
@@ -81,34 +68,39 @@ end
 function PudgeWarsMode:InitGameMode()
 	print('[PUDGEWARS] Starting to load Pudgewars gamemode...')
 
-	-- Global Variables
-	self.RESPAWN_TIME = 8.0
-	PRE_GAME_TIME = 10.0
-
-	-- Runes Variables
-	RUNE_SPAWN_TIME = 40.0
-	RUNE_TEXT_DURATION = 4.0
-	RUNE_SLOW = false
-	RUNE_SLOW_DURATION = 15.0
-	RUNE_SHIELD_DURATION = 12.0
-	RUNE_FIRE_DURATION = 24.0
-
 	-- Setup rules
 	GameRules:SetHeroRespawnEnabled(true)
 	GameRules:SetUseUniversalShopMode(false)
 	GameRules:SetHeroSelectionTime(0.0)
 	GameRules:SetPreGameTime(PRE_GAME_TIME)
-	GameRules:SetPostGameTime(20.0)
-	GameRules:SetGoldPerTick(0)
+	GameRules:SetTreeRegrowTime(TREE_REGROW_TIME)
+	GameRules:SetPostGameTime(POST_GAME_TIME)
 	GameRules:SetHeroMinimapIconScale(0.8)
 	GameRules:SetCreepMinimapIconScale(0)
 	GameRules:SetRuneMinimapIconScale(0.7)
 	GameRules:SetSameHeroSelectionEnabled(true)
 	GameRules:SetHideKillMessageHeaders(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_pudge")
+	GameRules:GetGameModeEntity():SetFixedRespawnTime(FIXED_RESPAWN_TIME) 
+	GameRules:SetGoldPerTick(GOLD_PER_TICK)
+	GameRules:SetGoldTickTime(GOLD_TICK_TIME)
 
 	if IsInToolsMode() then
 		GameRules:SetCustomGameSetupAutoLaunchDelay(2.0)
+	end
+
+	self.itemKV = LoadKeyValues("scripts/npc/items.txt")
+	for k,v in pairs(LoadKeyValues("scripts/npc/npc_items_custom.txt")) do
+		if not self.itemKV[k] then
+			self.itemKV[k] = v
+		end
+	end
+
+	self.itemIDs = {}
+	for k,v in pairs(self.itemKV) do
+		if type(v) == "table" and v.ID then
+			self.itemIDs[v.ID] = k
+		end
 	end
 
 	print('[PUDGEWARS] Rules set')
@@ -118,12 +110,14 @@ function PudgeWarsMode:InitGameMode()
 	-- Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, 'OnEntityKilled'), self)
 	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, 'AutoAssignPlayer'), self)
---	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(self, 'OnItemPurchased'), self)
+	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(self, 'OnItemPurchased'), self)
 	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'AbilityUsed'), self)
 --	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap( self, 'ItemPickedUp' ), self )
 	ListenToGameEvent('npc_spawned', Dynamic_Wrap( self, 'OnNPCSpawned'), self)
 	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap( self, 'OnLevelUp'), self)
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, 'OnGameRulesStateChange'), self)
+	ListenToGameEvent('player_chat', Dynamic_Wrap(self, 'OnPlayerChat'), self)
+	GameRules:GetGameModeEntity():SetExecuteOrderFilter(Dynamic_Wrap(self, "OrderFilter"), self)
 
 	CustomGameEventManager:RegisterListener( "pudgewars_player_vote50", OnPlayerVote50 )
 	CustomGameEventManager:RegisterListener( "pudgewars_player_vote75", OnPlayerVote75 )
@@ -219,7 +213,7 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 		GameRules:SendCustomMessage("Good luck, have fun! May the headshot be with you.", 0, 0)
 
 		-- start spawn rune timer
-		Timers:CreateTimer(RUNE_SPAWN_TIME, function()
+		Timers:CreateTimer(function()
 			PudgeWarsMode:SpawnRune()
 			return RUNE_SPAWN_TIME
 		end)
@@ -304,15 +298,6 @@ function PudgeWarsMode:SlowThink()
 					hero:AddAbility("pudge_wars_empty3"):SetLevel(1)
 				end
 			end
-		end
-	end
-
-	-- handle the rune slow modifier duration
-	if RUNE_SLOW ~= false then
-		RUNE_SLOW = RUNE_SLOW - 1
-
-		if RUNE_SLOW <= 0 then
-			RUNE_SLOW = false
 		end
 	end
 
@@ -472,76 +457,6 @@ function PudgeWarsMode:ItemPickedUp( keys )
 	end
 end
 ]]
-function PudgeWarsMode:OnNPCSpawned( keys )
-	local spawnedUnit = EntIndexToHScript( keys.entindex )
-	local player = spawnedUnit:GetPlayerOwner()
-
-	if spawnedUnit:GetUnitName() == "npc_dota_campfire" then
-		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_campfire", {})
-	elseif spawnedUnit:GetUnitName() == "npc_vision_dummy" then
-		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_tower_truesight_aura", {duration = 30})
-		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_invisible", {})
-	elseif string.find(spawnedUnit:GetUnitName(), "npc_dota_mine") then
-		spawnedUnit:AddAbility('vision_dummy_passive')
-		local spawnedUnitPassive = spawnedUnit:FindAbilityByName('vision_dummy_passive')
-		spawnedUnitPassive:SetLevel(1)
-	elseif spawnedUnit:GetUnitName() == "npc_dummy_rune_diretide" or spawnedUnit:GetUnitName() == "npc_dummy_rune_lightning" or spawnedUnit:GetUnitName() == "npc_dummy_rune_haste" or spawnedUnit:GetUnitName() == "npc_dummy_rune_gold" or spawnedUnit:GetUnitName() == "npc_dummy_rune_ion" or spawnedUnit:GetUnitName() == "npc_dummy_rune_fire" or spawnedUnit:GetUnitName() == "npc_dummy_rune_dynamite" then
-		PudgeWarsMode:MoveRune(spawnedUnit)
-	elseif string.find(spawnedUnit:GetUnitName(), "barrier") then
-		local owner = spawnedUnit:GetOwner()
-		spawnedUnit:SetForwardVector(owner:GetForwardVector())
-
-		PudgeWarsMode:CreateTimer(DoUniqueString("clear_space"), {
-			endTime = GameRules:GetGameTime() + 0.07,
-			callback = function(reflex, args)
-			FindClearSpaceForUnit(spawnedUnit, spawnedUnit:GetAbsOrigin(), true ) 
-			return
-		end})
-	elseif spawnedUnit:GetUnitName() == "npc_dota_hero_pudge" then
-		if spawnedUnit:GetPlayerOwnerID() ~= -1 then
-			if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
-				PudgeWarsMode:InitPudge( spawnedUnit )
-
-				local vote_update_info = 
-				{
-					votes_50 = self.vote_50_votes,
-					votes_75 = self.vote_75_votes,
-					votes_100 = self.vote_100_votes,
-					vote_visible = self.is_voting,
-				}
-				
-				CustomGameEventManager:Send_ServerToPlayer( player,"pudgewars_vote_update", vote_update_info )
-			end
-
-			if not spawnedUnit:HasModifier("modifier_ability_points") then
-				spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_ability_points", {}):SetStackCount(spawnedUnit:GetAbilityPoints())
-			end
-		end
-	end
-end
-
-function PudgeWarsMode:OnLevelUp( keys )
-	local player = EntIndexToHScript(keys.player)
-	local hero = player:GetAssignedHero()
-	local hero_level = hero:GetLevel()
-
-	local extra_ab_points = {17, 19, 21, 22, 23, 24}
-
-	for i = 0, #extra_ab_points do
-		if hero_level == extra_ab_points[i] then
-			hero:SetAbilityPoints(hero:GetAbilityPoints() + 1)
-		end
-	end
-
-	if hero_level > 40 then
-		hero:SetAbilityPoints(hero:GetAbilityPoints() - 1)
-	end
-
-	local modifier = hero:FindModifierByName("modifier_ability_points")
-	if modifier then
-		modifier:SetStackCount(hero:GetAbilityPoints())
-	end
-end
 
 function PudgeWarsMode:AutoAssignPlayer(keys)
 	print ('[PUDGEWARS] AutoAssignPlayer FIXED')
@@ -571,7 +486,7 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
 
 	self.vPlayers[playerID] = ply
 end
---[[
+
 function PudgeWarsMode:OnItemPurchased(keys)
 	-- The playerID of the hero who is buying something
 	local plyID = keys.PlayerID
@@ -603,7 +518,7 @@ function PudgeWarsMode:OnItemPurchased(keys)
 		end
 	end
 end
-]]
+
 function PudgeWarsMode:Think()
 	-- If the game's over, it's over.
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
@@ -646,8 +561,8 @@ function PudgeWarsMode:Think()
 			info = {
 				winner = GAME_WINNER_TEAM,
 				id = 0,
-				radiant_score = GetTeamHeroKills(2),
-				dire_score = GetTeamHeroKills(3),
+				radiant_score = self.scoreRadiant,
+				dire_score = self.scoreDire,
 			},
 		})
 
@@ -663,15 +578,15 @@ function PudgeWarsMode:Think()
 	end
 
 	-- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
-	local now = GameRules:GetGameTime()
-	--print("now: " .. now)
-	if PudgeWarsMode.t0 == nil then
-		PudgeWarsMode.t0 = now
-	end
-	local dt = now - PudgeWarsMode.t0
-	PudgeWarsMode.t0 = now
+    local now = GameRules:GetGameTime()
+    --print("now: " .. now)
+    if PudgeWarsMode.t0 == nil then
+        PudgeWarsMode.t0 = now
+    end
+    local dt = now - PudgeWarsMode.t0
+    PudgeWarsMode.t0 = now
 
-	--PudgeWarsMode:thinkState( dt )
+    --PudgeWarsMode:thinkState( dt )
 
 	-- Process timers
 	for k,v in pairs(PudgeWarsMode.timers) do
@@ -695,25 +610,9 @@ function PudgeWarsMode:Think()
 					v.endTime = nextCall
 					PudgeWarsMode.timers[k] = v
 				end
-
 			else
 				-- Nope, handle the error
 				PudgeWarsMode:HandleEventError('Timer', k, nextCall, v)
-			end
-		end
-	end
-
-	-- Apply slow modifier if slow rune is picked up
-	if RUNE_SLOW ~= false then
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if not hero:HasModifier("modifier_slow_rune") then
-				hero:AddNewModifier(hero, nil, "modifier_slow_rune", {})
-			end
-		end
-	else
-		for _, hero in pairs(HeroList:GetAllHeroes()) do
-			if hero:HasModifier("modifier_slow_rune") then
-				hero:RemoveModifierByName("modifier_slow_rune")
 			end
 		end
 	end
@@ -796,63 +695,4 @@ function PudgeWarsMode:RemoveTimers(killAll)
 
 	-- Store the new batch of timers
 	self.timers = timers
-end
-
-function PudgeWarsMode:OnEntityKilled(keys)
-	local killedUnit = EntIndexToHScript(keys.entindex_killed)
-	local killerEntity = nil
-
-	if keys.entindex_attacker ~= nil then
-		killerEntity = EntIndexToHScript(keys.entindex_attacker)
-	else
-		return
-	end
-
-	if string.find(killedUnit:GetClassname(), "creep") and string.find(killedUnit:GetUnitName(), "mine") and not killedUnit:HasModifier("modifier_pudge_meat_hook") then
-		Timers:CreateTimer(1.0, function()
-			if killedUnit and IsValidEntity(killedUnit) then
-				killedUnit:RemoveSelf()
-			end
-		end)   
-
-		return
-	end
-
-	if string.find(killedUnit:GetClassname(), "creature") and string.find(killedUnit:GetUnitName(), "barrier") then
-		Timers:CreateTimer(1.0, function()
-			if killedUnit and IsValidEntity(killedUnit) then
-				killedUnit:RemoveSelf()
-			end
-		end) 
-
-		return
-	end
-
-	if killedUnit:IsRealHero() then
-		killedUnit:SetTimeUntilRespawn(self.RESPAWN_TIME)
-
-		if killedUnit:GetTeam() == DOTA_TEAM_BADGUYS then
-			if killerEntity:GetTeam() == 2 then
-				self.scoreRadiant = self.scoreRadiant + 1
-				CustomNetTables:SetTableValue("game_score", "team_score", {radiant_score = self.scoreRadiant, dire_score = self.scoreDire})
-			end
-		elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS then
-			if killerEntity:GetTeam() == 3 then
-				self.scoreDire = self.scoreDire + 1
-				CustomNetTables:SetTableValue("game_score", "team_score", {radiant_score = self.scoreRadiant, dire_score = self.scoreDire})
-			end
-		end
-
-		if self.scoreDire >= self.kills_to_win then
-			GAME_WINNER_TEAM = 2
-			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
-			GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS)
-			GameRules:Defeated()
-		elseif self.scoreRadiant >= self.kills_to_win then
-			GAME_WINNER_TEAM = 3
-			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
-			GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
-			GameRules:Defeated()
-		end
-	end
 end

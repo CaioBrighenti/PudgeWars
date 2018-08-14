@@ -43,6 +43,7 @@ function PudgeWarsMode:InitPudge(pudge)
 	for i = 0, 5 do
 		pudge:GetAbilityByIndex(i):SetLevel(1)
 	end
+	pudge:FindAbilityByName("pudge_wars_abilities_down"):SetLevel(1)
 
 	pudge.ab2 = "pudge_wars_empty1"
 	pudge.ab3 = "pudge_wars_empty2"

@@ -85,6 +85,7 @@ function findEntity(entities, vars_table, forward, bounces, hero)
 					vars_table[2] = true
 					if v:HasModifier("modifier_pudge_meat_hook") and (vars_table[1]:GetTeamNumber() ~= v:GetTeamNumber()) then
 						--HEADSHOT
+						v.headshot = true
 						dealDamage(vars_table[1], v, 9000) 
 						EmitGlobalSound( "Pudgewars.Headshot" )
 						--sendAMsg('HEADSHOT!')
@@ -92,7 +93,7 @@ function findEntity(entities, vars_table, forward, bounces, hero)
 						local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_axe/axe_culling_blade_kill.vpcf', PATTACH_ABSORIGIN, v)
 						local headshotPos = v:GetOrigin()
 						ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
-						ScreenShake( v:GetOrigin(), 100, 100, 1, 9999, 0, true)       
+						ScreenShake( v:GetOrigin(), 100, 100, 1, 9999, 0, true)  
 					elseif v:HasModifier("modifier_pudge_meat_hook") and (vars_table[1]:GetTeamNumber() == v:GetTeamNumber()) then
 						--DENY
 						dealDamage(vars_table[1], v, 9000) 
@@ -408,25 +409,19 @@ function LaunchHook(keys)
 					--hooked:RemoveModifierByName("modifier_rooted")
 					hooked:RemoveModifierByName("modifier_pudge_meat_hook")
 
-					if hero:HasItemInInventory('item_strygwyr_claw'):GetLevel() == 5 then
+					if hero:HasItemInInventory('item_strygwyr_claw') and hero:HasItemInInventory('item_strygwyr_claw'):GetLevel() == 5 then
 						--If the caster has max level strygwyrs, leave rupture for 3 seconds
 						local hooked_rupture = hooked
 
-						PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
-							endTime = GameRules:GetGameTime() + 3,
-							useGameTime = true,
-							callback = function(reflex, args)
-								if hooked_rupture and IsValidEntity(hooked_rupture) then
-									hooked_rupture:RemoveModifierByName("modifier_bloodseeker_rupture")
-								end
-						
-								if vars_table[6] ~= nil then
-									vars_table[6]:Destroy()
-								end
-									
-								return
+						Timers:CreateTimer(3.0, function()
+							if hooked_rupture and IsValidEntity(hooked_rupture) then
+								hooked_rupture:RemoveModifierByName("modifier_bloodseeker_rupture")
 							end
-						})
+						
+							if vars_table[6] ~= nil then
+								vars_table[6]:Destroy()
+							end
+						end)
 					else
 						--Remove rupture unit
 						hooked:RemoveModifierByName("modifier_bloodseeker_rupture")

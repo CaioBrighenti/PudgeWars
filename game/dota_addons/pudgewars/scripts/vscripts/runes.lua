@@ -1,12 +1,14 @@
-print("[RUNES] Runes start loading")
 function PudgeWarsMode:RuneHooked(unit, caster, rune_type)
-	--Kill rune, give caster the bonus from runes, give everybody else debuffs thorugh dummy units (if needed).
 	if rune_type == 1 then
-		--Hyperspeed rune
-		--Slows everybody with aura, the caster has haste so isnt affected by it.
+		--Slows everybody with aura, give to the caster bonus movespeed.
 		Notifications:TopToAll({text="HYPERSPEED RUNE!", duration=RUNE_TEXT_DURATION, style = {color = "Red"}})
-		caster:AddNewModifier(caster, nil, "modifier_rune_haste", {duration = RUNE_SLOW_DURATION}) 
-		RUNE_SLOW = RUNE_SLOW_DURATION
+		for _, hero in pairs(HeroList:GetAllHeroes()) do
+			if hero == caster then
+				hero:AddNewModifier(hero, nil, "modifier_rune_haste", {duration = RUNE_SLOW_DURATION}) 
+			else
+				hero:AddNewModifier(hero, nil, "modifier_slow_rune", {duration = RUNE_SLOW_DURATION})
+			end
+		end
 	elseif rune_type == 2 then
 		--Gold rune
 		Notifications:Bottom(PlayerResource:GetPlayer(caster:GetPlayerID()), {text="You hooked a gold rune! +500 gold", duration=RUNE_TEXT_DURATION, style = {color = "Gold"}})
@@ -19,7 +21,6 @@ function PudgeWarsMode:RuneHooked(unit, caster, rune_type)
 		caster:AddNewModifier(caster, nil, "modifier_fire_rune", {duration = RUNE_FIRE_DURATION})
 	elseif rune_type == 5 then
 		--Dynamite rune
-		print("dynamite rune")
 		Notifications:TopToAll({text="DYNAMITE RUNE!", duration=RUNE_TEXT_DURATION, style = {color = "DarkRed"}})
 		DynamiteRune(caster, 400, 10)
 	elseif rune_type == 6 then
@@ -89,52 +90,21 @@ end
 function PudgeWarsMode:RuneHookedParticle(unit)
 	local runeParticle = ParticleManager:CreateParticle( 'sven_spell_gods_strength_wave', PATTACH_OVERHEAD_FOLLOW, unit)
 	local runePos = unit:GetOrigin()
-	ParticleManager:SetParticleControl( runeParticle, 4, Vector( runePos.x, runePos.y, runePos.z) )
+	ParticleManager:SetParticleControl(runeParticle, 4, Vector( runePos.x, runePos.y, runePos.z))
 end
 
 function PudgeWarsMode:SpawnRune()
-	local rune_type = RandomInt(1, 6)
-	if rune_type==1 then   
-		local rune = CreateUnitByName( "npc_dummy_rune_haste", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
-		rune:AddNewModifier(rune,nil,"modifier_phased", {})
-	elseif rune_type==2 then
-		local rune = CreateUnitByName( "npc_dummy_rune_gold", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
-		rune:AddNewModifier(rune,nil,"modifier_phased", {})
-	elseif rune_type==3 then
-		local rune = CreateUnitByName( "npc_dummy_rune_ion", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
-		rune:AddNewModifier(rune,nil,"modifier_phased", {})
-	elseif rune_type==4 then
-		local rune = CreateUnitByName( "npc_dummy_rune_fire", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
-		rune:AddNewModifier(rune,nil,"modifier_phased", {})
-	elseif rune_type==5 then
-		local rune = CreateUnitByName( "npc_dummy_rune_dynamite", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM) 
-		rune:AddNewModifier(rune,nil,"modifier_phased", {})
-	elseif rune_type==6 then
-	   local rune = CreateUnitByName( "npc_dummy_rune_lightning", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
-	   rune:AddNewModifier(rune,nil,"modifier_phased",{})
-	elseif rune_type==7 then
-		--IMPORTANT: Dont call this for now!!!
-	   local rune = CreateUnitByName( "npc_dummy_rune_diretide", Vector(0,-1500,0), true, nil, nil, DOTA_TEAM_NOTEAM)
-	   rune:AddNewModifier(rune,nil,"modifier_phased",{})
-	end
-end
+	local runes = {
+		"npc_dummy_rune_haste",
+		"npc_dummy_rune_gold",
+		"npc_dummy_rune_ion",
+		"npc_dummy_rune_fire",
+		"npc_dummy_rune_dynamite",
+		"npc_dummy_rune_lightning",
+--		"npc_dummy_rune_diretide",
+	}
+	local rune_type = RandomInt(1, #runes)
 
-function PudgeWarsMode:MoveRune(spawnedUnit)
-	--Move the unit until it reaches y=1900 
-	PudgeWarsMode:CreateTimer(DoUniqueString("moverune"), {
-		endTime = GameRules:GetGameTime(),
-		useGameTime = true,
-		callback = function(reflex, args)
-		if not IsValidEntity(spawnedUnit) or not spawnedUnit:IsAlive() then return end
-
-		local vec_move_to = spawnedUnit:GetOrigin() + Vector(0,14,0)
-			if vec_move_to.y >= 1900 then
-				spawnedUnit:ForceKill(false)
-		return
-			else
-				spawnedUnit:SetAbsOrigin(vec_move_to)
-		return GameRules:GetGameTime()
-			end
-	end
-	})   
+	local rune = CreateUnitByName(runes[rune_type], Vector(0, -1800, 0), true, nil, nil, DOTA_TEAM_NOTEAM)
+	rune:AddNewModifier(rune, nil, "modifier_phased", {})
 end

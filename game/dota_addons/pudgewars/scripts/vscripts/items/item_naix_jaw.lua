@@ -3,7 +3,11 @@
 item_naix_jaw = class({})
 
 function item_naix_jaw:GetAbilityTextureName()
-	return "item_naix_jaw"
+	if self:GetLevel() == 5 then
+		return "item_naix_jaw_max"
+	else
+		return "item_naix_jaw"
+	end
 end
 
 function item_naix_jaw:GetIntrinsicModifierName()
@@ -19,7 +23,7 @@ function modifier_lifesteal:GetTexture()
 end
 
 function modifier_lifesteal:GetTexture()
-	return "modifiers/lifesteal_mask"
+	return "item_naix_jaw"
 end
 
 function modifier_lifesteal:DeclareFunctions()

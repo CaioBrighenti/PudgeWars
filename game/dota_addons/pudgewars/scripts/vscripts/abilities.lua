@@ -315,7 +315,6 @@ function OnGrapplingHook(keys)
 	local caster = keys.caster
 	local targetPoint = keys.target_points[1]
 
-	print(keys.ability:GetLevel())
 	caster:AddAbility("pudge_wars_grappling_hook"):SetLevel(keys.ability:GetLevel())
 	local ab = caster:FindAbilityByName("pudge_wars_grappling_hook")
 

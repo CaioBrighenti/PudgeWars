@@ -124,7 +124,6 @@ function PudgeWarsMode:StartVoting()
 	useGameTime = true,
 	callback = function(reflex, args)
 		PudgeWarsMode:StopVoting()
-		PudgeWarsMode:LaunchTimers()
 		return
 	end
 	})
@@ -168,31 +167,6 @@ function PudgeWarsMode:StartVoting()
 		end
 		end
 		return
-	end
-	})
-end
-
-function PudgeWarsMode:LaunchTimers()
-
-	--start give gold timer
-	PudgeWarsMode:CreateTimer(DoUniqueString("goldtick"), {
-	endTime = GameRules:GetGameTime() + 10,
-	useGameTime = true,
-	callback = function(reflex, args)
-		for key,ply in pairs(PudgeArray) do
-		ply.pudgeunit:ModifyGold(25,false,0)
-		end
-		return GameRules:GetGameTime() + 10
-	end
-	})
-
-	--start tree_regrow timer
-	PudgeWarsMode:CreateTimer(DoUniqueString("goldtick"), {
-	endTime = GameRules:GetGameTime() + 1,
-	useGameTime = true,
-	callback = function(reflex, args)
-		GridNav:RegrowAllTrees()
-		return GameRules:GetGameTime() + 1
 	end
 	})
 end

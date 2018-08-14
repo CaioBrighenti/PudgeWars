@@ -2,6 +2,10 @@ modifier_fire_rune = modifier_fire_rune or class({})
 
 function modifier_fire_rune:IsDebuff() return false end
 
+function modifier_fire_rune:GetTexture()
+	return "ember_spirit_fire_remnant"
+end
+
 -- function modifier_fire_rune:GetTextureName()
 -- 	return "dark_seer_ion_shell"
 -- end

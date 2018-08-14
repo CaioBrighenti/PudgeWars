@@ -295,7 +295,7 @@
 			// Movement
 			//----------------------------------------------------------------
 			"MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_FLY"               // Type of locomotion - ground, air
-			"MovementSpeed"                     "350"       // Speed
+			"MovementSpeed"                     "450"       // Speed
 			"MovementTurnRate"                  "2.0"       // Turning rate.
 
 			// Status
@@ -318,8 +318,8 @@
 			"VisionNighttimeRange"        "800"       // Range of vision at night time.
 	  }
 
-	   "npc_dummy_rune_diretide_unit"
-	  {
+	"npc_dummy_rune_diretide_unit"
+	{
 			// General
 			//
 			"BaseClass"                         "npc_dota_creature"     // Class of entity of link to.
@@ -327,7 +327,7 @@
 			"SoundSet"                          "Creep_Bad_Range"                         // Name of sound set.
 			"ModelScale"                        "1.1"
 			"Level"                                   "1"
-			
+
 			// Armor
 			//----------------------------------------------------------------
 			"ArmorPhysical"                     "3"               // Physical protection.
@@ -447,7 +447,7 @@
 			// Movement
 			//----------------------------------------------------------------
 			"MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_FLY"               // Type of locomotion - ground, air
-			"MovementSpeed"                     "350"       // Speed
+			"MovementSpeed"                     "450"       // Speed
 			"MovementTurnRate"                  "2.0"       // Turning rate.
 
 			// Status
@@ -533,7 +533,7 @@
 			// Movement
 			//----------------------------------------------------------------
 			"MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_FLY"               // Type of locomotion - ground, air
-			"MovementSpeed"                     "350"       // Speed
+			"MovementSpeed"                     "450"       // Speed
 			"MovementTurnRate"                  "2.0"       // Turning rate.
 
 			// Status
@@ -619,7 +619,7 @@
 			// Movement
 			//----------------------------------------------------------------
 			"MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_FLY"               // Type of locomotion - ground, air
-			"MovementSpeed"                     "350"       // Speed
+			"MovementSpeed"                     "450"       // Speed
 			"MovementTurnRate"                  "2.0"       // Turning rate.
 
 			// Status
@@ -705,7 +705,7 @@
 			// Movement
 			//----------------------------------------------------------------
 			"MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_FLY"               // Type of locomotion - ground, air
-			"MovementSpeed"                     "350"       // Speed
+			"MovementSpeed"                     "450"       // Speed
 			"MovementTurnRate"                  "2.0"       // Turning rate.
 
 			// Status
@@ -791,7 +791,7 @@
 			// Movement
 			//----------------------------------------------------------------
 			"MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_FLY"               // Type of locomotion - ground, air
-			"MovementSpeed"                     "350"       // Speed
+			"MovementSpeed"                     "450"       // Speed
 			"MovementTurnRate"                  "2.0"       // Turning rate.
 
 			// Status
@@ -877,7 +877,7 @@
 			// Movement
 			//----------------------------------------------------------------
 			"MovementCapabilities"        "DOTA_UNIT_CAP_MOVE_FLY"               // Type of locomotion - ground, air
-			"MovementSpeed"                     "350"       // Speed
+			"MovementSpeed"                     "450"       // Speed
 			"MovementTurnRate"                  "2.0"       // Turning rate.
 
 			// Status
@@ -1372,7 +1372,7 @@
 
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
-		"AttackCapabilities"		""DOTA_UNIT_CAP_NO_ATTACK""
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 
 		// Bounds
 		//----------------------------------------------------------------
@@ -1426,7 +1426,7 @@
 
 		// Attack
 		//-------------------------------------------------------------------------------------------------------------
-		"AttackCapabilities"		""DOTA_UNIT_CAP_NO_ATTACK""
+		"AttackCapabilities"		"DOTA_UNIT_CAP_NO_ATTACK"
 
 		// Bounds
 		//----------------------------------------------------------------

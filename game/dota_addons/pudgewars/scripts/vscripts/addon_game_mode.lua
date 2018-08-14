@@ -10,6 +10,9 @@ require('battlepass/battlepass')
 require('battlepass/experience')
 
 require('pudgewars')
+require('constants')
+require('events')
+require('filters')
 require('hook')
 --require('sf')
 require('util')
@@ -18,6 +21,9 @@ require('abilities')
 require('pudge')
 require('functions')
 require('runes')
+
+require('trigger_rune')
+
 ----Stats: By Jimmydorry/SinZ/Ash47
 --require('lib.statcollection')
 ----Load helper: By Ash47
@@ -31,6 +37,7 @@ function Precache(context)
 	LinkLuaModifier("modifier_fire_rune", "modifiers/modifier_fire_rune.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_shield_rune", "modifiers/modifier_shield_rune.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_campfire", "modifiers/modifier_campfire.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_slow_rune", "modifiers/modifier_slow_rune.lua", LUA_MODIFIER_MOTION_NONE)
 
 	PrecacheUnitByNameSync("npc_dota_hero_pudge", context)
 

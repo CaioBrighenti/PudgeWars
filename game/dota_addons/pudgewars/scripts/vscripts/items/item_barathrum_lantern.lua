@@ -4,6 +4,14 @@ function item_barathrum_lantern:OnCreated()
 --	print(self:GetLevel())
 end
 
+function item_barathrum_lantern:GetAbilityTextureName()
+	if self:GetLevel() == 5 then
+		return "item_barathrum_lantern_max"
+	else
+		return "item_barathrum_lantern"
+	end
+end
+
 function item_barathrum_lantern:GetIntrinsicModifierName() return "modifier_bash_lantern" end
 
 LinkLuaModifier("modifier_bash_lantern", "items/item_barathrum_lantern.lua", LUA_MODIFIER_MOTION_NONE)

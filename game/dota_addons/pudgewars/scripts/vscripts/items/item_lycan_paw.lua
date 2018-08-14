@@ -3,6 +3,14 @@ LinkLuaModifier("modifier_lycan_paw_max", "items/item_lycan_paw.lua", LUA_MODIFI
 
 item_lycan_paw = class({})
 
+function item_lycan_paw:GetAbilityTextureName()
+	if self:GetLevel() == 5 then
+		return "item_lycan_paw_max"
+	else
+		return "item_lycan_paw"
+	end
+end
+
 function item_lycan_paw:GetIntrinsicModifierName()
 	return "modifier_lycan_paw"
 end

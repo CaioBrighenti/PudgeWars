@@ -257,3 +257,11 @@ function CDOTA_BaseNPC:GetLifesteal()
 
 	return lifesteal
 end
+
+-- Thanks to LoD-Redux & darklord for this!
+function DisplayError(playerID, message)
+	local player = PlayerResource:GetPlayer(playerID)
+	if player then
+		CustomGameEventManager:Send_ServerToPlayer(player, "CreateIngameErrorMessage", {message=message})
+	end
+end

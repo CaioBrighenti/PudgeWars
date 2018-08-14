@@ -1,6 +1,6 @@
 modifier_campfire = class({})
 
-function modifier_campfire:IsHidden() return false end
+function modifier_campfire:IsHidden() return true end
 function modifier_campfire:IsPurgable() return false end
 
 function modifier_campfire:DeclareFunctions()

@@ -2,6 +2,14 @@ LinkLuaModifier("modifier_explosive_barrel", "items/item_techies_explosive_barre
 
 item_techies_explosive_barrel = item_techies_explosive_barrel or class({})
 
+function item_techies_explosive_barrel:GetAbilityTextureName()
+	if self:GetLevel() == 5 then
+		return "item_techies_explosive_barrel_max"
+	else
+		return "item_techies_explosive_barrel"
+	end
+end
+
 function item_techies_explosive_barrel:OnCreated()
 --	print(self:GetLevel())
 end
