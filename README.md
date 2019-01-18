@@ -26,7 +26,8 @@ This code is the product of thousands of hours of labor of love by each of the d
 
 ## Acknowledgments
 
-* This list should be very long, as this project could not have been accomplished without the extensive contributions from many figures in the Dota 2 Modding community. This will be completed soon.
+* This list should be very long, as this project could not have been accomplished without the extensive contributions from many figures in the Dota 2 Modding community. While many are listed below, it is impossible to properly include everyone who contributed to the reverse-engineering of the Dota 2 modding engine in the early days of this project, before proper documentation and development tools existed. We are grateful to everyone in the #dota2mods IRC community.
+
 * **Azarak** - *Developed Pudge Wars map* - [Azarak](https://steamcommunity.com/profiles/76561198019839522/)
 * **BMD** - *Overhauled hook code* - [BMD](https://steamcommunity.com/profiles/765611980291)
 * **Queaks** - *Created all original artwork for the mod, including item icons and the loading screen* - [Queaks](https://steamcommunity.com/profiles/76561197995159417/)
