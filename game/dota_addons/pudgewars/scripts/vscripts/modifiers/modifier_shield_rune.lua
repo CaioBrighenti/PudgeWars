@@ -15,12 +15,13 @@ function modifier_shield_rune:GetEffectAttachType()
 end
 
 function modifier_shield_rune:OnCreated()
-	self:StartIntervalThink(0.1)
+	if IsServer() then
+		self:StartIntervalThink(0.1)
+	end
 end
 
 function modifier_shield_rune:OnIntervalThink()
-	local center_vec = self:GetParent():GetAbsOrigin()
-	local units = Entities:FindAllInSphere(center_vec, 400)
+	local units = Entities:FindAllInSphere(self:GetParent():GetAbsOrigin(), 400)
 
 	for k,v in pairs(units) do
 		if IsValidEntity(v) and string.find(v:GetClassname(), "pudge") and v ~= self:GetParent() then

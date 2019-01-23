@@ -19,21 +19,22 @@ function modifier_campfire:OnCreated()
 	self.active = false
 	self.duration = 180
 	self.vision_range = 900
-	self:StartIntervalThink(0.5)
+	if IsServer() then
+		self:StartIntervalThink(0.5)
+		self:GetParent():SetCustomHealthLabel("Hit campfire for vision!", 200, 0, 0)
+	end
 end
 
 function modifier_campfire:OnIntervalThink()
-	if IsServer() then
-		if not self:GetParent():HasModifier("modifier_invulnerable") then
-			self.active = false
-		end
+	if not self:GetParent():HasModifier("modifier_invulnerable") then
+		self.active = false
+	end
 
-		if self.active == false then
-			if self.nFXIndex then
-				ParticleManager:DestroyParticle(self.nFXIndex, false)
-				ParticleManager:ReleaseParticleIndex(self.nFXIndex)
-				self.nFXIndex = nil
-			end
+	if self.active == false then
+		if self.nFXIndex then
+			ParticleManager:DestroyParticle(self.nFXIndex, false)
+			ParticleManager:ReleaseParticleIndex(self.nFXIndex)
+			self.nFXIndex = nil
 		end
 	end
 end

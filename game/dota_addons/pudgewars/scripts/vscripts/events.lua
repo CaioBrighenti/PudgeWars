@@ -13,7 +13,7 @@ function PudgeWarsMode:OnNPCSpawned( keys )
 		spawnedUnitPassive:SetLevel(1)
 	elseif string.find(spawnedUnit:GetUnitName(), "npc_dummy_rune_") then
 		Timers:CreateTimer(0.4, function()
-			spawnedUnit:SetInitialGoalEntity(Entities:FindByName(nil, "trigger_kill_rune"))
+			spawnedUnit:MoveToPosition(Vector(0, 2000, 0))
 		end)
 	elseif string.find(spawnedUnit:GetUnitName(), "barrier") then
 		local owner = spawnedUnit:GetOwner()

@@ -105,6 +105,6 @@ function PudgeWarsMode:SpawnRune()
 	}
 	local rune_type = RandomInt(1, #runes)
 
-	local rune = CreateUnitByName(runes[rune_type], Vector(0, -1800, 0), true, nil, nil, DOTA_TEAM_NOTEAM)
+	local rune = CreateUnitByName(runes[rune_type], Vector(0, -1700, 0), true, nil, nil, DOTA_TEAM_NOTEAM)
 	rune:AddNewModifier(rune, nil, "modifier_phased", {})
 end

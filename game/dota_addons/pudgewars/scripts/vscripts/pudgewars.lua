@@ -238,6 +238,7 @@ function PudgeWarsMode:SlowThink()
 				hero.anti_afk = true
 				FindClearSpaceForUnit(hero, Entities:FindByName(nil, "anti_afk_"..hero:GetTeamNumber()):GetAbsOrigin(), true)
 				hero:AddNewModifier(hero, nil, "modifier_command_restricted", {})
+				hero:AddNewModifier(hero, nil, "modifier_invulnerable", {})
 			end
 		end
 
@@ -341,6 +342,15 @@ function PudgeWarsMode:SlowThink()
 					GameRules:SetGameWinner(2)
 				end
 			end
+		end
+	end
+
+	-- Destroy runes when reaching destination
+	local runes = FindUnitsInRadius(2, Entities:FindByName(nil, "kill_rune_point"):GetAbsOrigin(), nil, 200, DOTA_UNIT_TARGET_TEAM_BOTH, DOTA_UNIT_TARGET_ALL, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)
+
+	if #runes > 0 then
+		for _, rune in pairs(runes) do
+			rune:ForceKill(false)
 		end
 	end
 end

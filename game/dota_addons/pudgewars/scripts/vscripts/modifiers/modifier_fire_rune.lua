@@ -19,18 +19,21 @@ end
 -- end
 
 function modifier_fire_rune:OnCreated()
-	PudgeArray[self:GetParent():GetPlayerID()].use_flame = true
+	if IsServer() then
+		PudgeArray[self:GetParent():GetPlayerID()].use_flame = true
+	end
 end
 
 function modifier_fire_rune:OnDestroy()
-	PudgeArray[self:GetParent():GetPlayerID()].use_flame = false
+	if IsServer() then
+		PudgeArray[self:GetParent():GetPlayerID()].use_flame = false
 
-	for key, flame in pairs(_G.all_flame_hooks) do
-		if flame then
-			print("destroy flame")
-			flame:RemoveSelf()
+		for key, flame in pairs(_G.all_flame_hooks) do
+			if flame then
+				flame:RemoveSelf()
+			end
+
+			_G.all_flame_hooks[key] = nil
 		end
-
-		_G.all_flame_hooks[key] = nil
 	end
 end

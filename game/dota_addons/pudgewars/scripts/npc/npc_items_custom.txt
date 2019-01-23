@@ -767,6 +767,32 @@
 		"ItemShareability"				"ITEM_NOT_SHAREABLE"
 		"ItemSellable"					"0"
 		"ItemKillable"					"1"
+
+		// Special (Tooltips only, need formatting later to not use an ability + an item)
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"duration"					"3.0"
+			}
+			"02"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"movement_damage_pct"		"15 20 25 30 35"
+			}
+			"03"
+			{
+				"var_type"					"FIELD_INTEGER"
+				"damage_cap_amount"			"200"
+			}
+			"04"
+			{
+				"var_type"					"FIELD_FLOAT"
+				"damage_cap_interval"		"0.25"
+			}
+		}
 	}
 
 	//=================================================================================================================
