@@ -1,0 +1,70 @@
+<root>
+	<script>
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_FLYOUT_SCOREBOARD, false );
+		GameUI.SetDefaultUIEnabled( DotaDefaultUIElement_t.DOTA_DEFAULT_UI_ENDGAME, false );
+
+		GameUI.CustomUIConfig().team_colors = {}
+//		GameUI.CustomUIConfig().team_names = {}
+
+//		GameUI.CustomUIConfig().team_logo_xml = "file://{resources}/layout/custom_game/overthrow_team_icon.xml";
+//		GameUI.CustomUIConfig().team_logo_large_xml = "file://{resources}/layout/custom_game/overthrow_team_icon_large.xml";
+
+//		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "Radiant";
+//		GameUI.CustomUIConfig().team_names[DOTATeam_t.DOTA_TEAM_BADGUYS] = "Dire";
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_GOODGUYS] = "#3dd296;"; // { 61, 210, 150 }	--		Teal
+		GameUI.CustomUIConfig().team_colors[DOTATeam_t.DOTA_TEAM_BADGUYS ] = "#F3C909;"; // { 243, 201, 9 }		--		Yellow
+
+		// These lines set up the panorama colors used by each player on the top scoreboard
+		GameUI.CustomUIConfig().player_colors = {}
+		GameUI.CustomUIConfig().player_colors[0] = "#4385FF;";
+		GameUI.CustomUIConfig().player_colors[1] = "#AAFFC3;";
+		GameUI.CustomUIConfig().player_colors[2] = "#820096;";
+		GameUI.CustomUIConfig().player_colors[3] = "#FFEA00;";
+		GameUI.CustomUIConfig().player_colors[4] = "#FF9900;";
+		GameUI.CustomUIConfig().player_colors[5] = "#BEFF00;";
+		GameUI.CustomUIConfig().player_colors[6] = "#FF0000;";
+		GameUI.CustomUIConfig().player_colors[7] = "#008080;";
+		GameUI.CustomUIConfig().player_colors[8] = "#FFFAC8;";
+		GameUI.CustomUIConfig().player_colors[9] = "#313131;";
+		GameUI.CustomUIConfig().player_colors[10] = "#FF00FF;";
+		GameUI.CustomUIConfig().player_colors[11] = "#808000;";
+		GameUI.CustomUIConfig().player_colors[12] = "#64FFFF;";
+		GameUI.CustomUIConfig().player_colors[13] = "#00BE00;";
+		GameUI.CustomUIConfig().player_colors[14] = "#AA6E28;";
+		GameUI.CustomUIConfig().player_colors[15] = "#000080;";
+		GameUI.CustomUIConfig().player_colors[16] = "#E6BEFF;";
+		GameUI.CustomUIConfig().player_colors[17] = "#800000;";
+		GameUI.CustomUIConfig().player_colors[18] = "#909090;";
+		GameUI.CustomUIConfig().player_colors[19] = "#FEFEFE;";
+		GameUI.CustomUIConfig().player_colors[20] = "#A6A6A6;";
+		GameUI.CustomUIConfig().player_colors[21] = "#FF59FF;";
+		GameUI.CustomUIConfig().player_colors[22] = "#CBFF59;";
+		GameUI.CustomUIConfig().player_colors[23] = "#6CA7FF;";
+
+		//Fuck Scanner
+		var newUI = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements").FindChildTraverse("minimap_container");
+		newUI.FindChildTraverse("GlyphScanContainer").style.visibility = "collapse";
+
+		var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
+		var newUI = hudElements.FindChildTraverse("center_block");
+
+		newUI.FindChildTraverse("StatBranch").style.visibility = "collapse";
+		//you are not spawning the talent UI, fuck off (Disabling mouseover and onactivate)
+		//We also don't want to crash, valve plz
+		newUI.FindChildTraverse("StatBranch").SetPanelEvent("onmouseover", function(){});
+		newUI.FindChildTraverse("StatBranch").SetPanelEvent("onactivate", function(){});
+		//Fuck that levelup button
+		newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
+	</script>
+
+	<Panel>
+		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
+		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
+		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/battlepass.xml" />
+		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/pudgewars_tutorial.xml" />
+		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/precache.xml" />
+		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" />
+		<CustomUIElement type="GameInfo" 	layoutfile="file://{resources}/layout/custom_game/pudgewars_game_info.xml" />
+		<CustomUIElement type="GameSetup"	layoutfile="file://{resources}/layout/custom_game/pudgewars_team_select.xml" />
+	</Panel>
+</root>

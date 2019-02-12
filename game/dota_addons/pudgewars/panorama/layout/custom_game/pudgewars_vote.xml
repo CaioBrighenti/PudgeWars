@@ -1,0 +1,77 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/custom_game/pudgewars_vote.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/pudgewars_vote.js" />
+	</scripts>
+	<Panel hittest="false" class="PudgeWarsVoteMain">
+		<Panel hittest="false" id="PudgeWarsVotePanel">
+			<Image id="PudgeWarsVotePanelBg" src="file://{images}/custom_game/bg_noise512.png" />
+			<Button id="PudgeWarsVotePanelClose" onactivate="OnVotePanelClose()">
+				<Label id="PudgeWarsVotePanelCloseLabel" class="TitleFont" text="X" />
+			</Button>
+			<Label id="PudgeWarsVotePanelLabel" class="TitleFont" text="Welcome to Pudge Wars!" />
+			<Label id="PudgeWarsVotePanelLabel2" class="TitleFont" text="Vote for kills needed to win the game" />
+			<Panel hittest="false" id="PudgeWarsVotePanelRows">
+				<Panel hittest="false" id="PudgeWarsVotePanelRows1">
+					<Label id="PudgeWarsVotePanelRowsLabel1" class="TitleFont" text="50:" />
+					<Image id="PudgeWarsVotePanelRows1Block1" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block2" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block3" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block4" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block5" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block6" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block7" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block8" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block9" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows1Block10" src="file://{images}/custom_game/bar_progress.png" />
+				</Panel>
+				<Panel hittest="false" id="PudgeWarsVotePanelRows2">
+					<Label id="PudgeWarsVotePanelRowsLabel2" class="TitleFont" text="75:" />
+					<Image id="PudgeWarsVotePanelRows2Block1" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block2" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block3" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block4" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block5" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block6" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block7" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block8" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block9" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows2Block10" src="file://{images}/custom_game/bar_progress.png" />
+				</Panel>
+				<Panel hittest="false" id="PudgeWarsVotePanelRows3">
+					<Label id="PudgeWarsVotePanelRowsLabel3" class="TitleFont" text="100:" />
+					<Image id="PudgeWarsVotePanelRows3Block1" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block2" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block3" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block4" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block5" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block6" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block7" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block8" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block9" src="file://{images}/custom_game/bar_progress.png" />
+					<Image id="PudgeWarsVotePanelRows3Block10" src="file://{images}/custom_game/bar_progress.png" />
+				</Panel>
+			</Panel>
+			<Label id="PudgeWarsVotePanelVotedForLabel" class="TitleFont" text="" />	
+			<Panel hittest="false" id="PudgeWarsVotePanelButtons">
+				<Button id="PudgeWarsVotePanelButtons50" onactivate="OnVote50()">
+					<Label id="PudgeWarsVotePanelButtons50Label" class="TitleFont" text="50" />
+				</Button>
+				<Button id="PudgeWarsVotePanelButtons75" onactivate="OnVote75()">
+					<Label id="PudgeWarsVotePanelButtons75Label" class="TitleFont" text="75" />
+				</Button>
+				<Button id="PudgeWarsVotePanelButtons100" onactivate="OnVote100()">
+					<Label id="PudgeWarsVotePanelButtons100Label" class="TitleFont" text="100" />
+				</Button>
+			</Panel>	
+		</Panel>
+		<Panel hittest="false" class="PudgeWarsVoteTip">
+			<Image id="PudgeWarsVoteTipBg" src="file://{images}/custom_game/bg_noise512_small.png" />
+			<Image id="PudgeWarsVoteTipIcon" src="file://{images}/custom_game/statpop_exclaim.png" />
+			<Label id="PudgeWarsVoteTipLabel" class="TitleFont" text="Time left:" />
+			<Label id="PudgeWarsVoteTipTimer" class="TitleFont" text="1:00" />
+		</Panel>	
+	</Panel>	
+</root>
