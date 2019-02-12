@@ -119,11 +119,6 @@ function PudgeWarsMode:InitGameMode()
 	ListenToGameEvent('player_chat', Dynamic_Wrap(self, 'OnPlayerChat'), self)
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter(Dynamic_Wrap(self, "OrderFilter"), self)
 
-	CustomGameEventManager:RegisterListener( "pudgewars_player_vote50", OnPlayerVote50 )
-	CustomGameEventManager:RegisterListener( "pudgewars_player_vote75", OnPlayerVote75 )
-	CustomGameEventManager:RegisterListener( "pudgewars_player_vote100", OnPlayerVote100 )
-	CustomGameEventManager:RegisterListener( "pudgewars_vote_update", OnVoteUpdate )
-
 	-- Change random seed
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','')
 	math.randomseed(tonumber(timeTxt))
@@ -145,11 +140,6 @@ function PudgeWarsMode:InitGameMode()
 	self.scoreDire = 0
 	self.scoreRadiant = 0
 	self.kills_to_win = 50
-	self.vote_50_votes = 0
-	self.vote_75_votes = 0
-	self.vote_100_votes = 0
-	self.is_voting = false
-	self.vote_start_time = 0
 
 	--runes
 	_G.all_flame_hooks = {}
@@ -161,7 +151,6 @@ function PudgeWarsMode:InitGameMode()
 	PudgeWarsMode:SpawnRuneSpellCasters()
 	PudgeWarsMode:SpawnVisionDummies()
 	PudgeWarsMode:SpawnFuntainDummy()
-	--PudgeWarsMode:InitScaleForm()
 
 	-- print('[PUDGEWARS] Starting stats')
 	-- statcollection.addStats({
@@ -355,65 +344,6 @@ function PudgeWarsMode:SlowThink()
 	end
 end
 
-function OnVoteUpdate( Index,keys )
-	local killsVoted = keys.killsVoted
-	if killsVoted == 1 then
-		PudgeWarsMode .vote_50_votes = PudgeWarsMode.vote_50_votes + 1
-	elseif killsVoted == 2 then
-		PudgeWarsMode .vote_75_votes = PudgeWarsMode .vote_75_votes + 1
-	elseif killsVoted == 3 then
-		PudgeWarsMode .vote_100_votes = PudgeWarsMode  .vote_100_votes + 1
-	end
-end
-
-function OnPlayerVote50( Index,keys )
-
-	print("Vote 50")
-
-	PudgeWarsMode .vote_50_votes = PudgeWarsMode.vote_50_votes + 1
-	local votes_for_50 = PudgeWarsMode.vote_50_votes
-	local votes_for_75 = PudgeWarsMode.vote_75_votes
-	local votes_for_100 = PudgeWarsMode.vote_100_votes
-	local vote_update_info = 
-	{
-		votes_50 = PudgeWarsMode.vote_50_votes,
-		votes_75 = PudgeWarsMode.vote_75_votes,
-		votes_100 = PudgeWarsMode.vote_100_votes,
-	}
-
-	CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
-end
-
-function OnPlayerVote75( Index,keys )
-	print("Vote 75")
-
-	PudgeWarsMode .vote_75_votes = PudgeWarsMode .vote_75_votes + 1
-
-	local vote_update_info = 
-	{
-		votes_50 = PudgeWarsMode.vote_50_votes,
-		votes_75 = PudgeWarsMode.vote_75_votes,
-		votes_100 = PudgeWarsMode.vote_100_votes,
-	}
-
-	CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
-end
-
-function OnPlayerVote100( Index,keys )
-	print("Vote 100")
-
-	PudgeWarsMode.vote_100_votes = PudgeWarsMode.vote_100_votes + 1
-
-	local vote_update_info = 
-	{
-		votes_50 = PudgeWarsMode.vote_50_votes,
-		votes_75 = PudgeWarsMode.vote_75_votes,
-		votes_100 = PudgeWarsMode.vote_100_votes,
-	}
-
-	CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_blocks_update", vote_update_info )
-end
-
 function PudgeWarsMode:AbilityUsed(keys)
 	local playerID = keys.PlayerID
 	local abilityName = keys.abilityname
@@ -577,14 +507,6 @@ function PudgeWarsMode:Think()
 		})
 
 		return
-	end
-
-	if PudgeWarsMode.is_voting then
-		local vote_timer_table =
-		{
-			time_elapsed = GameRules:GetGameTime() - PudgeWarsMode.vote_start_time,
-		}
-		CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_timer_update", vote_timer_table )
 	end
 
 	-- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.

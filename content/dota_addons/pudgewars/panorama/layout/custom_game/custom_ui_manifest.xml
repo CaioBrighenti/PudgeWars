@@ -55,6 +55,30 @@
 		newUI.FindChildTraverse("StatBranch").SetPanelEvent("onactivate", function(){});
 		//Fuck that levelup button
 		newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
+
+		var Parent = $.GetContextPanel().GetParent().GetParent();
+
+		// setup modified vanilla HUD
+		SetupLoadingScreen();
+
+		function SetupLoadingScreen() {
+			if (Parent.FindChildTraverse("GameAndPlayersRoot") == undefined || Parent.FindChildTraverse("TeamsList") == undefined || Parent.FindChildTraverse("TeamsListGroup") == undefined || Parent.FindChildTraverse("CancelAndUnlockButton") == undefined || Parent.FindChildTraverse("UnassignedPlayerPanel") == undefined || Parent.FindChildTraverse("ShuffleTeamAssignmentButton") == undefined)
+				$.Schedule(0.25, SetupLoadingScreen);
+			else {
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.backgroundColor = "rgba(50, 50, 50, 0.4)";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.borderRadius = "3px";
+				Parent.FindChildTraverse("GameAndPlayersRoot").style.boxShadow = "black -4px -4px 8px 8px";
+				Parent.FindChildTraverse("TeamsList").style.visibility = "collapse";
+				Parent.FindChildTraverse("TeamsListGroup").SetParent(Parent.FindChildTraverse("GameAndPlayersRoot"))
+				Parent.FindChildTraverse("TeamsListGroup").style.verticalAlign = "top";
+				Parent.FindChildTraverse("TeamsListGroup").style.width = "99%";
+				if (Game.IsInToolsMode() == false) {
+					Parent.FindChildTraverse("UnassignedPlayerPanel").style.visibility = "collapse";
+					Parent.FindChildTraverse("CancelAndUnlockButton").style.visibility = "collapse";
+					Parent.FindChildTraverse("ShuffleTeamAssignmentButton").style.visibility = "collapse";
+				}
+			}
+		}
 	</script>
 
 	<Panel>
@@ -65,6 +89,5 @@
 		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/precache.xml" />
 		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" />
 		<CustomUIElement type="GameInfo" 	layoutfile="file://{resources}/layout/custom_game/pudgewars_game_info.xml" />
-		<CustomUIElement type="GameSetup"	layoutfile="file://{resources}/layout/custom_game/pudgewars_team_select.xml" />
 	</Panel>
 </root>

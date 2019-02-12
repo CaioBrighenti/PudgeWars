@@ -1,125 +1,270 @@
-.AddonLoadingRoot
-{
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    overflow: clip;
+@define COLOR_INFO_BACKGROUND_BLUE: #224470dd;
+@define COLOR_INFO_BACKGROUND_DARK_BLUE: #002233;
+@define COLOR_INFO_TEXT_BLUE: #66aaff;
+
+@define COLOR_INFO_BACKGROUND_GREEN: #004d1ada;
+@define COLOR_INFO_BACKGROUND_GREEN_SOCIAL: #003800da;
+@define COLOR_INFO_BACKGROUND_DARK_GREEN: #003312;
+@define COLOR_INFO_TEXT_GREEN: #00e64d;
+
+@define COLOR_INFO_BACKGROUND_ORANGE: #994d00ee;
+@define COLOR_INFO_BACKGROUND_DARK_ORANGE: #663300;
+@define COLOR_INFO_TEXT_ORANGE: #ffb366;
+
+@define COLOR_INFO_BACKGROUND_RED: #660000ee;
+@define COLOR_INFO_BACKGROUND_DARK_RED: #330000;
+@define COLOR_INFO_TEXT_RED: #ff0000;
+
+@define COLOR_INFO_BACKGROUND_GREY: #222222ee;
+@define COLOR_INFO_BACKGROUND_GREY_SOCIAL: #222222da;
+@define COLOR_INFO_BACKGROUND_DARK_GREY: #333333;
+@define COLOR_INFO_TEXT_GREY: #ff0000;
+
+.addon-root {
+	width: 39%;
+	height: 100%;
+/*	z-index: 1; /* disable if loading players are no longer visible */
 }
 
-#TitlePanel
-{
-	horizontal-align: left;
-	vertical-align: bottom;
-	margin-bottom: 150px;
-	margin-left: 100px;
+.down {
+	flow-children: down;
+	width: 100%;
+	box-shadow: 0 0 10px #111;
+	padding: 20px 40px;
+}
+
+.large {
+	font-size: 28px;
+}
+
+.huge {
+	font-size: 36px;
+}
+
+.normal {
+	font-size: 20px;
+}
+
+.small {
+	font-size: 12px;
+}
+
+#loading {
+	flow-children: down;
+	width: 100%;
+	height: 100%;
+	background-color: black;
+	background-position: center center;
+	background-size: cover;
+	background-image: url("file://{images}/custom_game/loading_screen/loading_screen_bg.png");
+}
+
+.loading-title {
+	width: 1250px;
+	margin-left: 120px;
 	flow-children: right;
 }
 
-#AddonTitle
-{
-	margin-bottom: -15px;
-	vertical-align: center;
+#loading-game-title {
+	margin-top: 50px;
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
 }
 
-.LabelBig,
-.LabelMid
-{
+#loading-title-patreon {
+	margin-top: 50px;
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+#loading-title-promote, {
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+#loading-title-vote, {
+	background-color: COLOR_INFO_BACKGROUND_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+#loading-title-text,
+#loading-title-text-patreon,
+#loading-title-text-promote,
+#loading-title-text-vote {
 	width: 100%;
-	text-transform: uppercase;
-	font-size: 80px;
+	font-size: 36px;
+}
+
+#loading-title-text {
+	color: COLOR_INFO_TEXT_GREEN;
+}
+
+#loading-title-text-patreon {
+	color: COLOR_INFO_TEXT_ORANGE;
+}
+
+#loading-title-text-promote {
+	color: COLOR_INFO_TEXT_BLUE;
+}
+
+#loading-title-text-vote {
+	color: COLOR_INFO_TEXT_RED;
+}
+
+#loading-content-text,
+.loading-content-text-patreon,
+#loading-content-text-promote,
+#loading-content-text-vote, {
+	font-size: 20px;
 	color: #cccccc;
-	text-shadow: 2px 2px 2px #000000;
-	text-align: center;
-}
-
-.LabelMid
-{
-	font-size: 19px;
-}
-
-.ProBg
-{
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	background-size: 100% 100%;
-}
-
-#CustomBg
-{
-    overflow: clip;
-	pre-transform-scale2d: 1, 1;
-}
-
-.pw-social {
-	width: 670px;
-	margin-left: 2%;
-	vertical-align: bottom;
-	margin-bottom: 250px;
-	padding: 10px;
-	flow-children: down;
-}
-
-.pw-social-title {
 	width: 100%;
+}
+
+#loading-map-text {
+	margin: 20px 0px;
+	color: #ddddff;
+	font-size: 24px;
+}
+
+#loading-link {
 	margin-top: 20px;
-	margin-bottom: 20px;
-	margin-left: 2%;
-	vertical-align: bottom;
-	padding: 10px;
-	flow-children: down;
-	border-radius: 20px;
-	background-color: #000000da;
+	background-color: COLOR_INFO_BACKGROUND_DARK_GREY;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	box-shadow: 0 0 10px #111;
 }
 
-.pw-social-buttons {
-	width: 100%;
+#loading-link-promote {
+	background-color: COLOR_INFO_BACKGROUND_DARK_BLUE;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_BLUE;
+	box-shadow: 0 0 10px #111;
+}
+
+#loading-link-vote {
+	background-color: COLOR_INFO_BACKGROUND_DARK_RED;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_RED;
+	box-shadow: 0 0 10px #111;
+}
+
+#loading-link-patreon {
+	width: 340px;
+	height: 80px;
+	margin-top: 20px;
+	background-image: url("file://{images}/custom_game/loading_screen/patreon.png");
+	background-size: 340px 80px;
+	border: 2px solid COLOR_INFO_BACKGROUND_DARK_ORANGE;
+	box-shadow: 0 0 10px #111;
+	transition-duration: 0.25s;
+	transition-property: box-shadow;
+}
+
+#loading-link-patreon:hover {
+	box-shadow: 0 0 10px orange;
+}
+
+#loading-link-text,
+#loading-link-text-promote {
+	padding: 0px 10px;
+	font-size: 24px;
+	text-shadow: 0 0 5px #000;
+	color: #cccccc;	
+}
+
+#loading-link-text:hover {
+	text-decoration: underline;
+	background-color: #003339;
+}
+
+#loading-link-text-promote:hover {
+	text-decoration: underline;
+	background-color: #003339;
+}
+
+#LoadingSocial {
+	overflow: scroll;
+	flow-children: down;
+}
+
+.LoadingSocialRow {
+	horizontal-align: center;
+	background-color: COLOR_INFO_BACKGROUND_GREY_SOCIAL;
+	border-left: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	border-right: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	border-bottom: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+#LoadingSocial Panel {
+	padding: 0px 20px;
 	flow-children: right;
 }
 
-.pw-social-buttons Button {
-	width: 200px;
-	height: 65px;
-	box-shadow: #000 0 0 10px 0; 
-	align: center center;
-	background-position: center center;
+#LoadingSocial Button:hover {
+	box-shadow: 0 0 7px #333;
 }
 
-.AspectRatio4x3 .pw-social-buttons Button {
-	width: 180px;
-	height: 59px;
-	box-shadow: #000 0 0 10px 0; 
-	background-position: center center;
+#LoadingSocial Button {
+	border: 1px solid #333;
+	padding: 5px 20px 3px;
+	margin: 4px 12px 4px 0px;
+	box-shadow: 0 0 5px  #222;
 }
 
-.pw-social-buttons Button:hover {
-	box-shadow: #111 0 0 15px 0;
+#LoadingSocial Label {
+	font-size: 20px;
+	color: #fff;
 }
 
-.pw-social-buttons Button:active {
-	box-shadow: #333 0 0 15px 0;
-	width: 198px; 
+.SocialButtons {
+	transition-duration: 0.25s;
+	transition-property: pre-transform-scale2d;
 }
 
-.AspectRatio4x3 .pw-social-buttons Button:active {
-	width: 178px; 
+.SocialButtons:hover {
+	pre-transform-scale2d: 1.05;
 }
 
-.pw-social-button {
+#LoadingSocialOfficialWebsite { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
+#LoadingSocialSteamGroup { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
+#LoadingSocialSteamWorkshop { background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111)); }
+#LoadingSocialFacebook { background-color: gradient(linear, 0% 0%, 0% 100%, from(#22e), to(#111)); }
+#LoadingSocialTwitter { background-color: gradient(linear, 0% 0%, 0% 100%, from(#0D91E2), to(#111)); }
+#LoadingSocialTwitter Label { color: #fff; }
+#LoadingSocialDiscordEn { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+#LoadingSocialDiscordRu { background-color: gradient(linear, 0% 0%, 0% 100%, from(#7289DA), to(#111)); }
+
+#vote-content {
+	width: 100%;
+	height: 50px;
+	flow-children: right;
+}
+
+.VoteButton {
+	margin-top: 20px;
 	margin-left: 20px;
-	background-size: contain;
-	saturation: 0.9;
 }
 
-.pw-social-button:hover {
-	saturation: 1.0;
+.VoteGameModeText {
+	margin-left: 27px;
+	font-size: 16px;
+	letter-spacing: 1px;
+	text-shadow: 2px 2px 2px black;
 }
 
-#pw-social-button-patreon-en {
-	background-image: url("file://{images}/custom_game/loading_screen/patreon.png");
-	background-size: cover;
+#VoteGameModeText1
+{
+	color: yellow;
 }
 
-#pw-social-button-discord-en {
-	background-image: url("file://{images}/custom_game/loading_screen/community_discord_header.png"); 
-	background-size: cover;
+#VoteGameModeText2
+{
+	color: orange;
+}
+
+#VoteGameModeText3
+{
+	color: red;
+}
+
+.CGSRadio
+{
+	width: 100%;
 }

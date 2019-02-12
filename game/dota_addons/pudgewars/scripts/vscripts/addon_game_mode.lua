@@ -9,6 +9,9 @@ require('internal/util')
 require('battlepass/battlepass')
 require('battlepass/experience')
 
+require('components/loading_screen/init')
+require('components/vote/init')
+
 require('pudgewars')
 require('constants')
 require('events')

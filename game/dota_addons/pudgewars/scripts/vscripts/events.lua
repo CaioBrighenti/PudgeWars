@@ -29,16 +29,6 @@ function PudgeWarsMode:OnNPCSpawned( keys )
 		if spawnedUnit:GetPlayerOwnerID() ~= -1 then
 			if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
 				PudgeWarsMode:InitPudge( spawnedUnit )
-
-				local vote_update_info = 
-				{
-					votes_50 = self.vote_50_votes,
-					votes_75 = self.vote_75_votes,
-					votes_100 = self.vote_100_votes,
-					vote_visible = self.is_voting,
-				}
-				
-				CustomGameEventManager:Send_ServerToPlayer( player,"pudgewars_vote_update", vote_update_info )
 			end
 
 			if not spawnedUnit:HasModifier("modifier_ability_points") then

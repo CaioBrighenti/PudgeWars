@@ -20,40 +20,6 @@
 
 "CustomEvents"
 {
-    //This event is fired when a player vote
-    "pwgm_player_voted"
-    {
-	//define the name of the parameter and the type, we use a short for these values (16 bit integer)
-	"player_ID"		"short"
-	"vote_type"		"string"
-	"vote_value"		"short"
-    }
-    //This event is fired when vscript confirms a vote
-    "pwgm_cf_player_voted"
-    {
-	//define the name of the parameter and the type, we use a short for these values (16 bit integer)
-	"player_ID"		"short"
-	"vote_type"		"string"
-	"vote_value"		"short"
-    }
-    //This event is fired when the its time to start voting
-    "pwgm_start_win_vote"
-    {
-	//define the name of the parameter and the type, we use a short for these values (16 bit integer)
-    }
-    //This event is fired when the its time to end voting
-    "pwgm_end_win_vote"
-    {
-	//define the name of the parameter and the type, we use a short for these values (16 bit integer)
-    }   
-    "pwgm_update_vote_score"
-    {
-      "votes_on_50"     "short"
-      "votes_on_75"     "short"
-      "votes_on_100"     "short"
-    }
-	
-
     // Stat collection
     "stat_collection_part"
     {

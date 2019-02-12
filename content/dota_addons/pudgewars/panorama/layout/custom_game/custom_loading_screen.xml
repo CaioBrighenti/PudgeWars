@@ -1,33 +1,96 @@
 <root>
 	<styles>
-		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css" />
+		<include src="file://{resources}/styles/dotastyles.vcss_c"/>
+		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css"/>
 	</styles>
 
-	<Panel class="AddonLoadingRoot">
-		<Panel id="CustomBg" >
-			<Image id="bg" class="ProBg" src="file://{images}/custom_game/loading_screen/custom_bg.jpg" />
-		</Panel>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/util.js"/>
+		<include src="file://{resources}/scripts/custom_game/custom_loading_screen.js"/>
+	</scripts>
 
-		<Panel class="pw-social">
-			<Panel class="pw-social-title">
-				<Label class="LabelMid" text="Feel free to donate on patreon! This Patreon page support EarthSalamander #42, current maintainer of Pudge Wars, not the original creators!" style="" />
+	<Panel class="addon-root">
+		<Panel id="loading">
+			<Panel id="loading-game-title" class="loading-title">
+				<Panel class="down">
+					<Label id="loading-title-text" text="#addon_game_name"/>
+					<Label id="loading-map-text" text="Loading ..."/>
+					<Label id="loading-content-text" html="true" text="Loading ..." />
+					<Button id="loading-link" onactivate="DOTADisplayURL('http://d2pudgewars.com/index.php');">
+						<Label id="loading-link-text" text="Loading ..." />
+					</Button>
+				</Panel>
 			</Panel>
 
-			<Panel class="pw-social-buttons">
-				<Button id="pw-social-button-patreon-en" class="pw-social-button" onactivate="DOTADisplayURL('https://www.patreon.com/earthsalamander42');" />
+			<Panel id="LoadingSocial" class="loading-title">
+				<Panel class="LoadingSocialRow">
+					<Button id="LoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('https://discord.gg/gsywzVX');">
+						<Label text="Discord" />
+					</Button>
+					<Button id="LoadingSocialSteamGroup" class="SocialButtons" onactivate="DOTADisplayURL('https://steamcommunity.com/groups/d2pudgewars');">
+						<Label text="Steam Group" />
+					</Button>
+					<Button id="LoadingSocialSteamWorkshop" class="SocialButtons" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
+						<Label text="Frostrose Workshop" />
+					</Button>
+				</Panel>
+			</Panel>
+			<Panel id="loading-title-vote" class="loading-title">
+				<Panel class="down">
+					<Label id="loading-title-text-vote" text="#vote_gamemode"/>
+					<Panel id="vote-content">
+						<Panel class="VoteButton" hittest="false">
+							<RadioButton id="VoteGameMode1" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 1)" />
+							<Label id="VoteGameModeText1" class="VoteGameModeText" text="#vote_gamemode_1" />
+						</Panel>
+						<Panel class="VoteButton" hittest="false">
+							<RadioButton id="VoteGameMode2" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 2)" />
+							<Label id="VoteGameModeText2" class="VoteGameModeText" text="#vote_gamemode_2" />
+						</Panel>
+						<Panel class="VoteButton" hittest="false">
+							<RadioButton id="VoteGameMode3" class="CGSRadio" group="GameLength" onactivate="OnVoteButtonPressed('gamemode', 3)" />
+							<Label id="VoteGameModeText3" class="VoteGameModeText" text="#vote_gamemode_3" />
+						</Panel>
+					</Panel>
+				</Panel>
 			</Panel>
 
-			<Panel class="pw-social-title">
-				<Label class="LabelMid" text="Join the Discord server to find more players, report bugs or suggest features!" style="" />
+<!--
+			<Panel id="loading-title-promote" class="loading-title">
+				<Panel class="down">
+					<Label id="loading-title-text-promote" text="#loading_screen_promote"/>
+					<Label id="loading-content-text-promote" html="true" text="#loading_screen_promote_description" />
+					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.transifex.com/dota-imba/dota-imba/dashboard/');">
+						<Label id="loading-link-text-promote" text="#loading_screen_promote_button" />
+					</Button>
+				</Panel>
 			</Panel>
-
-			<Panel class="pw-social-buttons">
-				<Button id="pw-social-button-discord-en" class="pw-social-button" onactivate="DOTADisplayURL('https://discord.gg/gsywzVX');" />
+-->
+			<Panel id="loading-title-patreon" class="loading-title">
+				<Panel class="down">
+					<Label id="loading-title-text-patreon" text="#loading_screen_patreon"/>
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_description" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist1" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist2" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist3" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist4" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist5" />
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist6" />
+					<Button id="loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
+					</Button>
+				</Panel>
 			</Panel>
-		</Panel>
-
-		<Panel id="TitlePanel">
-			<Label id="AddonTitle" class="LabelBig" text="Pudge Wars" style="" />
+<!--
+			<Panel id="loading-title-promote">
+				<Panel class="down">
+					<Label id="loading-title-text-promote" text="X Hero Siege now have an experience system!"/>
+					<Label id="loading-content-text-promote" html="true" text="You can now earn experience when playing X Hero Siege! A custom battlepass will be implented soon to unlock cosmetics." />
+					<Button id="loading-link-promote" onactivate="DOTADisplayURL('https://www.facebook.com/D2IMBA/');">
+						<Label id="loading-link-text-promote" text="Click here to download X Hero Siege!" />
+					</Button>
+				</Panel>
+			</Panel>
+-->
 		</Panel>
 	</Panel>
 </root>

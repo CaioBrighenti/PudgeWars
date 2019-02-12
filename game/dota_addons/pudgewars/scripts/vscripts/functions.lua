@@ -95,9 +95,8 @@ function PudgeWarsMode:StartTimers()
 		if not ((GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME) or (GameRules:State_Get() == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS)) or not(has_been_in_wait_for_players)then
 			return GameRules:GetGameTime() + 1 
 		end
-		   
-		PudgeWarsMode:StartVoting() -- start voting when game is in progress
-	   return -- stop wait for game to being timer
+
+		return -- stop wait for game to being timer
 	end
 	})
 
@@ -114,93 +113,6 @@ function PudgeWarsMode:StartTimers()
 		return GameRules:GetGameTime() + 0.1
 	end
 	})
-end
-
-function PudgeWarsMode:StartVoting()
-	
-	--Start voting when game is in progress. Wait 25  (vote time) seconds and start the game timers
-	PudgeWarsMode:CreateTimer(DoUniqueString("voting"), {
-	endTime = GameRules:GetGameTime() + 0,
-	useGameTime = true,
-	callback = function(reflex, args)
-		PudgeWarsMode:StopVoting()
-		return
-	end
-	})
-
-	--for key,ply in pairs(PudgeArray) do 
-	--ply.pudgeunit:AddNewModifier(ply.pudgeunit,nil,"modifier_stunned", {})
-	--end
-	
-	--wait two seconds to let stuff get ready..
-	PudgeWarsMode:CreateTimer(DoUniqueString("waitforsf"), {
-	endTime = GameRules:GetGameTime() + 2,
-	useGameTime = true,
-	callback = function(reflex, args)
-		GameRules:SendCustomMessage("Welcome to <font color='#CC6600'>Pudge Wars!</font>", 0, 0)
-		GameRules:SendCustomMessage("Created by  <font color='#CC6600'>Kobb</font> and <font color='#CC6600'>Aderum</font>", 0, 0)
-		GameRules:SendCustomMessage("Fixed for "..PUDGEWARS_VERSION.." by  <font color='#CC6600'>EarthSalamander #42</font>", 0, 0)
-		GameRules:SendCustomMessage("For more information and credits go to  <font color='#CC6600'>\"http://d2pudgewars.com\"</font>", 0, 0)
-
-		--FireGameEvent('pwgm_start_win_vote', {})
-		self.vote_start_time = GameRules:GetGameTime()
-		 local vote_update_info = 
-		{
-			votes_50 = self.vote_50_votes,
-			votes_75 = self.vote_75_votes,
-			votes_100 = self.vote_100_votes,
-			vote_visible = true,
-		}
-		CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
-		self.is_voting = true
-		print("Fired startWinVote")
-
-
-		for key,ply in pairs(PudgeArray) do 
-		  --ply.pudgeunit:AddNewModifier(ply.pudgeunit,nil,"modifier_stunned", {})
-		local pudge = ply.pudgeunit
-		--Assign modelName if it hasnt been done to stop model bug.
-		if PudgeArray[pudge:GetPlayerOwnerID()].modelName == "" then
-			if pudge then
-			  PudgeWarsMode:AssignHookModel(pudge)    
-			end
-		end
-		end
-		return
-	end
-	})
-end
-
-function PudgeWarsMode:StopVoting()
-	for key,ply in pairs(PudgeArray) do 
---	   ply.pudgeunit:RemoveModifierByName("modifier_stunned")
-	end
-	if self.vote_100_votes >= self.vote_75_votes and self.vote_100_votes >= self.vote_50_votes then
-	self.kills_to_win = 100
-	elseif self.vote_75_votes > self.vote_100_votes and self.vote_75_votes >= self.vote_50_votes then
-	self.kills_to_win = 75
-	else
-	self.kills_to_win = 50
-	end
-	self.is_voting = false
-	--FireGameEvent('pwgm_end_win_vote', {})
-
-	local votes_for_50 = self.vote_50_votes
-	local votes_for_75 = self.vote_75_votes
-	local votes_for_100 = self.vote_100_votes
-	local vote_update_info = 
-		{
-			votes_50 = votes_for_50,
-			votes_75 = votes_for_75,
-			votes_100 = votes_for_100,
-			vote_visible = false,
-		}
-	CustomGameEventManager:Send_ServerToAllClients( "pudgewars_vote_update", vote_update_info )
-
-	GameRules:SendCustomMessage("50 kills: " .. self.vote_50_votes .. " votes" ,0,0)
-	GameRules:SendCustomMessage("75 kills: " .. self.vote_75_votes.. " votes",0,0)
-	GameRules:SendCustomMessage("100 kills: " .. self.vote_100_votes .. " votes",0,0)
-	GameRules:SendCustomMessage("First to " .. self.kills_to_win .. " wins!", 0,0)
 end
 
 function sendAMsg(msg)

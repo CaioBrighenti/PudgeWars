@@ -21,4 +21,26 @@
 	"battlepass_hook8"							"Dragonclaw Hook"
 	"battlepass_pudge_arcana"					"Pudge Arcana (red)"
 	"battlepass_pudge_arcana2"					"Pudge Arcana (green)"
+
+	// Loading screen
+	"loading_screen_description"			"You can now use traps! Just walk on the activator stones and watch the world burn!"
+	"loading_screen_button"					"Pudge Wars website"
+
+//	"loading_screen_promote"				"Translate Pudge Wars in your native language!"
+//	"loading_screen_promote_description"	"You can translate Pudge Wars on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forgot to request your Discord role!"
+//	"loading_screen_promote_button"			"Click here to redirect to Transifex!"
+
+	"loading_screen_patreon"				"Patreon"
+	"loading_screen_patreon_description"	"(This patreon page doesn't support the original creators, but the current maintainers of Pudge Wars!) Support Frostrose Studio on Patreon! Servers for the Battlepass, Statistics and XP System are expensive. Donations support the development of:"
+	"loading_screen_patreon_modlist1"		"- Battlegrounds Legends"
+	"loading_screen_patreon_modlist2"		"- Dota IMBA"
+	"loading_screen_patreon_modlist3"		"- X Hero Siege"
+	"loading_screen_patreon_modlist4"		"- Pudge Wars"
+	"loading_screen_patreon_modlist5"		"- Hero Line Wars"
+	"loading_screen_patreon_modlist6"		"- Tourouk's Duel"
+
+	"vote_gamemode"							"Vote for kills:"
+	"vote_gamemode_1"						"50 kills"
+	"vote_gamemode_2"						"75 kills"
+	"vote_gamemode_3"						"100 kills"
 }

@@ -13,7 +13,7 @@
 	"HeroGuidesSupported"			"1"
 
 //	"maps"							"pudge_wars pudge_wars_10v10"
-	"maps"							"pudge_wars"
+	"maps"							"pudge_wars_new"
 	"IsPlayable"					"1"
 
 	"pudgewars"

@@ -17,7 +17,6 @@ function PudgeClass.create(playerId)
 	pudge.death_time = 0
 	pudge.modelName = ""
 	pudge.use_flame = false
-	pudge.has_voted = false
 	pudge.is_throwing_hook = false
 	pudge.pos_before_dc = nil
 	pudge.has_max_level_timer = false
