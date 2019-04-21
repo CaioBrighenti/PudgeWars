@@ -1,8 +1,5 @@
 if Battlepass == nil then Battlepass = class({}) end
 
--- Experience System
-CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
-
 Battlepass_Player_XP = {}
 Battlepass_Player_XP[0] = 0
 
@@ -47,12 +44,12 @@ ListenToGameEvent('npc_spawned', function(keys)
 			if donator_level and donator_level > 0 then
 				npc:SetCustomHealthLabel("#donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
 			end
-		end
 
-		if donator_level ~= 6 and donator_level ~= 10 then
-			Timers:CreateTimer(2.0, function()
-				Battlepass:DonatorCompanion(npc:GetPlayerID(), nil)
-			end)
+			if donator_level ~= 6 and donator_level ~= 10 then
+				Timers:CreateTimer(2.0, function()
+					Battlepass:DonatorCompanion(npc:GetPlayerID(), nil)
+				end)
+			end
 		end
 	end
 end, nil)

@@ -36,6 +36,7 @@ function Precache(context)
 
 	LinkLuaModifier("modifier_ability_points", "components/modifiers/modifier_ability_points.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_command_restricted", "components/modifiers/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_companion", "components/modifiers/modifier_companion.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_fire_rune", "components/modifiers/modifier_fire_rune.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_shield_rune", "components/modifiers/modifier_shield_rune.lua", LUA_MODIFIER_MOTION_NONE)
 	LinkLuaModifier("modifier_campfire", "components/modifiers/modifier_campfire.lua", LUA_MODIFIER_MOTION_NONE)

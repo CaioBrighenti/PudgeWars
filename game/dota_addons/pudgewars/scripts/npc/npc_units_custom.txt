@@ -1608,10 +1608,10 @@
 			"particlefile"				"particles/units/heroes/hero_earthshaker.pcf"
 			"particlefile"				"particles/doto/generic_hero_status/death_tombstone_alt.vpcf"
 
-			"soundfile"					"scripts/game_sounds_heroes/game_sounds_spirit_breaker.txt"
-			"soundfile"					"scripts/game_sounds_heroes/game_sounds_tiny.txt"
-			"soundfile"					"scripts/game_sounds_heroes/game_sounds_shredder.txt"
-//			"soundfile"					"scripts/game_sounds_heroes/game_sounds_antimage"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_spirit_breaker.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_tiny.vsndevts"
+			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_shredder.vsndevts"
+//			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_antimage.vsndevts"
 			"soundfile"					"soundevents/game_sounds_heroes/game_sounds_phoenix.vsndevts"
 
 			"model"						"models/heroes/pudge/weapon.vmdl"

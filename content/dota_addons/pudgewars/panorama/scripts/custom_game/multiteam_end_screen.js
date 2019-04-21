@@ -2,24 +2,27 @@
 
 (function () {
 
+// GameEvents.Subscribe("hall_of_fame", HallOfFame);
+
 function EndScoreboard() {
 	GameEvents.Subscribe("end_game", function (args) {
-		$.Msg(args);
+		$.Msg(args)
 
 		// Hide all other UI
 		var MainPanel = $.GetContextPanel().GetParent().GetParent().GetParent().GetParent()
 		MainPanel.FindChildTraverse("topbar").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("minimap_container").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("lower_hud").style.visibility = "collapse";
-//		MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
+		// MainPanel.FindChildTraverse("HudChat").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("NetGraph").style.visibility = "collapse";
 		MainPanel.FindChildTraverse("quickstats").style.visibility = "collapse";
 
 		// Gather info 
 		var playerResults = args.players;
 		var serverInfo = args.info;
-		var xpInfo = args.xp_info;
 		var mapInfo = Game.GetMapInfo();
+
+		// player ids
 		var radiantPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_GOODGUYS);
 		var direPlayerIds = Game.GetPlayerIDsOnTeam(DOTATeam_t.DOTA_TEAM_BADGUYS);
 
@@ -27,10 +30,12 @@ function EndScoreboard() {
 		var victoryMessage = "winning_team_name Victory!";
 		var victoryMessageLabel = $("#es-victory-info-text");
 
-		if (serverInfo.winner == 2)
+		if (serverInfo.winner == 2) {
 			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_GoodGuys"));
-		else if (serverInfo.winner == 3)
+		} else if (serverInfo.winner == 3) {
 			victoryMessage = victoryMessage.replace("winning_team_name", $.Localize("#DOTA_BadGuys"));
+		}
+
 		victoryMessageLabel.text = victoryMessage;
 
 		// Load frequently used panels
@@ -48,31 +53,32 @@ function EndScoreboard() {
 
 		// sort a player by merging results from server and using getplayerinfo  
 		var loadPlayer = function (id) {
-			var playerInfo = Game.GetPlayerInfo(id);
-			var resultInfo = null;
-			var xp = null;
+			var info = Game.GetPlayerInfo(id);
 
-			for (var i in playerResults) {
-				if (playerInfo.player_steamid == playerResults[i].steamid)
-					resultInfo = playerResults[i];
+			$.Msg("args.data:")
+			$.Msg(args.data)
+			$.Msg("args.data.players:")
+			$.Msg(args.data.players)
+
+			var result = null;
+			for (var k in args.data.players) {
+				$.Msg("args.data.players[k]:")
+				$.Msg(args.data.players[k])
+                if (k == info.player_steamid) {
+                    return {
+                        id: id,
+                        info: info,
+                        result: args.data.players[k]
+                    };
+                }
 			}
 
-			$.Msg(xpInfo);
-			for (var i in xpInfo) {
-				$.Msg(xpInfo[i]);
-				
-				if (playerInfo.player_steamid == xpInfo[i].steamid)
-					xp = xpInfo[i];
-			}
+//			$.Msg("WTF");
+//			$.Msg(playerResults);
 
-			return {
-				id: id,
-				info: playerInfo,
-				result: resultInfo,
-				xp: xp
-			};
+			return null;
 		};
-		
+
 		// Load players = sort our data we got from above
 		var radiantPlayers = [];
 		var direPlayers = [];
@@ -82,6 +88,7 @@ function EndScoreboard() {
 
 		var createPanelForPlayer = function (player, parent) {
 			// Create a new Panel for this player
+//			$.Msg(player)
 			var pp = $.CreatePanel("Panel", parent, "es-player-" + player.id);
 			pp.AddClass("es-player");
 			pp.BLoadLayout(playerXmlFile, false, false);
@@ -104,7 +111,8 @@ function EndScoreboard() {
 					level: pp.FindChildInLayoutFile("es-player-xp-level"),
 					rank: pp.FindChildInLayoutFile("es-player-xp-rank"),
 					rank_name: pp.FindChildInLayoutFile("es-player-xp-rank-name"),
-					earned: pp.FindChildInLayoutFile("es-player-xp-earned")
+					earned: pp.FindChildInLayoutFile("es-player-xp-earned"),
+					booster: pp.FindChildInLayoutFile("es-player-xp-booster")
 				}
 			};
 
@@ -123,39 +131,66 @@ function EndScoreboard() {
 			values.gold.text = player.info.player_gold;
 			values.level.text = player.info.player_level;
 
-			// IMR
-			$.Msg(player);
+			// XP
+			var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
+			if (player_table) {
+				$.Msg("ply info steamid: " + player.info.player_steamid);
 
-			if (player.result != null) {
-//				values.imr.style.visibility = "visible";
-
-				if (player.result.imr5v5_calibrating)
-					values.imr.text = "TBD";
-				else {
-					var imr = Math.floor(player.result.imr5v5);
-					var diff = Math.floor(player.result.imr5v5_difference);
-
-					if (diff == 0) {
-						values.imr.text = imr;
-						values.imr.AddClass("es-text-white");
-					} else if (diff > 0) {
-						values.imr.text = imr + " (+" + diff + ")";
-						values.imr.AddClass("es-text-green");
-					} else {
-						values.imr.text = imr + " (" + diff + ")";
-						values.imr.AddClass("es-text-red");
-					}
+				// Testing exp view obfuscation
+				if (player.info.player_steamid != 76561198046078552) {
+					values.xp.rank.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
+					values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
+					values.xp.rank_name.text = player_table.title;
+					values.xp.rank_name.style.color = player_table.title_color;
+					values.xp.booster.style.color = player_table.donator_color;
+//					$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
+//					if (Math.floor(player_table.XP) / Math.floor(player_table.MaxXP) >= 1) {
+//						$.Msg("Level Up!")
+//						values.xp.bar[0].AddClass("level-up");
+//					}
+					var progress = Math.round((100.0 * Math.floor(player_table.XP)) / Math.floor(player_table.MaxXP));
+					values.xp.progress.style.width = progress + "%";
 				}
-			} else {
-				values.imr.text = "N/A";
+				else {
+					values.xp.rank.text = "0/500";
+					values.xp.level.text = $.Localize("#battlepass_level") + 1;
+					values.xp.rank_name.text = "Rookie";
+					values.xp.rank_name.style.color = "#FFFFFF";
+					values.xp.booster.style.color = "#21272F";
+					values.xp.progress.style.width = 0 + "%";					
+				}
 			}
 
-			// XP
+			// MMR
 			if (player.result != null) {
-				var diff = 0; // placeholder value
-//				var diff = player.result.xp_difference;
-				var xp = Math.floor(player.result.xp);
-				var xpDiff = Math.floor(diff);
+//				if (mapInfo.map_display_name == "pudgewars_ranked") {
+					values.imr.style.visibility = "visible";
+
+					if (player.result.imr5v5_calibrating)
+						values.imr.text = "TBD";
+					else {
+						var imr = Math.floor(player.result.imr5v5);
+						var diff = Math.floor(player.result.imr5v5_difference);
+
+						if (diff == 0) {
+							values.imr.text = imr;
+							values.imr.AddClass("es-text-white");
+						} else if (diff > 0) {
+							values.imr.text = imr + " (+" + diff + ")";
+							values.imr.AddClass("es-text-green");
+						} else {
+							values.imr.text = imr + " (" + diff + ")";
+							values.imr.AddClass("es-text-red");
+						}
+					}
+//				}
+			} else {
+				values.imr.text = "0 (+0)";
+			}
+
+//			$.Msg(player)
+			if (player.result != null) {
+				var xpDiff = Math.floor(player.result.xp_change);
 
 				if (xpDiff > 0) {
 					values.xp.earned.text = "+" + xpDiff;
@@ -168,69 +203,10 @@ function EndScoreboard() {
 					values.xp.earned.AddClass("es-text-red");
 				}
 
-				var old_xp = player.xp.progress.xp;
-				if (old_xp == undefined || old_xp < 0) {
-					$.Msg("XP undefined or below 0")
-					old_xp = 0
-				}
-				var max_xp = player.xp.progress.max_xp;
-				var new_xp = (old_xp + diff);
-				var progress_bar = new_xp / max_xp * 100;
+				var multiplier = Math.round(player.result.xp_multiplier * 100.0);
 
-				$.Schedule(0.8, function () {
-					values.xp.level.text = $.Localize("#battlepass_level") + player.xp.level;
-					values.xp.rank_name.text = player.xp.title;
-					values.xp.rank_name.style.color = player.xp.color;
-
-					// if max level
-					if (player.xp.level == 500) {
-						values.xp.progress.style.width = "100%";
-						values.xp.rank.text = "#42";
-					}
-					// if not leveling up
-					else if (progress_bar >= 0 && progress_bar < 100) {
-						values.xp.progress.style.width = progress_bar + "%";
-						values.xp.rank.text = progress_bar * 100 / max_xp + "/" + max_xp;
-					// else if leveling down
-					} else if (progress_bar < 0) {
-						values.xp.rank.text = max_xp + "/" + max_xp;
-						values.xp.progress.style.width = "100%";
-
-						if (values.xp.bar[0].BHasClass("level-down")) {
-							values.xp.bar[0].RemoveClass("level-down")
-						}
-						values.xp.bar[0].AddClass("level-down")
-						values.xp.level.text = "Level down..";
-						values.xp.rank.text = "";
-						progress_bar = progress_bar + 100;
-						values.xp.progress.style.width = progress_bar + "%";
-						$.Schedule(2.0, function() {
-							var levelup_level = player.xp.level - 1
-							var levelup_xp = progress_bar * 100 / max_xp // BUG: max_xp should be the max xp of previous level.
-							values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
-							values.xp.rank.text = levelup_xp + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
-						});
-					// else if leveling up
-					} else {
-						values.xp.rank.text = max_xp + "/" + max_xp;
-						values.xp.progress.style.width = "100%";
-
-						if (values.xp.bar[0].BHasClass("level-up")) {
-							values.xp.bar[0].RemoveClass("level-up")
-						}
-						values.xp.bar[0].AddClass("level-up")
-						values.xp.level.text = "Level up!";
-						values.xp.rank.text = "";
-						progress_bar = progress_bar -100;
-						values.xp.progress.style.width = progress_bar + "%";
-						$.Schedule(2.0, function() {
-							var levelup_level = player.xp.level + 1
-							var levelup_xp = old_xp + diff - max_xp // BUG: max_xp should be the max xp of previous level.
-							values.xp.level.text = $.Localize("#battlepass_level") + levelup_level;
-							values.xp.rank.text = levelup_xp + "/" + max_xp; // BUG: max_xp should be the max xp of previous level.
-						});
-					}
-				});
+				values.xp.booster.text = " (" + multiplier + "%)";
+				values.xp.booster.style.color = "white";
 			} else {
 				values.xp.earned.text = "N/A";
 			}
@@ -248,8 +224,25 @@ function EndScoreboard() {
 		// Set Team Score
 		$("#es-team-score-radiant").text = new String(serverInfo.radiant_score);
 		$("#es-team-score-dire").text = new String(serverInfo.dire_score);
+		$("#es-game-time-text").text = RawTimetoGameTime(Game.GetDOTATime(false, false));
 	});
 }
-	
-EndScoreboard()
+
+function RawTimetoGameTime(time) {
+	var sec = Math.floor( time % 60 );
+	var min = Math.floor( time / 60 );
+
+	var timerText = "";
+	timerText += min;
+	timerText += ":";
+
+	if ( sec < 10 )
+	{
+		timerText += "0";
+	}
+	timerText += sec;
+	return timerText;
+}
+
+EndScoreboard();
 })();

@@ -768,7 +768,7 @@
 		"ItemSellable"					"0"
 		"ItemKillable"					"1"
 
-		// Special (Tooltips only, need formatting later to not use an ability + an item)
+		// Special
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilitySpecial"
 		{
@@ -780,7 +780,7 @@
 			"02"
 			{
 				"var_type"					"FIELD_INTEGER"
-				"movement_damage_pct"		"15 20 25 30 35"
+				"movement_damage_pct"		"10 15 20 25 30"
 			}
 			"03"
 			{

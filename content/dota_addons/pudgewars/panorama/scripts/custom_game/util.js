@@ -107,23 +107,6 @@ function IsDeveloper(ID) {
 	return false;
 }
 
-function HideIMR(panel) {
-	var map_info = Game.GetMapInfo();
-	var imr_panel = panel.FindChildrenWithClassTraverse("es-legend-imr");
-	var imr_panel_10v10 = panel.FindChildrenWithClassTraverse("es-legend-imr10v10");
-
-	var hide = function(panels) {
-		for ( var i in panels)
-			panels[i].style.visibility = "collapse";
-	};
-
-	if (map_info.map_display_name == "pudgewars") {
-		hide(imr_panel_10v10);
-	} else if (map_info.map_display_name == "pudgewars_10v10") {
-		hide(imr_panel);
-	}
-}
-
 function OverrideTopBarHeroImage(args) {
 	var arcana_level = args.arcana + 1
 	var team = "Radiant"

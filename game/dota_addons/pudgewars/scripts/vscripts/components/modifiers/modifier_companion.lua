@@ -27,12 +27,7 @@ end
 
 function modifier_companion:OnCreated()
 	if IsServer() then
-		if GetMapName() == Map1v1() then
-			self:GetParent():ForceKill(false)
-			return
-		else
-			self:StartIntervalThink(0.2)
-		end
+		self:StartIntervalThink(0.2)
 
 		if not self:GetParent().base_model then
 			self:GetParent().base_model = self:GetParent():GetModelName()
@@ -83,28 +78,10 @@ function modifier_companion:OnIntervalThink()
 		if companion:GetPlayerOwner() == nil or companion:GetPlayerOwner():GetAssignedHero() == nil then return end
 		local hero = companion:GetPlayerOwner():GetAssignedHero()
 		hero.companion = companion
-		local fountain
-
-		if GetMapName() == MapOverthrow() then
-			fountain = Entities:FindByName(nil, "@overboss")
-		elseif GetMapName() == "imba_demo" then
-			for _, ent in pairs(Entities:FindAllByClassname("ent_dota_fountain")) do
-				if ent:GetTeamNumber() == companion:GetTeamNumber() then
-					fountain = ent
-					break
-				end
-			end
-		else
-			if hero:GetTeamNumber() == 2 then
-				fountain = GoodCamera
-			elseif hero:GetTeamNumber() == 3 then
-				fountain = BadCamera
-			end
-		end
-
+		local wait_pos = Vector(0, 0, 0) + RandomVector(200)
 		local hero_origin = hero:GetAbsOrigin()
 		local hero_distance = (hero_origin - companion:GetAbsOrigin()):Length()
-		local fountain_distance = (fountain:GetAbsOrigin() - companion:GetAbsOrigin()):Length()
+		local wait_pos_distance = (wait_pos - companion:GetAbsOrigin()):Length()
 		local min_distance = 250
 		local blink_distance = 750
 
@@ -112,21 +89,21 @@ function modifier_companion:OnIntervalThink()
 			companion:SetBaseMoveSpeed(hero:GetIdealSpeed() - 70)
 		end
 
-		for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
-			if not hero:HasModifier(v) then
-				if companion:HasModifier(v) then
-					companion:RemoveModifierByName(v)
-				end
-			else
-				if not companion:HasModifier(v) then
-					companion:AddNewModifier(companion, nil, v, {})
-				end
-			end
-		end
+--		for _,v in pairs(IMBA_INVISIBLE_MODIFIERS) do
+--			if not hero:HasModifier(v) then
+--				if companion:HasModifier(v) then
+--					companion:RemoveModifierByName(v)
+--				end
+--			else
+--				if not companion:HasModifier(v) then
+--					companion:AddNewModifier(companion, nil, v, {})
+--				end
+--			end
+--		end
 
 		if not hero:IsAlive() then
-			if fountain_distance > blink_distance then -- min_distance is too high with fountain bound radius
-				FindClearSpaceForUnit(companion, fountain:GetAbsOrigin(), false)
+			if wait_pos_distance > blink_distance then -- min_distance is too high with fountain bound radius
+				FindClearSpaceForUnit(companion, wait_pos, false)
 				companion:Stop()
 				return
 			end
@@ -143,14 +120,14 @@ function modifier_companion:OnIntervalThink()
 
 		self:SetStackCount(hero_distance / 4)
 
-		for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do
-			if hero:HasModifier(v) or self:IsOnMountain() then
-				companion:AddNoDraw()
-				return
-			elseif not hero:HasModifier(v) then
-				companion:RemoveNoDraw()
-			end
-		end
+--		for _, v in ipairs(SHARED_NODRAW_MODIFIERS) do
+--			if hero:HasModifier(v) or self:IsOnMountain() then
+--				companion:AddNoDraw()
+--				return
+--			elseif not hero:HasModifier(v) then
+--				companion:RemoveNoDraw()
+--			end
+--		end
 	end
 end
 

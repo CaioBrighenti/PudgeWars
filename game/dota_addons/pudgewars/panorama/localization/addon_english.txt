@@ -66,4 +66,7 @@
 	"vote_gamemode_1"						"50 kills"
 	"vote_gamemode_2"						"75 kills"
 	"vote_gamemode_3"						"100 kills"
+
+	// End Screen
+	"custom_end_screen_legend_imr"			"MMR"
 }
