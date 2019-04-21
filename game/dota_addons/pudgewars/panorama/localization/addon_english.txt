@@ -5,11 +5,12 @@
 
 	"kills_to_win"								"Score: "
 
-	"battlepass"								"Pudge Wars Battlepass"
+	"battlepass_title"							"Pudge Wars Battlepass"
+	"battlepass"								"Battlepass"
 	"battlepass_close"							"Close Battlepass"
 	"battlepass_level"							"Level: "
 	"battlepass_refresh"						"Refresh"
-	"battlepass_reward_locked"					"Locked"
+	"battlepass_reward_locked"					"Locked!"
 	"battlepass_streak_counter"					"Successful Hooks Counter"
 	"battlepass_hook"							"Broilers Hook"
 	"battlepass_hook2"							"Blood Drainer Hook"
@@ -21,6 +22,28 @@
 	"battlepass_hook8"							"Dragonclaw Hook"
 	"battlepass_pudge_arcana"					"Pudge Arcana (red)"
 	"battlepass_pudge_arcana2"					"Pudge Arcana (green)"
+
+	//Donator Tab
+	"donator_companion"				"Companion"
+	"donator_statue"				"Statue"
+	"donator_info"					"Select a Companion"
+	"companion_enabled"				"Companion enabled."
+	"companion_disabled"			"Companion disabled."
+//	"companion_enabled"				"Companion enabled. (Click to disable)"
+//	"companion_disabled"			"Companion disabled. (Click to enable)"
+	"companion_success"				"Companion changed with: "
+	"companion_error"				"Oops! Something went wrong."
+	"companion_not_donator"			"This feature is only for Patreon donators. Click here to pledge!"
+	"toggle_companion"				"Toggle Companion"
+
+	"statue_success"				"Statue changed with: "
+
+	//Leaderboard
+	"leaderboard"					"Leaderboard"
+	"leaderboard_loading"			"Loading leaderboard, please wait"
+	"leaderboard_rank"				"Rank"
+	"leaderboard_steam_avatar"		"Steam"
+	"leaderboard_xp"				"Experience (click to sort)"
 
 	// Loading screen
 	"loading_screen_description"			"You can now use traps! Just walk on the activator stones and watch the world burn!"

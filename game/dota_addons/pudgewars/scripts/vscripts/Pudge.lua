@@ -49,24 +49,6 @@ function PudgeWarsMode:InitPudge(pudge)
 	pudge.ab4 = "pudge_wars_empty3"
 
 	pudge.successful_hooks = 0
-	Battlepass:AddItemEffects(pudge)
-
-	local battlepass_level = Battlepass:GetRewardUnlocked(pudge:GetPlayerID())
-	local level_color = GetTitleColorIXP(GetTitleIXP(battlepass_level), false)
-
-	if IsDonator(pudge:GetPlayerID()) == 1 or IsDeveloper(pudge:GetPlayerID()) then
-		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Mod Developer)", level_color[1], level_color[2], level_color[3])
-	elseif IsDonator(pudge:GetPlayerID()) == 4 then
-		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Ember Donator)", 200, 40, 40)
-	elseif IsDonator(pudge:GetPlayerID()) == 5 then
-		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Golden Donator)", 255, 200, 0)
-	elseif IsDonator(pudge:GetPlayerID()) == 6 then
-		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Donator)", 40, 200, 40)
-	elseif IsDonator(pudge:GetPlayerID()) == 7 then
-		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level).." (Salamander Donator)", 20, 86, 239)
-	else
-		pudge:SetCustomHealthLabel(GetTitleIXP(battlepass_level), level_color[1], level_color[2], level_color[3])
-	end
 
 	pudge:AddNewModifier(pudge, nil, "modifier_command_restricted", {duration=PRE_GAME_TIME})
 end

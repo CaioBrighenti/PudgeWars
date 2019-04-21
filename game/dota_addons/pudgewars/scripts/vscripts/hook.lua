@@ -66,7 +66,7 @@ function findEntity(entities, vars_table, forward, bounces, hero)
 			--if string.find(v:GetClassname(), "pudge") or string.find(v:GetClassname(), "mine") then
 			if vars_table[0] == nil then
 				if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((PudgeWarsMode.shield_carrier == nil) or (PudgeWarsMode.shield_carrier ~= v)) then
-					if HasPudgeHookStreakCounter(hero:GetPlayerID()) then
+					if Battlepass:HasPudgeHookStreakCounter(hero:GetPlayerID()) then
 						hero.successful_hooks = hero.successful_hooks + 1
 						EmitSoundOnLocationWithCaster(hero:GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", hero)
 						local pfx = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_hook_streak.vpcf"

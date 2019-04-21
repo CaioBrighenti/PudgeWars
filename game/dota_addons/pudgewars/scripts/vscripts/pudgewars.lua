@@ -186,10 +186,7 @@ end
 function PudgeWarsMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
-	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
-		GetPlayerInfoXP()
-		ApiLoad()
-	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
+	if newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		InitCampfires()
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		CustomGameEventManager:Send_ServerToAllClients( "pudgewars_set_score_topbar", {kills = self.kills_to_win} )

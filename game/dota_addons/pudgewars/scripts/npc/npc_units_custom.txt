@@ -1,4 +1,7 @@
-	// Dota Units File
+#base units/companions.txt
+#base units/statues.txt
+
+// Dota Units File
 "DOTAUnits"
 {
 	"Version"	"1"

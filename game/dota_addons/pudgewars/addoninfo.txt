@@ -12,11 +12,10 @@
 	"addonDescription"				"A remake of the classic Warcraft 3 Pudge Wars mod in Dota 2."
 	"HeroGuidesSupported"			"1"
 
-//	"maps"							"pudge_wars pudge_wars_10v10"
-	"maps"							"pudge_wars_new"
+	"maps"							"pudgewars_new"
 	"IsPlayable"					"1"
 
-	"pudgewars"
+	"pudgewars_new"
 	{
 		"MaxPlayers"				"10"
 	}

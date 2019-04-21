@@ -1,14 +1,13 @@
 -- Generated from template
 require('lib/notifications')
+require('lib/player')
+require('lib/rgb_to_hex')
 require('lib/timers')
 
-require('api/json')
-require('api/api')
-
 require('internal/util')
-require('battlepass/battlepass')
-require('battlepass/experience')
 
+require('components/api/init')
+require('components/battlepass/init')
 require('components/loading_screen/init')
 require('components/vote/init')
 
@@ -35,12 +34,12 @@ require('trigger_rune')
 function Precache(context)
 	print("starting precache")
 
-	LinkLuaModifier("modifier_ability_points", "modifiers/modifier_ability_points.lua", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_command_restricted", "modifiers/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_fire_rune", "modifiers/modifier_fire_rune.lua", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_shield_rune", "modifiers/modifier_shield_rune.lua", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_campfire", "modifiers/modifier_campfire.lua", LUA_MODIFIER_MOTION_NONE)
-	LinkLuaModifier("modifier_slow_rune", "modifiers/modifier_slow_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_ability_points", "components/modifiers/modifier_ability_points.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_command_restricted", "components/modifiers/modifier_command_restricted.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_fire_rune", "components/modifiers/modifier_fire_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_shield_rune", "components/modifiers/modifier_shield_rune.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_campfire", "components/modifiers/modifier_campfire.lua", LUA_MODIFIER_MOTION_NONE)
+	LinkLuaModifier("modifier_slow_rune", "components/modifiers/modifier_slow_rune.lua", LUA_MODIFIER_MOTION_NONE)
 
 	PrecacheUnitByNameSync("npc_dota_hero_pudge", context)
 

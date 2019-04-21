@@ -135,7 +135,7 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 		hero.companion:ForceKill(false)
 	end
 
-	local companion = CreateUnitByName("npc_imba_donator_companion", hero:GetAbsOrigin() + RandomVector(200), true, hero, hero, hero:GetTeamNumber())
+	local companion = CreateUnitByName("npc_donator_companion", hero:GetAbsOrigin() + RandomVector(200), true, hero, hero, hero:GetTeamNumber())
 	companion:SetModel(model)
 	companion:SetOriginalModel(model)
 	companion:SetOwner(hero)
@@ -165,12 +165,12 @@ local model_scale = GetKeyValueByHeroName(unit_name, "ModelScale")
 			companion:SetOriginalModel("models/courier/baby_rosh/babyroshan_elemental.vmdl")
 			companion:SetMaterialGroup(tostring(random_int-4))
 		end
-	elseif unit_name == "npc_imba_donator_companion_suthernfriend" then
+	elseif unit_name == "npc_donator_companion_suthernfriend" then
 		companion:SetMaterialGroup("1")
 	elseif model == "models/heroes/mario/mario_model.vmdl" then
 		companion:SetMaterialGroup(tostring(RandomInt(0, 2)))
 		companion:SetModelScale(0.5)
-	elseif unit_name == "npc_imba_donator_companion_baekho" then
+	elseif unit_name == "npc_donator_companion_baekho" then
 		local particle = ParticleManager:CreateParticle("particles/econ/courier/courier_baekho/courier_baekho_ambient.vpcf", PATTACH_ABSORIGIN_FOLLOW, companion)
 	end
 
@@ -219,22 +219,6 @@ function CheatDetector()
 				CustomGameEventManager:Send_ServerToAllClients("safe_to_leave", {})
 				return true
 			end
-		end
-	end
-
-	return false
-end
-
-function IsDeveloper(ID)
-	local developers = {
-		"76561198052613450",
-		"76561198015161808",
-	}
-
-	for i = 1, #developers do
-		local steam_id = tostring(PlayerResource:GetSteamID(ID))
-		if steam_id == developers[i] then
-			return true
 		end
 	end
 
