@@ -1,0 +1,3 @@
+[submodule "game/dota_addons/pudgewars/scripts/vscripts/components/api"]
+	path = game/dota_addons/pudgewars/scripts/vscripts/components/api
+	url = https://github.com/EarthSalamander42/frostrose_api.git
