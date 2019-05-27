@@ -31,13 +31,19 @@ function modifier_explosive_barrel:IsPurgable() return false end
 function modifier_explosive_barrel:OnCreated()
 	if IsClient() then return end
 	self:StartIntervalThink(0.1)
+	self.parent = self:GetParent()
+	self.ability = self:GetAbility()
+	self.radius = self.ability:GetSpecialValueFor("radius")
 	self.detonate = false
 end
 
 function modifier_explosive_barrel:OnIntervalThink()
-	local units = FindUnitsInRadius(self:GetParent():GetTeam(), self:GetParent():GetAbsOrigin(), nil, self:GetAbility():GetSpecialValueFor("radius"), DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)		
+	if self.ability == nil then
+		print("lol")
+	end
+	local units = FindUnitsInRadius(self.parent:GetTeam(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)		
 	if self.detonate == false and #units > 0 then
-		DynamiteRune(self:GetParent(), self:GetAbility():GetSpecialValueFor("radius"), 0)
+		DynamiteRune(self.parent, self.radius, -1)
 		self.detonate = true
 	end
 end

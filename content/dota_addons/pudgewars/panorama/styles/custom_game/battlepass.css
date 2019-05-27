@@ -47,6 +47,78 @@
 	}
 }
 
+@keyframes 'breathe_ancient'
+{
+	0%
+	{
+		box-shadow: inset #eb4b4b 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #eb4b4b 0 0 4px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #eb4b4b 0 0 1px 0;
+	}
+}
+
+@keyframes 'breathe_arcana'
+{
+	0%
+	{
+		box-shadow: inset #88ff4d 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #88ff4d 0 0 4px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #88ff4d 0 0 1px 0;
+	}
+}
+
+@keyframes 'breathe_immortal'
+{
+	0%
+	{
+		box-shadow: inset #e6b800 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #e6b800 0 0 4px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #e6b800 0 0 1px 0;
+	}
+}
+
+@keyframes 'breathe_mythical'
+{
+	0%
+	{
+		box-shadow: inset #720585 0 0 1px 0;
+	}
+
+	50%
+	{
+		box-shadow: inset #720585 0 0 4px 0;
+	}
+
+	100%
+	{
+		box-shadow: inset #720585 0 0 1px 0;
+	}
+}
+
 .Battlepass
 {
 	width: 100%;
@@ -84,8 +156,8 @@
 
 #BattlepassButton
 {
-	width: 225px;
-	height: 40px;
+	width: 150px;
+	height: 35px;
 	horizontal-align: center;
 	saturation: 0.8;
 }
@@ -155,7 +227,8 @@
 
 #BattlepassInfoContainer,
 #DonatorInfoContainer,
-#LeaderboardInfoContainer, {
+#LeaderboardInfoContainer,
+#SettingsInfoContainer, {
 	width: 100%;
 	height: 520px;
 	flow-children: down;
@@ -184,7 +257,8 @@
 
 
 #DonatorInfoContainer,
-#LeaderboardInfoContainer {
+#LeaderboardInfoContainer,
+#SettingsInfoContainer {
 	visibility: collapse;
 }
 
@@ -377,6 +451,22 @@
 	opacity: 0.5;
 }
 #CloseButton:hover #CloseButtonImage {
+	opacity: 1;
+}
+#SettingsButton {
+	width: 37px;
+	height: 37px;
+	align: right center;
+}
+#SettingsButtonImage {
+	width: 37px;
+	height: 37px;
+	align: left center;
+	background-image: url("s2r://panorama/images/control_icons/gear_png.vtex");
+	background-size: cover;
+	opacity: 0.5;
+}
+#SettingsButton:hover #SettingsButtonImage {
 	opacity: 1;
 }
 .color_animation {	
@@ -704,10 +794,18 @@
 	wash-color: #000000a0;
 	brightness: 0.6;
 }
+
+.BattlepassRewardHeroIcon {
+	width: 25px;
+	height: 25px;
+	horizontal-align: right;
+	background-size: cover;
+}
 .BattlepassReward:hover .BattlepassRewardPanelUnlocked {
 	opacity: 1;
 }
 .BattlepassRewardLabel {
+	width: 92%;
 	horizontal-align: left;
 	font-size: 12px;
 	vertical-align: top;
@@ -734,8 +832,9 @@
 }
 
 .BattlepassRewardLabelLocked {
+	width: 92%;
 	horizontal-align: left;
-	font-size: 12px;
+	font-size: 10px;
 	vertical-align: top;
 	letter-spacing: 1px;
 	align: center center;
@@ -990,22 +1089,66 @@
 }
 
 /* colors */
+.ancient_border {
+	animation-name: breathe_ancient;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
 
 .arcana_border {
-	border: 1px solid #88ff4d;
+	animation-name: breathe_arcana;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
 }
 
 .immortal_border {
-	border: 1px solid #e6b800;
+	animation-name: breathe_immortal;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
 }
 
-.arcana_text {
-	color:#88ff4d;
+.mythical_border {
+	animation-name: breathe_mythical;
+	animation-duration: 2.0s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+.common_text {
+	color: #b0c3d9;
+}
+
+.uncommon_text {
+	color: #5e98d9;
+}
+
+.rare_text {
+	color: #4b69ff;
+}
+
+.mythical_text {
+	color: #8847ff;
+}
+
+.legendary_text {
+	color: #d32ce6;
 }
 
 .immortal_text {
-	color:#e6b800;
+	color: #b28a33;
 }
+
+.arcana_text {
+	color: #ade55c;
+}
+
+.ancient_text {
+	color: #eb4b4b;
+}
+
 
 .gold {
 	color: gold;
@@ -1013,18 +1156,6 @@
 
 .blue {
 	color: dodgerblue;
-}
-
-#rank_1 {
-	color: gold;
-}
-
-#rank_2 {
-	color: grey;
-}
-
-#rank_3 {
-	color: darkorange;
 }
 
 .patreon_donator_row {
@@ -1052,4 +1183,56 @@
 	width: 50%;
 	height: 100%;
 	background-color: #000000aa;
+}
+
+.SettingsButtonClass {
+	width: 500px;
+	margin-bottom: 5px;
+	align:  center top;
+	border-bottom: 1px solid #333333;
+	border-right: 1px solid #333333;
+	border-top: 1px solid #555555;
+	border-top: 1px solid #555555;
+	padding: 5px 20px;
+	background-color:  gradient( linear, 0% 0, 0 100%, from( #394048 ), color-stop( 0.9, #4b565e ), to( #4b565e ) );
+	flow-children: right;
+	transition-property: pre-transform-scale2d, brightness;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in;	
+	box-shadow: 0px 2px 6px 0px #000000a5;
+}
+
+.SettingsButtonClass Label {
+	align: center center;
+	color: #eaebeb;
+	text-align: center center;
+	font-size: 16px;
+	font-weight: normal;
+	letter-spacing: 2px;
+	margin-top: 2px;
+	text-transform: uppercase;
+	text-shadow: 1px 1px 3px 2.0 #00000025;
+	text-overflow: shrink;
+}
+
+#RefreshBattlepass {
+	width: 20px;
+	height: 20px;
+	margin-right: 6px;
+	background-image: url("s2r://panorama/images/control_icons/refresh_psd.vtex");
+	background-size: 100% 100%;
+	align: left center;
+}
+
+.SettingsButtonClass:hover {
+	brightness: 1.6;
+}
+
+#RefreshBattlepass.Active {
+	animation-name: refresh;
+	animation-duration: 0.55s;
+	animation-delay: 0.15s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: 1;
+	animation-direction: reverse;
 }

@@ -1,23 +1,33 @@
--- utils
-local function GetXPLevelByXp(xp)
+-- Experience System
+CustomNetTables:SetTableValue("game_options", "game_count", {value = 1})
+
+local XP_level_table = {}
+XP_level_table[0] = 0
+
+-- xp needed increased by 500 xp every 25 levels
+for i = 1, 1000 do
+	XP_level_table[i] = XP_level_table[i-1] + (500 * (math.floor(i / 25) + 1))
+end
+
+function Battlepass:GetXPLevelByXp(xp)
 	if xp <= 0 or xp == nil then return 1 end
 
-	for k, v in pairs(Battlepass_Player_XP) do
+	for k, v in pairs(XP_level_table) do
 		if v > xp then
-			return k - 1
+			return k
 		end
 	end
 
-	return 1000
+	return 1
 end
 
-local function GetXpProgressToNextLevel(xp)
-	if xp == nil then return Battlepass_Player_XP[1] end
+function Battlepass:GetXpProgressToNextLevel(xp)
+	if xp == nil then return XP_level_table[1] end
 
-	local level = GetXPLevelByXp(xp)
-	local next = level + 1
-	local thisXp = Battlepass_Player_XP[level]
-	local nextXp = Battlepass_Player_XP[next]
+	local level = Battlepass:GetXPLevelByXp(xp)
+	local next = level
+	local thisXp = XP_level_table[level - 1]
+	local nextXp = XP_level_table[next]
 	if nextXp == nil then
 		nextXp = 0
 	end
@@ -109,30 +119,14 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 
 	for ID = 0, PlayerResource:GetPlayerCount() -1 do
 		local global_xp = tonumber(api:GetPlayerXP(ID))
---		print("Player "..ID.." XP: "..global_xp)
-		local level = GetXPLevelByXp(global_xp)
---		print("Battlepass for ID "..ID..": "..level)
-		local previous_xp = Battlepass_Player_XP[level - 1]
-		local current_xp_in_level
-		local max_xp
-
-		for i = 1, #Battlepass_Player_XP do
-			if global_xp >= Battlepass_Player_XP[i] then
-				if global_xp >= Battlepass_Player_XP[#Battlepass_Player_XP] then -- if max level
-					current_xp_in_level = Battlepass_Player_XP[level] - previous_xp
-					max_xp = Battlepass_Player_XP[level] - previous_xp
-				else
-					level = i
-					current_xp_in_level = 0
-					current_xp_in_level = global_xp - Battlepass_Player_XP[i]
-					max_xp = Battlepass_Player_XP[level + 1] - Battlepass_Player_XP[level]
-				end
-			elseif global_xp == 0 or global_xp == nil then
-				level = 1
-				current_xp_in_level = 0
-				max_xp = Battlepass_Player_XP[1]
-			end
-		end
+		print("Player "..ID.." XP: "..global_xp)
+		local level = Battlepass:GetXPLevelByXp(global_xp)
+		print("Battlepass level for ID "..ID..": "..level)
+		local progress_to_next_level = Battlepass:GetXpProgressToNextLevel(global_xp)
+		local current_xp_in_level = progress_to_next_level.xp
+		print("Battlepass xp in level for ID "..ID..": "..current_xp_in_level)
+		local max_xp = progress_to_next_level.max_xp
+		print("Battlepass max xp for ID "..ID..": "..max_xp)
 
 		local color = PLAYER_COLORS[ID]
 
@@ -144,7 +138,13 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 			donator_color = DONATOR_COLOR[0]
 		end
 
-		CustomNetTables:SetTableValue("player_table", tostring(ID),
+		-- check arcana icon replacement
+		local arcana = {}
+		if Battlepass then
+			arcana["npc_dota_hero_pudge"] = Battlepass:HasPudgeArcana(i)
+		end
+
+		CustomNetTables:SetTableValue("battlepass", tostring(ID),
 		{
 			XP = current_xp_in_level,
 			MaxXP = max_xp,
@@ -156,84 +156,12 @@ function Battlepass:GetPlayerInfoXP() -- yet it has too much useless loops, form
 			IMR_5v5_change = 0,
 			donator_level = api:GetDonatorStatus(ID),
 			donator_color = rgbToHex(donator_color),
+			in_game_tag = api:GetPlayerTagEnabled(ID),
+			bp_rewards = api:GetPlayerBPRewardsEnabled(ID),
+			player_xp = api:GetPlayerXPEnabled(ID),
+			arcana = arcana
 		})
-	end
 
-	-- TODO: fixdishit
---	GetTopPlayersIXP()
---	GetTopPlayersIMR()
-end
-
-function GetTopPlayersIXP()
-	if not api.imba.ready then return end
-
-	for _, top_user in pairs(api.imba.get_rankings_xp()) do
-		local global_xp = top_user.xp
-		local level = GetXPLevelByXp(global_xp)
-		local current_xp_in_level
-		local max_xp
-
-		for i = 1, #Battlepass_Player_XP do
-			if global_xp > Battlepass_Player_XP[i] then
-				if global_xp > Battlepass_Player_XP[#Battlepass_Player_XP] then -- if max level
-					level = #Battlepass_Player_XP
-					current_xp_in_level = Battlepass_Player_XP[level] - Battlepass_Player_XP[level]
-					max_xp = Battlepass_Player_XP[level] - Battlepass_Player_XP[level]
-				else
-					level = i +1
-					current_xp_in_level = 0
-					current_xp_in_level = global_xp - Battlepass_Player_XP[i]
-					max_xp = Battlepass_Player_XP[level + 1] - Battlepass_Player_XP[level]
-				end
-			end
-		end
-
-		CustomNetTables:SetTableValue("top_xp", tostring(top_user.rank),
-		{
-			SteamID64 = top_user.steamid,
-			XP = current_xp_in_level,
-			MaxXP = max_xp,
-			Lvl = level,
-			title = Battlepass:GetTitleXP(level),
-			title_color = rgbToHex(Battlepass:GetTitleColorXP(level)),
-			IMR_5v5 = top_user.imr5v5,
-		})
-	end
-end
-
-function GetTopPlayersIMR()
-	if not api.imba.ready then return end
-
-	for _, top_user in pairs(api.imba.get_rankings_imr5v5()) do
-		local global_xp = top_user.xp
-		local level = GetXPLevelByXp(global_xp)
-		local current_xp_in_level
-		local max_xp
-
-		for i = 1, #Battlepass_Player_XP do
-			if global_xp > Battlepass_Player_XP[i] then
-				if global_xp > Battlepass_Player_XP[#Battlepass_Player_XP] then -- if max level
-					level = #Battlepass_Player_XP
-					current_xp_in_level = Battlepass_Player_XP[level] - Battlepass_Player_XP[level]
-					max_xp = Battlepass_Player_XP[level] - Battlepass_Player_XP[level]
-				else
-					level = i +1 -- transform level 0 into level 1
-					current_xp_in_level = 0
-					current_xp_in_level = global_xp - Battlepass_Player_XP[i]
-					max_xp = Battlepass_Player_XP[level + 1] - Battlepass_Player_XP[level]
-				end
-			end
-		end
-
-		CustomNetTables:SetTableValue("top_imr5v5", tostring(top_user.rank),
-		{
-			SteamID64 = top_user.steamid,
-			XP = current_xp_in_level,
-			MaxXP = max_xp,
-			Lvl = level,
-			title = Battlepass:GetTitleXP(level),
-			title_color = rgbToHex(Battlepass:GetTitleColorXP(Battlepass:GetTitleXP(level))),
-			IMR_5v5 = top_user.imr5v5,
-		})
+--		print(CustomNetTables:GetTableValue("battlepass", tostring(ID)))
 	end
 end

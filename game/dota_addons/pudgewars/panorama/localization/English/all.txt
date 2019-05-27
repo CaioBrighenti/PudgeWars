@@ -1,0 +1,7 @@
+// "DOTA_GoodGuys"						"Light Forces"
+// "DOTA_BadGuys"						"Dark Forces"
+
+"kills_to_win"							"Score: "
+
+// End Screen
+"custom_end_screen_legend_imr"			"MMR"

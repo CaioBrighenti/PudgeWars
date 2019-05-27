@@ -51,7 +51,7 @@ function modifier_lifesteal:OnAttackLanded(keys)
 
 		-- Calculate actual lifesteal amount
 		local damage = keys.damage
-		local target_armor = target:GetPhysicalArmorValue()
+		local target_armor = target:GetPhysicalArmorValue(false)
 		local heal = damage * lifesteal_amount * 0.01 * GetReductionFromArmor(target_armor) * 0.01
 		SendOverheadEventMessage(nil, OVERHEAD_ALERT_HEAL, parent, heal, nil)
 

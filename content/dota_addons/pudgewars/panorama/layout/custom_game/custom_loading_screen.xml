@@ -22,7 +22,7 @@
 				</Panel>
 			</Panel>
 
-			<Panel id="LoadingSocial" class="loading-title">
+			<Panel id="SocialButtons" class="LoadingButtons">
 				<Panel class="LoadingSocialRow">
 					<Button id="LoadingSocialDiscordEn" class="SocialButtons" onactivate="DOTADisplayURL('https://discord.gg/gsywzVX');">
 						<Label text="Discord" />
@@ -30,7 +30,7 @@
 					<Button id="LoadingSocialSteamGroup" class="SocialButtons" onactivate="DOTADisplayURL('https://steamcommunity.com/groups/d2pudgewars');">
 						<Label text="Steam Group" />
 					</Button>
-					<Button id="LoadingSocialSteamWorkshop" class="SocialButtons" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
+					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/id/DendiR/myworkshopfiles/');">
 						<Label text="Frostrose Workshop" />
 					</Button>
 				</Panel>
@@ -70,13 +70,31 @@
 				<Panel class="down">
 					<Label id="loading-title-text-patreon" text="#loading_screen_patreon"/>
 					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_description" />
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist1" />
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist2" />
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist3" />
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist4" />
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist5" />
-					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_modlist6" />
 					<Button id="loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325');">
+					</Button>
+					<Label class="loading-content-text-patreon" html="true" text="#loading_screen_patreon_description_bottom" />
+				</Panel>
+			</Panel>
+
+			<Panel id="PatreonButtons" class="LoadingButtons">
+				<Panel class="Row">
+					<Button class="SocialButtons DarkBlue">
+						<Label text="#loading_screen_patreon_modlist1" />
+					</Button>
+					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=1350425247');">
+						<Label text="#loading_screen_patreon_modlist2" />
+					</Button>
+					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=536682348');">
+						<Label text="#loading_screen_patreon_modlist3" />
+					</Button>
+					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=296831818');">
+						<Label text="#loading_screen_patreon_modlist4" />
+					</Button>
+					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=492195751');">
+						<Label text="#loading_screen_patreon_modlist5" />
+					</Button>
+					<Button class="SocialButtons DarkBlue" onactivate="DOTADisplayURL('https://steamcommunity.com/sharedfiles/filedetails/?id=544075277');">
+						<Label text="#loading_screen_patreon_modlist6" />
 					</Button>
 				</Panel>
 			</Panel>

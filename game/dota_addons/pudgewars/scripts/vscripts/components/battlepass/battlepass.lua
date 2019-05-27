@@ -1,67 +1,37 @@
--- Copyright (C) 2018  The Dota IMBA Development Team
---
--- Licensed under the Apache License, Version 2.0 (the "License");
--- you may not use this file except in compliance with the License.
--- You may obtain a copy of the License at
---
--- http://www.apache.org/licenses/LICENSE-2.0
---
--- Unless required by applicable law or agreed to in writing, software
--- distributed under the License is distributed on an "AS IS" BASIS,
--- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
--- See the License for the specific language governing permissions and
--- limitations under the License.
---
--- Editors:
---     Earth Salamander #42
-
--- Battlepass
-
 BATTLEPASS_LEVEL_REWARD = {}
-BATTLEPASS_LEVEL_REWARD[5] = "hook" -- Broilers Hook
-BATTLEPASS_LEVEL_REWARD[10] = "streak_counter"
-BATTLEPASS_LEVEL_REWARD[15] = "hook2" -- Blood Drainer Hook
-BATTLEPASS_LEVEL_REWARD[25] = "hook3" -- Sorrowful Prey Hook
-BATTLEPASS_LEVEL_REWARD[35] = "hook4" -- Ol'Choppers Hook
-BATTLEPASS_LEVEL_REWARD[45] = "hook5" -- Force Hook
-BATTLEPASS_LEVEL_REWARD[50] = "pudge_arcana" -- (Red)
-BATTLEPASS_LEVEL_REWARD[55] = "hook6" -- Harpoon
-BATTLEPASS_LEVEL_REWARD[65] = "hook7" -- Whale Hook
-BATTLEPASS_LEVEL_REWARD[75] = "hook8" -- Dragonclaw Hook
-BATTLEPASS_LEVEL_REWARD[100] = "pudge_arcana2" -- (Green)
+BATTLEPASS_LEVEL_REWARD[5]		= {"hook", "rare"} -- Broilers Hook
+BATTLEPASS_LEVEL_REWARD[10]		= {"streak_counter", "arcana"}
+BATTLEPASS_LEVEL_REWARD[15]		= {"hook2", "mythical"} -- Blood Drainer Hook
+BATTLEPASS_LEVEL_REWARD[25]		= {"hook3", "mythical"} -- Sorrowful Prey Hook
+BATTLEPASS_LEVEL_REWARD[35]		= {"hook4", "rare"} -- Ol'Choppers Hook
+BATTLEPASS_LEVEL_REWARD[45]		= {"hook5", "uncommon"} -- Force Hook
+BATTLEPASS_LEVEL_REWARD[50]		= {"pudge_arcana", "arcana"} -- (Red)
+BATTLEPASS_LEVEL_REWARD[55]		= {"hook6", "immortal"} -- Ripper's Reel
+BATTLEPASS_LEVEL_REWARD[65]		= {"hook7", "mythical"} -- Whale Hook
+BATTLEPASS_LEVEL_REWARD[75]		= {"hook8", "immortal"} -- Dragonclaw Hook
+BATTLEPASS_LEVEL_REWARD[100]	= {"pudge_arcana2", "arcana"} -- (Green)
 
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = BATTLEPASS_LEVEL_REWARD})
 
 function Battlepass:Init()
 	BATTLEPASS_PUDGE = {}
 	BATTLEPASS_HOOK = {}
-	BATTLEPASS_HOOK_STREAK_COUNTER = {}
+	BATTLEPASS_STREAK_COUNTER = {}
 
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
-		if string.find(v, "pudge_arcana") then
-			BATTLEPASS_PUDGE[v] = k
-		elseif string.find(v, "hook") then
-			BATTLEPASS_HOOK[v] = k
-		elseif string.find(v, "streak_counter") then
-			BATTLEPASS_HOOK_STREAK_COUNTER[v] = k
+		if string.find(v[1], "pudge_arcana") then
+			BATTLEPASS_PUDGE[v[1]] = k
+		elseif string.find(v[1], "hook") then
+			BATTLEPASS_HOOK[v[1]] = k
+		elseif string.find(v[1], "streak_counter") then
+			BATTLEPASS_STREAK_COUNTER[v[1]] = k
 		end
 	end
-
-	Battlepass:GetPlayerInfoXP()
 end
 
 function Battlepass:AddItemEffects(hero)
 	Battlepass:GetPudgeHook(hero)
-	Battlepass:HasPudgeHookStreakCounter(hero)
 	Battlepass:GetPudgeArcanaEffect(hero)
-end
-
-function Battlepass:GetRewardUnlocked(ID)
-	if CustomNetTables:GetTableValue("player_table", tostring(ID)) then
-		return CustomNetTables:GetTableValue("player_table", tostring(ID)).Lvl
-	end
-
-	return 1
 end
 
 function Battlepass:GetPudgeHook(hero)
@@ -166,7 +136,7 @@ function Battlepass:HasPudgeArcana(ID)
 end
 
 function Battlepass:HasPudgeHookStreakCounter(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_HOOK_STREAK_COUNTER["streak_counter"] then
+	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_STREAK_COUNTER["streak_counter"] then
 		return true
 	end
 

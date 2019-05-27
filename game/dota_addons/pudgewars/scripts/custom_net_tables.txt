@@ -5,6 +5,7 @@
 		"game_score",
 		"game_options",
 		"player_table",
+		"battlepass",
 		"top_xp",
 		"top_imr5v5",
 		"shared_unit_control",

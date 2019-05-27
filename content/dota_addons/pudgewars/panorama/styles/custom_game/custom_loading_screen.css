@@ -224,7 +224,7 @@
 
 #LoadingSocialOfficialWebsite { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
 #LoadingSocialSteamGroup { background-color: gradient(linear, 0% 0%, 0% 100%, from(#333), to(#111)); }
-#LoadingSocialSteamWorkshop { background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111)); }
+.DarkBlue { background-color: gradient(linear, 0% 0%, 0% 100%, from(#336), to(#111)); }
 #LoadingSocialFacebook { background-color: gradient(linear, 0% 0%, 0% 100%, from(#22e), to(#111)); }
 #LoadingSocialTwitter { background-color: gradient(linear, 0% 0%, 0% 100%, from(#0D91E2), to(#111)); }
 #LoadingSocialTwitter Label { color: #fff; }
@@ -267,4 +267,42 @@
 .CGSRadio
 {
 	width: 100%;
+}
+
+#SocialButtons {
+	margin-left: 500px;
+}
+
+#PatreonButtons {
+	margin-left: 160px;
+}
+
+.LoadingButtons {
+	overflow: scroll;
+	flow-children: down;
+	background-color: COLOR_INFO_BACKGROUND_GREY_SOCIAL;
+	border-left: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	border-right: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+	border-bottom: 2px solid COLOR_INFO_BACKGROUND_DARK_GREY;
+}
+
+.LoadingButtons Panel {
+	padding: 0px 20px;
+	flow-children: right;
+}
+
+.LoadingButtons Button:hover {
+	box-shadow: 0 0 7px #333;
+}
+
+.LoadingButtons Button {
+	border: 1px solid #333;
+	padding: 5px 20px 3px;
+	margin: 4px 12px 4px 0px;
+	box-shadow: 0 0 5px  #222;
+}
+
+.LoadingButtons Label {
+	font-size: 20px;
+	color: #fff;
 }

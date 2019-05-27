@@ -1,0 +1,193 @@
+"addon_game_name"			"Pudge Wars"
+"HeadshotMessage"			"%s1 GOT A HEADSHOT!"
+"DeniedMessage"				"%s1 GOT A DENY!"
+
+"LH_Resume"					"Toggle Resume"
+"LH_Quit"					"Cancel Lobby"
+"LH_Confirm"				"Confirm"
+
+// Dynamic Layout Tooltips
+"DOTA_Tooltip_ability_pudge_wars_empty1"								"Empty Slot"
+"DOTA_Tooltip_ability_pudge_wars_empty1_description"					"An empty slot, reserved for the active max level bonus of an item."
+"DOTA_Tooltip_ability_pudge_wars_empty2"								"Empty Slot"
+"DOTA_Tooltip_ability_pudge_wars_empty2_description"					"An empty slot, reserved for the active max level bonus of an item."
+"DOTA_Tooltip_ability_pudge_wars_empty3"								"Empty Slot"
+"DOTA_Tooltip_ability_pudge_wars_empty3_description"					"An empty slot, reserved for the active max level bonus of an item."
+
+"DOTA_Tooltip_ability_pudge_wars_abilities_up"								"Upgrade Abilities"
+"DOTA_Tooltip_ability_pudge_wars_abilities_up_description"					"Allows you to see and cast your upgrade abilities. You can return to your active abilities at any time."
+"DOTA_Tooltip_ability_pudge_wars_abilities_down"								"Active Abilities"
+"DOTA_Tooltip_ability_pudge_wars_abilities_down_description"					"Allows you to see and cast your active abilities. You can return to your upgrade abilities at any time."
+
+"DOTA_Tooltip_modifier_ability_points"					"Ability Points"
+"DOTA_Tooltip_modifier_ability_points_Description"		"Number of ability points available."
+
+// Max Level Bonus Abilities
+"DOTA_Tooltip_ability_grappling_hook_blink"											"Blink"
+"DOTA_Tooltip_ability_grappling_hook_blink_Description"								"Short distance teleportation that allows Pudge to move in and out of combat."
+"DOTA_Tooltip_ability_grappling_hook_blink_blink_range"								"RANGE:"
+
+"DOTA_Tooltip_ability_earthshaker_totem_fissure"										"Fissure"
+"DOTA_Tooltip_ability_earthshaker_totem_fissure_Description"							"Pudge slams the ground with a mighty totem, fissuring the earth while stunning and damaging enemy units in a line.  Creates an impassable ridge of stone."
+"DOTA_Tooltip_ability_earthshaker_totem_fissure_fissure_range"						"FISSURE RANGE:"		
+"DOTA_Tooltip_ability_earthshaker_totem_fissure_fissure_duration"						"FISSURE DURATION:"
+"DOTA_Tooltip_ability_earthshaker_totem_fissure_stun_duration"						"STUN DURATION:"
+
+"DOTA_Tooltip_ability_techies_explosive_barrel_detonate"										"Detonate"
+"DOTA_Tooltip_ability_techies_explosive_barrel_detonate_Description"							"Pudge detonates his barrel, borrowed from Techies, blowing up and killing himself and others around him."
+
+//Earthshaker Totem
+"DOTA_Tooltip_ability_item_pudgewars_earthshaker_totem"		"Earthshaker's Totem"
+"DOTA_Tooltip_ability_item_pudgewars_earthshaker_totem_Description"		"Barrier Health: <font color='#FBAF40'>750</font>/900/1050/1200/1350\nHealth Increment: 150\nMax Level Bonus: Gives Pudge the ability to throw fissure.\n\nAllows Pudge to place a barrier that blocks incoming hooks. The health of the barrier increases at each level."
+"DOTA_Tooltip_ability_item_pudgewars_earthshaker_totem_Lore"		"Wielding the Earthshaker's totem, Pudge is able to place barriers which deflect hooks."
+"DOTA_Tooltip_ability_item_pudgewars_earthshaker_totem_5"		"Earthshaker's Totem"
+"DOTA_Tooltip_ability_item_pudgewars_earthshaker_totem_5_Description"		"Barrier Health: 750/900/1050/1200/<font color='#FBAF40'>1350</font>\nHealth Increment: 150\nMax Level Bonus: <font color='#FBAF40'>Gives Pudge the ability to throw fissure.</font>\n\nAllows Pudge to place a barrier that blocks incoming hooks. The health of the barrier increases at each level."
+"DOTA_Tooltip_ability_item_pudgewars_earthshaker_totem_5_Lore"		"Wielding the Earthshaker's totem, Pudge is able to place barriers which deflect hooks."
+
+//Ricochets Turbine
+"DOTA_Tooltip_ability_item_ricochet_turbine"		"Ricochet's Turbine"
+"DOTA_Tooltip_ability_item_ricochet_turbine_Description"		"Damage Multiplier: <font color='#FBAF40'>0.1</font>/0.2/0.3/0.4/0.5\nDamage Increment: 0.1\n\nHook gains power with bounces."
+"DOTA_Tooltip_ability_item_ricochet_turbine_Lore"		"This incredible device allows Pudge's hook to actually GAIN power as it careens off anything in its path, dealing increased damage when it hits."
+"DOTA_Tooltip_ability_item_ricochet_turbine_5"		"Ricochet's Turbine"
+"DOTA_Tooltip_ability_item_ricochet_turbine_5_Description"		"Damage Multiplier: 0.1/0.2/0.3/0.4/<font color='#FBAF40'>0.5</font>\nDamage Increment: 0.1\n\nHook gains power with bounces."
+"DOTA_Tooltip_ability_item_ricochet_turbine_5_Lore"		"This incredible device allows Pudge's hook to actually GAIN power as it careens off anything in its path, dealing increased damage when it hits."
+
+//Item tooltips
+//Strygwyrs Claws
+"DOTA_Tooltip_ability_item_strygwyr_claw"						"Strygwyr's Claws"
+"DOTA_Tooltip_ability_item_strygwyr_claw_Description"			"Applies a Rupture to hooked enemies, dealing a percentage of their distance dragged as damage.\n\nMax Level Bonus: <font color='#FBAF40'>Rupture stays on the target for %duration% seconds.</font>"
+"DOTA_Tooltip_ability_item_strygwyr_claw_Lore"					"Strygwyr's thirst for blood embodied in an item, these claws cause any unit hooked by their wielder to take a portion of the distance dragged as damage."
+"DOTA_Tooltip_ability_item_strygwyr_claw_duration"				"DURATION:"
+"DOTA_Tooltip_ability_item_strygwyr_claw_movement_damage_pct"	"%MOVEMENT DAMAGE PCT:"
+"DOTA_Tooltip_ability_item_strygwyr_claw_damage_cap_amount"		"DAMAGE CAP AMOUNT:"
+"DOTA_Tooltip_ability_item_strygwyr_claw_damage_cap_interval"	"DAMAGE CAP INTERVAL:"
+
+//Techies' Barrel
+"DOTA_Tooltip_ability_item_techies_explosive_barrel"					"Techies's Explosive Barrel"
+"DOTA_Tooltip_ability_item_techies_explosive_barrel_Description"		"Places a mine that explodes in a %radius% radius when an enemy comes near it. Does more damage the closer you are to the center of the explosion up to . Damage increases at each level. \nMax Level Bonus: <font color='#FBAF40'>Gives Pudge the ability to detonate himself and others around him.</font>"
+"DOTA_Tooltip_ability_item_techies_explosive_barrel_Lore"				"Borrowed from the Goblin Techies, this barrel allows Pudge to place explosive landmines. When thrown at an enemy, they become deadly grenades."
+
+//Lycan Paws
+"DOTA_Tooltip_ability_item_lycan_paw"					"Lycan's Paws"
+"DOTA_Tooltip_ability_item_lycan_paw_Description"		"Increases Pudge's Movespeed by %movespeed_bonus%. Movespeed bonus increases at each level.\n\n<font color='#FBAF40'>Max Level Bonus: %movespeed_percent_bonus%% bonus Movespeed and %attackspeed_bonus% bonus Attack Speed.</font>"
+"DOTA_Tooltip_ability_item_lycan_paw_Lore"				"The quickfooted spirit of Banehallow empowers Pudge's usually plodding movement."
+"DOTA_Tooltip_ability_item_lycan_paw_movespeed_bonus"	"BONUS MOVESPEED:"
+
+"dota_tooltip_modifier_lycan_paw"						"Lycan's Paws"
+"dota_tooltip_modifier_lycan_paw_Description"			"Movement speed increased by %dMODIFIER_PROPERTY_MOVESPEED_BONUS_CONSTANT%"
+
+//Naix Jaws
+"DOTA_Tooltip_ability_item_naix_jaw"					"Naix's Jaws"
+"DOTA_Tooltip_ability_item_naix_jaw_Description"		"Causes Meat Hook to lifesteal %hook_lifesteal%%  of Meat Hook's damage. Lifesteal increases at each level. \n\nMax Level Bonus: <font color='#FBAF40'>Pudge's normal attacks steal %lifesteal_pct%% life.</font>"
+"DOTA_Tooltip_ability_item_naix_jaw_Lore"				"Naix's ravenous hunger overcomes Pudge, making his hooks steal life."	
+
+"DOTA_TOOLTIP_modifier_lifesteal"						"Naix's Jaws Lifesteal"
+"DOTA_TOOLTIP_modifier_lifesteal_Description"			"%lifesteal_pct%% lifesteal on autoattacks."
+
+//Grappling hook
+"DOTA_Tooltip_ability_item_grappling_hook"						"Grappling Hook"
+"DOTA_Tooltip_ability_item_grappling_hook_Description"			"Fires a hook that grapples to a lightpost, carrying Pudge to it over any terrain. Cooldown decreases at each level.\n\n<font color='#FBAF40'>Max Level Bonus: Gives Pudge the ability to blink a short distance.</font>"
+"DOTA_Tooltip_ability_item_grappling_hook_cooldown_tooltip"		"COOLDOWN:"
+
+//Tinys Arm
+"DOTA_Tooltip_ability_item_tiny_arm"							"Tiny's Arm"
+"DOTA_Tooltip_ability_item_tiny_arm_Description"				"Allows Pudge to toss allies and enemies to the targeted location. Range increases and Cooldown decreases at each level.\n\n<font color='#FBAF40'>Max Level Bonus: Stuns target on impact for %stun_duration% seconds and deals %damage% damage.</font>"
+"DOTA_Tooltip_ability_item_tiny_arm_range_tooltip"				"RANGE:"
+"DOTA_Tooltip_ability_item_tiny_arm_cooldown_tooltip"			"COOLDOWN:"
+
+//Barathrums Lantern
+"DOTA_Tooltip_ability_item_barathrum_lantern"					"Barathrum's Lantern"
+"DOTA_Tooltip_ability_item_barathrum_lantern_Description"		"Increases the damage of Meat Hook based on %damage_pct%%  of Meat Hook's speed. Damage increases at each level.\n\n<font color='#FBAF40'>Max Level Bonus: %bash_chance%% chance to active a +%bash_damage% damage Powerbash.</font>"
+"DOTA_Tooltip_ability_item_barathrum_lantern_Lore"			"The power of the Spiritbreak's lantern imbues Pudge's hook with damage based on speed."
+
+"DOTA_Tooltip_ability_item_greater_salve" "Healing Salve"
+"DOTA_Tooltip_ability_item_greater_salve_Description" "Regenerates a target unit's hitpoints by 1000 over 60 seconds when used."
+"DOTA_Tooltip_ability_item_pudge_wars_reveal" "Reveal"
+"DOTA_Tooltip_ability_item_pudge_wars_reveal_Description" "Reveals an area of radius 800.\nDetects invisible units.\nLasts 30 seconds."
+"DOTA_Tooltip_ability_item_greater_salve_instant" "Potion of Greater Healing"
+"DOTA_Tooltip_ability_item_greater_salve_instant_Description" "Heals 750 hit points when used."
+
+"DOTA_Tooltip_ability_item_tome_of_wisdom" "Tome of Wisdom"
+"DOTA_Tooltip_ability_item_tome_of_wisdom_Description" "Increases the level of Pudge by 1 when used."
+
+"DOTA_Tooltip_ability_item_tome_of_damage" "Tome of Power"
+"DOTA_Tooltip_ability_item_tome_of_damage_Description" "Increases the base damage of Pudge by 25 when used."
+
+"DOTA_Tooltip_ability_item_tome_of_health" "Tome of Strength"
+"DOTA_Tooltip_ability_item_tome_of_health_Description" "Increases the max health of Pudge by 100 when used."
+
+//Fountain healing
+"DOTA_TOOLTIP_fountain_regen" "Fountain Heal"
+"DOTA_TOOLTIP_fountain_regen_Description" "Regenerates 1%% of life while near the Fountain."
+
+//Item modifiers tooltips
+"DOTA_TOOLTIP_MODIFIER_item_greater_salve" "Healing Salve"
+"DOTA_TOOLTIP_MODIFIER_item_greater_salve_Description" "Regenerates 1000 hitpoints over 60 seconds."
+
+// Runes tooltips
+"npc_dummy_rune_dynamite"			"Dynamite rune"
+"npc_dummy_rune_fire"				"Ember rune"
+"npc_dummy_rune_gold"				"Gold rune"
+"npc_dummy_rune_haste"				"Haste rune"
+"npc_dummy_rune_lightning"			"Thunder rune"
+
+"DOTA_Tooltip_modifier_fire_rune"					"Ember Rune"
+"DOTA_Tooltip_modifier_fire_rune_Description"		"Throwing hook release fire on the ground, damaging enemies walking in."
+
+"DOTA_Tooltip_modifier_slow_rune"					"Slow Rune"
+"DOTA_Tooltip_modifier_slow_rune_Description"		"Reduces all enemies movespeed to 150, while increasing yours at 550."
+
+"DOTA_Tooltip_modifier_shield_rune"					"Shield Rune"
+"DOTA_Tooltip_modifier_shield_rune_Description"		"Deals damage to units around you."
+
+//Upgrade tooltips
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_damage"				"Upgrade hook damage"
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_damage_Description"	"Increases the damage of Pudge's hook. Can only be cast when Pudge has enough upgrade points to spend."
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_damage_bonus_damage"	"BONUS DAMAGE:"
+
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_range"				"Upgrade hook distance"
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_range_Description"	"Increases the range of Pudge's hook. Can only be upgraded when Pudge has upgrade points to spend."
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_range_bonus_range"	"BONUS RANGE:"
+
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_speed"				"Upgrade hook speed"
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_speed_Description"	"Increases the speed of Pudge's hook. Can only be upgraded when Pudge has upgrade points to spend."
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_speed_bonus_speed"	"BONUS SPEED:"
+
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_size"					"Upgrade hook radius"
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_size_Description"		"Increases the size of Pudge's hook. Can only be upgraded when Pudge has upgrade points to spend."
+"DOTA_Tooltip_ability_pudge_wars_upgrade_hook_size_bonus_radius"	"BONUS RADIUS:"
+
+//All hooks	
+"DOTA_Tooltip_ability_pudge_wars_custom_hook"				"Meat Hook"
+"DOTA_Tooltip_ability_pudge_wars_custom_hook_Description"	"Launches a bloody hook at a unit or location. The hook will snag the first unit it encounters, dragging the unit back to Pudge and dealing damage if it is an enemy."
+"DOTA_Tooltip_ability_pudge_wars_custom_hook_Lore"			"The Butcher's hook is a symbolic nightmare, its curved blade a frightening reminder of his slaughterous intent."
+"DOTA_Tooltip_ability_pudge_wars_custom_hook_Note0"			"Attributes will change depending on upgrades used."
+"DOTA_Tooltip_ability_pudge_wars_custom_hook_base_damage"	"BASE DAMAGE:"
+"DOTA_Tooltip_ability_pudge_wars_custom_hook_base_range"	"BASE DISTANCE:"
+"DOTA_Tooltip_ability_pudge_wars_custom_hook_base_speed"	"BASE SPEED:"
+"DOTA_Tooltip_ability_pudge_wars_custom_hook_base_radius"	"BASE RADIUS:"
+
+// Pudge's Butcher's Cleaver
+"DOTA_Tooltip_ability_pudge_wars_cleaver"						"Butcher's Cleaver"
+"DOTA_Tooltip_ability_pudge_wars_cleaver_Description"			"Pudge throws his offhand weapon forward, which flies in a straight line, stopping at the first enemy it hits. The Cleaver deals magical damage and slow the target."
+"DOTA_Tooltip_ability_pudge_wars_cleaver_Note0"					"Pudge and his allies are immune to the effect."
+"DOTA_Tooltip_ability_pudge_wars_cleaver_Lore"					"The Butcher's Cleaver is Pudge's most beloved possession, used to serve him dinner every day." 
+"DOTA_Tooltip_ability_pudge_wars_cleaver_damage"				"DAMAGE:"
+"DOTA_Tooltip_ability_pudge_wars_cleaver_move_slow"				"%MOVE SLOW:"
+"DOTA_Tooltip_ability_pudge_wars_cleaver_duration"				"SLOW DURATION:"
+"DOTA_Tooltip_ability_pudge_wars_cleaver_projectile_radius"		"CLEAVER RADIUS:"
+"DOTA_Tooltip_ability_pudge_wars_cleaver_range"					"CLEAVER RANGE:"
+"DOTA_Tooltip_ability_pudge_wars_cleaver_projectile_speed"		"CLEAVER SPEED:"
+
+"DOTA_Tooltip_modifier_cleaver_rot"									"Infected Cleaver"
+"DOTA_Tooltip_modifier_cleaver_rot_Description"						"Hit by Pudge's Infected Cleaver! You're rotting down, damaging you and your teammates."
+
+"DOTA_Tooltip_modifier_butchers_cleaver"							"Butchers Cleaver Root"
+"DOTA_Tooltip_modifier_butchers_cleaver_Description"				"Rooted by Butcher's Cleaver"
+
+// Units
+"npc_dota_campfire"				"Campfire"
+
+// Error messages
+"dota_hud_error_cant_purchase_item"			"You can't purchase this item!"
+"dota_hud_error_item_level_max"				"You've reached max level for this item!"

@@ -1,55 +1,53 @@
 if Battlepass == nil then Battlepass = class({}) end
 
-Battlepass_Player_XP = {}
-Battlepass_Player_XP[0] = 0
-
--- xp needed increased by 500 xp every 25 levels
-for i = 1, 1000 do
-	Battlepass_Player_XP[i] = Battlepass_Player_XP[i-1] + (500 * (math.floor(i / 25) + 1))
-end
-
-DONATOR_COLOR = {}
-DONATOR_COLOR[0] = {33, 39, 47} -- Not a donator
-DONATOR_COLOR[1] = {135, 20, 20} -- IMBA Lead-Developer
-DONATOR_COLOR[2] = {100, 20, 20} -- IMBA Developer
-DONATOR_COLOR[3] = {0, 102, 255} -- Administrator
-DONATOR_COLOR[4] = {220, 40, 40} -- Ember Donator
-DONATOR_COLOR[5] = {218, 165, 32} -- Golden Donator
-DONATOR_COLOR[6] = {0, 204, 0} -- Green Donator (basic)
-DONATOR_COLOR[8] = {47, 91, 151} -- Salamander Donator (blue)
-DONATOR_COLOR[7] = {153, 51, 153} -- Icefrog Donator (purple)
-DONATOR_COLOR[9] = {185, 75, 10} -- Gaben Donator
-DONATOR_COLOR[10] = {255, 255, 255}
-
-require("components/battlepass/battlepass")
-require("components/battlepass/donator")
-require("components/battlepass/experience")
+require('components/battlepass/constants')
+require('components/battlepass/util')
+require('components/battlepass/battlepass')
+require('components/battlepass/donator')
+require('components/battlepass/experience')
 
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
 		Battlepass:Init()
+		Battlepass:GetPlayerInfoXP()
 	end
 end, nil)
 
-ListenToGameEvent('npc_spawned', function(keys)
-	local npc = EntIndexToHScript(keys.entindex)
+ListenToGameEvent('npc_spawned', function(event)
+	local npc = EntIndexToHScript(event.entindex)
 
-	if npc:IsRealHero() then
+	if npc:IsIllusion() or string.find(npc:GetUnitName(), "npc_dota_lone_druid_bear") then
+		npc:SetupHealthBarLabel()
+		return
+	elseif npc:IsRealHero() then
 		Battlepass:AddItemEffects(npc)
 
-		local donator_level = api:GetDonatorStatus(npc:GetPlayerID())
---		print("Donator Player ID / status:", npc:GetPlayerID(), donator_level)
+		local ply_table = CustomNetTables:GetTableValue("battlepass", tostring(npc:GetPlayerID()))
 
-		if api:IsDonator(npc:GetPlayerID()) ~= false then
-			if donator_level and donator_level > 0 then
-				npc:SetCustomHealthLabel("#donator_label_" .. donator_level, DONATOR_COLOR[donator_level][1], DONATOR_COLOR[donator_level][2], DONATOR_COLOR[donator_level][3])
-			end
+		if ply_table and ply_table.bp_rewards == 0 then
+			return
+		end
 
-			if donator_level ~= 6 and donator_level ~= 10 then
-				Timers:CreateTimer(2.0, function()
-					Battlepass:DonatorCompanion(npc:GetPlayerID(), nil)
-				end)
+		if api:IsDonator(npc:GetPlayerID()) and PlayerResource:GetConnectionState(npc:GetPlayerID()) ~= 1 then
+			npc:SetupHealthBarLabel()
+
+			if api:GetDonatorStatus(npc:GetPlayerID()) == 10 then
+				npc:SetOriginalModel("models/items/courier/kanyu_shark/kanyu_shark.vmdl")
+				npc:CenterCameraOnEntity(npc, -1)
+			else
+				npc:AddNewModifier(npc, nil, "modifier_patreon_donator", {})
+
+				if GetMapName() == "imba_demo" then return end
+				if api:GetDonatorStatus(npc:GetPlayerID()) ~= 6 then
+					Timers:CreateTimer(1.5, function()
+						Battlepass:DonatorCompanion(npc:GetPlayerID(), api:GetPlayerCompanion(npc:GetPlayerID()))
+					end)
+				end
 			end
 		end
+
+		CustomGameEventManager:Send_ServerToAllClients("override_hero_image", {
+			hero_name = string.gsub(npc:GetUnitName(), "npc_dota_hero_", ""),
+		})
 	end
 end, nil)

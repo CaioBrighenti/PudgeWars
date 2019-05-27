@@ -131,7 +131,6 @@ function PudgeWarsMode:KillTarget(caster,unit)
 end
 
 function applyRupture(source, target)
-	print("applyRupture")
 	local hasStrygwyr = false
 	local ruptureLevel = nil
 
@@ -143,7 +142,6 @@ function applyRupture(source, target)
 				if item and IsValidEntity(item) and item:GetAbilityName() == 'item_strygwyr_claw' then
 					ruptureLevel = item:GetLevel()
 					hasStrygwyr = true
-					print("item level:", ruptureLevel)
 				end
 			end
 
@@ -362,10 +360,10 @@ end
 function OnTechiesExplosiveBarrelDetonate(keys)
 	local caster = keys.caster
 
-	DynamiteRune(caster, 200, 3)
+	DynamiteRune(caster, 200, -1, false)
 end
 
-function DynamiteRune(caster, radius_explosion, delay)
+function DynamiteRune(caster, radius_explosion, delay, bTargetAlly)
 	local i = delay + 1
 
 	caster:AddNewModifier(caster, nil, "modifier_silenced", {duration=delay})
@@ -382,7 +380,11 @@ function DynamiteRune(caster, radius_explosion, delay)
 			return 1.0
 		else
 			local center_vec = caster:GetAbsOrigin()
-			local units = Entities:FindAllInSphere(center_vec, radius_explosion)
+			local team_target = DOTA_UNIT_TARGET_TEAM_ENEMY
+			if bTargetAlly == true then
+				team_target = DOTA_UNIT_TARGET_TEAM_BOTH
+			end
+			local units = FindUnitsInRadius(caster:GetTeam(), caster:GetAbsOrigin(), nil, radius_explosion, team_target, DOTA_UNIT_TARGET_HERO, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)		
 
 			for k,v in pairs(units) do
 				if IsValidEntity(v) and string.find(v:GetClassname(), "pudge") and v ~= caster then
@@ -393,12 +395,18 @@ function DynamiteRune(caster, radius_explosion, delay)
 				end
 			end
 
-			--Kill pudge last to give him all EXP and stuff
 			caster:EmitSound('Hero_Alchemist.UnstableConcoction.Stun')
-			dealDamage(caster,caster,caster:GetMaxHealth() + 1000)
-			local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_ABSORIGIN, caster)
-			local headshotPos = caster:GetOrigin()
-			ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
+
+			--Kill pudge last to give him all EXP and stuff
+			if bTargetAlly == true then
+				dealDamage(caster,caster,caster:GetMaxHealth() + 1000)
+				local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_ABSORIGIN, caster)
+				local headshotPos = caster:GetOrigin()
+				ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
+			end
+
+			caster:ForceKill(false)
+
 			return nil
 		end
 	end)

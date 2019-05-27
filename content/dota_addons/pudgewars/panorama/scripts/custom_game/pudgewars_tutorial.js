@@ -21,7 +21,8 @@ function SetTopBarScoreToWin(data) {
 GameEvents.Subscribe( "pudgewars_set_score_topbar", SetTopBarScoreToWin );
 
 // Show tutorial to newcomers only
-var plyData = CustomNetTables.GetTableValue("player_table", Game.GetLocalPlayerID());
+var plyData = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
+
 if (plyData.XP > 1) {
 	TutorialButtonPressed = true;
 	$.GetContextPanel().SetHasClass( "toggle_tutorial_button", true );
