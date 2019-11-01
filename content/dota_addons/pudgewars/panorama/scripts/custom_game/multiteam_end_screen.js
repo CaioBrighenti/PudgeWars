@@ -132,23 +132,23 @@ function EndScoreboard() {
 			values.level.text = player.info.player_level;
 
 			// XP
-			var player_table = CustomNetTables.GetTableValue("player_table", player.id.toString());
-			if (player_table) {
+			var battlepass = CustomNetTables.GetTableValue("battlepass", player.id.toString());
+			if (battlepass) {
 				$.Msg("ply info steamid: " + player.info.player_steamid);
 
 				// Testing exp view obfuscation
 				if (player.info.player_steamid != 76561198046078552) {
-					values.xp.rank.text = Math.floor(player_table.XP) + "/" + Math.floor(player_table.MaxXP);
-					values.xp.level.text = $.Localize("#battlepass_level") + player_table.Lvl;
-					values.xp.rank_name.text = player_table.title;
-					values.xp.rank_name.style.color = player_table.title_color;
-					values.xp.booster.style.color = player_table.donator_color;
-//					$.Msg(Math.floor(player_table.XP) / Math.floor(player_table.MaxXP))
-//					if (Math.floor(player_table.XP) / Math.floor(player_table.MaxXP) >= 1) {
+					values.xp.rank.text = Math.floor(battlepass.XP) + "/" + Math.floor(battlepass.MaxXP);
+					values.xp.level.text = $.Localize("#battlepass_level") + battlepass.Lvl;
+					values.xp.rank_name.text = battlepass.title;
+					values.xp.rank_name.style.color = battlepass.title_color;
+					values.xp.booster.style.color = battlepass.donator_color;
+//					$.Msg(Math.floor(battlepass.XP) / Math.floor(battlepass.MaxXP))
+//					if (Math.floor(battlepass.XP) / Math.floor(battlepass.MaxXP) >= 1) {
 //						$.Msg("Level Up!")
 //						values.xp.bar[0].AddClass("level-up");
 //					}
-					var progress = Math.round((100.0 * Math.floor(player_table.XP)) / Math.floor(player_table.MaxXP));
+					var progress = Math.round((100.0 * Math.floor(battlepass.XP)) / Math.floor(battlepass.MaxXP));
 					values.xp.progress.style.width = progress + "%";
 				}
 				else {

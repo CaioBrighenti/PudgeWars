@@ -545,13 +545,13 @@ Label
 
 .PudgeWarsKillsToWin
 {
-	width: 120px;
 	height: 40px;
 	vertical-align: top;
 	horizontal-align: center;
-	margin-top: 3.7%;
-	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
-	background-size: 100%;
+	margin-top: 9%;
+	flow-children: right;
+//	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
+//	background-size: 100%;
 }
 
 .PudgewarsLabel {
@@ -561,4 +561,108 @@ Label
 	text-shadow: 4px 4px 4px #121212;
 	font-size: 16px;
 	font-weight: bold;
+}
+
+/* Kills to win progress bars */
+
+.imbar-progress-bar
+{
+	width: 300px;
+	background-color: #282f39;
+	height: 28px;
+	vertical-align: center;
+	overflow:  clip;
+}
+
+#RadiantProgressBar {
+	border-bottom-left-radius: 10px;
+}
+
+#DireProgressBar {
+	border-bottom-right-radius: 10px;
+}
+
+#RadiantProgressBar_Left
+{
+	background-color: gradient( linear,  100% 0%, 0 0 , from (#0a9153), color-stop( 0.5, #09bb6a ), to(#0a9153));
+}
+
+#RadiantProgressBar_Right
+{
+	background-color: gradient( linear, 0% 0%, 0 0%, from( #222222FF ), to( black ) );
+}
+
+#DireProgressBar_Left
+{
+	background-color: gradient( linear, 0% 0%, 0 0%, from( #222222FF ), to( black ) );
+}
+
+#DireProgressBar_Right
+{
+	background-color: gradient( linear,  100% 0%, 0 0 , from (#910A0A), color-stop( 0.5, #BB0909 ), to(#910A0A));
+}
+
+.imbar-lvl
+{
+	width: 35%;
+	font-size: 16px;
+	margin-top: 2px;
+	margin-left: 15px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: left;
+	text-align: left;
+	opacity: 1;
+	text-shadow: 1px 1px 2px 2.0 #00000030;
+}
+.imbar-rank-wrapper {
+	width: 30%;
+	flow-children:  right;
+	align: center center;
+}
+.imbar-rank
+{
+	margin-top: 2px;
+	font-size: 14px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: left;
+	text-align: left;
+	opacity: 1;
+	text-transform: uppercase;
+	border-radius: 5px;
+	margin-left: 8px;
+
+	text-shadow: 1px 1px 2px 3.0 #00000030;
+}
+
+.imbar-rank-cicle {
+	width: 12px;
+	height: 12px;
+	align:  center center;
+	border-radius: 50%;
+	opacity: 0.9;
+	box-shadow: 0px 0px 2px 0px #00000085;
+	brightness: 0.9;
+}
+
+.imbar-xp
+{
+	width: 40%;
+	margin-top: 2px;
+	margin-right: 18px;
+	font-size: 16px;
+	color: white;
+	vertical-align: center;
+	horizontal-align: right;
+	text-align: right;
+	opacity: 1;
+	letter-spacing: 0.5px;
+	text-shadow: 1px 1px 2px 2.0 #00000030;
+}
+
+.Separator {
+	width: 1px;
+	height: 100%;
+	background-color: gold;
 }

@@ -36,7 +36,7 @@
 "npc_donator_companion_demi_doom"				"Doomling"
 "npc_donator_companion_carty"					"Carty"
 "npc_donator_companion_carty_dire"				"Dire Carty (flying)"
-"npc_donator_companion_llama"					"LLama"
+"npc_donator_companion_llama"					"Llama"
 "npc_donator_companion_jumo"					"Jumo"
 "npc_donator_companion_jin"						"Jin (White)"
 "npc_donator_companion_baekho"					"Baekho"

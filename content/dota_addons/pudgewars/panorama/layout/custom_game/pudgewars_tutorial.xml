@@ -10,7 +10,15 @@
 
 	<Panel hittest="false" class="PudgeWarsTutorialMain">
 		<Panel hittest="false" class="PudgeWarsKillsToWin">
-			<Label id="LabelKillsToWin" class="PudgewarsLabel" text="#kills_to_win" />
+			<ProgressBar hittest="false" id="RadiantProgressBar" class="imbar-progress-bar">
+				<Label id="RadiantScore" class="PudgewarsLabel" text="0/0" />
+			</ProgressBar>
+
+			<Panel hittest="false" class="Separator"/>
+
+			<ProgressBar hittest="false" id="DireProgressBar" class="imbar-progress-bar">
+				<Label id="DireScore" class="PudgewarsLabel" text="0/0" />
+			</ProgressBar>
 		</Panel>
 
 		<Panel hittest="false" class="PudgeWarsTutorialButton">
@@ -43,6 +51,5 @@
 			<Label id="PudgeWarsLabelGameinfo" class="PudgewarsLabel" text="Find the Game Info panel here!" />
 		</Panel>
 		<Image id="ArrowImageGameinfo" src="file://{images}/custom_game/spectate_heroselection_iee_left.png" />
-
 	</Panel>	
 </root>

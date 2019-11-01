@@ -15,7 +15,7 @@ function UpdateScore(table_name, key, data) {
 	RadiantBar.text = data.radiant_score;
 	DireBar.text = data.dire_score;
 }
-CustomNetTables.SubscribeNetTableListener("game_score", UpdateScore)
+//	CustomNetTables.SubscribeNetTableListener("game_score", UpdateScore)
 
 function FindDotaHudElement(id) {
 	return GetDotaHud().FindChildTraverse(id);

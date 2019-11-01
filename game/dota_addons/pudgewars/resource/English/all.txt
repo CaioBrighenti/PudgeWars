@@ -20,7 +20,7 @@
 "DOTA_Tooltip_ability_pudge_wars_abilities_down_description"					"Allows you to see and cast your active abilities. You can return to your upgrade abilities at any time."
 
 "DOTA_Tooltip_modifier_ability_points"					"Ability Points"
-"DOTA_Tooltip_modifier_ability_points_Description"		"Number of ability points available."
+"DOTA_Tooltip_modifier_ability_points_Description"		"Amount of ability points available to spend."
 
 // Max Level Bonus Abilities
 "DOTA_Tooltip_ability_grappling_hook_blink"											"Blink"

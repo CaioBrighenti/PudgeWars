@@ -189,7 +189,7 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 	if newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		InitCampfires()
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		CustomGameEventManager:Send_ServerToAllClients( "pudgewars_set_score_topbar", {kills = self.kills_to_win} )
+		CustomNetTables:SetTableValue("game_score" ,"max_score", {kills = self.kills_to_win})
 		-- start slower thinker to avoid lags
 		Timers:CreateTimer(function()
 			self:SlowThink()

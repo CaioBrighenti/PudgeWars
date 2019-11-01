@@ -1,8 +1,7 @@
 "use strict";
 var TutorialButtonPressed = false;
 
-function OnToggleTutorialButton()
-{
+function OnToggleTutorialButton() {
 	if (TutorialButtonPressed) {
 		TutorialButtonPressed = false;
 		$.GetContextPanel().SetHasClass( "toggle_tutorial_button", false );
@@ -14,16 +13,38 @@ function OnToggleTutorialButton()
 	};
 }
 
-function SetTopBarScoreToWin(data) {
-	$("#LabelKillsToWin").text = $.Localize("#kills_to_win") + data.kills;
+SetTopBarScoreToWin()
+
+function SetTopBarScoreToWin() {
+	var team_score = CustomNetTables.GetTableValue("game_score", "team_score")
+	var max_score = CustomNetTables.GetTableValue("game_score", "max_score")
+
+	if (max_score)
+		max_score = max_score.kills;
+	else
+		return;
+
+	var radiant_score = 0;
+	var dire_score = 0;
+
+	if (team_score) {
+		radiant_score = team_score.radiant_score;
+		dire_score = team_score.dire_score;
+	}
+
+	$("#RadiantScore").text = radiant_score + "/" + max_score;
+	$("#DireScore").text = dire_score + "/" + max_score;
+
+	$("#RadiantProgressBar").value = radiant_score / max_score;
+	$("#DireProgressBar").value = (max_score - dire_score) / max_score;
 }
 
-GameEvents.Subscribe( "pudgewars_set_score_topbar", SetTopBarScoreToWin );
+CustomNetTables.SubscribeNetTableListener("game_score", SetTopBarScoreToWin);
 
 // Show tutorial to newcomers only
 var plyData = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
 if (plyData.XP > 1) {
 	TutorialButtonPressed = true;
-	$.GetContextPanel().SetHasClass( "toggle_tutorial_button", true );
+	$.GetContextPanel().SetHasClass("toggle_tutorial_button", true);
 }

@@ -165,7 +165,7 @@ function _ScoreboardUpdater_UpdatePlayerPanel(scoreboardConfig, playersContainer
 
 		if (ImbaXP_Panel != null) {
 			// get player data
-			var plyData = CustomNetTables.GetTableValue("player_table", playerId);
+			var plyData = CustomNetTables.GetTableValue("battlepass", playerId);
 
 			if (plyData != null) {
 				// set xp values

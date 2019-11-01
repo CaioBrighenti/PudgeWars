@@ -5,6 +5,8 @@ function modifier_ability_points:RemoveOnDeath() return false end
 function modifier_ability_points:GetTexture() return "pudge_wars_hook" end
 
 function modifier_ability_points:OnCreated()
+	if not IsServer() then return end
+
 	self:StartIntervalThink(0.1) -- might be too laggy?
 end
 
