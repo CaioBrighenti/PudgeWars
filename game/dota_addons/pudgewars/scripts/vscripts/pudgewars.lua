@@ -219,6 +219,7 @@ function PudgeWarsMode:SlowThink()
 			hero.anti_afk = false
 			hero:RespawnHero(false, false)
 			hero:RemoveModifierByName("modifier_command_restricted")
+			hero:RemoveModifierByName("modifier_invulnerable")
 		elseif PlayerResource:GetConnectionState(hero:GetPlayerID()) > 2 and hero.anti_afk ~= true then
 			if hero:IsAlive() then
 				hero.anti_afk = true
