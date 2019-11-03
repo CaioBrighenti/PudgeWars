@@ -56,6 +56,9 @@
 		//Fuck that levelup button
 		newUI.FindChildTraverse("level_stats_frame").style.visibility = "collapse";
 
+		var TimeUntil = hudElements.FindChildTraverse("TimeUntil");
+		TimeUntil.style.marginBottom = "30px";
+
 		var Parent = $.GetContextPanel().GetParent().GetParent();
 
 		// setup modified vanilla HUD
@@ -82,7 +85,7 @@
 	</script>
 
 	<Panel>
-		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/multiteam_end_screen.xml" />
+		<CustomUIElement type="EndScreen" layoutfile="file://{resources}/layout/custom_game/frostrose_end_screen.xml" />
 		<CustomUIElement type="FlyoutScoreboard" layoutfile="file://{resources}/layout/custom_game/multiteam_flyout_scoreboard.xml" />
 		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/battlepass.xml" />
 		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/pudgewars_tutorial.xml" />

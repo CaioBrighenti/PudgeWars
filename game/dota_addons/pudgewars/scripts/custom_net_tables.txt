@@ -9,5 +9,7 @@
 		"top_imr5v5",
 		"shared_unit_control",
 		"hero_selection",
+		"hero_wearables",
+		"other_available_items",
 	]
 }

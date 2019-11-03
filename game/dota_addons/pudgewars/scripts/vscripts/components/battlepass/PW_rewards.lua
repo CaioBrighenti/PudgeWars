@@ -14,23 +14,22 @@ BATTLEPASS_LEVEL_REWARD[100]	= {"pudge_arcana2", "arcana"} -- (Green)
 CustomNetTables:SetTableValue("game_options", "battlepass", {battlepass = BATTLEPASS_LEVEL_REWARD})
 
 function Battlepass:Init()
-	BATTLEPASS_PUDGE = {}
 	BATTLEPASS_HOOK = {}
 	BATTLEPASS_STREAK_COUNTER = {}
 
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
-		if string.find(v[1], "pudge_arcana") then
-			BATTLEPASS_PUDGE[v[1]] = k
-		elseif string.find(v[1], "hook") then
+		if string.find(v[1], "hook") then
 			BATTLEPASS_HOOK[v[1]] = k
 		elseif string.find(v[1], "streak_counter") then
 			BATTLEPASS_STREAK_COUNTER[v[1]] = k
 		end
 	end
 
---[[
+	BattlepassHeroes = {}
+	BattlepassHeroes["pudge"] = {}
+
 	BattlepassItems = {}
-	BattlepassItems["blink"] = {}
+--	BattlepassItems["blink"] = {}
 
 	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
 		local required_level = k
@@ -38,13 +37,22 @@ function Battlepass:Init()
 		local category = string.gsub(reward_name, "%d", "")
 		local reward_level = string.gsub(reward_name, "%D", "")
 
+		for i, j in pairs(BattlepassHeroes) do
+			local hero_name = i
+
+			if string.find(reward_name, hero_name) then
+				BattlepassHeroes[hero_name][reward_name] = required_level
+				break
+			end
+		end
+
 --		print(required_level, category, reward_level)
 		if BattlepassItems[category] then
 			if reward_level == "" then reward_level = 1 end
 			table.insert(BattlepassItems[category], tonumber(reward_level), required_level)
 		end
 	end
---]]
+
 end
 
 --[[ -- instead of a flat BattlepassHeroes[hero_name] value, generate it by finding if there's a hero name in all reward names
@@ -105,64 +113,49 @@ function Battlepass:GetPudgeHook(hero)
 --		hook_pfx = ""
 	end
 
-	local hHook = hero:GetTogglableWearable( DOTA_LOADOUT_TYPE_WEAPON )
-
-	if hHook then
+	if hero.hook == nil then
 		hero.hook = SpawnEntityFromTableSynchronous("prop_dynamic", {model = hook_model})
 		hero.hook:FollowEntity(hero, true)
-
-		Timers:CreateTimer(1.0, function()
-			hHook:AddEffects(EF_NODRAW)
-			return 1.0
-		end)
 	end
 
 	hero.hook_model = hook_model
 end
 
 function Battlepass:GetPudgeArcanaEffect(hero)
-	local has_arcana = Battlepass:HasPudgeArcana(hero:GetPlayerID())
+	local has_arcana = Battlepass:HasArcana(hero:GetPlayerID(), "pudge")
 
 	if has_arcana then
 		if has_arcana == true then has_arcana = 1 end
-		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
-		hero:SetMaterialGroup(tostring(has_arcana))
+--		hero:SetModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+--		hero:SetOriginalModel("models/items/pudge/arcana/pudge_arcana_base.vmdl")
+--		hero:SetMaterialGroup(tostring(has_arcana))
 		hero.pudge_arcana = has_arcana
 
-		local wearable = hero:GetTogglableWearable(DOTA_LOADOUT_TYPE_BACK)
+--		local wearable = hero:GetTogglableWearable(DOTA_LOADOUT_TYPE_BACK)
 
-		if wearable then
-			wearable:AddEffects(EF_NODRAW)
-		end
+--		if wearable then
+--			wearable:AddEffects(EF_NODRAW)
+--		end
 
-		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
-		hero.back:FollowEntity(hero, true)
-		hero.back:SetMaterialGroup(tostring(has_arcana))
+--		hero.back = SpawnEntityFromTableSynchronous("prop_dynamic", {model = "models/items/pudge/arcana/pudge_arcana_back.vmdl"})
+--		hero.back:FollowEntity(hero, true)
+--		hero.back:SetMaterialGroup(tostring(has_arcana))
 
-		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
-		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
-		if has_arcana >= 1 then
-			particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf"
-			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
-		end
+--		local particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient.vpcf"	
+--		local particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_red_back_ambient_beam.vpcf"
+--		if has_arcana >= 1 then
+--			particle = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient.vpcf"
+--			particle2 = "particles/econ/items/pudge/pudge_arcana/pudge_arcana_back_ambient_beam.vpcf"
+--		end
 
-		ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.back)
-		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
-		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
+--		ParticleManager:CreateParticle(particle, PATTACH_ABSORIGIN_FOLLOW, hero.back)
+--		ParticleManager:CreateParticle(particle2, PATTACH_ABSORIGIN_FOLLOW, hero.back)
+--		ParticleManager:CreateParticle("particles/econ/items/pudge/pudge_arcana/pudge_arcana_ambient_flies.vpcf", PATTACH_ABSORIGIN_FOLLOW, hero)
 
-		if has_arcana > 1 then has_arcana = 1 end
-		CustomGameEventManager:Send_ServerToPlayer(hero:GetPlayerOwner(), "override_hero_image", {arcana = has_arcana})
-	end
-end
+		Wearable:_WearProp(hero, "7756", "back", has_arcana)
 
-function Battlepass:HasPudgeArcana(ID)
-	if Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana2"] or api:GetDonatorStatus(ID) == 4 or api:GetDonatorStatus(ID) == 7 or api:GetDonatorStatus(ID) == 8 or api:GetDonatorStatus(ID) == 9 then
-		return 1
-	elseif Battlepass:GetRewardUnlocked(ID) >= BATTLEPASS_PUDGE["pudge_arcana"] or api:IsDonator(ID) then
-		return 0
-	else
-		return false
+		-- custom icons
+--		hero:AddNewModifier(hero, nil, "modifier_battlepass_wearable_spellicons", {style = has_arcana})
 	end
 end
 

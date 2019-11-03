@@ -11,6 +11,9 @@
 			<Image src="file://panorama/images/custom_game/battlepass/hook6.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hook7.png" hittest="false" />
 			<Image src="file://panorama/images/custom_game/battlepass/hook8.png" hittest="false" />
+
+			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana0.png" hittest="false" />
+			<Image src="file://panorama/images/heroes/npc_dota_hero_pudge_arcana1.png" hittest="false" />
 		-->
 
 		<!--

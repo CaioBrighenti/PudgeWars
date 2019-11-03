@@ -549,7 +549,7 @@ Label
 	height: 40px;
 	vertical-align: top;
 	horizontal-align: center;
-	margin-top: 9%;
+	margin-top: 60px;
 	flow-children: right;
 //	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
 //	background-size: 100%;
@@ -664,6 +664,7 @@ Label
 
 .Separator {
 	width: 1px;
-	height: 100%;
+	height: 70%;
+	align: center center;
 	background-color: gold;
 }

@@ -3,6 +3,7 @@ require('lib/notifications')
 require('lib/player')
 require('lib/rgb_to_hex')
 require('lib/timers')
+require('lib/wearables_warmful_ancient')
 
 require('internal/util')
 

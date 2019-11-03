@@ -14,7 +14,10 @@ var toggle = false;
 var first_time = false;
 
 var secret_key = CustomNetTables.GetTableValue("game_options", "server_key")["1"];
-
+var game_version = CustomNetTables.GetTableValue("game_options", "game_version");
+var game_type = undefined;
+if (game_version)
+	game_type = game_version.game_type;
 
 var api = {
 	base : "http://api.dota2imba.fr/",
@@ -103,7 +106,7 @@ var api = {
 			type : "GET",
 			dataType : "json",
 			timeout : 5000,
-			headers : {'X-Dota-Server-Key' : secret_key},
+			headers : {'X-Dota-Server-Key' : secret_key, 'X-Dota-Game-Type' : game_type},
 			success : function(obj) {
 				if (obj.error || !obj.data || !obj.data.players)
 					$.Msg("Error finding top xp");
@@ -704,7 +707,7 @@ function GenerateBattlepassPanel(BattlepassRewards, player, bRewardsDisabled) {
 	var reward_row = $.CreatePanel("Panel", $('#BattlepassInfoContainer'), "BattlepassRow" + class_option_count + "_" + player);
 	reward_row.AddClass("BattlepassRow");
 
-	for (var i = 1; i <= 500; i++) {
+	for (var i = 1; i <= 1000; i++) {
 		if (BattlepassRewards[i] != undefined) {
 			var bp_reward = BattlepassRewards[i][1];
 			var bp_rarity = BattlepassRewards[i][2];
@@ -1040,50 +1043,50 @@ function SetupPanel() {
 }
 
 (function() {
-	var game_type = CustomNetTables.GetTableValue("game_options", "game_version");
+	if (game_type) {
+		if (game_type == "IMBA") {
+			// Update the game options display
+			var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
+			var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
+			var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
+			var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
+			var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
+			var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
+			var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
 
-	if (game_type)
-		game_type = game_type.game_type;
-	else
-		return;
+			$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
+			$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
+			$("#InitialGoldValue").text = initial_gold[1];
+			$("#InitialLevelValue").text = initial_level[1];
+			$("#MaxLevelValue").text = max_level[1];
+			$("#GoldTickValue").text = gold_tick[1].toFixed(1);
+		} else if (game_type == "PW") {
+			$("#ExpMultiplierDesc").style.visibility = "collapse";
+			$("#InitialGoldDesc").style.visibility = "collapse";
+			$("#InitialLevelDesc").style.visibility = "collapse";
+			$("#MaxLevelDesc").style.visibility = "collapse";
+			$("#GoldTickDesc").style.visibility = "collapse";
 
-	if (game_type == "IMBA") {
-		// Update the game options display
-		var bounty_multiplier = CustomNetTables.GetTableValue("game_options", "bounty_multiplier");
-		var exp_multiplier = CustomNetTables.GetTableValue("game_options", "exp_multiplier");
-		var initial_gold = CustomNetTables.GetTableValue("game_options", "initial_gold");
-		var initial_level = CustomNetTables.GetTableValue("game_options", "initial_level");
-		var max_level = CustomNetTables.GetTableValue("game_options", "max_level");
-		var frantic_mode = CustomNetTables.GetTableValue("game_options", "frantic_mode");
-		var gold_tick = CustomNetTables.GetTableValue("game_options", "gold_tick");
+			$("#ExpMultiplierValue").style.visibility = "collapse";
+			$("#InitialGoldValue").style.visibility = "collapse";
+			$("#InitialLevelValue").style.visibility = "collapse";
+			$("#MaxLevelValue").style.visibility = "collapse";
+			$("#GoldTickValue").style.visibility = "collapse";
 
-		$("#BountyMultiplierValue").text = bounty_multiplier[1] + "%";
-		$("#ExpMultiplierValue").text = exp_multiplier[1] + "%";
-		$("#InitialGoldValue").text = initial_gold[1];
-		$("#InitialLevelValue").text = initial_level[1];
-		$("#MaxLevelValue").text = max_level[1];
-		$("#GoldTickValue").text = gold_tick[1].toFixed(1);
-	} else if (game_type == "PW") {
-		$("#ExpMultiplierDesc").style.visibility = "collapse";
-		$("#InitialGoldDesc").style.visibility = "collapse";
-		$("#InitialLevelDesc").style.visibility = "collapse";
-		$("#MaxLevelDesc").style.visibility = "collapse";
-		$("#GoldTickDesc").style.visibility = "collapse";
+			var max_score = CustomNetTables.GetTableValue("game_score", "max_score");
 
-		$("#ExpMultiplierValue").style.visibility = "collapse";
-		$("#InitialGoldValue").style.visibility = "collapse";
-		$("#InitialLevelValue").style.visibility = "collapse";
-		$("#MaxLevelValue").style.visibility = "collapse";
-		$("#GoldTickValue").style.visibility = "collapse";
+			if (max_score)
+				max_score = max_score.kills;
+			else
+				return;
 
-		var max_score = CustomNetTables.GetTableValue("game_score", "max_score");
+			CustomNetTables.SubscribeNetTableListener("game_score", function(){
+				if ($("#BountyMultiplierValue").text != max_score)
+					$("#BountyMultiplierValue").text = max_score;
+			});
+		}
 
-		if (max_score)
-			max_score = max_score.kills;
-		else
-			return;
-
-		$("#BountyMultiplierValue").text = max_score;
+		$("#BattlepassButtonContainer").AddClass(game_type)
 	}
 
 	GameEvents.Subscribe("safe_to_leave", SafeToLeave);

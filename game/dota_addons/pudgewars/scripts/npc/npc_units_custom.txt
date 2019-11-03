@@ -6,6 +6,12 @@
 {
 	"Version"	"1"
 
+	// yahnich utilities for illusion system
+	"wearable_dummy"
+	{
+		"BaseClass"     "npc_dota_base_additive"
+	}
+
 	  "npc_dummy_slow_auro"
 	  {
 			// General

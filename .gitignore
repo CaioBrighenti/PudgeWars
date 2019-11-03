@@ -29,6 +29,7 @@ content/dota_addons/dota_pvp_test/
 *~
 *.swp
 *.bin
+*.cfg
 
 game/dota_addons/pudgewars/scripts/vscripts/components/api/backend_key.kv
 game/dota_addons/pudgewars/tools_thumbnail_cache.bin
