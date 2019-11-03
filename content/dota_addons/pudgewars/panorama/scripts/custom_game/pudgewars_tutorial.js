@@ -1,5 +1,11 @@
 "use strict";
+
 var TutorialButtonPressed = false;
+
+var RadiantScore = $("#RadiantScore");
+var DireScore = $("#DireScore");
+var RadiantProgressBar = $("#RadiantProgressBar");
+var DireProgressBar = $("#DireProgressBar");
 
 function OnToggleTutorialButton() {
 	if (TutorialButtonPressed) {
@@ -32,19 +38,24 @@ function SetTopBarScoreToWin() {
 		dire_score = team_score.dire_score;
 	}
 
-	$("#RadiantScore").text = radiant_score + "/" + max_score;
-	$("#DireScore").text = dire_score + "/" + max_score;
+	RadiantScore.text = radiant_score + "/" + max_score;
+	DireScore.text = dire_score + "/" + max_score;
 
-	$("#RadiantProgressBar").value = radiant_score / max_score;
-	$("#DireProgressBar").value = (max_score - dire_score) / max_score;
+	RadiantProgressBar.value = radiant_score / max_score;
+	DireProgressBar.value = (max_score - dire_score) / max_score;
 }
 
-CustomNetTables.SubscribeNetTableListener("game_score", SetTopBarScoreToWin);
+(function () {
+	// progress bar goes from right to left, wich makes default being 1.
+	DireProgressBar.value = 1;
 
-// Show tutorial to newcomers only
-var plyData = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
+	// Show tutorial to newcomers only
+	var plyData = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-if (plyData.XP > 1) {
-	TutorialButtonPressed = true;
-	$.GetContextPanel().SetHasClass("toggle_tutorial_button", true);
-}
+	if (plyData && plyData.XP > 1) {
+		TutorialButtonPressed = true;
+		$.GetContextPanel().SetHasClass("toggle_tutorial_button", true);
+	}
+
+	CustomNetTables.SubscribeNetTableListener("game_score", SetTopBarScoreToWin);
+})();

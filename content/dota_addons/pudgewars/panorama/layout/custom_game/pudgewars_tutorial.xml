@@ -23,32 +23,32 @@
 
 		<Panel hittest="false" class="PudgeWarsTutorialButton">
 			<Button id="ToggleTutorialButton" onactivate="OnToggleTutorialButton()">
-				<Label class="PudgewarsLabel" text="Info UI" />
+				<Label class="PudgewarsLabel" text="#tutorial_info_ui" />
 			</Button>
 		</Panel>
 
 		<Panel hittest="false" class="PudgeWarsTutorial">
-			<Label id="PudgeWarsLabel" class="PudgewarsLabel" text="Find your upgrades here!" />
+			<Label id="PudgeWarsLabel" class="PudgewarsLabel" text="#tutorial_upgrades" />
 		</Panel>
 		<Image id="ArrowImage" src="file://{images}/custom_game/spectate_heroselection_iee.png" />
 
 		<Panel hittest="false" class="PudgeWarsTutorialPoints">
-			<Label id="PudgeWarsLabelPoints" class="PudgewarsLabel" text="Your upgrade points are here!" />
+			<Label id="PudgeWarsLabelPoints" class="PudgewarsLabel" text="#tutorial_upgrades_2" />
 		</Panel>
 		<Image id="ArrowImagePoints" src="file://{images}/custom_game/spectate_heroselection_iee_left.png" />
 
 		<Panel hittest="false" class="PudgeWarsTutorialShop">
-			<Label id="PudgeWarsLabelShop" class="PudgewarsLabel" text="Purchase items in the shop here!" />
+			<Label id="PudgeWarsLabelShop" class="PudgewarsLabel" text="#tutorial_purchase_items" />
 		</Panel>
 		<Image id="ArrowImageShop" src="file://{images}/custom_game/spectate_heroselection_iee_bottom_right.png" />
 
 		<Panel hittest="false" class="PudgeWarsTutorialToggle">
-			<Label id="PudgeWarsLabelToggle" class="PudgewarsLabel" text="Toggle the informational UI here!" />
+			<Label id="PudgeWarsLabelToggle" class="PudgewarsLabel" text="#tutorial_toggle_info" />
 		</Panel>
 		<Image id="ArrowImageToggle" src="file://{images}/custom_game/spectate_heroselection_iee_up.png" />
 
 		<Panel hittest="false" class="PudgeWarsTutorialGameinfo">
-			<Label id="PudgeWarsLabelGameinfo" class="PudgewarsLabel" text="Find the Game Info panel here!" />
+			<Label id="PudgeWarsLabelGameinfo" class="PudgewarsLabel" text="#tutorial_game_info" />
 		</Panel>
 		<Image id="ArrowImageGameinfo" src="file://{images}/custom_game/spectate_heroselection_iee_left.png" />
 	</Panel>	

@@ -27,9 +27,40 @@ function Battlepass:Init()
 			BATTLEPASS_STREAK_COUNTER[v[1]] = k
 		end
 	end
+
+--[[
+	BattlepassItems = {}
+	BattlepassItems["blink"] = {}
+
+	for k, v in pairs(BATTLEPASS_LEVEL_REWARD) do
+		local required_level = k
+		local reward_name = v[1]
+		local category = string.gsub(reward_name, "%d", "")
+		local reward_level = string.gsub(reward_name, "%D", "")
+
+--		print(required_level, category, reward_level)
+		if BattlepassItems[category] then
+			if reward_level == "" then reward_level = 1 end
+			table.insert(BattlepassItems[category], tonumber(reward_level), required_level)
+		end
+	end
+--]]
 end
 
-function Battlepass:AddItemEffects(hero)
+--[[ -- instead of a flat BattlepassHeroes[hero_name] value, generate it by finding if there's a hero name in all reward names
+function Battlepass:IsHeroName(hero_name)
+	local herolist = LoadKeyValues("scripts/npc/herolist.txt")
+
+	print(herolist[hero_name])
+	if herolist[hero_name] then
+		return true
+	end
+
+	return false
+end
+--]]
+
+function Battlepass:SetItemEffects(hero)
 	Battlepass:GetPudgeHook(hero)
 	Battlepass:GetPudgeArcanaEffect(hero)
 end

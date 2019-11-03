@@ -5,29 +5,29 @@
 
 	<Panel class="OverthrowGameInfo">
 		<Panel id="Title">
-			<Label id="TitleName" text="Pudge Wars" />
+			<Label id="TitleName" text="#addon_game_name" />
 		</Panel>
-		<Label id="ObjectiveHeader" class="Header" html="true" text="Objective:" />
-		<Label id="BriefDescription" text="Use your Meat Hook to hook the enemy Pudges to your side of the river and kill them." />
-		<Label id="HowToPlayHeader" class="Header" html="true" text="How to Play:" />
+		<Label id="ObjectiveHeader" class="Header" html="true" text="#game_info_header" />
+		<Label id="BriefDescription" text="#game_info_header_description" />
+		<Label id="HowToPlayHeader" class="Header" html="true" text="#game_info_how_to_play" />
 		<Panel id="ThroneRow" class="InfoRow">
-			<Label id="ThroneText" html="true" text="Upgrade your hook by using points obtained at each level." />
+			<Label id="ThroneText" html="true" text="#game_info_throne" />
 			<Image id="ThroneImage" src="file://{images}/custom_game/game_info/pudgehooking.psd" />
 		</Panel>
 		<Panel id="CoinsRow" class="InfoRow">
 			<Image id="CoinsImage" src="file://{images}/custom_game/game_info/runes.psd" />
-			<Label id="CoinsText" html="true" text="#Hook the runes moving across the river to gain powerful temporary upgrades." />
+			<Label id="CoinsText" html="true" text="#game_info_coins" />
 		</Panel>
 		<Panel id="ItemsRow" class="InfoRow">
-			<Label id="ItemsText" html="true" text="Purchase items from the shop to upgrade your hook or gain new abilities." />
+			<Label id="ItemsText" html="true" text="#game_info_items" />
 			<Image id="ItemsImage" src="file://{images}/custom_game/game_info/items2.psd" />
 		</Panel>
 		<Label id="TipsHeader" class="Header" html="true" text=" helpful Tips" />
 		<Panel id="TipsRow" class="InfoRow">
-			<Label id="TipText01" class="TipText" html="true" text="• Cast the up arrow to find your upgrades." />
-			<Label id="TipText02" class="TipText" html="true" text="• You can deny your teammates at low health points" />
-			<Label id="TipText03" class="TipText" html="true" text="• If a Pudge is hooked by two hooks he will be instakilled." />
-			<Label id="TipText04" class="TipText" html="true" text="• Each item can be upgraded up to 5 times." />
+			<Label id="TipText01" class="TipText" html="true" text="#game_info_tip_1" />
+			<Label id="TipText02" class="TipText" html="true" text="#game_info_tip_2" />
+			<Label id="TipText03" class="TipText" html="true" text="#game_info_tip_3" />
+			<Label id="TipText04" class="TipText" html="true" text="#game_info_tip_4" />
 		</Panel>
 	</Panel>
 </root>

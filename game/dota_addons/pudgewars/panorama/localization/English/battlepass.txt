@@ -50,3 +50,5 @@
 "disable_companion"				"Disable companion"
 "toggle_bp_rewards"				"Toggle battlepass rewards"
 "toggle_player_xp"				"Toggle battlepass XP visibility (will take effect on next game)"
+
+"imba_gamemode_settings_gold_multiplier"	"Max Score:"

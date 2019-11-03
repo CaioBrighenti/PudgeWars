@@ -32,19 +32,20 @@ function fetch() {
 	}
 
 	var game_options = CustomNetTables.GetTableValue("game_options", "game_version");
-	if (game_options == undefined) {
+
+	if (game_options == undefined || game_options.value == undefined) {
 		$.Schedule(0.1, fetch);
 		return;
 	}
 
-	var game_version = game_options[1]
+	var game_version = game_options.value;
 
 	if (isInt(game_version))
 		game_version = game_version.toString() + ".0";
 
 	game_version = game_version.toFixed(2);
 
-	view.title.text = $.Localize("#addon_game_name") + " " + game_version + " - " + "[" + game_version + "]";
+	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
 	view.text.text = $.Localize("#loading_screen_description");
 	view.link_text.text = $.Localize("#loading_screen_button");
 

@@ -1,5 +1,7 @@
-PUDGEWARS_VERSION = 7.20
+GAME_VERSION = 7.20
 CUSTOM_GAME_TYPE = "PW"
+
+CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})
 
 PRE_GAME_TIME = 10.0
 TREE_REGROW_TIME = 1.0

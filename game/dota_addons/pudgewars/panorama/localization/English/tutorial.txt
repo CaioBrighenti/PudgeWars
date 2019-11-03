@@ -1,0 +1,6 @@
+"tutorial_info_ui"					"Info UI"
+"tutorial_upgrades"					"Find your upgrades here!"
+"tutorial_upgrades_2"				"Your upgrade points are here!"
+"tutorial_purchase_items"			"Purchase items in the shop here!"
+"tutorial_toggle_info"				"Toggle the informational UI here!"
+"tutorial_game_info"				"Find the Game Info panel here!"

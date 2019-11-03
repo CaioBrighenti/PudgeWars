@@ -8,7 +8,6 @@ require('internal/util')
 
 require('components/api/init')
 require('components/battlepass/init')
-require('components/loading_screen/init')
 require('components/vote/init')
 
 require('pudgewars')

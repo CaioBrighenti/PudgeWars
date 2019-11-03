@@ -18,8 +18,9 @@ LinkLuaModifier("modifier_bash_lantern", "items/item_barathrum_lantern.lua", LUA
 
 modifier_bash_lantern = modifier_bash_lantern or class({})
 
-function modifier_bash_lantern:IsHidden() return false end
-function modifier_bash_lantern:IsDebuff() return false end
+function modifier_bash_lantern:IsHidden() return true end
+function modifier_bash_lantern:IsPurgable() return false end
+function modifier_bash_lantern:IsPurgeException() return false end
 
 -- function modifier_bash_lantern:GetTextureName()
 -- 	return "dark_seer_ion_shell"
