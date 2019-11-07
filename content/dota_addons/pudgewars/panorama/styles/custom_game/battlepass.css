@@ -258,10 +258,10 @@
 	overflow:  squish scroll;
 }
 
-#LeaderboardMainContainer {
+.LeaderboardTableWrapper {
 	width: 100%;
 	background-color: #040c1850;
-	height: 490px;
+	height: 445px;
 	padding-bottom: 10px;
 	overflow:  squish scroll;
 	flow-children: down;
@@ -331,10 +331,23 @@
 
 .LeaderboardRank,
 .LeaderboardXP,
-.LeaderboardIMR,
 .LeaderboardAvatar,
 .LeaderboardAvatar_alt
 {
+	height: 100%;
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;
+}
+
+.LeaderboardIMR {
+	text-align: center;
+	font-size: 19px;
+	color:#daebff;	
+}
+
+.LeaderboardAvatarDiretide {
+	width: 40%;
 	height: 100%;
 	text-align: center;
 	font-size: 19px;
@@ -378,7 +391,7 @@
 }
 
 .LeaderboardIMR {
-	width: 23%;	
+	width: 23%;
 	align:  center center;
 }
 
@@ -424,7 +437,7 @@
 	/* background-color: #414f62; */
 }
 
-#MiniTabButtonContainer {
+.MiniTabButtonContainer {
 	flow-children: right;
 	width: 100%;
 	align:  center top;
@@ -571,7 +584,7 @@
 	saturation: 0.6;
 }
 
-#Tops {
+.Tops {
 	width: 100%;
 	height: fit-children;
 	flow-children: down;

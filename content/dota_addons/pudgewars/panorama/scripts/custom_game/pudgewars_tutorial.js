@@ -52,7 +52,7 @@ function SetTopBarScoreToWin() {
 	// Show tutorial to newcomers only
 	var plyData = CustomNetTables.GetTableValue("battlepass", Game.GetLocalPlayerID());
 
-	if (plyData && plyData.XP > 1) {
+	if (plyData && plyData.XP > 1 || plyData.XP == 0 && plyData.Lvl > 1) {
 		TutorialButtonPressed = true;
 		$.GetContextPanel().SetHasClass("toggle_tutorial_button", true);
 	}

@@ -35,6 +35,7 @@
 "companion_error"				"Oops! Something went wrong."
 "companion_not_donator"			"This feature is only for Patreon donators. Click here to pledge!"
 "toggle_companion"				"Toggle Companion"
+"donator_emblem"				"Emblem"
 
 "statue_success"				"Statue changed with: "
 
@@ -43,7 +44,8 @@
 "leaderboard_loading"			"Loading leaderboard, please wait"
 "leaderboard_rank"				"Rank"
 "leaderboard_steam_avatar"		"Steam"
-"leaderboard_xp"				"Experience (click to sort)"
+"leaderboard_xp"				"Experience"
+"leaderboard_winrate"			"Winrate"
 
 // settings
 "toggle_ingame_tag"				"Toggle health bar label"
