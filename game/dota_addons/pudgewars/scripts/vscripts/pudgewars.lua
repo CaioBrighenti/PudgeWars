@@ -628,21 +628,3 @@ function PudgeWarsMode:RemoveTimers(killAll)
 	-- Store the new batch of timers
 	self.timers = timers
 end
-
-function PudgeWarsMode:SetCustomGamemode(iValue)
-	if iValue and type(iValue) == "number" then
-		CustomNetTables:SetTableValue("game_options", "gamemode", {iValue})
-	end
-
-	return nil
-end
-
-function PudgeWarsMode:GetCustomGamemode()
-	local gamemode = nil
-
-	if CustomNetTables:GetTableValue("game_options", "gamemode") then
-		gamemode = CustomNetTables:GetTableValue("game_options", "gamemode")["1"]
-	end
-
-	return gamemode
-end
