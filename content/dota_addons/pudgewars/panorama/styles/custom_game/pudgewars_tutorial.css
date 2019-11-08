@@ -512,7 +512,7 @@ Label
 {
 	vertical-align: top;
 	horizontal-align: right;
-	margin-right: 15%;
+	margin-right: 12%;
 	margin-top: 6px;
 	background-color: #222222;
 }
@@ -528,7 +528,7 @@ Label
 #ToggleTutorialButton
 {
 	horizontal-align: right;
-	width: 80px;
+	width: 160px;
 	height: 30px;
 	border: 1px solid #5e686966;
 	box-shadow: #00000055 -2px -2px 1px 4px;
@@ -549,7 +549,7 @@ Label
 	height: 40px;
 	vertical-align: top;
 	horizontal-align: center;
-	margin-top: 60px;
+	margin-top: 70px;
 	flow-children: right;
 //	background-image: url("s2r://panorama/images/hud/reborn/bg_timer_psd.vtex");
 //	background-size: 100%;
@@ -562,6 +562,7 @@ Label
 	text-shadow: 4px 4px 4px #121212;
 	font-size: 16px;
 	font-weight: bold;
+	text-overflow: shrink;
 }
 
 /* Kills to win progress bars */
