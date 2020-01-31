@@ -107,7 +107,8 @@ function PudgeWarsMode:InitGameMode()
 
 	print('[PUDGEWARS] Rules set')
 
-	InitLogFile( "log/pudgewars.txt","")
+	-- deprecated
+--	InitLogFile( "log/pudgewars.txt","")
 
 	-- Hooks
 	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, 'OnEntityKilled'), self)
