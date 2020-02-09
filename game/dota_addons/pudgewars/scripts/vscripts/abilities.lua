@@ -363,8 +363,9 @@ function OnTechiesExplosiveBarrelDetonate(keys)
 	DynamiteRune(caster, 200, -1, false)
 end
 
-function DynamiteRune(caster, radius_explosion, delay, bTargetAlly)
+function DynamiteRune(caster, radius_explosion, delay, bTargetAlly, damage)
 	local i = delay + 1
+	if damage == nil then damage = 100000 end
 
 	caster:AddNewModifier(caster, nil, "modifier_silenced", {duration=delay})
 
@@ -388,7 +389,7 @@ function DynamiteRune(caster, radius_explosion, delay, bTargetAlly)
 
 			for k,v in pairs(units) do
 				if IsValidEntity(v) and string.find(v:GetClassname(), "pudge") and v ~= caster then
-					dealDamage(caster,v,v:GetMaxHealth() + 1000)
+					dealDamage(caster, v, damage)
 					local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_ABSORIGIN, v)
 					local headshotPos = v:GetOrigin()
 					ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
@@ -399,12 +400,13 @@ function DynamiteRune(caster, radius_explosion, delay, bTargetAlly)
 
 			--Kill pudge last to give him all EXP and stuff
 			if bTargetAlly == true then
-				dealDamage(caster,caster,caster:GetMaxHealth() + 1000)
+				dealDamage(caster, caster, damage)
 				local headshotParticle = ParticleManager:CreateParticle( 'particles/units/heroes/hero_tinker/tinker_missle_explosion.vpcf', PATTACH_ABSORIGIN, caster)
 				local headshotPos = caster:GetOrigin()
 				ParticleManager:SetParticleControl( headshotParticle, 4, Vector( headshotPos.x, headshotPos.y, headshotPos.z) )
 			end
 
+			-- remove the mine
 			caster:ForceKill(false)
 
 			return nil

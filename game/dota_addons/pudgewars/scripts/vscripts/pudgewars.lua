@@ -82,8 +82,6 @@ function PudgeWarsMode:InitGameMode()
 	GameRules:SetHideKillMessageHeaders(true)
 	GameRules:GetGameModeEntity():SetCustomGameForceHero("npc_dota_hero_pudge")
 	GameRules:GetGameModeEntity():SetFixedRespawnTime(FIXED_RESPAWN_TIME) 
-	GameRules:SetGoldPerTick(GOLD_PER_TICK)
-	GameRules:SetGoldTickTime(GOLD_TICK_TIME)
 	GameRules:SetFirstBloodActive(true)
 	GameRules:SetHideKillMessageHeaders(false)
 
@@ -205,6 +203,19 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 		Timers:CreateTimer(function()
 			PudgeWarsMode:SpawnRune()
 			return RUNE_SPAWN_TIME
+		end)
+
+		-- start gold tick time
+		Timers:CreateTimer(function()
+			if GameRules:State_Get() == DOTA_GAMERULES_STATE_POST_GAME then return nil end
+
+			for i = 0, PlayerResource:GetPlayerCount() - 1 do
+				if PlayerResource:IsValidPlayerID(i) then
+					PlayerResource:ModifyGold(i, GOLD_PER_TICK, true, DOTA_ModifyGold_GameTick)
+				end
+			end
+
+			return GOLD_TICK_TIME
 		end)
 	end
 end

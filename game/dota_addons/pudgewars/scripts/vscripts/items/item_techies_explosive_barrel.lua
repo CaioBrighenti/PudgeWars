@@ -34,6 +34,7 @@ function modifier_explosive_barrel:OnCreated()
 	self.parent = self:GetParent()
 	self.ability = self:GetAbility()
 	self.radius = self.ability:GetSpecialValueFor("radius")
+	self.damage = self.ability:GetSpecialValueFor("damage")
 	self.detonate = false
 end
 
@@ -43,7 +44,7 @@ function modifier_explosive_barrel:OnIntervalThink()
 	end
 	local units = FindUnitsInRadius(self.parent:GetTeam(), self.parent:GetAbsOrigin(), nil, self.radius, DOTA_UNIT_TARGET_TEAM_ENEMY, DOTA_UNIT_TARGET_HERO, DOTA_DAMAGE_FLAG_NONE, FIND_ANY_ORDER, false)		
 	if self.detonate == false and #units > 0 then
-		DynamiteRune(self.parent, self.radius, -1)
+		DynamiteRune(self.parent, self.radius, -1, false, self.damage)
 		self.detonate = true
 	end
 end

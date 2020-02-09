@@ -66,6 +66,8 @@
 "DOTA_Tooltip_ability_item_techies_explosive_barrel"					"Techies's Explosive Barrel"
 "DOTA_Tooltip_ability_item_techies_explosive_barrel_Description"		"Places a mine that explodes in a %radius% radius when an enemy comes near it. Does more damage the closer you are to the center of the explosion up to . Damage increases at each level. \nMax Level Bonus: <font color='#FBAF40'>Gives Pudge the ability to detonate himself and others around him.</font>"
 "DOTA_Tooltip_ability_item_techies_explosive_barrel_Lore"				"Borrowed from the Goblin Techies, this barrel allows Pudge to place explosive landmines. When thrown at an enemy, they become deadly grenades."
+"DOTA_Tooltip_ability_item_techies_explosive_barrel_radius"				"RADIUS:"
+"DOTA_Tooltip_ability_item_techies_explosive_barrel_damage"				"DAMAGE:"
 
 //Lycan Paws
 "DOTA_Tooltip_ability_item_lycan_paw"					"Lycan's Paws"
