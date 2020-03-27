@@ -4,4 +4,5 @@
 "kills_to_win"							"Score: "
 
 // End Screen
-"custom_end_screen_legend_imr"			"MMR"
+"custom_end_screen_legend_imr"					"MMR"
+"custom_end_screen_legend_battlepass_xp"		"Battle Pass XP"

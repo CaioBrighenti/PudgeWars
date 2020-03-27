@@ -1,6 +1,7 @@
 -- Generated from template
 require('lib/notifications')
 require('lib/player')
+require('lib/player_resource')
 require('lib/rgb_to_hex')
 require('lib/timers')
 require('lib/wearables_warmful_ancient')

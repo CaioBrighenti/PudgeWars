@@ -275,3 +275,18 @@ function CDOTA_BaseNPC_Hero:GetHeroColorSecondary()
 	end
 	return false
 end
+
+function CDOTA_BaseNPC:GetNetworth()
+	if not self:IsRealHero() then return 0 end
+	local gold = self:GetGold()
+
+	-- Iterate over item slots adding up its gold cost
+	for i = 0, 15 do
+		local item = self:GetItemInSlot(i)
+		if item then
+			gold = gold + item:GetCost()
+		end
+	end
+
+	return gold
+end
