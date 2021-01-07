@@ -12,6 +12,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 
 		Battlepass:Init()
 		Battlepass:GetPlayerInfoXP()
+		CustomGameEventManager:Send_ServerToAllClients("all_players_loaded", {})
 	end
 end, nil)
 

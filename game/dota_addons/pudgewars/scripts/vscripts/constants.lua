@@ -1,4 +1,4 @@
-GAME_VERSION = 7.20
+GAME_VERSION = 7.28
 CUSTOM_GAME_TYPE = "PW"
 
 CustomNetTables:SetTableValue("game_options", "game_version", {value = GAME_VERSION, game_type = CUSTOM_GAME_TYPE})

@@ -1,4 +1,8 @@
 -- Generated from template
+require('components/api/init')
+require('components/battlepass/init')
+
+require('lib/adv_log') -- be careful! this library can hide lua errors in rare cases
 require('lib/notifications')
 require('lib/player')
 require('lib/player_resource')
@@ -7,10 +11,6 @@ require('lib/timers')
 require('lib/wearables_warmful_ancient')
 
 require('internal/util')
-
-require('components/api/init')
-require('components/battlepass/init')
-require('components/vote/init')
 
 require('pudgewars')
 require('constants')

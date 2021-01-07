@@ -68,6 +68,8 @@ end
 function PudgeWarsMode:InitGameMode()
 	print('[PUDGEWARS] Starting to load Pudgewars gamemode...')
 
+	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(PudgeWarsMode, "OnSettingVote"))
+
 	-- Setup rules
 	GameRules:SetHeroRespawnEnabled(true)
 	GameRules:SetUseUniversalShopMode(false)
@@ -188,9 +190,16 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
 	if newState == DOTA_GAMERULES_STATE_PRE_GAME then
+		GameRules:GetGameModeEntity():SetCustomDireScore(0)
 		InitCampfires()
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-		CustomNetTables:SetTableValue("game_score" ,"max_score", {kills = self.kills_to_win})
+		local kills_to_win = {}
+		kills_to_win[1] = 50
+		kills_to_win[2] = 75
+		kills_to_win[3] = 100
+		kills_to_win[4] = 200
+
+		CustomNetTables:SetTableValue("game_score" ,"max_score", {kills = kills_to_win[api:GetCustomGamemode()]})
 		-- start slower thinker to avoid lags
 		Timers:CreateTimer(function()
 			self:SlowThink()
@@ -640,3 +649,203 @@ function PudgeWarsMode:RemoveTimers(killAll)
 	-- Store the new batch of timers
 	self.timers = timers
 end
+
+-- new system, double votes for donators 
+ListenToGameEvent('game_rules_state_change', function(keys)
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
+		-- If no one voted, default to IMBA 10v10 gamemode
+		GameRules:SetCustomGameDifficulty(1)
+		api:SetCustomGamemode(1)
+
+		if PudgeWarsMode.VoteTable == nil then return end
+		local votes = PudgeWarsMode.VoteTable
+
+		for category, pidVoteTable in pairs(votes) do
+			-- Tally the votes into a new table
+			local voteCounts = {}
+			for pid, vote in pairs(pidVoteTable) do
+				local gamemode = vote[1]
+				local vote_count = vote[2]
+				if not voteCounts[vote[1]] then voteCounts[vote[1]] = 0 end
+				print(pid, vote[1], vote[2])
+				voteCounts[vote[1]] = voteCounts[vote[1]] + vote[2]
+			end
+
+			-- Find the key that has the highest value (key=vote value, value=number of votes)
+			local highest_vote = 0
+			local highest_key = ""
+			for k, v in pairs(voteCounts) do
+				print(k, v)
+				if v > highest_vote then
+					highest_key = k
+					highest_vote = v
+				end
+			end
+
+			-- Check for a tie by counting how many values have the highest number of votes
+			local tieTable = {}
+			for k, v in pairs(voteCounts) do
+				print(k, v)
+				if v == highest_vote then
+					table.insert(tieTable, k[1])
+				end
+			end
+
+			-- Resolve a tie by selecting a random value from those with the highest votes
+			if table.getn(tieTable) > 1 then
+				print("Vote System: TIE!")
+				highest_key = tieTable[math.random(table.getn(tieTable))]
+			end
+
+			-- Act on the winning vote
+			if category == "gamemode" then
+				api:SetCustomGamemode(highest_key)
+			end
+
+			-- Act on the winning vote
+			if category == "difficulty" then
+				GameRules:SetCustomGameDifficulty(highest_key)
+			end
+
+			print(category .. ": " .. highest_key)
+		end
+	end
+end, nil)
+
+local donator_list = {}
+donator_list[1] = 5 -- Lead-Dev
+donator_list[2] = 5 -- Dev
+-- donator_list[3] = 5 -- Administrator
+donator_list[4] = 1 -- Ember Donator
+donator_list[7] = 2 -- Salamander Donator
+donator_list[8] = 3 -- Icefrog Donator
+donator_list[9] = 3 -- Gaben Donator
+
+function PudgeWarsMode:OnSettingVote(keys)
+	local pid = keys.PlayerID
+
+	print(keys)
+
+	if not PudgeWarsMode.VoteTable then PudgeWarsMode.VoteTable = {} end
+	if not PudgeWarsMode.VoteTable[keys.category] then PudgeWarsMode.VoteTable[keys.category] = {} end
+
+	if pid >= 0 then
+		if not PudgeWarsMode.VoteTable[keys.category][pid] then PudgeWarsMode.VoteTable[keys.category][pid] = {} end
+
+		PudgeWarsMode.VoteTable[keys.category][pid][1] = keys.vote
+
+		if donator_list[api:GetDonatorStatus(pid)] then
+			PudgeWarsMode.VoteTable[keys.category][pid][2] = donator_list[api:GetDonatorStatus(pid)]
+		else
+			PudgeWarsMode.VoteTable[keys.category][pid][2] = 1
+		end
+	end
+
+--	Say(nil, keys.category, false)
+--	Say(nil, tostring(keys.vote), false)
+
+	-- TODO: Finish votes show up
+	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = PudgeWarsMode.VoteTable[keys.category]})
+end
+
+-- Custom game-modes as per api:GetCustomGamemode():
+-- 1: Standard
+-- 2: Mutation
+-- 3: Super Frantic
+-- 4: Diretide
+-- 5: Same Hero Selection
+
+--[[
+
+ListenToGameEvent('game_rules_state_change', function(keys)
+	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then		
+		-- If no one voted, default to IMBA 10v10 gamemode
+		GameRules:SetCustomGameDifficulty(2)
+
+		if PudgeWarsMode.VoteTable == nil then return end
+		local votes = PudgeWarsMode.VoteTable
+
+		for category, pidVoteTable in pairs(votes) do
+			-- Tally the votes into a new table
+			local voteCounts = {}
+			for pid, vote in pairs(pidVoteTable) do
+				if not voteCounts[vote] then voteCounts[vote] = 0 end
+				voteCounts[vote] = voteCounts[vote] + 1
+			end
+
+			print(voteCounts)
+
+			-- Find the key that has the highest value (key=vote value, value=number of votes)
+			local highest_vote = 0
+			local highest_key = ""
+			for k, v in pairs(voteCounts) do
+				if v > highest_vote then
+					highest_key = k
+					highest_vote = v
+				end
+			end
+
+			print("Highest vote:", highest_vote)
+			-- if vote count is lower than player count / 4, default to whatever the standard is
+			if highest_vote < 5 then
+				if GetMapName() == "imba_10v10" then
+					highest_key = 3
+				else
+					highest_key = 1
+				end
+			else
+				-- Check for a tie by counting how many values have the highest number of votes
+				local tieTable = {}
+				for k, v in pairs(voteCounts) do
+					if v == highest_vote then
+						table.insert(tieTable, k)
+					end
+				end
+
+				-- Resolve a tie by selecting a random value from those with the highest votes
+				if table.getn(tieTable) > 1 then
+					print("Vote System: TIE!")
+					highest_key = tieTable[math.random(table.getn(tieTable))]
+				end
+			end
+
+			-- Act on the winning vote
+			if category == "gamemode" then
+				api:SetCustomGamemode(highest_key)
+			end
+
+			-- Act on the winning vote
+--			if category == "difficulty" then
+--				GameRules:SetCustomGameDifficulty(highest_key)
+--			end
+
+			print(category .. ": " .. highest_key)
+		end
+	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
+		GameRules:GetGameModeEntity():SetPauseEnabled(true)
+	end
+end, nil)
+
+function PudgeWarsMode:OnSettingVote(keys)
+	local pid = keys.PlayerID
+
+	if not PudgeWarsMode.VoteTable then
+		PudgeWarsMode.VoteTable = {}
+	end
+
+	if not PudgeWarsMode.VoteTable[keys.category] then
+		PudgeWarsMode.VoteTable[keys.category] = {}
+	end
+
+	if pid >= 0 then
+		PudgeWarsMode.VoteTable[keys.category][pid] = keys.vote
+	end
+
+--	Say(nil, keys.category, false)
+--	Say(nil, tostring(keys.vote), false)
+
+	-- TODO: Finish votes show up
+	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = PudgeWarsMode.VoteTable[keys.category]})
+end
+
+--]]

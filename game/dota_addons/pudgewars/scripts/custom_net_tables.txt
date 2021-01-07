@@ -11,5 +11,6 @@
 		"hero_selection",
 		"hero_wearables",
 		"other_available_items",
+		"battlepass_player",
 	]
 }

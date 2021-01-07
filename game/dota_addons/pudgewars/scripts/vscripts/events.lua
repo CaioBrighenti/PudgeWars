@@ -106,6 +106,9 @@ function PudgeWarsMode:OnEntityKilled(keys)
 			if killerEntity:GetTeam() == 2 then
 				self.scoreRadiant = self.scoreRadiant + kill_score
 				CustomNetTables:SetTableValue("game_score", "team_score", {radiant_score = self.scoreRadiant, dire_score = self.scoreDire})
+
+				-- weird bug since Dota 7.28, requires manual score setup now
+				GameRules:GetGameModeEntity():SetCustomDireScore(GetTeamHeroKills(DOTA_TEAM_BADGUYS))
 			end
 		elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS then
 			if killerEntity:GetTeam() == 3 then
