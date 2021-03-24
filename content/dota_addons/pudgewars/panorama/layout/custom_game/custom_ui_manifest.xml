@@ -92,5 +92,7 @@
 		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/precache.xml" />
 		<CustomUIElement type="Hud"			layoutfile="file://{resources}/layout/custom_game/barebones_notifications.xml" />
 		<CustomUIElement type="GameInfo" 	layoutfile="file://{resources}/layout/custom_game/pudgewars_game_info.xml" />
+
+        <CustomUIElement type="Hud" layoutfile="file://{resources}/layout/custom_game/fix_custom_game/fix_custom_game.xml" />
 	</Panel>
 </root>
