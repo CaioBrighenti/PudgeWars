@@ -1,8 +1,8 @@
 pudgewars_new
 {
 	material materials/overviews/pudgewars_new.vmat
-	pos_x -2816
-	pos_y 2816
-	scale 5.500
+	pos_x -2560
+	pos_y 2560
+	scale 5.000
 }
 

@@ -43,7 +43,7 @@ function PudgeWarsMode:OnLevelUp( keys )
 	local hero = player:GetAssignedHero()
 	local hero_level = hero:GetLevel()
 
-	local extra_ab_points = {17, 19, 21, 22, 23, 24}
+	local extra_ab_points = {17, 19, 21, 22, 23, 24, 26}
 
 	for i = 0, #extra_ab_points do
 		if hero_level == extra_ab_points[i] then

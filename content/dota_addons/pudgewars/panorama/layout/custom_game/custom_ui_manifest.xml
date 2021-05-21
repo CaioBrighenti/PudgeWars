@@ -42,10 +42,11 @@
 		GameUI.CustomUIConfig().player_colors[23] = "#6CA7FF;";
 
 		//Fuck Scanner
-		var newUI = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements").FindChildTraverse("minimap_container");
+		var Parent = $.GetContextPanel().GetParent().GetParent();
+		var newUI = Parent.FindChildTraverse("HUDElements").FindChildTraverse("minimap_container");
 		newUI.FindChildTraverse("GlyphScanContainer").style.visibility = "collapse";
 
-		var hudElements = $.GetContextPanel().GetParent().GetParent().FindChildTraverse("HUDElements");
+		var hudElements = Parent.FindChildTraverse("HUDElements");
 		var newUI = hudElements.FindChildTraverse("center_block");
 
 		newUI.FindChildTraverse("StatBranch").style.visibility = "collapse";
@@ -59,7 +60,11 @@
 		var TimeUntil = hudElements.FindChildTraverse("TimeUntil");
 		TimeUntil.style.marginBottom = "30px";
 
-		var Parent = $.GetContextPanel().GetParent().GetParent();
+		hudElements.FindChildTraverse("topbar").style.width = "1500px";
+		hudElements.FindChildTraverse("TopBarRadiantTeamContainer").style.width = "750px";
+		hudElements.FindChildTraverse("TopBarRadiantTeam").style.width = "1500px";
+		hudElements.FindChildTraverse("TopBarDireTeamContainer").style.width = "750px";
+		hudElements.FindChildTraverse("TopBarDireTeam").style.width = "1500px";
 
 		// setup modified vanilla HUD
 		SetupLoadingScreen();

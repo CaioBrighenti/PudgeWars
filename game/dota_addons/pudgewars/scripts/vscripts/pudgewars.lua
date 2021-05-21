@@ -189,7 +189,21 @@ end
 function PudgeWarsMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
-	if newState == DOTA_GAMERULES_STATE_PRE_GAME then
+	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
+		if GetMapName() == "pudgewars_10v10" then
+			GameRules:SetCustomGameTeamMaxPlayers(2, 10)
+			GameRules:SetCustomGameTeamMaxPlayers(3, 10)
+		end
+
+		GameRules:GetGameModeEntity():SetContextThink(DoUniqueString("terrible_fix"), function()
+			if IsInToolsMode() then
+				SendToServerConsole('sm_gmode 1')
+				SendToServerConsole('dota_bot_populate')
+			end
+
+			return nil
+		end, 2.0)
+	elseif newState == DOTA_GAMERULES_STATE_PRE_GAME then
 		GameRules:GetGameModeEntity():SetCustomDireScore(0)
 		InitCampfires()
 	elseif newState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then

@@ -19,4 +19,9 @@
 	{
 		"MaxPlayers"				"10"
 	}
+
+	"pudgewars_10v10"
+	{
+		"MaxPlayers"				"20"
+	}
 }
