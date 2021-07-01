@@ -1,6 +1,6 @@
 print("[FUNCTIONS] functions loading")
 
-function PudgeWarsMode:AssignHookModel(hero)
+function GameMode:AssignHookModel(hero)
 	PudgeArray[hero:GetPlayerOwnerID()].modelName  = "none"
 	--[[
 	local cur = hero:FirstMoveChild()
@@ -19,7 +19,7 @@ function PudgeWarsMode:AssignHookModel(hero)
 	end --]]
 end
 
-function PudgeWarsMode:CreateVisionUnit(unitname, unitOrigin, team)
+function GameMode:CreateVisionUnit(unitname, unitOrigin, team)
 	--ToDo: Add KV-files
 	VisionDummy = CreateUnitByName( unitname, unitOrigin, false, nil, nil, team )
 	VisionDummy:AddAbility('vision_dummy_passive')
@@ -29,7 +29,7 @@ function PudgeWarsMode:CreateVisionUnit(unitname, unitOrigin, team)
 	VisionDummyPassive:SetLevel(1)
 end
 
-function PudgeWarsMode:SpawnFuntainDummy()
+function GameMode:SpawnFuntainDummy()
 	print("[FUNCTIONS] SpawnFuntainDummy")
 	--ToDo: Add KV-files
 	VisionDummy = CreateUnitByName( "npc_funtain_dummy", Vector(0,0,0), false, nil, nil, DOTA_TEAM_BADGUYS )
@@ -41,32 +41,32 @@ function PudgeWarsMode:SpawnFuntainDummy()
 	VisionDummyPassive:SetLevel(1)
 end
 
-function PudgeWarsMode:SpawnVisionDummies()
+function GameMode:SpawnVisionDummies()
 	--Vision in base 
 --	AddFOWViewer(2, Vector(-1200, -1300, 0), 1300, 99999, false)
 --	AddFOWViewer(2, Vector(-1200, 0, 0), 1300, 99999, false)
 --	AddFOWViewer(2, Vector(-1200, 1300, 0), 1300, 99999, false)
 
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1200, -1300, 0), DOTA_TEAM_GOODGUYS)
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1200, 0, 0), DOTA_TEAM_GOODGUYS)
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1200, 1300, 0), DOTA_TEAM_GOODGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1200, -1300, 0), DOTA_TEAM_GOODGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1200, 0, 0), DOTA_TEAM_GOODGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1200, 1300, 0), DOTA_TEAM_GOODGUYS)
 
 	-- shop
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1800, 0, 500), DOTA_TEAM_GOODGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(-1800, 0, 500), DOTA_TEAM_GOODGUYS)
 
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1200, -1300, 0), DOTA_TEAM_BADGUYS)
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1200, 0, 0), DOTA_TEAM_BADGUYS)
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1200, 1300, 0), DOTA_TEAM_BADGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1200, -1300, 0), DOTA_TEAM_BADGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1200, 0, 0), DOTA_TEAM_BADGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1200, 1300, 0), DOTA_TEAM_BADGUYS)
 
 	-- shop
-	PudgeWarsMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1800, 0, 500), DOTA_TEAM_BADGUYS)
+	GameMode:CreateVisionUnit("npc_vision_dummy_2", Vector(1800, 0, 500), DOTA_TEAM_BADGUYS)
 
 --	AddFOWViewer(3, Vector(1200, -1300, 0), 1300, 99999, false)
 --	AddFOWViewer(3, Vector(1200, 0, 0), 1300, 99999, false)
 --	AddFOWViewer(3, Vector(1200, 1300, 0), 1300, 99999, false)
 end
 
-function PudgeWarsMode:SpawnRuneSpellCasters()
+function GameMode:SpawnRuneSpellCasters()
 	print("[FUNCTIONS] Spawn Spell Casters")
 	local abil_ion_good = nil
 	local lightning_effect = nil
@@ -82,12 +82,12 @@ function PudgeWarsMode:SpawnRuneSpellCasters()
 	lightning_effect:SetLevel(1)
 end
 
-function PudgeWarsMode:StartTimers()
+function GameMode:StartTimers()
 	--start timers that are running from the start
 	print("[FUNCTIONS] Starting timer")
    
 	--start a timer that waits for the game to be in progress
-	PudgeWarsMode:CreateTimer(DoUniqueString("waitforgamestart"), {
+	GameMode:CreateTimer(DoUniqueString("waitforgamestart"), {
 		endTime = GameRules:GetGameTime() + 1,
 		useGameTime = true,
 		callback = function(reflex, args)
@@ -101,7 +101,7 @@ function PudgeWarsMode:StartTimers()
 	})
 
 	
-	PudgeWarsMode:CreateTimer(DoUniqueString("waitforgamestartdebug"), {
+	GameMode:CreateTimer(DoUniqueString("waitforgamestartdebug"), {
 	endTime = GameRules:GetGameTime() + 0.1,
 	useGameTime = true,
 	callback = function(reflex, args)
@@ -131,6 +131,6 @@ function sendAMsgTime(msg, time)
 	FireGameEvent( "show_center_message", centerMessage)
 end
 
-function PudgeWarsMode:RollBash(per)
+function GameMode:RollBash(per)
 	return RandomInt(1,100) <= per
 end

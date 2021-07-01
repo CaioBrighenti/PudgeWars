@@ -54,21 +54,21 @@ shield_carrier = nil
 rune_spell_caster_good = nil
 has_been_in_wait_for_players = false
 
-if PudgeWarsMode == nil then
-	PudgeWarsMode = class({})
+if GameMode == nil then
+	GameMode = class({})
 end
 
-function PudgeWarsMode:new( o )
-	print ( '[PUDGEWARS] PudgeWarsMode:new' )
+function GameMode:new( o )
+	print ( '[PUDGEWARS] GameMode:new' )
 	o = o or {}
-	setmetatable( o, PudgeWarsMode )
+	setmetatable( o, GameMode )
 	return o
 end
 
-function PudgeWarsMode:InitGameMode()
+function GameMode:InitGameMode()
 	print('[PUDGEWARS] Starting to load Pudgewars gamemode...')
 
-	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(PudgeWarsMode, "OnSettingVote"))
+	CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(GameMode, "OnSettingVote"))
 
 	-- Setup rules
 	GameRules:SetHeroRespawnEnabled(true)
@@ -127,7 +127,7 @@ function PudgeWarsMode:InitGameMode()
 	math.randomseed(tonumber(timeTxt))
 		
 	-- Init self
-	PudgeWarsMode = self
+	GameMode = self
 	-- Timers
 	self.timers = {}
 
@@ -150,10 +150,10 @@ function PudgeWarsMode:InitGameMode()
 	--tomes
 	self.health_tome_modifier_item = nil
 
-	PudgeWarsMode:StartTimers()
-	PudgeWarsMode:SpawnRuneSpellCasters()
-	PudgeWarsMode:SpawnVisionDummies()
-	PudgeWarsMode:SpawnFuntainDummy()
+	GameMode:StartTimers()
+	GameMode:SpawnRuneSpellCasters()
+	GameMode:SpawnVisionDummies()
+	GameMode:SpawnFuntainDummy()
 
 	-- print('[PUDGEWARS] Starting stats')
 	-- statcollection.addStats({
@@ -163,7 +163,7 @@ function PudgeWarsMode:InitGameMode()
 	print('[PUDGEWARS] Done loading Pudgewars gamemode!\n\n')
 end
 
-function PudgeWarsMode:CaptureGameMode()
+function GameMode:CaptureGameMode()
 	if GameMode == nil then
 		-- Set GameMode parameters
 		GameMode = GameRules:GetGameModeEntity()		
@@ -182,11 +182,11 @@ function PudgeWarsMode:CaptureGameMode()
 		FULL_ABANDON_TIME = 10.0
 
 		print( '[PUDGEWARS] NOT Beginning Think' ) 
-		GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( PudgeWarsMode, 'Think' ), THINK_TIME )
+		GameMode:SetContextThink("PudgewarsThink", Dynamic_Wrap( GameMode, 'Think' ), THINK_TIME )
 	end 
 end
 
-function PudgeWarsMode:OnGameRulesStateChange(keys)
+function GameMode:OnGameRulesStateChange(keys)
 	local newState = GameRules:State_Get()
 
 	if newState == DOTA_GAMERULES_STATE_CUSTOM_GAME_SETUP then
@@ -224,7 +224,7 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 
 		-- start spawn rune timer
 		Timers:CreateTimer(function()
-			PudgeWarsMode:SpawnRune()
+			GameMode:SpawnRune()
 			return RUNE_SPAWN_TIME
 		end)
 
@@ -243,13 +243,13 @@ function PudgeWarsMode:OnGameRulesStateChange(keys)
 	end
 end
 
-function PudgeWarsMode:SlowThink()
+function GameMode:SlowThink()
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then return nil end
 
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		-- model bug fix
 --		if PudgeArray[hero:GetPlayerID()].modelName == "" then
---			PudgeWarsMode:AssignHookModel(hero)    
+--			PudgeClass:AssignHookModel(hero)    
 --		end
 
 		if PlayerResource:GetConnectionState(hero:GetPlayerID()) <= 2 and hero.anti_afk ~= false then
@@ -379,7 +379,7 @@ function PudgeWarsMode:SlowThink()
 	end
 end
 
-function PudgeWarsMode:AbilityUsed(keys)
+function GameMode:AbilityUsed(keys)
 	local playerID = keys.PlayerID
 	local abilityName = keys.abilityname
 
@@ -401,12 +401,12 @@ function PudgeWarsMode:AbilityUsed(keys)
 	end
 end
 
-function PudgeWarsMode:CloseServer()
+function GameMode:CloseServer()
 	-- Just exit
 	SendToServerConsole('exit')
 end
 --[[
-function PudgeWarsMode:ItemPickedUp( keys )
+function GameMode:ItemPickedUp( keys )
 	print("[PUDGEWARS] ItemPickedUp")
 	local playerID = keys.PlayerID
 	local itemname = keys.itemname
@@ -433,9 +433,9 @@ function PudgeWarsMode:ItemPickedUp( keys )
 end
 ]]
 
-function PudgeWarsMode:AutoAssignPlayer(keys)
+function GameMode:AutoAssignPlayer(keys)
 	print ('[PUDGEWARS] AutoAssignPlayer FIXED')
-	PudgeWarsMode:CaptureGameMode()
+	GameMode:CaptureGameMode()
 
 	local entIndex = keys.index+1
 	local ply = EntIndexToHScript(entIndex)
@@ -462,7 +462,7 @@ function PudgeWarsMode:AutoAssignPlayer(keys)
 	self.vPlayers[playerID] = ply
 end
 
-function PudgeWarsMode:OnItemPurchased(keys)
+function GameMode:OnItemPurchased(keys)
 	-- The playerID of the hero who is buying something
 	local plyID = keys.PlayerID
 	if not plyID then return end
@@ -494,7 +494,7 @@ function PudgeWarsMode:OnItemPurchased(keys)
 	end
 end
 
-function PudgeWarsMode:Think()
+function GameMode:Think()
 	-- If the game's over, it's over.
 	if GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
 		local players = {}
@@ -547,16 +547,16 @@ function PudgeWarsMode:Think()
 	-- Track game time, since the dt passed in to think is actually wall-clock time not simulation time.
     local now = GameRules:GetGameTime()
     --print("now: " .. now)
-    if PudgeWarsMode.t0 == nil then
-        PudgeWarsMode.t0 = now
+    if GameMode.t0 == nil then
+        GameMode.t0 = now
     end
-    local dt = now - PudgeWarsMode.t0
-    PudgeWarsMode.t0 = now
+    local dt = now - GameMode.t0
+    GameMode.t0 = now
 
-    --PudgeWarsMode:thinkState( dt )
+    --GameMode:thinkState( dt )
 
 	-- Process timers
-	for k,v in pairs(PudgeWarsMode.timers) do
+	for k,v in pairs(GameMode.timers) do
 		local bUseGameTime = false
 		if v.useGameTime and v.useGameTime == true then
 			bUseGameTime = true;
@@ -564,10 +564,10 @@ function PudgeWarsMode:Think()
 		-- Check if the timer has finished
 		if (bUseGameTime and GameRules:GetGameTime() > v.endTime) or (not bUseGameTime and Time() > v.endTime) then
 			-- Remove from timers list
-			PudgeWarsMode.timers[k] = nil
+			GameMode.timers[k] = nil
 
 			-- Run the callback
-			local status, nextCall = pcall(v.callback, PudgeWarsMode, v)
+			local status, nextCall = pcall(v.callback, GameMode, v)
 
 			-- Make sure it worked
 			if status then
@@ -575,11 +575,11 @@ function PudgeWarsMode:Think()
 				if nextCall then
 					-- Change it's end time
 					v.endTime = nextCall
-					PudgeWarsMode.timers[k] = v
+					GameMode.timers[k] = v
 				end
 			else
 				-- Nope, handle the error
-				PudgeWarsMode:HandleEventError('Timer', k, nextCall, v)
+				GameMode:HandleEventError('Timer', k, nextCall, v)
 			end
 		end
 	end
@@ -587,7 +587,7 @@ function PudgeWarsMode:Think()
 	return THINK_TIME
 end
 
-function PudgeWarsMode:HandleEventError(name, event, err, v)
+function GameMode:HandleEventError(name, event, err, v)
 	-- This gets fired when an event throws an error
 
 	-- Log to console
@@ -613,7 +613,7 @@ function PudgeWarsMode:HandleEventError(name, event, err, v)
 	end
 end
 
-function PudgeWarsMode:CreateTimer(name, args)
+function GameMode:CreateTimer(name, args)
 	--[[
 	args: {
 	endTime = Time you want this timer to end: Time() + 30 (for 30 seconds from now),
@@ -640,12 +640,12 @@ function PudgeWarsMode:CreateTimer(name, args)
 	self.timers[name] = args
 end
 
-function PudgeWarsMode:RemoveTimer(name)
+function GameMode:RemoveTimer(name)
 	-- Remove this timer
 	self.timers[name] = nil
 end
 
-function PudgeWarsMode:RemoveTimers(killAll)
+function GameMode:RemoveTimers(killAll)
 	local timers = {}
 
 	-- If we shouldn't kill all timers
@@ -671,8 +671,8 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		GameRules:SetCustomGameDifficulty(1)
 		api:SetCustomGamemode(1)
 
-		if PudgeWarsMode.VoteTable == nil then return end
-		local votes = PudgeWarsMode.VoteTable
+		if GameMode.VoteTable == nil then return end
+		local votes = GameMode.VoteTable
 
 		for category, pidVoteTable in pairs(votes) do
 			-- Tally the votes into a new table
@@ -735,23 +735,23 @@ donator_list[7] = 2 -- Salamander Donator
 donator_list[8] = 3 -- Icefrog Donator
 donator_list[9] = 3 -- Gaben Donator
 
-function PudgeWarsMode:OnSettingVote(keys)
+function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
 
 	print(keys)
 
-	if not PudgeWarsMode.VoteTable then PudgeWarsMode.VoteTable = {} end
-	if not PudgeWarsMode.VoteTable[keys.category] then PudgeWarsMode.VoteTable[keys.category] = {} end
+	if not GameMode.VoteTable then GameMode.VoteTable = {} end
+	if not GameMode.VoteTable[keys.category] then GameMode.VoteTable[keys.category] = {} end
 
 	if pid >= 0 then
-		if not PudgeWarsMode.VoteTable[keys.category][pid] then PudgeWarsMode.VoteTable[keys.category][pid] = {} end
+		if not GameMode.VoteTable[keys.category][pid] then GameMode.VoteTable[keys.category][pid] = {} end
 
-		PudgeWarsMode.VoteTable[keys.category][pid][1] = keys.vote
+		GameMode.VoteTable[keys.category][pid][1] = keys.vote
 
 		if donator_list[api:GetDonatorStatus(pid)] then
-			PudgeWarsMode.VoteTable[keys.category][pid][2] = donator_list[api:GetDonatorStatus(pid)]
+			GameMode.VoteTable[keys.category][pid][2] = donator_list[api:GetDonatorStatus(pid)]
 		else
-			PudgeWarsMode.VoteTable[keys.category][pid][2] = 1
+			GameMode.VoteTable[keys.category][pid][2] = 1
 		end
 	end
 
@@ -759,7 +759,7 @@ function PudgeWarsMode:OnSettingVote(keys)
 --	Say(nil, tostring(keys.vote), false)
 
 	-- TODO: Finish votes show up
-	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = PudgeWarsMode.VoteTable[keys.category]})
+	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
 end
 
 -- Custom game-modes as per api:GetCustomGamemode():
@@ -776,8 +776,8 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 		-- If no one voted, default to IMBA 10v10 gamemode
 		GameRules:SetCustomGameDifficulty(2)
 
-		if PudgeWarsMode.VoteTable == nil then return end
-		local votes = PudgeWarsMode.VoteTable
+		if GameMode.VoteTable == nil then return end
+		local votes = GameMode.VoteTable
 
 		for category, pidVoteTable in pairs(votes) do
 			-- Tally the votes into a new table
@@ -840,26 +840,26 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 	end
 end, nil)
 
-function PudgeWarsMode:OnSettingVote(keys)
+function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
 
-	if not PudgeWarsMode.VoteTable then
-		PudgeWarsMode.VoteTable = {}
+	if not GameMode.VoteTable then
+		GameMode.VoteTable = {}
 	end
 
-	if not PudgeWarsMode.VoteTable[keys.category] then
-		PudgeWarsMode.VoteTable[keys.category] = {}
+	if not GameMode.VoteTable[keys.category] then
+		GameMode.VoteTable[keys.category] = {}
 	end
 
 	if pid >= 0 then
-		PudgeWarsMode.VoteTable[keys.category][pid] = keys.vote
+		GameMode.VoteTable[keys.category][pid] = keys.vote
 	end
 
 --	Say(nil, keys.category, false)
 --	Say(nil, tostring(keys.vote), false)
 
 	-- TODO: Finish votes show up
-	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = PudgeWarsMode.VoteTable[keys.category]})
+	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
 end
 
 --]]

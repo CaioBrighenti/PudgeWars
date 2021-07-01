@@ -1,4 +1,4 @@
-function PudgeWarsMode:RuneHooked(unit, caster, rune_type)
+function GameMode:RuneHooked(unit, caster, rune_type)
 	if rune_type == 1 then
 		--Slows everybody with aura, give to the caster bonus movespeed.
 		Notifications:TopToAll({text="HYPERSPEED RUNE!", duration=RUNE_TEXT_DURATION, style = {color = "Red"}})
@@ -53,7 +53,7 @@ function PudgeWarsMode:RuneHooked(unit, caster, rune_type)
 		--EmitGlobalSound("Hero_Phoenix.SunRay.Loop")
 
 		--attach the rope
-		PudgeWarsMode:CreateTimer(DoUniqueString("spooky_rune"), {
+		GameMode:CreateTimer(DoUniqueString("spooky_rune"), {
 			endTime = GameRules:GetGameTime() + 0.1,
 			useGameTime = true,
 			callback = function(reflex, args)
@@ -65,7 +65,7 @@ function PudgeWarsMode:RuneHooked(unit, caster, rune_type)
 			end
 		})
 		--End the spell after 8 seconds
-		PudgeWarsMode:CreateTimer(DoUniqueString("spooky_rune"), {
+		GameMode:CreateTimer(DoUniqueString("spooky_rune"), {
 			endTime = GameRules:GetGameTime() + 8,
 			useGameTime = true,
 			callback = function(reflex, args)
@@ -81,19 +81,19 @@ function PudgeWarsMode:RuneHooked(unit, caster, rune_type)
 	end
 
 	--Kill rune and remove it to stop death animation
-	PudgeWarsMode:RuneHookedParticle(caster)
+	GameMode:RuneHookedParticle(caster)
 	dealDamage(caster, unit, 12000)
 
 	--unit:RemoveSelf()
 end
 
-function PudgeWarsMode:RuneHookedParticle(unit)
+function GameMode:RuneHookedParticle(unit)
 	local runeParticle = ParticleManager:CreateParticle( 'sven_spell_gods_strength_wave', PATTACH_OVERHEAD_FOLLOW, unit)
 	local runePos = unit:GetOrigin()
 	ParticleManager:SetParticleControl(runeParticle, 4, Vector( runePos.x, runePos.y, runePos.z))
 end
 
-function PudgeWarsMode:SpawnRune()
+function GameMode:SpawnRune()
 	local runes = {
 		"npc_dummy_rune_haste",
 		"npc_dummy_rune_gold",

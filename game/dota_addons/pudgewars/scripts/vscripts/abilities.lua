@@ -55,14 +55,14 @@ function castSpell(source, target, spell, spell_level, time_out)
 	caster:SetForwardVector(diff:Normalized())
   
 
-	PudgeWarsMode:CreateTimer(DoUniqueString("spawn"), {
+	GameMode:CreateTimer(DoUniqueString("spawn"), {
 	endTime = GameRules:GetGameTime() + 0.070,
 	useGameTime = true,
 	callback = function(reflex, args)
 	--Cast ability on target, wait time_out seconds and check if spell was scuccesfull
 	caster:CastAbilityOnTarget(target, ability, 0 )
 
-	  PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
+	  GameMode:CreateTimer(DoUniqueString("spell"), {
 		endTime = GameRules:GetGameTime() + time_out,
 		useGameTime = true,
 		callback = function(reflex, args)
@@ -100,7 +100,7 @@ function castInstantSpell(caster, spell, spell_level, time_out)
 	ability:SetLevel(spell_level)
 
 	--Wait two frames to let the NPC spawn
-	PudgeWarsMode:CreateTimer(DoUniqueString("spawn"), {
+	GameMode:CreateTimer(DoUniqueString("spawn"), {
 	endTime = GameRules:GetGameTime() + 0.070,
 	useGameTime = true,
 	callback = function(reflex, args)
@@ -109,7 +109,7 @@ function castInstantSpell(caster, spell, spell_level, time_out)
 		caster:CastAbilityImmediately(ability, 0)
 	end
 
-	  PudgeWarsMode:CreateTimer(DoUniqueString("spell"), {
+	  GameMode:CreateTimer(DoUniqueString("spell"), {
 		endTime = GameRules:GetGameTime() + time_out,
 		useGameTime = true,
 		callback = function(reflex, args)
@@ -126,7 +126,7 @@ function castInstantSpell(caster, spell, spell_level, time_out)
 	})
 end
 
-function PudgeWarsMode:KillTarget(caster,unit)
+function GameMode:KillTarget(caster,unit)
    dealDamage(caster,unit,unit:GetMaxHealth() + 1000)
 end
 

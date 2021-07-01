@@ -65,7 +65,7 @@ function findEntity(entities, vars_table, forward, bounces, hero)
 		for k,v in pairs(entities) do
 			--if string.find(v:GetClassname(), "pudge") or string.find(v:GetClassname(), "mine") then
 			if vars_table[0] == nil then
-				if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((PudgeWarsMode.shield_carrier == nil) or (PudgeWarsMode.shield_carrier ~= v)) then
+				if ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((GameMode.shield_carrier == nil) or (GameMode.shield_carrier ~= v)) then
 					if Battlepass:HasPudgeHookStreakCounter(hero:GetPlayerID()) then
 						hero.successful_hooks = hero.successful_hooks + 1
 						EmitSoundOnLocationWithCaster(hero:GetAbsOrigin(), "Hero_Pudge.HookDrag.Arcana", hero)
@@ -143,7 +143,7 @@ function findEntity(entities, vars_table, forward, bounces, hero)
 						end
 					end
 					vars_table[0] = v
-				elseif ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((PudgeWarsMode.shield_carrier ~= nil) or (PudgeWarsMode.shield_carrier == v)) or (string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(), "barrier") and v:IsAlive()) then 
+				elseif ((string.find(v:GetClassname(), "pudge")) and (v ~= vars_table[1]) and (v:IsAlive())) and ((GameMode.shield_carrier ~= nil) or (GameMode.shield_carrier == v)) or (string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(), "barrier") and v:IsAlive()) then 
 					if forward then
 						vars_table[5] = true --BOUNCE
 
@@ -193,37 +193,37 @@ function findEntity(entities, vars_table, forward, bounces, hero)
 					v:AddNewModifier(vars_table[1], nil, "modifier_pudge_meat_hook", {})
 				elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"dummy_rune_haste") and v:IsAlive() then
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
-					PudgeWarsMode:RuneHooked(v,vars_table[1],1)
+					GameMode:RuneHooked(v,vars_table[1],1)
 					vars_table[2] = true
 					vars_table[0] = v
 				elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"dummy_rune_gold") and v:IsAlive() then
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
-					PudgeWarsMode:RuneHooked(v,vars_table[1],2)
+					GameMode:RuneHooked(v,vars_table[1],2)
 					vars_table[2] = true
 					vars_table[0] = v
 				elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"dummy_rune_ion") and v:IsAlive() then
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
-					PudgeWarsMode:RuneHooked(v,vars_table[1],3)
+					GameMode:RuneHooked(v,vars_table[1],3)
 					vars_table[2] = true
 					vars_table[0] = v
 				elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"npc_dummy_rune_fire") and v:IsAlive() then
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
-					PudgeWarsMode:RuneHooked(v,vars_table[1],4)
+					GameMode:RuneHooked(v,vars_table[1],4)
 					vars_table[2] = true
 					vars_table[0] = v
 				elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"rune_dynamite") and v:IsAlive() then
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
-					PudgeWarsMode:RuneHooked(v,vars_table[1],5)
+					GameMode:RuneHooked(v,vars_table[1],5)
 					vars_table[2] = true
 					vars_table[0] = v   
 				elseif string.find(v:GetClassname(),"creature") and string.find(v:GetUnitName(),"rune_lightning") and v:IsAlive() then
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
-					PudgeWarsMode:RuneHooked(v,vars_table[1],6)
+					GameMode:RuneHooked(v,vars_table[1],6)
 					vars_table[2] = true
 					vars_table[0] = v   
 				elseif string.find(v:GetClassname(),"creature") and v:GetUnitName() == "npc_dummy_rune_diretide" and v:IsAlive() then
 					vars_table[1]:EmitSound('Hero_Pudge.AttackHookImpact') 
-					PudgeWarsMode:RuneHooked(v,vars_table[1],7)
+					GameMode:RuneHooked(v,vars_table[1],7)
 					vars_table[2] = true
 					vars_table[0] = v   
 				end         
@@ -300,7 +300,7 @@ function LaunchHook(keys)
 	-- only load pudge hook first time
 	if pudge.modelName == "" then
 		if PudgeArray[hero:GetPlayerOwnerID()].modelName == "" then
-			PudgeWarsMode:AssignHookModel(hero)    
+			PudgeClass:AssignHookModel(hero)    
 		end
 	end
 
@@ -319,10 +319,15 @@ function LaunchHook(keys)
 	local dir = pos - hero:GetAbsOrigin()
 	dir = dir:Normalized()
 
+	local hook_model = "models/heroes/pudge/righthook.vmdl"
+
+	if hero.hook_model then
+		hook_model = hero.hook_model
+	end
 
 	hooks[hookCount] = CreateUnitByName("npc_reflex_hook_test", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
-	hooks[hookCount]:SetModel(hero.hook_model)
-	hooks[hookCount]:SetOriginalModel(hero.hook_model)
+	hooks[hookCount]:SetModel(hook_model)
+	hooks[hookCount]:SetOriginalModel(hook_model)
 	hooks[hookCount]:SetModelScale(modelScale)
 	hooks[hookCount]:SetAbsOrigin(hero:GetAbsOrigin() + Vector(0,0,125))
 
@@ -339,7 +344,7 @@ function LaunchHook(keys)
 		abil:SetLevel(1)
 		fire_dummy:CastAbilityImmediately(abil,0)
 
-		PudgeWarsMode:CreateTimer(DoUniqueString("fireflydummy"), {
+		GameMode:CreateTimer(DoUniqueString("fireflydummy"), {
 			endTime = GameRules:GetGameTime(),
 			useGameTime = true,
 			callback = function(reflex, args)
@@ -383,7 +388,7 @@ function LaunchHook(keys)
 	vars_table[6] = nil  -- rupture_unit 
 	vars_table[7] = nil -- totem unit
  
-	PudgeWarsMode:CreateTimer(DoUniqueString('hook_test2'), {
+	GameMode:CreateTimer(DoUniqueString('hook_test2'), {
 		endTime = GameRules:GetGameTime(),
 		useGameTime = true,
 		errorcallback = function(reflex, args)
@@ -531,7 +536,7 @@ function LaunchHook(keys)
 			hooks[1]:SetAbsOrigin(hooks[1]:GetAbsOrigin() + dir * speed / 30)
 			dir.z = 0
 			hooks[1]:SetForwardVector(dir)
-			
+
 			local diff = hooks[1]:GetAbsOrigin() - hooks[2]:GetAbsOrigin()
 			diff.z = 0
 			if diff:Length() > linkFollowDistance then
@@ -540,7 +545,7 @@ function LaunchHook(keys)
 			if hooks[2]:GetEnd() ~= hooks[1]:GetAbsOrigin() then
 				hooks[2]:SetEnd(hooks[1]:GetAbsOrigin())
 			end
-			
+
 			-- Move chains
 			for i=3,#hooks do
 				local diff = hooks[i-1]:GetAbsOrigin() - hooks[i]:GetAbsOrigin()
@@ -552,7 +557,7 @@ function LaunchHook(keys)
 					hooks[i]:SetEnd(hooks[i-1]:GetAbsOrigin())
 				end
 			end
-			
+
 			-- Create New Chain link
 			local diff = hooks[#hooks]:GetAbsOrigin() - hero:GetAbsOrigin()
 			if diff:Length() > linkCreationTolerance then
@@ -562,14 +567,14 @@ function LaunchHook(keys)
 				local position = hero:GetAbsOrigin() + Vector(0,0,70)
 				local endPosition = hero:GetAbsOrigin() + direction * 75 + Vector(0,0,140)
 				local pu = ParticleUnit.new(particle, position, endPosition) --cpStart, cpEnd, cpDelete)
-				
+
 				hooks[hookCount] = pu
-				
+
 				hookCount = hookCount + 1
 			elseif #hooks > 1 then
 				hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,120))
 			end
-		 
+
 			--Collision detection
 			if hooked == nil and vars_table[5] == false then
 				--FORWARD
@@ -650,8 +655,8 @@ function LaunchHook(keys)
 			end
 
 			--Bounce on shiled barrier target
-			if ((vars_table[5] == true) and ((rebounceTolerance )< 1)) and (vars_table[7] == nil) and (PudgeWarsMode.shield_carrier) then
-				diff = PudgeWarsMode.shield_carrier:GetAbsOrigin() - hookPos
+			if ((vars_table[5] == true) and ((rebounceTolerance )< 1)) and (vars_table[7] == nil) and (GameMode.shield_carrier) then
+				diff = GameMode.shield_carrier:GetAbsOrigin() - hookPos
 				has_bounced_on_shield = true
 				rebounceTolerance = rebounceToleranceMax
 				diff = diff:Normalized()

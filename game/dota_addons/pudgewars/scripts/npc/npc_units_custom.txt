@@ -2478,7 +2478,7 @@
 		// Team
 		//----------------------------------------------------------------
 		"UnitRelationshipClass"		"DOTA_NPC_UNIT_RELATIONSHIP_TYPE_WARD"
-	}	
+	}
 	"npc_dota_spike_trap_ward"
 	{
 		// General

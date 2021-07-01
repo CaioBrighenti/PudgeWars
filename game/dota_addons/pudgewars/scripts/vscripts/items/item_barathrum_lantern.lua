@@ -36,7 +36,7 @@ end
 
 function modifier_bash_lantern:OnAttackLanded(keys)
 	if self:GetParent() == keys.attacker and self:GetAbility():GetLevel() == 5 then
-		if PudgeWarsMode:RollBash(self:GetAbility():GetSpecialValueFor("bash_chance")) then
+		if GameMode:RollBash(self:GetAbility():GetSpecialValueFor("bash_chance")) then
 			dealDamage(self:GetParent(), keys.target, self:GetAbility():GetSpecialValueFor("bash_damage"))
 
 			local bashParticle = ParticleManager:CreateParticle('particles/units/heroes/hero_spirit_breaker/spirit_breaker_greater_bash.vpcf', PATTACH_ABSORIGIN, keys.target)

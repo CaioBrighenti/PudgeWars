@@ -1,4 +1,5 @@
 print("[PUDGE] PudgeClass loading")
+
 if PudgeClass == nil then
 	PudgeClass = {}
 	PudgeClass.__index = PudgeClass
@@ -25,12 +26,15 @@ function PudgeClass.create(playerId)
 	--ENUMS
 	pudge.grappleint = 0
 	pudge.tinysarmint = 1
+
+	print(pudge)
 	return pudge
 end
 
-function PudgeWarsMode:InitPudge(pudge)
+function PudgeClass:InitPudge(pudge)
+	print(pudge:GetUnitName())
 	print('Pudge Spawned for the first time, id=' .. pudge:GetPlayerOwnerID())
-	PudgeArray[ pudge:GetPlayerOwnerID() ] = PudgeClass.create( pudge:GetPlayerOwnerID() )
+	PudgeArray[ pudge:GetPlayerOwnerID() ] = self.create( pudge:GetPlayerOwnerID() )
 	--Add the unit for easy acces in other functions
 	PudgeArray[pudge:GetPlayerOwnerID()].pudgeunit = pudge
 
@@ -40,8 +44,13 @@ function PudgeWarsMode:InitPudge(pudge)
 	PudgeArray[pudge:GetPlayerOwnerID()].hasspawned = true
 
 	for i = 0, 5 do
-		pudge:GetAbilityByIndex(i):SetLevel(1)
+		local ability = pudge:GetAbilityByIndex(i)
+
+		if ability then
+			ability:SetLevel(1)
+		end
 	end
+
 	pudge:FindAbilityByName("pudge_wars_abilities_down"):SetLevel(1)
 
 	pudge.ab2 = "pudge_wars_empty1"
@@ -51,4 +60,5 @@ function PudgeWarsMode:InitPudge(pudge)
 	pudge.successful_hooks = 0
 
 	pudge:AddNewModifier(pudge, nil, "modifier_command_restricted", {duration=PRE_GAME_TIME})
+	pudge:AddNewModifier(pudge, nil, "modifier_ability_points", {}):SetStackCount(pudge:GetAbilityPoints())
 end

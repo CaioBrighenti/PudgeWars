@@ -1,5 +1,5 @@
 -- Order filter function
-function PudgeWarsMode:OrderFilter( keys )
+function GameMode:OrderFilter( keys )
 
 	--entindex_ability	 ==> 	0
 	--sequence_number_const	 ==> 	20

@@ -1,4 +1,4 @@
-function PudgeWarsMode:OnNPCSpawned( keys )
+ListenToGameEvent('npc_spawned', function(keys)
 	local spawnedUnit = EntIndexToHScript( keys.entindex )
 	local player = spawnedUnit:GetPlayerOwner()
 
@@ -19,16 +19,16 @@ function PudgeWarsMode:OnNPCSpawned( keys )
 		local owner = spawnedUnit:GetOwner()
 		spawnedUnit:SetForwardVector(owner:GetForwardVector())
 
-		PudgeWarsMode:CreateTimer(DoUniqueString("clear_space"), {
+		GameMode:CreateTimer(DoUniqueString("clear_space"), {
 			endTime = GameRules:GetGameTime() + 0.07,
 			callback = function(reflex, args)
 			FindClearSpaceForUnit(spawnedUnit, spawnedUnit:GetAbsOrigin(), true ) 
 			return
 		end})
-	elseif spawnedUnit:GetUnitName() == "npc_dota_hero_pudge" then
+	elseif spawnedUnit:IsRealHero() then
 		if spawnedUnit:GetPlayerOwnerID() ~= -1 then
 			if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
-				PudgeWarsMode:InitPudge( spawnedUnit )
+				GameMode:InitPudge( spawnedUnit )
 			end
 
 			if not spawnedUnit:HasModifier("modifier_ability_points") then
@@ -36,9 +36,9 @@ function PudgeWarsMode:OnNPCSpawned( keys )
 			end
 		end
 	end
-end
+end, nil)
 
-function PudgeWarsMode:OnLevelUp( keys )
+ListenToGameEvent('dota_player_gained_level', function(keys)
 	local player = EntIndexToHScript(keys.player)
 	local hero = player:GetAssignedHero()
 	local hero_level = hero:GetLevel()
@@ -59,10 +59,10 @@ function PudgeWarsMode:OnLevelUp( keys )
 	if modifier then
 		modifier:SetStackCount(hero:GetAbilityPoints())
 	end
-end
+end, nil)
 
 local first_blood = false
-function PudgeWarsMode:OnEntityKilled(keys)
+ListenToGameEvent('entity_killed', function(keys)
 	local killedUnit = EntIndexToHScript(keys.entindex_killed)
 	local killerEntity = nil
 
@@ -131,9 +131,9 @@ function PudgeWarsMode:OnEntityKilled(keys)
 
 		return
 	end
-end
+end, nil)
 
-function PudgeWarsMode:OnPlayerChat(keys)
+ListenToGameEvent('player_chat', function(keys)
 	local text = keys.text
 --	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
 
@@ -155,4 +155,4 @@ function PudgeWarsMode:OnPlayerChat(keys)
 			end
 		end
 	end
-end
+end, nil)

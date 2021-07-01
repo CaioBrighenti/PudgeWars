@@ -75,6 +75,6 @@ end
 
 -- Create the game mode when we activate
 function Activate()
-	GameRules.PW = PudgeWarsMode()
+	GameRules.PW = GameMode()
 	GameRules.PW:InitGameMode()
 end

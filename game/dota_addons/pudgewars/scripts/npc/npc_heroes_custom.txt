@@ -27,12 +27,15 @@
 		"Ability10"					"pudge_wars_upgrade_hook_size"
 		"Ability11"					"pudge_wars_abilities_down"
 
+		"AbilityTalentStart"		"12"
 		"Ability12"					"generic_hidden"
 		"Ability13"					"generic_hidden"
 		"Ability14"					"generic_hidden"
 		"Ability15"					"generic_hidden"
 		"Ability16"					"generic_hidden"
 		"Ability17"					"generic_hidden"
+		"Ability18"					"generic_hidden"
+		"Ability19"					"generic_hidden"
 
 		"VisionNighttimeRange"		"600"
 		"VisionDaytimeRange"		"600"
