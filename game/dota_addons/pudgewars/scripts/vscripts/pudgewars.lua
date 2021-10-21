@@ -111,15 +111,11 @@ function GameMode:InitGameMode()
 --	InitLogFile( "log/pudgewars.txt","")
 
 	-- Hooks
-	ListenToGameEvent('entity_killed', Dynamic_Wrap(self, 'OnEntityKilled'), self)
 	ListenToGameEvent('player_connect_full', Dynamic_Wrap(self, 'AutoAssignPlayer'), self)
 	ListenToGameEvent('dota_item_purchased', Dynamic_Wrap(self, 'OnItemPurchased'), self)
 	ListenToGameEvent('dota_player_used_ability', Dynamic_Wrap(self, 'AbilityUsed'), self)
 --	ListenToGameEvent('dota_item_picked_up', Dynamic_Wrap( self, 'ItemPickedUp' ), self )
-	ListenToGameEvent('npc_spawned', Dynamic_Wrap( self, 'OnNPCSpawned'), self)
-	ListenToGameEvent('dota_player_gained_level', Dynamic_Wrap( self, 'OnLevelUp'), self)
 	ListenToGameEvent('game_rules_state_change', Dynamic_Wrap(self, 'OnGameRulesStateChange'), self)
-	ListenToGameEvent('player_chat', Dynamic_Wrap(self, 'OnPlayerChat'), self)
 	GameRules:GetGameModeEntity():SetExecuteOrderFilter(Dynamic_Wrap(self, "OrderFilter"), self)
 
 	-- Change random seed
@@ -249,7 +245,7 @@ function GameMode:SlowThink()
 	for _, hero in pairs(HeroList:GetAllHeroes()) do
 		-- model bug fix
 --		if PudgeArray[hero:GetPlayerID()].modelName == "" then
---			PudgeClass:AssignHookModel(hero)    
+--			GameMode:AssignHookModel(hero)    
 --		end
 
 		if PlayerResource:GetConnectionState(hero:GetPlayerID()) <= 2 and hero.anti_afk ~= false then

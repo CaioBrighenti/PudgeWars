@@ -1,25 +1,21 @@
 "AddonInfo"
 {
-//	"addonSteamAppID"				"816"
-	"addontitle"					"Pudge Wars"
-	"addon_game_name"				"Pudge Wars"
-	"addonversion"					"1.0"
-	"addontagline"					"PW"
-	"addonauthor"					"Kobb and Aderum"
-	"addonSteamGroupName"			""
-	"addonauthorSteamID"			""
-	"addonContent_Campaign"			"0"
-	"addonDescription"				"A remake of the classic Warcraft 3 Pudge Wars mod in Dota 2."
-	"HeroGuidesSupported"			"1"
-
-	"maps"							"pudgewars_new pudgewars_10v10"
-	"IsPlayable"					"1"
-
+	"maps"					"pudgewars_new pudgewars_10v10"
+	"MinimalPrecache"		"1"
+	"IsPlayable"			"1"
+	"EventGame"				"0"
+	"EnablePickRules"		"0"
+	"HeroGuidesSupported"	"1"
+	"ForceDefaultGuide"		"0"
+	"MinPlayers"			"1"
+	"MaxPlayers"			"20"
+	"TeamCount"				"2"
+	"CheckAFKPlayers"		"1"
+	"PenaltiesEnabled"		"0"
 	"pudgewars_new"
 	{
 		"MaxPlayers"				"10"
 	}
-
 	"pudgewars_10v10"
 	{
 		"MaxPlayers"				"20"

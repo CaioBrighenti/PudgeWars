@@ -1,13 +1,8 @@
 print("[PUDGE] PudgeClass loading")
 
-if PudgeClass == nil then
-	PudgeClass = {}
-	PudgeClass.__index = PudgeClass
-end
-
-function PudgeClass.create(playerId)
+function GameMode.create(playerId)
 	local pudge = {}
-	setmetatable(pudge,PudgeClass)
+	setmetatable(pudge,GameMode)
 	pudge.playerId = playerId
 	pudge.isHooked = false
 	pudge.hasspawned = false
@@ -31,7 +26,7 @@ function PudgeClass.create(playerId)
 	return pudge
 end
 
-function PudgeClass:InitPudge(pudge)
+function GameMode:InitPudge(pudge)
 	print(pudge:GetUnitName())
 	print('Pudge Spawned for the first time, id=' .. pudge:GetPlayerOwnerID())
 	PudgeArray[ pudge:GetPlayerOwnerID() ] = self.create( pudge:GetPlayerOwnerID() )

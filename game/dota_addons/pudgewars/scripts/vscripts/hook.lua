@@ -300,7 +300,7 @@ function LaunchHook(keys)
 	-- only load pudge hook first time
 	if pudge.modelName == "" then
 		if PudgeArray[hero:GetPlayerOwnerID()].modelName == "" then
-			PudgeClass:AssignHookModel(hero)    
+			GameMode:AssignHookModel(hero)    
 		end
 	end
 
