@@ -47,7 +47,7 @@ Label
 	height: 76.8px;
 	vertical-align: bottom;
 	horizontal-align: center;
-	margin-left: 13%;
+	margin-left: 8.5%;
 	margin-bottom: 14.5%;
 
 	animation-name: ArrowImage_anim;
@@ -82,7 +82,7 @@ Label
 	border: 0px solid red;
 	vertical-align: bottom;
 	horizontal-align: center;
-	margin-left: 13%;
+	margin-left: 9%;
 	margin-bottom: 22%;
 
 	background-color: #111111;
@@ -99,17 +99,17 @@ Label
 {
 	0%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 
 	50%
 	{
-		box-shadow: -2px -2px 5px 5px #edbd28;
+		box-shadow: 0px 0px 5px 5px #edbd28;
 	}
 
 	100%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 }
 
@@ -139,17 +139,17 @@ Label
 {
 	0%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 
 	50%
 	{
-		box-shadow: -2px -2px 5px 5px #edbd28;
+		box-shadow: 0px 0px 5px 5px #edbd28;
 	}
 
 	100%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 }
 
@@ -239,17 +239,17 @@ Label
 {
 	0%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 
 	50%
 	{
-		box-shadow: -2px -2px 5px 5px #edbd28;
+		box-shadow: 0px 0px 5px 5px #edbd28;
 	}
 
 	100%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 }
 
@@ -337,17 +337,17 @@ Label
 {
 	0%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 
 	50%
 	{
-		box-shadow: -2px -2px 5px 5px #edbd28;
+		box-shadow: 0px 0px 5px 5px #edbd28;
 	}
 
 	100%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 }
 
@@ -435,17 +435,17 @@ Label
 {
 	0%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 
 	50%
 	{
-		box-shadow: -2px -2px 5px 5px #edbd28;
+		box-shadow: 0px 0px 5px 5px #edbd28;
 	}
 
 	100%
 	{
-		box-shadow: -2px -2px 0px 3px #edbd28;
+		box-shadow: 0px 0px 0px 3px #edbd28;
 	}
 }
 
@@ -531,7 +531,7 @@ Label
 	width: 160px;
 	height: 30px;
 	border: 1px solid #5e686966;
-	box-shadow: #00000055 -2px -2px 1px 4px;
+	box-shadow: #00000055 0px 0px 1px 4px;
 }
 
 #ToggleTutorialButtonLabel
