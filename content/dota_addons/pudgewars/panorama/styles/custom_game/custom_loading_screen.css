@@ -25,6 +25,10 @@
 @define COLOR_INFO_BACKGROUND_DARK_PURPLE: #333333;
 @define COLOR_INFO_TEXT_PURPLE: #ff0000;
 
+@define COLOR_INFO_BACKGROUND_BLUE: #224470dd;
+@define COLOR_INFO_BACKGROUND_DARK_BLUE_XHS: #0B0B27;
+@define COLOR_INFO_TEXT_BLUE: #66aaff;
+
 @define maximum_length: 77%;
 
 @keyframes 'VoteVisible'
@@ -168,6 +172,12 @@
 	flow-children: down;
 }
 
+#vote-label-container {
+	width: 100%;
+	height: 40%;
+	flow-children: down;
+}
+
 .vote-header-container {
 	width: 100%;
 	height: 20%;
@@ -180,6 +190,7 @@
 	height: 100%;
 	text-align: center center;
 	font-size: 35px;
+	text-shadow: 2px 2px 2px black;
 	color: #aaa;
 }
 
@@ -240,15 +251,15 @@
 .description-background {
 	width: 100%;
 	height: 55%;
-	background-image: url("file://{images}/custom_game/loading_screen/custom_bg.jpg");
-	background-position: 50% 0%;
+	background-image: url("file://{images}/custom_game/mods/modlist1.jpg");
+	background-position: 50% 30%;
 	background-size: cover;
 }
 
 .description-text-container {
 	width: 100%;
 	height: 45%;
-	background-color: COLOR_INFO_BACKGROUND_DARK_ORANGE;
+	background-color: COLOR_INFO_BACKGROUND_DARK_BLUE_XHS;
 	flow-children: down;
 }
 
@@ -441,13 +452,15 @@
 }
 
 .vote-content {
-	width: 55%;
+	width: 70%;
 	height: 55%;
+	margin-right: 20%;
 	padding: 0% 5% 0% 5%;
 	align: center center;
 	flow-children: down;
 	background-image: url("file://{images}/custom_game/gg/gg_background.png");
 	background-size: 100% 100%;
+	z-index: 100;
 }
 
 .vote-content-title {
@@ -469,7 +482,7 @@
 }
 
 .vote-select-panel {
-	width: 23%;
+	width: 18%;
 	height: 80%;
 	margin-left: 1%;
 	margin-right: 1%;
@@ -497,8 +510,8 @@
 	padding: 0px 10px 0px 10px;
 	align: center center;
 	text-shadow: 2px 2px 4px black;
-	color: #909090;
-	text-align: center center;
+	color: #FFF;
+	text-align: left center;
 }
 
 .vote-select-description {
@@ -541,12 +554,12 @@
 	width: 100%;
 	height: 100%;
 	visibility: collapse;
+	flow-children: down;
 }
 
 .bottom-patreon-sub {
 	width: 100%;
 	height: 100%;
-	align: center top;
 	flow-children: right;
 }
 
@@ -619,7 +632,7 @@
 	box-shadow: 0 0 10px #111;
 	transition-duration: 0.25s;
 	transition-property: box-shadow;
-	align: center top;
+	align: center center;
 }
 
 .loading-link-patreon:hover {
@@ -710,47 +723,3 @@
 	visibility: visible;
 }
 
-.Active #VoteGameModeText1
-{
-	color: yellow;
-}
-
-.Active #VoteGameModeText2
-{
-	color: orange;
-}
-
-.Active #VoteGameModeText3
-{
-	color: red;
-}
-
-.Active #VoteGameModeText4
-{
-	color: darkred;
-}
-
-.Active #VoteGameModeText5
-{
-	color: darkred;
-}
-
-.CGSRadio
-{
-	width: 100%;
-	height: 100%;
-	z-index: 2;
-	visibility: collapse;
-}
-
-.Active .CGSRadio {
-	visibility: visible;
-}
-
-.DonatorReward {
-	height: 100%;
-}
-
-#MainVoteButton {
-	opacity: 0;
-}

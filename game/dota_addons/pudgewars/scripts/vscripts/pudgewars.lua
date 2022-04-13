@@ -664,7 +664,6 @@ end
 ListenToGameEvent('game_rules_state_change', function(keys)
 	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then
 		-- If no one voted, default to IMBA 10v10 gamemode
-		GameRules:SetCustomGameDifficulty(1)
 		api:SetCustomGamemode(1)
 
 		if GameMode.VoteTable == nil then return end
@@ -677,7 +676,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				local gamemode = vote[1]
 				local vote_count = vote[2]
 				if not voteCounts[vote[1]] then voteCounts[vote[1]] = 0 end
-				print(pid, vote[1], vote[2])
+--				print(pid, vote[1], vote[2])
 				voteCounts[vote[1]] = voteCounts[vote[1]] + vote[2]
 			end
 
@@ -685,7 +684,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			local highest_vote = 0
 			local highest_key = ""
 			for k, v in pairs(voteCounts) do
-				print(k, v)
+--				print(k, v)
 				if v > highest_vote then
 					highest_key = k
 					highest_vote = v
@@ -695,15 +694,15 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 			-- Check for a tie by counting how many values have the highest number of votes
 			local tieTable = {}
 			for k, v in pairs(voteCounts) do
-				print(k, v)
+--				print(k, v)
 				if v == highest_vote then
-					table.insert(tieTable, k[1])
+					table.insert(tieTable, tonumber(k))
 				end
 			end
 
 			-- Resolve a tie by selecting a random value from those with the highest votes
 			if table.getn(tieTable) > 1 then
-				print("Vote System: TIE!")
+--				print("Vote System: TIE!")
 				highest_key = tieTable[math.random(table.getn(tieTable))]
 			end
 
@@ -712,12 +711,7 @@ ListenToGameEvent('game_rules_state_change', function(keys)
 				api:SetCustomGamemode(highest_key)
 			end
 
-			-- Act on the winning vote
-			if category == "difficulty" then
-				GameRules:SetCustomGameDifficulty(highest_key)
-			end
-
-			print(category .. ": " .. highest_key)
+--			print(category .. ": " .. highest_key)
 		end
 	end
 end, nil)
@@ -734,7 +728,7 @@ donator_list[9] = 3 -- Gaben Donator
 function GameMode:OnSettingVote(keys)
 	local pid = keys.PlayerID
 
-	print(keys)
+--	print(keys)
 
 	if not GameMode.VoteTable then GameMode.VoteTable = {} end
 	if not GameMode.VoteTable[keys.category] then GameMode.VoteTable[keys.category] = {} end
@@ -758,104 +752,4 @@ function GameMode:OnSettingVote(keys)
 	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
 end
 
--- Custom game-modes as per api:GetCustomGamemode():
--- 1: Standard
--- 2: Mutation
--- 3: Super Frantic
--- 4: Diretide
--- 5: Same Hero Selection
-
---[[
-
-ListenToGameEvent('game_rules_state_change', function(keys)
-	if GameRules:State_Get() == DOTA_GAMERULES_STATE_HERO_SELECTION then		
-		-- If no one voted, default to IMBA 10v10 gamemode
-		GameRules:SetCustomGameDifficulty(2)
-
-		if GameMode.VoteTable == nil then return end
-		local votes = GameMode.VoteTable
-
-		for category, pidVoteTable in pairs(votes) do
-			-- Tally the votes into a new table
-			local voteCounts = {}
-			for pid, vote in pairs(pidVoteTable) do
-				if not voteCounts[vote] then voteCounts[vote] = 0 end
-				voteCounts[vote] = voteCounts[vote] + 1
-			end
-
-			print(voteCounts)
-
-			-- Find the key that has the highest value (key=vote value, value=number of votes)
-			local highest_vote = 0
-			local highest_key = ""
-			for k, v in pairs(voteCounts) do
-				if v > highest_vote then
-					highest_key = k
-					highest_vote = v
-				end
-			end
-
-			print("Highest vote:", highest_vote)
-			-- if vote count is lower than player count / 4, default to whatever the standard is
-			if highest_vote < 5 then
-				if GetMapName() == "imba_10v10" then
-					highest_key = 3
-				else
-					highest_key = 1
-				end
-			else
-				-- Check for a tie by counting how many values have the highest number of votes
-				local tieTable = {}
-				for k, v in pairs(voteCounts) do
-					if v == highest_vote then
-						table.insert(tieTable, k)
-					end
-				end
-
-				-- Resolve a tie by selecting a random value from those with the highest votes
-				if table.getn(tieTable) > 1 then
-					print("Vote System: TIE!")
-					highest_key = tieTable[math.random(table.getn(tieTable))]
-				end
-			end
-
-			-- Act on the winning vote
-			if category == "gamemode" then
-				api:SetCustomGamemode(highest_key)
-			end
-
-			-- Act on the winning vote
---			if category == "difficulty" then
---				GameRules:SetCustomGameDifficulty(highest_key)
---			end
-
-			print(category .. ": " .. highest_key)
-		end
-	elseif GameRules:State_Get() == DOTA_GAMERULES_STATE_PRE_GAME then
-		GameRules:GetGameModeEntity():SetPauseEnabled(true)
-	end
-end, nil)
-
-function GameMode:OnSettingVote(keys)
-	local pid = keys.PlayerID
-
-	if not GameMode.VoteTable then
-		GameMode.VoteTable = {}
-	end
-
-	if not GameMode.VoteTable[keys.category] then
-		GameMode.VoteTable[keys.category] = {}
-	end
-
-	if pid >= 0 then
-		GameMode.VoteTable[keys.category][pid] = keys.vote
-	end
-
---	Say(nil, keys.category, false)
---	Say(nil, tostring(keys.vote), false)
-
-	-- TODO: Finish votes show up
-	CustomGameEventManager:Send_ServerToAllClients("send_votes", {category = keys.category, vote = keys.vote, table = GameMode.VoteTable[keys.category]})
-end
-
---]]
+CustomGameEventManager:RegisterListener("setting_vote", Dynamic_Wrap(GameMode, "OnSettingVote"))

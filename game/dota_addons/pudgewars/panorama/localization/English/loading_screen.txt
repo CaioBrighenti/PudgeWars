@@ -1,4 +1,4 @@
-"game_version_name"							""
+"game_version_name"							"7.31 Fixed"
 "loading_screen_description" 				"Pudge Wars is part of Frostrose Studio, directed by EarthSalamander."
 "loading_screen_button"						"Pudge Wars Website"
 "loading_screen_frostrose_battlefield"		"Frostrose Battlefield requires more testers! We're moving closer to a release date and we need help to polish the gameplay and make sure the game is stable. Play-testing F-B will grant you 2x more Imbattlepass XP than regular imba games. If you're interested, join Frostrose Battlefield's Discord server:"
@@ -24,10 +24,10 @@
 "vote_gamemode_3"						"100 kills"
 "vote_gamemode_4"						"200 kills"
 
-"description_gamemode_1"				"Amount of kills per team required to win the game."
-"description_gamemode_2"				"Amount of kills per team required to win the game."
-"description_gamemode_3"				"Amount of kills per team required to win the game."
-"description_gamemode_4"				"Amount of kills per team required to win the game."
+"vote_gamemode_1_description"				"Amount of kills per team required to win the game."
+"vote_gamemode_2_description"				"Amount of kills per team required to win the game."
+"vote_gamemode_3_description"				"Amount of kills per team required to win the game."
+"vote_gamemode_4_description"				"Amount of kills per team required to win the game."
 
 "loading_screen_custom_games_1"			"This is the list of every custom games currently managed by Frostrose Studio:"
 "loading_screen_custom_games_2"			"You can translate Pudge Wars in your native language on Transifex website, it's easy! Just create an account and subscribe to a language. Give it a try! Don't forget to request your Discord role!"

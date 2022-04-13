@@ -1,5 +1,6 @@
 "use strict";
 
+var game_options;
 var secret_key = {};
 
 var api = {
@@ -38,6 +39,14 @@ var view = {
 	link: $("#loading-link"),
 	link_text:  $("#loading-link-text")
 };
+
+var vote_tooltips = {};
+var vote_count = {
+	"IMBA": 5,
+	"XHS": 5,
+	"PW": 4,
+	"FB": 3,
+}
 
 var link_targets = "";
 
@@ -136,10 +145,19 @@ function fetch() {
 		return;
 	}
 
-	var game_options = CustomNetTables.GetTableValue("game_options", "game_version");
+	game_options = CustomNetTables.GetTableValue("game_options", "game_version");
 	if (game_options == undefined) {
 		$.Schedule(0.1, fetch);
 		return;
+	}
+
+	for (var i = 1; i <= vote_count[game_options.game_type]; i++) {
+		// if Frostrose Battlefield
+		if (game_options.game_type == "FB") {
+			vote_tooltips[i] = "mutation_" + CustomNetTables.GetTableValue("game_options", "mutations")[1][i];
+		} else {
+			vote_tooltips[i] = "vote_gamemode_" + i;
+		}
 	}
 
 	secret_key = CustomNetTables.GetTableValue("game_options", "server_key");
@@ -155,10 +173,15 @@ function fetch() {
 	else if (Game.GetMapInfo().map_display_name == "imbathrow_3v3v3v3")
 		DisableRankingVoting();
 
-	view.title.text = $.Localize("#addon_game_name");
-	view.subtitle.text = "7.28 Fixed";
+	var game_version = game_options.value;
 
-/*
+	if (typeof(game_version) == "number") game_version = game_version.toFixed(2);
+	if (isInt(game_version))
+		game_version = game_version.toString() + ".0";
+
+	view.title.text = $.Localize("#addon_game_name") + " " + game_version;
+	view.subtitle.text = $.Localize("#game_version_name").toUpperCase();
+
 	api.getLoadingScreenMessage(function(data) {
 		var found_lang = false;
 		var result = data.data;
@@ -167,7 +190,7 @@ function fetch() {
 		for (var i in result) {
 			var info = result[i];
 
-			if (info.lang == $.Localize("lang")) {
+			if (info.lang == $.Localize("#lang")) {
 				view.text.text = info.content;
 //				view.link_text.text = info.link_text;
 				found_lang = true;
@@ -185,8 +208,6 @@ function fetch() {
 		// error callback
 		$.Msg("Unable to retrieve loading screen info.")
 	});
-*/
-
 };
 
 function AllPlayersLoaded() {
@@ -194,23 +215,33 @@ function AllPlayersLoaded() {
 
 	$("#MainVoteButton").style.opacity = "1";
 
-	for (var i = 1; i <= $("#vote-container").GetChildCount() - 3; i++) {
+	if (Game.IsInToolsMode())
+		$("#VoteContent").RemoveAndDeleteChildren();
+
+	for (var i = 1; i <= vote_count[game_options.game_type]; i++) {
+		var gamemode_vote = $.CreatePanel("Panel", $("#VoteContent"), "VoteGameMode" + i);
+		gamemode_vote.BLoadLayoutSnippet('VoteChoice');
+		gamemode_vote.style.width = (93 / vote_count[game_options.game_type]) + "%";
+
+		var gamemode_label = $.CreatePanel("Label", $("#vote-label-container"), "VoteGameModeText" + i);
+		gamemode_label.AddClass("vote-label");
+		gamemode_label.style.height = (100 / vote_count[game_options.game_type]) + "%";
+		gamemode_label.text = $.Localize("#" + vote_tooltips[i]);
+	}
+
+	for (var i = 1; i <= $("#vote-label-container").GetChildCount(); i++) {
 		//$.Msg("Game Mode: ", i)
-		var panel = $("#vote-container").GetChild(i);
-		var gamemode = panel.id.replace("VoteGameModeText", "");
+		var panel = $("#vote-label-container").GetChild(i - 1);
 
-		if (!panel.BHasClass("Active"))
-			panel.AddClass("Active");
-
-		(function (panel, gamemode) {
+		(function (panel, i) {
 			panel.SetPanelEvent("onmouseover", function () {
-				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("description_gamemode_" + gamemode));
+				$.DispatchEvent("UIShowTextTooltip", panel, $.Localize("#" + vote_tooltips[i] + "_description"));
 			})
 
 			panel.SetPanelEvent("onmouseout", function () {
 				$.DispatchEvent("UIHideTextTooltip", panel);
 			})
-		})(panel, gamemode);
+		})(panel, i);
 	}
 
 	ToggleVoteContainer(true);
@@ -218,30 +249,23 @@ function AllPlayersLoaded() {
 	var vote_panel = $.GetContextPanel().FindChildrenWithClassTraverse("vote-select-panel-container");
 
 	if (vote_panel && vote_panel[0]) {
-		for (var i = 0; i <= vote_panel[0].GetChildCount() - 1; i++) {
-			var panel = vote_panel[0].GetChild(i);
-			var gamemode = undefined;
+		for (var i = 1; i <= vote_panel[0].GetChildCount(); i++) {
+			var panel = vote_panel[0].GetChild(i - 1);
 			var button = undefined;
 
 			if (panel.GetChild(2)) {
-				gamemode = panel.GetChild(2).id.replace("VoteGameModeMainText", "");
 				button = panel.GetChild(2);
 
-				panel.GetChild(0).text = $.Localize("vote_gamemode_" + gamemode);
-				panel.GetChild(1).text = $.Localize("description_gamemode_" + gamemode);
+				panel.GetChild(0).text = $.Localize("#" + vote_tooltips[i]);
+				panel.GetChild(1).text = $.Localize("#" + vote_tooltips[i] + "_description");
 			}
 
-//			if (!panel.BHasClass("Active"))
-//				panel.AddClass("Active");
-
-			if (gamemode) {
-				(function (button, gamemode) {
-					button.SetPanelEvent("onactivate", function () {
-						OnVoteButtonPressed('gamemode', gamemode);
-						ToggleVoteContainer(false);
-					})
-				})(button, gamemode);
-			}
+			(function (button, i) {
+				button.SetPanelEvent("onactivate", function () {
+					OnVoteButtonPressed('gamemode', i);
+					ToggleVoteContainer(false);
+				})
+			})(button, i);
 		}
 	}
 
@@ -310,9 +334,11 @@ function OnVoteButtonPressed(category, vote)
 {
 //	$.Msg("Category: ", category);
 //	$.Msg("Vote: ", vote);
+
+	var gamemode_name = $.Localize("#" + vote_tooltips[vote]);
+
+	$("#VoteGameModeCheck").text = "You have voted for " + gamemode_name + ".";
 	GameEvents.SendCustomGameEventToServer( "setting_vote", { "category":category, "vote":vote, "PlayerID":Game.GetLocalPlayerID() } );
-	var gamemode_name = $.Localize("vote_gamemode_" + vote)
-	$("#VoteGameModeCheck").text = "You have voted for " + gamemode_name + "."
 }
 
 /* new system, double votes for donators */
@@ -320,109 +346,59 @@ function OnVoteButtonPressed(category, vote)
 function OnVotesReceived(data)
 {
 //	$.Msg(data)
-//	$.Msg(data.vote.toString())
 //	$.Msg(data.table)
 
-	var vote_count = [];
+	var vote_counter = [];
 
 	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
 
 	// Reset tooltips
-	for (var i = 1; i <= 5; i++) {
-		vote_count[i] = 0;
-		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i);
-	}
+	for (var i = 1; i <= vote_count[game_options.game_type]; i++) {
+		vote_counter[i] = 0;
 
-
-	// Check number of votes for each gamemodes
-	for (var id in data.table){
-		var gamemode = data.table[id][1];
-		var amount_of_votes = data.table[id][2];
-//		$.Msg(gamemode + " / "+ amount_of_votes)
-		vote_count[gamemode] = vote_count[gamemode] + amount_of_votes;
-	}
-
-	// Modify tooltips based on voted gamemode
-	for (var i = 1; i <= 5; i++) {
-		var vote_tooltip = "vote"
-		if (vote_count[i] > 1)
-			vote_tooltip = "votes"
-
-		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
-	}
-
-	// calculate number of people who voted
-	var highest_vote = 0;
-	for (var i in vote_count) {
-		if (vote_count[i] > highest_vote)
-			highest_vote = i;
-	}
-
-	if ($("#VoteGameModeText" + highest_vote)) {
-		if (highest_vote != 1 && vote_count[highest_vote] < 5) {
-			$("#VoteGameModeText1").style.color = "green";
-		} else {
-			$("#VoteGameModeText" + highest_vote).style.color = "green";
-		}
-	}
-}
-
-/*
-
-function OnVotesReceived(data)
-{
-//	$.Msg(data)
-//	$.Msg(data.vote.toString())
-//	$.Msg(data.table)
-//	$.Msg(data.table[id])
-
-	var vote_count = [];
-
-	var map_name_cut = Game.GetMapInfo().map_display_name.replace('_', " ");
-
-	// Reset tooltips
-	for (var i = 1; i <= 5; i++) {
-		vote_count[i] = 0;
-		if ($("#VoteGameModeText" + i))
-			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i);
-	}
-
-	// Check number of votes for each gamemodes
-	for (var id in data.table){
-		var gamemode = data.table[id];
-		vote_count[gamemode]++;
-	}
-
-	// Modify tooltips based on voted gamemode
-	for (var i = 1; i <= 5; i++) {
-		var vote_tooltip = "vote"
-		if (vote_count[i] > 1)
-			vote_tooltip = "votes"
+		var gamemode_text = $.Localize("#" + vote_tooltips[i]);
 
 		if ($("#VoteGameModeText" + i)) {
-			$("#VoteGameModeText" + i).text = $.Localize("#vote_gamemode_" + i) + " (" + vote_count[i] + " "+ vote_tooltip +")";
+			$("#VoteGameModeText" + i).text = gamemode_text;
+		}
+	}
+
+	// Check number of votes for each gamemodes
+	for (var player_id in data.table) {
+//		$.Msg(data.table[player_id]);
+		var gamemode = data.table[player_id][1];
+		var amount_of_votes = data.table[player_id][2];
+//		$.Msg(gamemode + " / "+ amount_of_votes)
+		vote_counter[gamemode] = vote_counter[gamemode] + amount_of_votes;
+	}
+
+	// Modify tooltips based on voted gamemode
+	for (var i = 1; i <= vote_count[game_options.game_type]; i++) {
+		var vote_tooltip = "vote"
+
+		if (vote_counter[i] > 1)
+			vote_tooltip = "votes";
+
+		var gamemode_text = $.Localize("#" + vote_tooltips[i]) + " (" + vote_counter[i] + " "+ vote_tooltip +")";
+
+		if ($("#VoteGameModeText" + i)) {
+//			$.Msg(gamemode_text);
 			$("#VoteGameModeText" + i).style.color = "white";
+			$("#VoteGameModeText" + i).text = $.Localize("#" + vote_tooltips[i]) + " (" + vote_counter[i] + " "+ vote_tooltip +")";
 		}
 	}
 
 	// calculate number of people who voted
 	var highest_vote = 0;
-	for (var i in vote_count) {
-		if (vote_count[i] > highest_vote)
+	for (var i in vote_counter) {
+		if (vote_counter[i] > highest_vote)
 			highest_vote = i;
 	}
 
 	if ($("#VoteGameModeText" + highest_vote)) {
-		if (highest_vote != 1 && vote_count[highest_vote] < 5) {
-			$("#VoteGameModeText1").style.color = "green";
-		} else {
-			$("#VoteGameModeText" + highest_vote).style.color = "green";
-		}
+		$("#VoteGameModeText" + highest_vote).style.color = "green";
 	}
 }
-*/
 
 function DisableVoting() {
 	$("#imba-loading-title-vote").style.visibility = "collapse";
@@ -437,7 +413,7 @@ function DisableRankingVoting() {
 
 	if (vote_info && vote_info[0]) {
 		vote_info[0].SetPanelEvent("onmouseover", function () {
-			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("vote_gamemode_description"));
+			$.DispatchEvent("UIShowTextTooltip", vote_info[0], $.Localize("#vote_gamemode_description"));
 		})
 
 		vote_info[0].SetPanelEvent("onmouseout", function () {
@@ -449,7 +425,7 @@ function DisableRankingVoting() {
 
 	if (bottom_button_container && bottom_button_container[0] && bottom_button_container[0].GetChild(0))
 		bottom_button_container[0].GetChild(0).checked = true;
-
+/*/
 	var bottom_patreon_container = $.GetContextPanel().FindChildrenWithClassTraverse("bottom-patreon-sub");
 
 	if (bottom_patreon_container && bottom_patreon_container[0]) {
@@ -475,7 +451,7 @@ function DisableRankingVoting() {
 			companionpreview.style.opacityMask = 'url("s2r://panorama/images/masks/hero_model_opacity_mask_png.vtex");'
 		}
 	}
-
+*/
 	HoverableLoadingScreen();
 	fetch();
 	SetProfileName();
