@@ -72,6 +72,8 @@ ListenToGameEvent('entity_killed', function(keys)
 		return
 	end
 
+	print("Unit has been killed:", killedUnit:GetUnitName())
+
 	if string.find(killedUnit:GetClassname(), "creep") and string.find(killedUnit:GetUnitName(), "mine") and not killedUnit:HasModifier("modifier_pudge_meat_hook") then
 		Timers:CreateTimer(1.0, function()
 			if killedUnit and IsValidEntity(killedUnit) then

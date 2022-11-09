@@ -233,7 +233,7 @@ function LaunchHook(keys)
 	local pudge = PudgeArray[hero:GetPlayerID()]
 	local hook_ab = hero:FindAbilityByName("pudge_wars_custom_hook")
 
-	local hooks = {}
+	local hooks = {} -- a bunch of dummy units to track hook position
 	local damage = hook_ab:GetSpecialValueFor("base_damage")
 	local distance = hook_ab:GetSpecialValueFor("base_range")
 	local speed = hook_ab:GetSpecialValueFor("base_speed")
@@ -324,15 +324,22 @@ function LaunchHook(keys)
 	end
 
 	print("Create dummy unit")
-	hooks[hookCount] = CreateUnitByName("npc_reflex_hook_test", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
-	hooks[hookCount]:SetModel(hook_model)
-	hooks[hookCount]:SetOriginalModel(hook_model)
-	hooks[hookCount]:SetModelScale(modelScale)
-	hooks[hookCount]:SetAbsOrigin(hero:GetAbsOrigin() + Vector(0,0,125))
+	local hook_dummy = CreateUnitByName("npc_reflex_hook_test", hero:GetOrigin() + dir * 75, false, hero, hero, hero:GetTeamNumber())
+	hooks[1] = hook_dummy
+	print(hook_dummy)
+	print(IsValidEntity(hook_dummy))
+	Timers:CreateTimer(0.1, function()
+		print(hook_dummy:GetUnitName())
+		print(hook_dummy:IsAlive())
+	end)
+	hook_dummy:SetModel(hook_model)
+	hook_dummy:SetOriginalModel(hook_model)
+	hook_dummy:SetModelScale(modelScale)
+	hook_dummy:SetAbsOrigin(hero:GetAbsOrigin() + Vector(0,0,125))
 
 	if modelName ~= "none" then
-		hooks[hookCount]:SetOriginalModel(modelName)
-		hooks[hookCount]:SetModel(modelName)
+		hook_dummy:SetOriginalModel(modelName)
+		hook_dummy:SetModel(modelName)
 	end
 
 	if pudge.use_flame then
@@ -347,8 +354,8 @@ function LaunchHook(keys)
 			endTime = GameRules:GetGameTime(),
 			useGameTime = true,
 			callback = function(reflex, args)
-			if not stop_flame_hook and hooks[1] and IsValidEntity(hooks[1]) then
-				fire_dummy:SetAbsOrigin(hooks[1]:GetAbsOrigin() + Vector(0,0,-200))	   
+			if not stop_flame_hook and hook_dummy and IsValidEntity(hook_dummy) then
+				fire_dummy:SetAbsOrigin(hook_dummy:GetAbsOrigin() + Vector(0,0,-200))	   
 				return GameRules:GetGameTime()
 			end
 
@@ -358,7 +365,8 @@ function LaunchHook(keys)
 		end})
 	end
 
-	hooks[hookCount]:FindAbilityByName("reflex_dummy_unit"):SetLevel(1)
+	local ability = hook_dummy:FindAbilityByName("reflex_dummy_unit")
+	if ability then ability:SetLevel(1) else print("ERROR: Unable to find reflex dummy ability") end
 	hookCount = hookCount + 1
 
 	local vHookOffset = Vector( 0, 0, 96 )
@@ -366,13 +374,13 @@ function LaunchHook(keys)
 	local vKillswitch = Vector(((distance / speed) * 2) + 10, 0, 0)
 
 	-- Create special chain link attached to Hook
-	local particle = ParticleManager:CreateParticle(hero.hook_pfx, PATTACH_RENDERORIGIN_FOLLOW, hooks[1])
+	local particle = ParticleManager:CreateParticle(hero.hook_pfx, PATTACH_RENDERORIGIN_FOLLOW, hook_dummy)
 	local position = hero:GetAbsOrigin()
-	local endPosition = hooks[1]:GetAbsOrigin()
+	local endPosition = hook_dummy:GetAbsOrigin()
 	local pu = ParticleUnit.new(particle, position, endPosition, 6, 0, 10) --cpStart, cpEnd, cpDelete)
 
 	hooks[hookCount] = pu
-
+	print("Chain particle number:", hookCount)
 	hookCount = hookCount + 1
 
 	local timeout = GameRules:GetGameTime() + distance / speed
@@ -386,349 +394,354 @@ function LaunchHook(keys)
 	vars_table[5] = false --BOUNCE
 	vars_table[6] = nil  -- rupture_unit 
 	vars_table[7] = nil -- totem unit
+	local current_time = 0
  
 	print("About to start timer")
-	GameMode:CreateTimer(DoUniqueString('hook_test2'), {
-		endTime = GameRules:GetGameTime(),
-		useGameTime = true,
-		callback = function(reflex, args)
-			print("Start hook timer")
-			hooked = vars_table[0]
-			hero = vars_table[1]
-			complete = vars_table[2]
-			damage = vars_table[3]
-			speed = vars_table[4]
+	Timers:CreateTimer(function()
+		print("Start hook timer")
+		hooked = vars_table[0]
+		hero = vars_table[1]
+		complete = vars_table[2]
+		damage = vars_table[3]
+		speed = vars_table[4]
+		print(hook_dummy)
+		print(IsValidEntity(hook_dummy))
+		local hook_dummy_origin = hook_dummy:GetAbsOrigin()
 
-			print("Complete:", complete)
-			if complete then
-				if hooked ~= nil and IsValidEntity(hooked) and IsValidEntity(hooks[1]) then
-					hooked:SetAbsOrigin(hooks[1]:GetAbsOrigin() + Vector(0,0,-125))
+		print("Complete:", complete)
+		if complete then
+			if hooked ~= nil and IsValidEntity(hooked) and IsValidEntity(hook_dummy) then
+				hooked:SetAbsOrigin(hook_dummy_origin + Vector(0,0,-125))
 
-					local diff = hero:GetAbsOrigin() - hooked:GetAbsOrigin()
+				local diff = hero:GetAbsOrigin() - hooked:GetAbsOrigin()
 
-					if diff:Length() < 150 then
-						--hooked:RemoveModifierByName("modifier_rooted")
-						hooked:RemoveModifierByName("modifier_pudge_meat_hook")
+				if diff:Length() < 150 then
+					--hooked:RemoveModifierByName("modifier_rooted")
+					hooked:RemoveModifierByName("modifier_pudge_meat_hook")
 
-						if hero:HasItemInInventory('item_strygwyr_claw') and hero:FindItemInInventory('item_strygwyr_claw'):GetLevel() == 5 then
-							--If the caster has max level strygwyrs, leave rupture for 3 seconds
-							local hooked_rupture = hooked
+					if hero:HasItemInInventory('item_strygwyr_claw') and hero:FindItemInInventory('item_strygwyr_claw'):GetLevel() == 5 then
+						--If the caster has max level strygwyrs, leave rupture for 3 seconds
+						local hooked_rupture = hooked
 
-							Timers:CreateTimer(3.0, function()
-								if hooked_rupture and IsValidEntity(hooked_rupture) then
-									hooked_rupture:RemoveModifierByName("modifier_bloodseeker_rupture")
-								end
-						
-								if vars_table[6] ~= nil then
-									vars_table[6]:Destroy()
-								end
-							end)
-						else
-							--Remove rupture unit
-							hooked:RemoveModifierByName("modifier_bloodseeker_rupture")
+						Timers:CreateTimer(3.0, function()
+							if hooked_rupture and IsValidEntity(hooked_rupture) then
+								hooked_rupture:RemoveModifierByName("modifier_bloodseeker_rupture")
+							end
+					
 							if vars_table[6] ~= nil then
 								vars_table[6]:Destroy()
 							end
-						end
-					if (string.find(hooked:GetClassname(),"creature") and string.find(hooked:GetUnitName(),"rune")) or ( string.find(hooked:GetClassname(), "creep" ) and string.find(hooked:GetUnitName(), "mine") and not hooked:IsAlive() ) then
-						--Remove the rune as soon as it has return to the caster
-						hooked:RemoveSelf()
+						end)
 					else
-						-- Prevent getting stuck
-						FindClearSpaceForUnit(hooked, hooked:GetAbsOrigin(), true)
-					end
-
-						hooked = nil
-						dropped = true
-					end
-				end
-
-				--Move close chain
-				if #hooks > 1 then
-					local direction = hero:GetAbsOrigin() - hooks[#hooks]:GetEnd()
-					direction.z = 0
-					direction = direction:Normalized()
-					hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,70))
-					hooks[#hooks]:SetEnd(hooks[#hooks]:GetEnd() + direction * speed / 30)
-				else
-					local direction = hero:GetAbsOrigin() - hooks[#hooks]:GetAbsOrigin()
-					direction.z = 0
-					direction = direction:Normalized()
-					hooks[#hooks]:SetAbsOrigin(hooks[#hooks]:GetAbsOrigin() + direction * speed / 30)
-				end
-
-				for i=#hooks - 1,2,-1 do
-					local diff = hooks[i+1]:GetEnd() - hooks[i]:GetEnd()
-					if diff:Length() > linkFollowDistance then
-						diff.z = 0
-						hooks[i]:SetEnd(hooks[i]:GetEnd() + diff:Normalized() * (diff:Length() - linkFollowDistance))
-					end
-					if hooks[i]:GetStart() ~= hooks[i+1]:GetEnd() then
-						hooks[i]:SetStart(hooks[i+1]:GetEnd())
-					end
-				end
-
-				if #hooks > 1 then
-					local diff = hooks[2]:GetAbsOrigin() - hooks[1]:GetAbsOrigin()
-					diff.z = 0
-					hooks[1]:SetAbsOrigin(hooks[1]:GetAbsOrigin() + diff:Normalized() * (diff:Length() - linkFollowDistance))
-					hooks[1]:SetForwardVector(-1 * diff:Normalized())
-				end
-
-				local diff = nil
-				local hasFire = false
-				
-				if #hooks > 1 then
-					diff = hooks[#hooks]:GetEnd() - hero:GetAbsOrigin()
-				else
-					diff = hooks[#hooks]:GetAbsOrigin() - hero:GetAbsOrigin()
-					hasFire = hooks[#hooks]:HasAbility("pudge_wars_firefly")
-				end
-
-				diff.z = 0
-
-				if diff:Length() < linkDeletionTolerance then
-					if hasFire then
-						stop_flame_hook = true
-					else
-						hooks[#hooks]:Destroy()
-						hooks[#hooks] = nil
-						if #hooks > 1 then
-							hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,70))
+						--Remove rupture unit
+						hooked:RemoveModifierByName("modifier_bloodseeker_rupture")
+						if vars_table[6] ~= nil then
+							vars_table[6]:Destroy()
 						end
 					end
-				end
-		 
-				if #hooks == 0 then
-					if hooked ~= nil and IsValidEntity(hooked) then
-						--hooked:RemoveModifierByName("modifier_rooted")
-						hooked:RemoveModifierByName("modifier_pudge_meat_hook")
-					end
-					pudge.is_throwing_hook = false
-					return
-				end
-		 
-				--print(tostring(hooks[#hooks]:GetAbsOrigin()) .. " -- " .. tostring(dir) .. " -- " .. speed .. " -- " .. tostring(#hooks))
-				if hooked == nil and not dropped then
-					--BACKWARDS
-					local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-100), radius / 2)
-					findEntity(entities,vars_table, false,bounces,hero)
-					local entities = nil
-					if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
-						entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-200), radius / 2)
-					else
-						entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,0), radius / 2)
-					end
-					findEntity(entities,vars_table, false,bounces,hero)
-					hooked = vars_table[0]
-					hero = vars_table[1]
-					complete = vars_table[2]
-					damage = vars_table[3]
-					speed = vars_table[4]
-				end
-			else
-				-- Move hook
-				dir.z = 0
-				print(hooks[1]:GetAbsOrigin(), dir, speed)
-				hooks[1]:SetAbsOrigin(hooks[1]:GetAbsOrigin() + dir * speed / 30)
-				dir.z = 0
-				hooks[1]:SetForwardVector(dir)
-
-				local diff = hooks[1]:GetAbsOrigin() - hooks[2]:GetAbsOrigin()
-				diff.z = 0
-				if diff:Length() > linkFollowDistance then
-					hooks[2]:SetStart(hooks[2]:GetAbsOrigin() + diff:Normalized() * (diff:Length() - linkFollowDistance))
-				end
-				if hooks[2]:GetEnd() ~= hooks[1]:GetAbsOrigin() then
-					hooks[2]:SetEnd(hooks[1]:GetAbsOrigin())
+				if (string.find(hooked:GetClassname(),"creature") and string.find(hooked:GetUnitName(),"rune")) or ( string.find(hooked:GetClassname(), "creep" ) and string.find(hooked:GetUnitName(), "mine") and not hooked:IsAlive() ) then
+					--Remove the rune as soon as it has return to the caster
+					print("Remove rune:", hooked:GetUnitName())
+					hooked:RemoveSelf()
+				else
+					-- Prevent getting stuck
+					FindClearSpaceForUnit(hooked, hooked:GetAbsOrigin(), true)
 				end
 
-				-- Move chains
-				for i=3,#hooks do
-					local diff = hooks[i-1]:GetAbsOrigin() - hooks[i]:GetAbsOrigin()
-					diff.z = 0
-					if diff:Length() > linkFollowDistance then
-						hooks[i]:SetStart(hooks[i]:GetAbsOrigin() + diff:Normalized() * (diff:Length() - linkFollowDistance))
-					end
-					if hooks[i]:GetEnd() ~= hooks[i-1]:GetAbsOrigin() then
-						hooks[i]:SetEnd(hooks[i-1]:GetAbsOrigin())
-					end
-				end
-
-				-- Create New Chain link
-				local diff = hooks[#hooks]:GetAbsOrigin() - hero:GetAbsOrigin()
-				if diff:Length() > linkCreationTolerance then
-					diff.z = 0
-					local direction = diff:Normalized()
-					local particle = ParticleManager:CreateParticle("particles/pw/ref_pudge_meathook_chain.vpcf", PATTACH_ABSORIGIN, hooks[1]) --
-					local position = hero:GetAbsOrigin() + Vector(0,0,70)
-					local endPosition = hero:GetAbsOrigin() + direction * 75 + Vector(0,0,140)
-					local pu = ParticleUnit.new(particle, position, endPosition) --cpStart, cpEnd, cpDelete)
-
-					hooks[hookCount] = pu
-
-					hookCount = hookCount + 1
-				elseif #hooks > 1 then
-					hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,120))
-				end
-
-				--Collision detection
-				if hooked == nil and vars_table[5] == false then
-					--FORWARD
-					local entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-100), radius / 2)
-					findEntity(entities,vars_table, true,bounces,hero)
-					local entities = nil
-					if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
-						entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,-200), radius / 2)
-					else
-						entities = Entities:FindAllInSphere(hooks[1]:GetAbsOrigin() + Vector(0,0,100), radius / 2)
-					end
-					findEntity(entities,vars_table, true,bounces,hero)
-					hooked = vars_table[0]
-					hero = vars_table[1]
-					complete = vars_table[2]
-					damage = vars_table[3]
-					speed = vars_table[4]
-				end
-
-				-- Bounce wall checks
-				local hookPos = hooks[1]:GetAbsOrigin()
-				local angx = (math.acos(dir.x)/ math.pi * 180)
-				local angy = (math.acos(dir.y)/ math.pi * 180)
-				if hookPos.x > rightBound and dir.x > 0 then
-					local rotAngle = 180 - angx * 2
-					if angy > 90 then
-						rotAngle = 360 - rotAngle
-					end
-					bounces = bounces + 1
-					dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-				elseif hookPos.x < leftBound and dir.x < 0 then
-					local rotAngle =  angx * 2 - 180
-					if angy < 90 then
-						rotAngle = 360 - rotAngle
-					end
-					bounces = bounces + 1
-					dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-				elseif hookPos.y > topBound and dir.y > 0 then
-					local rotAngle =  180 - angy * 2
-					if angx < 90 then
-						rotAngle = 360 - rotAngle
-					end
-					bounces = bounces + 1
-					dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-				elseif hookPos.y < bottomBound and dir.y < 0 then
-					local rotAngle =  angy * 2 - 180
-					if angx > 90 then
-						rotAngle = 360 - rotAngle
-					end
-					bounces = bounces + 1
-					dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-				end
-
-				-- Bounce center
-				hookPos.z = 0
-				diff = ancientPosition - hookPos
-				rebounceTolerance = rebounceTolerance - 1
-				if ((diff:Length() < centerRadius) and (rebounceTolerance )< 1) then
-					rebounceTolerance = rebounceToleranceMax
-					diff = diff:Normalized()
-					local diffx = (math.acos(diff.x)/ math.pi * 180)
-					local diffy = (math.acos(diff.y)/ math.pi * 180)
-					local angx = (math.acos(dir.x)/ math.pi * 180)
-					local angy = (math.acos(dir.y)/ math.pi * 180)
-					local dx = diffx - angx
-					local dy = diffy - angy
-
-					local rotAngle = 180 - math.abs(dx) - math.abs(dy)
-
-					if (dx < 0 and dy  < 0 and dir.x > 0 and dir.y < 0) or
-						(dx > 0 and dy < 0 and dir.x > 0 and dir.y > 0) or
-						(dx > 0 and dy > 0 and dir.x < 0 and dir.y > 0) or 
-						(dx < 0 and dy > 0 and dir.x < 0 and dir.y < 0) then
-						rotAngle = 360 - rotAngle
-					end
-					bounces = bounces + 1
-					dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-				end
-
-				--Bounce on shiled barrier target
-				if ((vars_table[5] == true) and ((rebounceTolerance )< 1)) and (vars_table[7] == nil) and (GameMode.shield_carrier) then
-					diff = GameMode.shield_carrier:GetAbsOrigin() - hookPos
-					has_bounced_on_shield = true
-					rebounceTolerance = rebounceToleranceMax
-					diff = diff:Normalized()
-					local diffx = (math.acos(diff.x)/ math.pi * 180)
-					local diffy = (math.acos(diff.y)/ math.pi * 180)
-					local angx = (math.acos(dir.x)/ math.pi * 180)
-					local angy = (math.acos(dir.y)/ math.pi * 180)
-					local dx = diffx - angx
-					local dy = diffy - angy
-
-					local rotAngle = 180 - math.abs(dx) - math.abs(dy)
-
-					if (dx < 0 and dy  < 0 and dir.x > 0 and dir.y < 0) or
-						(dx > 0 and dy < 0 and dir.x > 0 and dir.y > 0) or
-						(dx > 0 and dy > 0 and dir.x < 0 and dir.y > 0) or 
-						(dx < 0 and dy > 0 and dir.x < 0 and dir.y < 0) then
-						rotAngle = 360 - rotAngle
-					end
-					bounces = bounces + 1
-					dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-					hooks[1]:EmitSound("Hero_Sven.Attack.Impact")
-					vars_table[5] = false
-				elseif ((vars_table[5] == true) and ((rebounceTolerance )< 1) and (vars_table[7]) and (IsValidEntity(vars_table[7])) ) then
-					--Bounce on ES totems
-					diff = vars_table[7]:GetAbsOrigin() - hookPos
-					rebounceTolerance = rebounceToleranceMax
-					diff = diff:Normalized()
-
-					local diffx = (math.acos(diff.x)/ math.pi * 180)
-					local diffy = (math.acos(diff.y)/ math.pi * 180)
-					local angx = (math.acos(dir.x)/ math.pi * 180)
-					local angy = (math.acos(dir.y)/ math.pi * 180)
-					local dx = diffx - angx
-					local dy = diffy - angy
-					
-					local rotAngle = 180 - math.abs(dx) - math.abs(dy)
-
-					if (dx < 0 and dy  < 0 and dir.x > 0 and dir.y < 0) or
-						(dx > 0 and dy < 0 and dir.x > 0 and dir.y > 0) or
-						(dx > 0 and dy > 0 and dir.x < 0 and dir.y > 0) or 
-						(dx < 0 and dy > 0 and dir.x < 0 and dir.y < 0) then
-						rotAngle = 360 - rotAngle
-					end
-
-					bounces = bounces + 1
-					dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
-
-					hooks[1]:EmitSound("Hero_WitchDoctor.Attack")
-					vars_table[5] = false
-					vars_table[7] = nil
-				end
-			
-				if GameRules:GetGameTime() > timeout then
-					complete = true
-					vars_table[0] = hooked
-					vars_table[1] = hero
-					vars_table[2] = complete
-					vars_table[3] = damage
-					vars_table[4] = speed
-
-					if hooked == nil then
-						hero.successful_hooks = 0
-					end
-
-					return GameRules:GetGameTime()
+					hooked = nil
+					dropped = true
 				end
 			end
 
-			vars_table[0] = hooked
-			vars_table[1] = hero
-			vars_table[2] = complete
-			vars_table[3] = damage
-			vars_table[4] = speed
-		return GameRules:GetGameTime()
-	end})
+			--Move close chain
+			if #hooks > 1 then
+				local direction = hero:GetAbsOrigin() - hooks[#hooks]:GetEnd()
+				direction.z = 0
+				direction = direction:Normalized()
+				hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,70))
+				hooks[#hooks]:SetEnd(hooks[#hooks]:GetEnd() + direction * speed / 30)
+			else
+				local direction = hero:GetAbsOrigin() - hooks[#hooks]:GetAbsOrigin()
+				direction.z = 0
+				direction = direction:Normalized()
+				hooks[#hooks]:SetAbsOrigin(hooks[#hooks]:GetAbsOrigin() + direction * speed / 30)
+			end
+
+			for i=#hooks - 1,2,-1 do
+				local diff = hooks[i+1]:GetEnd() - hooks[i]:GetEnd()
+				if diff:Length() > linkFollowDistance then
+					diff.z = 0
+					hooks[i]:SetEnd(hooks[i]:GetEnd() + diff:Normalized() * (diff:Length() - linkFollowDistance))
+				end
+				if hooks[i]:GetStart() ~= hooks[i+1]:GetEnd() then
+					hooks[i]:SetStart(hooks[i+1]:GetEnd())
+				end
+			end
+
+			if #hooks > 1 then
+				local diff = hooks[2]:GetAbsOrigin() - hook_dummy_origin
+				diff.z = 0
+				hook_dummy:SetAbsOrigin(hook_dummy_origin + diff:Normalized() * (diff:Length() - linkFollowDistance))
+				hook_dummy:SetForwardVector(-1 * diff:Normalized())
+			end
+
+			local diff = nil
+			local hasFire = false
+			
+			if #hooks > 1 then
+				diff = hooks[#hooks]:GetEnd() - hero:GetAbsOrigin()
+			else
+				diff = hooks[#hooks]:GetAbsOrigin() - hero:GetAbsOrigin()
+				hasFire = hooks[#hooks]:HasAbility("pudge_wars_firefly")
+			end
+
+			diff.z = 0
+
+			if diff:Length() < linkDeletionTolerance then
+				if hasFire then
+					stop_flame_hook = true
+				else
+					hooks[#hooks]:Destroy()
+					hooks[#hooks] = nil
+					if #hooks > 1 then
+						hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,70))
+					end
+				end
+			end
+		
+			if #hooks == 0 then
+				if hooked ~= nil and IsValidEntity(hooked) then
+					--hooked:RemoveModifierByName("modifier_rooted")
+					hooked:RemoveModifierByName("modifier_pudge_meat_hook")
+				end
+				pudge.is_throwing_hook = false
+				return
+			end
+		
+			--print(tostring(hooks[#hooks]:GetAbsOrigin()) .. " -- " .. tostring(dir) .. " -- " .. speed .. " -- " .. tostring(#hooks))
+			if hooked == nil and not dropped then
+				--BACKWARDS
+				local entities = Entities:FindAllInSphere(hook_dummy_origin + Vector(0,0,-100), radius / 2)
+				findEntity(entities,vars_table, false,bounces,hero)
+				local entities = nil
+				if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
+					entities = Entities:FindAllInSphere(hook_dummy_origin + Vector(0,0,-200), radius / 2)
+				else
+					entities = Entities:FindAllInSphere(hook_dummy_origin + Vector(0,0,0), radius / 2)
+				end
+				findEntity(entities,vars_table, false,bounces,hero)
+				hooked = vars_table[0]
+				hero = vars_table[1]
+				complete = vars_table[2]
+				damage = vars_table[3]
+				speed = vars_table[4]
+			end
+		else
+			-- Move hook
+			dir.z = 0
+			print(hooks)
+			print(hook_dummy)
+			print(hook_dummy_origin, dir, speed)
+			hook_dummy:SetAbsOrigin(hook_dummy_origin + dir * speed / 30)
+			dir.z = 0
+			hook_dummy:SetForwardVector(dir)
+
+			local diff = hook_dummy_origin - hooks[2]:GetAbsOrigin()
+			diff.z = 0
+			if diff:Length() > linkFollowDistance then
+				hooks[2]:SetStart(hooks[2]:GetAbsOrigin() + diff:Normalized() * (diff:Length() - linkFollowDistance))
+			end
+			if hooks[2]:GetEnd() ~= hook_dummy_origin then
+				hooks[2]:SetEnd(hook_dummy_origin)
+			end
+
+			-- Move chains
+			for i=3,#hooks do
+				local diff = hooks[i-1]:GetAbsOrigin() - hooks[i]:GetAbsOrigin()
+				diff.z = 0
+				if diff:Length() > linkFollowDistance then
+					hooks[i]:SetStart(hooks[i]:GetAbsOrigin() + diff:Normalized() * (diff:Length() - linkFollowDistance))
+				end
+				if hooks[i]:GetEnd() ~= hooks[i-1]:GetAbsOrigin() then
+					hooks[i]:SetEnd(hooks[i-1]:GetAbsOrigin())
+				end
+			end
+
+			-- Create New Chain link
+			local diff = hooks[#hooks]:GetAbsOrigin() - hero:GetAbsOrigin()
+			if diff:Length() > linkCreationTolerance then
+				diff.z = 0
+				local direction = diff:Normalized()
+				local particle = ParticleManager:CreateParticle("particles/pw/ref_pudge_meathook_chain.vpcf", PATTACH_ABSORIGIN, hook_dummy) --
+				local position = hero:GetAbsOrigin() + Vector(0,0,70)
+				local endPosition = hero:GetAbsOrigin() + direction * 75 + Vector(0,0,140)
+				local pu = ParticleUnit.new(particle, position, endPosition) --cpStart, cpEnd, cpDelete)
+
+				hooks[hookCount] = pu
+
+				hookCount = hookCount + 1
+			elseif #hooks > 1 then
+				hooks[#hooks]:SetStart(hero:GetAbsOrigin() + Vector(0,0,120))
+			end
+
+			--Collision detection
+			if hooked == nil and vars_table[5] == false then
+				--FORWARD
+				local entities = Entities:FindAllInSphere(hook_dummy_origin + Vector(0,0,-100), radius / 2)
+				findEntity(entities,vars_table, true,bounces,hero)
+				local entities = nil
+				if hero:GetAbsOrigin().x > 200 or hero:GetAbsOrigin().x < -200 then
+					entities = Entities:FindAllInSphere(hook_dummy_origin + Vector(0,0,-200), radius / 2)
+				else
+					entities = Entities:FindAllInSphere(hook_dummy_origin + Vector(0,0,100), radius / 2)
+				end
+				findEntity(entities,vars_table, true,bounces,hero)
+				hooked = vars_table[0]
+				hero = vars_table[1]
+				complete = vars_table[2]
+				damage = vars_table[3]
+				speed = vars_table[4]
+			end
+
+			-- Bounce wall checks
+			local hookPos = hook_dummy_origin
+			local angx = (math.acos(dir.x)/ math.pi * 180)
+			local angy = (math.acos(dir.y)/ math.pi * 180)
+			if hookPos.x > rightBound and dir.x > 0 then
+				local rotAngle = 180 - angx * 2
+				if angy > 90 then
+					rotAngle = 360 - rotAngle
+				end
+				bounces = bounces + 1
+				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
+			elseif hookPos.x < leftBound and dir.x < 0 then
+				local rotAngle =  angx * 2 - 180
+				if angy < 90 then
+					rotAngle = 360 - rotAngle
+				end
+				bounces = bounces + 1
+				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
+			elseif hookPos.y > topBound and dir.y > 0 then
+				local rotAngle =  180 - angy * 2
+				if angx < 90 then
+					rotAngle = 360 - rotAngle
+				end
+				bounces = bounces + 1
+				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
+			elseif hookPos.y < bottomBound and dir.y < 0 then
+				local rotAngle =  angy * 2 - 180
+				if angx > 90 then
+					rotAngle = 360 - rotAngle
+				end
+				bounces = bounces + 1
+				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
+			end
+
+			-- Bounce center
+			hookPos.z = 0
+			diff = ancientPosition - hookPos
+			rebounceTolerance = rebounceTolerance - 1
+			if ((diff:Length() < centerRadius) and (rebounceTolerance )< 1) then
+				rebounceTolerance = rebounceToleranceMax
+				diff = diff:Normalized()
+				local diffx = (math.acos(diff.x)/ math.pi * 180)
+				local diffy = (math.acos(diff.y)/ math.pi * 180)
+				local angx = (math.acos(dir.x)/ math.pi * 180)
+				local angy = (math.acos(dir.y)/ math.pi * 180)
+				local dx = diffx - angx
+				local dy = diffy - angy
+
+				local rotAngle = 180 - math.abs(dx) - math.abs(dy)
+
+				if (dx < 0 and dy  < 0 and dir.x > 0 and dir.y < 0) or
+					(dx > 0 and dy < 0 and dir.x > 0 and dir.y > 0) or
+					(dx > 0 and dy > 0 and dir.x < 0 and dir.y > 0) or 
+					(dx < 0 and dy > 0 and dir.x < 0 and dir.y < 0) then
+					rotAngle = 360 - rotAngle
+				end
+				bounces = bounces + 1
+				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
+			end
+
+			--Bounce on shiled barrier target
+			if ((vars_table[5] == true) and ((rebounceTolerance )< 1)) and (vars_table[7] == nil) and (GameMode.shield_carrier) then
+				diff = GameMode.shield_carrier:GetAbsOrigin() - hookPos
+				has_bounced_on_shield = true
+				rebounceTolerance = rebounceToleranceMax
+				diff = diff:Normalized()
+				local diffx = (math.acos(diff.x)/ math.pi * 180)
+				local diffy = (math.acos(diff.y)/ math.pi * 180)
+				local angx = (math.acos(dir.x)/ math.pi * 180)
+				local angy = (math.acos(dir.y)/ math.pi * 180)
+				local dx = diffx - angx
+				local dy = diffy - angy
+
+				local rotAngle = 180 - math.abs(dx) - math.abs(dy)
+
+				if (dx < 0 and dy  < 0 and dir.x > 0 and dir.y < 0) or
+					(dx > 0 and dy < 0 and dir.x > 0 and dir.y > 0) or
+					(dx > 0 and dy > 0 and dir.x < 0 and dir.y > 0) or 
+					(dx < 0 and dy > 0 and dir.x < 0 and dir.y < 0) then
+					rotAngle = 360 - rotAngle
+				end
+				bounces = bounces + 1
+				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
+				hook_dummy:EmitSound("Hero_Sven.Attack.Impact")
+				vars_table[5] = false
+			elseif ((vars_table[5] == true) and ((rebounceTolerance )< 1) and (vars_table[7]) and (IsValidEntity(vars_table[7])) ) then
+				--Bounce on ES totems
+				diff = vars_table[7]:GetAbsOrigin() - hookPos
+				rebounceTolerance = rebounceToleranceMax
+				diff = diff:Normalized()
+
+				local diffx = (math.acos(diff.x)/ math.pi * 180)
+				local diffy = (math.acos(diff.y)/ math.pi * 180)
+				local angx = (math.acos(dir.x)/ math.pi * 180)
+				local angy = (math.acos(dir.y)/ math.pi * 180)
+				local dx = diffx - angx
+				local dy = diffy - angy
+				
+				local rotAngle = 180 - math.abs(dx) - math.abs(dy)
+
+				if (dx < 0 and dy  < 0 and dir.x > 0 and dir.y < 0) or
+					(dx > 0 and dy < 0 and dir.x > 0 and dir.y > 0) or
+					(dx > 0 and dy > 0 and dir.x < 0 and dir.y > 0) or 
+					(dx < 0 and dy > 0 and dir.x < 0 and dir.y < 0) then
+					rotAngle = 360 - rotAngle
+				end
+
+				bounces = bounces + 1
+				dir = RotatePosition(Vector(0,0,0), QAngle(0,rotAngle,0), dir)
+
+				hook_dummy:EmitSound("Hero_WitchDoctor.Attack")
+				vars_table[5] = false
+				vars_table[7] = nil
+			end
+		
+			if current_time > timeout then
+				complete = true
+				vars_table[0] = hooked
+				vars_table[1] = hero
+				vars_table[2] = complete
+				vars_table[3] = damage
+				vars_table[4] = speed
+
+				if hooked == nil then
+					hero.successful_hooks = 0
+				end
+
+				return FrameTime()
+			end
+		end
+
+		vars_table[0] = hooked
+		vars_table[1] = hero
+		vars_table[2] = complete
+		vars_table[3] = damage
+		vars_table[4] = speed
+		current_time = current_time + FrameTime()
+		return FrameTime()
+	end)
 
 	pudge.is_throwing_hook = false -- if timer breaks, reset is_throwing_hook so they can keep throwing hooks
 
