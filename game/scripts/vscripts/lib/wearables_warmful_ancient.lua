@@ -7,7 +7,7 @@
 
 --[[
   Wearable Library by pilaoda
-  
+
 --]]
 
 require("lib/activity_modifier")
@@ -51,7 +51,14 @@ local EtherealParticle2Names = {}
 
 function Wearable:Init()
 	local npc_heroes = LoadKeyValues("scripts/npc/npc_heroes.txt")
-	Wearable.items_game = LoadKeyValues("scripts/items/items_game.txt")
+
+	if IsInToolsMode() then
+		Wearable.items_game = {}
+		Wearable.items_game.items = {}
+		Wearable.items_game.colors = {}
+	else
+		Wearable.items_game = LoadKeyValues("scripts/items/items_game.txt")
+	end
 
 	Wearable.asset_modifier = LoadKeyValues("scripts/items/asset_modifier.txt")
 	Wearable.control_points = LoadKeyValues("scripts/items/control_points.txt")
@@ -119,8 +126,8 @@ function Wearable:Init()
 								heroSlot.styles[itemDef][style].name = style_table.name
 								if
 									style_table.alternate_icon and item.visuals.alternate_icons and
-										item.visuals.alternate_icons[tostring(style_table.alternate_icon)]
-								 then
+									item.visuals.alternate_icons[tostring(style_table.alternate_icon)]
+								then
 									heroSlot.styles[itemDef][style].icon_path =
 										item.visuals.alternate_icons[tostring(style_table.alternate_icon)].icon_path
 								end
@@ -199,8 +206,8 @@ function Wearable:Init()
 					item_table.styles[style].name = style_table.name
 					if
 						style_table.alternate_icon and item.visuals.alternate_icons and
-							item.visuals.alternate_icons[tostring(style_table.alternate_icon)]
-					 then
+						item.visuals.alternate_icons[tostring(style_table.alternate_icon)]
+					then
 						item_table.styles[style].icon_path =
 							item.visuals.alternate_icons[tostring(style_table.alternate_icon)].icon_path
 					end
@@ -223,8 +230,8 @@ function Wearable:Init()
 					item_table.styles[style].name = style_table.name
 					if
 						style_table.alternate_icon and item.visuals.alternate_icons and
-							item.visuals.alternate_icons[tostring(style_table.alternate_icon)]
-					 then
+						item.visuals.alternate_icons[tostring(style_table.alternate_icon)]
+					then
 						item_table.styles[style].icon_path =
 							item.visuals.alternate_icons[tostring(style_table.alternate_icon)].icon_path
 					end
@@ -251,7 +258,6 @@ function Wearable:Init()
 		"show current units' itemdefs",
 		FCVAR_NOTIFY
 	)
-
 end
 
 function Wearable:RequestParticles()
@@ -289,7 +295,7 @@ end
 
 -- 脱下饰品
 function Wearable:TakeOffSlot(hUnit, sSlotName)
---	print("TakeOffSlot")
+	--	print("TakeOffSlot")
 	if hUnit.Slots[sSlotName] then
 		for p_name, p in pairs(hUnit.Slots[sSlotName]["particles"]) do
 			if p ~= false then
@@ -350,16 +356,16 @@ function Wearable:TakeOffSlot(hUnit, sSlotName)
 		end
 
 		hUnit.summon_skin = nil
-		
+
 		if hUnit.Slots[sSlotName]["bPersona"] then
 			hUnit.bPersona = nil
-			hUnit.Slots[sSlotName]["bPersona"] = nil  -- 防止stack overflow
+			hUnit.Slots[sSlotName]["bPersona"] = nil -- 防止stack overflow
 			Wearable:SwitchPersona(hUnit, false)
 		end
 
 		if hUnit.Slots[sSlotName]["bChangeScale"] then
 			local nDefaultScale = Wearable.heroes[hUnit:GetUnitName()]["ModelScale"]
---			PrintTable(Wearable.heroes[hUnit:GetUnitName()])
+			--			PrintTable(Wearable.heroes[hUnit:GetUnitName()])
 			hUnit:SetModelScale(nDefaultScale)
 		end
 
@@ -368,7 +374,7 @@ function Wearable:TakeOffSlot(hUnit, sSlotName)
 end
 
 function Wearable:SwitchPersona(hUnit, bPersona)
---	print("SwitchPersona", bPersona)
+	--	print("SwitchPersona", bPersona)
 	for sSlotName, hSlot in pairs(hUnit.Slots) do
 		Wearable:TakeOffSlot(hUnit, sSlotName)
 	end
@@ -399,9 +405,9 @@ function Wearable:WearDefaults(hUnit)
 end
 
 function Wearable:WearDefaultsPersona(hUnit)
---	print("WearDefaultsPersona")
---	print(Wearable.heroes)
---	print(Wearable.heroes[hUnit:GetUnitName()])
+	--	print("WearDefaultsPersona")
+	--	print(Wearable.heroes)
+	--	print(Wearable.heroes[hUnit:GetUnitName()])
 	local hHeroSlots = Wearable.heroes[hUnit:GetUnitName()]
 	hUnit.Slots = {}
 
@@ -464,7 +470,7 @@ function Wearable:GetSlotIndex(hUnit, sItemDef)
 end
 
 function Wearable:IsDisplayInLoadout(sHeroName, sSlotName)
---	print("IsDisplayInLoadout: sHeroName", sHeroName)
+	--	print("IsDisplayInLoadout: sHeroName", sHeroName)
 	if sHeroName == "npc_dota_hero_vardor" then
 		return false
 	end
@@ -520,8 +526,8 @@ function Wearable:WearAfterRespawn(hUnit, hNewWears)
 						-- 更换攻击弹道特效
 						if
 							((not am_table.style) or tostring(am_table.style) == sStyle) and
-								(not am_table.spawn_in_loadout_only)
-						 then
+							(not am_table.spawn_in_loadout_only)
+						then
 							local default_projectile = am_table.asset
 							local new_projectile = am_table.modifier
 							if hUnit:GetRangedProjectileName() == default_projectile then
@@ -536,7 +542,7 @@ function Wearable:WearAfterRespawn(hUnit, hNewWears)
 						hUnit.summon_model[am_table.asset] = am_table.modifier
 						hWear["bChangeSummon"] = hWear["bChangeSummon"] or {}
 						hWear["bChangeSummon"][am_table.asset] = true
-	
+
 						-- 召唤物skin写在外面，目前发现骨法金棒子 剑圣金猫
 						local nSkin = asset_modifiers["skin"]
 						if nSkin ~= nil then
@@ -613,7 +619,7 @@ function Wearable:_WearItemsRespawn(hUnitOrigin, hNewWears)
 
 	local position = hUnitOrigin:GetAbsOrigin()
 	local forward = hUnitOrigin:GetForwardVector()
---	print("_WearItemsRespawn", sUnitNameWithWear)
+	--	print("_WearItemsRespawn", sUnitNameWithWear)
 
 	CreateUnitByNameAsync(
 		sUnitNameWithWear,
@@ -792,6 +798,12 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	end
 
 	local hItem = Wearable.items[sItemDef]
+
+	if not hItem then
+		print("Wearable:_WearProp: item not found", sItemDef)
+		return
+	end
+
 	local sUnitName = hUnit:GetUnitName()
 	local sHeroName = hUnit:GetUnitName()
 
@@ -811,21 +823,21 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 		local sDefaultAnim = Wearable:SpecialFixAnim(hUnit, sItemDef)
 		local hModel = nil
 		if sDefaultAnim then
---			hModel =
---				SpawnEntityFromTableSynchronous(
---				sPropClass,
---				{
---					model = sModel_player,
---					DefaultAnim = sDefaultAnim
---				}
---			)
+			--			hModel =
+			--				SpawnEntityFromTableSynchronous(
+			--				sPropClass,
+			--				{
+			--					model = sModel_player,
+			--					DefaultAnim = sDefaultAnim
+			--				}
+			--			)
 
 			hModel = CreateUnitByName("wearable_dummy", hUnit:GetAbsOrigin(), false, nil, nil, hUnit:GetTeam())
 		else
---			hModel = SpawnEntityFromTableSynchronous(sPropClass, {model = sModel_player})
+			--			hModel = SpawnEntityFromTableSynchronous(sPropClass, {model = sModel_player})
 			hModel = CreateUnitByName("wearable_dummy", hUnit:GetAbsOrigin(), false, nil, nil, hUnit:GetTeam())
---			hModel:AddNewModifier(self, ability, "modifier_illusion", { duration = duration })
---			hModel:MakeIllusion()
+			--			hModel:AddNewModifier(self, ability, "modifier_illusion", { duration = duration })
+			--			hModel:MakeIllusion()
 			-- hModel:SetRenderColor(100,100,255)
 		end
 		hModel:SetOriginalModel(sModel_player)
@@ -870,14 +882,14 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 					hWear["additional_wearable"] = {}
 				end
 				local sModel = am_table.asset
-				local hModel = SpawnEntityFromTableSynchronous("prop_dynamic", {model = sModel})
+				local hModel = SpawnEntityFromTableSynchronous("prop_dynamic", { model = sModel })
 				hModel:SetOwner(hUnit)
 				hModel:SetParent(hUnit, "")
 				hModel:FollowEntity(hUnit, true)
 				table.insert(hWear["additional_wearable"], hModel)
 			elseif type(am_table) == "table" and am_table.type == "entity_model" then
 				-- 更换英雄模型
---				print("entity_model", am_table.asset)
+				--				print("entity_model", am_table.asset)
 
 				if sHeroName == am_table.asset then
 					local sNewModel = am_table.modifier
@@ -998,7 +1010,7 @@ function Wearable:_WearProp(hUnit, sItemDef, sSlotName, sStyle)
 	if Wearable:IsDisplayInLoadout(hUnit:GetUnitName(), sSlotName) then
 		CustomGameEventManager:Send_ServerToAllClients(
 			"UpdateWearable",
-			{unit = unit_id, itemDef = sItemDef, itemStyle = sStyle, slotName = sSlotName}
+			{ unit = unit_id, itemDef = sItemDef, itemStyle = sStyle, slotName = sSlotName }
 		)
 	end
 
@@ -1016,7 +1028,7 @@ function Wearable:Wear(hUnit, sItemDef, sStyle)
 	-- print("Wear", sItemDef, hItem, sStyle)
 
 	local sSlotName = Wearable:GetSlotName(sItemDef)
---	print(sSlotName, hUnit.bPersona, (not Wearable:IsPersona(sSlotName)), (sSlotName ~= "persona_selector"))
+	--	print(sSlotName, hUnit.bPersona, (not Wearable:IsPersona(sSlotName)), (sSlotName ~= "persona_selector"))
 	if hUnit.bPersona and (not Wearable:IsPersona(sSlotName)) and (sSlotName ~= "persona_selector") then
 		return
 	end
@@ -1048,7 +1060,7 @@ function Wearable:Wear(hUnit, sItemDef, sStyle)
 end
 
 function Wearable:WearCourier(hUnit, sItemDef, sStyle, bFlying, bDire)
---	print("WearCourier", hUnit, sItemDef, sStyle, type(sItemDef), type(sStyle), bFlying, bDire)
+	--	print("WearCourier", hUnit, sItemDef, sStyle, type(sItemDef), type(sStyle), bFlying, bDire)
 	local hItem = Wearable.items[sItemDef]
 
 	if type(sItemDef) ~= "string" then
@@ -1091,15 +1103,15 @@ function Wearable:WearCourier(hUnit, sItemDef, sStyle, bFlying, bDire)
 				end
 			elseif
 				type(am_table) == "table" and
-					((bDire and am_table.asset == "dire") or ((not bDire) and am_table.asset == "radiant"))
-			 then
+				((bDire and am_table.asset == "dire") or ((not bDire) and am_table.asset == "radiant"))
+			then
 				if
 					((not bFlying) and type(am_table) == "table" and am_table.type == "courier") or
-						(bFlying and type(am_table) == "table" and am_table.type == "courier_flying")
-				 then
+					(bFlying and type(am_table) == "table" and am_table.type == "courier_flying")
+				then
 					if ((not am_table.style) or tostring(am_table.style) == sStyle) then
 						local sNewModel = am_table.modifier
---						print(sNewModel)
+						--						print(sNewModel)
 						hUnit:SetOriginalModel(sNewModel)
 						hUnit:SetModel(sNewModel)
 					end
@@ -1134,7 +1146,7 @@ function Wearable:WearCourier(hUnit, sItemDef, sStyle, bFlying, bDire)
 end
 
 function Wearable:WearWard(hUnit, sItemDef, sStyle)
---	print("WearWard", hUnit, sItemDef, sStyle)
+	--	print("WearWard", hUnit, sItemDef, sStyle)
 	local hItem = Wearable.items[sItemDef]
 
 	if not sStyle then
@@ -1168,10 +1180,10 @@ function Wearable:WearWard(hUnit, sItemDef, sStyle)
 				end
 			elseif
 				type(am_table) == "table" and am_table.type == "entity_model" and hUnit:GetUnitName() == am_table.asset
-			 then
+			then
 				if ((not am_table.style) or tostring(am_table.style) == sStyle) then
 					local sNewModel = am_table.modifier
---					print(sNewModel)
+					--					print(sNewModel)
 					hUnit:SetOriginalModel(sNewModel)
 					hUnit:SetModel(sNewModel)
 				end
@@ -1217,10 +1229,10 @@ function Wearable:AddParticle(hUnit, hWear, particle_name, sSlotName, sStyle)
 			if (not cp_table.style) or tostring(cp_table.style) == sStyle then
 				local control_point_index = cp_table.control_point_index
 				attach_type = cp_table.attach_type
---				print("attach_type:", attach_type)
+				--				print("attach_type:", attach_type)
 				if attach_type == "vector" then
 					-- 控制点设置向量
---					print(cp_table, cp_table.cp_position)
+					--					print(cp_table, cp_table.cp_position)
 					local vPosition = String2Vector(cp_table.cp_position)
 					-- print(p, control_point_index, vPosition)
 					ParticleManager:SetParticleControl(p, control_point_index, vPosition)
@@ -1295,7 +1307,7 @@ end
 
 -- 切换棱彩宝石，如果切换的是已有的则去除
 function Wearable:SwitchPrismatic(hUnit, sPrismaticName)
---	print("SwitchPrismatic", hUnit.prismatic, sPrismaticName)
+	--	print("SwitchPrismatic", hUnit.prismatic, sPrismaticName)
 	if hUnit.prismatic == sPrismaticName then
 		Wearable:RemovePrismatic(hUnit)
 		return
@@ -1303,9 +1315,9 @@ function Wearable:SwitchPrismatic(hUnit, sPrismaticName)
 
 	if not hUnit["prismatic_particles"] then
 		Notifications:BottomToAll(
-			{text = "NoPrismaticParticle", duration = 3, style = { color = "white", ["font-size"] = "30px", ["background-color"] = "rgb(136, 34, 34)", opacity = "0.5" }}
+			{ text = "NoPrismaticParticle", duration = 3, style = { color = "white", ["font-size"] = "30px", ["background-color"] = "rgb(136, 34, 34)", opacity = "0.5" } }
 		)
-		
+
 		return
 	end
 
@@ -1341,12 +1353,12 @@ function Wearable:SwitchPrismatic(hUnit, sPrismaticName)
 		end
 	end
 
-	CustomNetTables:SetTableValue("hero_prismatic", tostring(hUnit:GetEntityIndex()), {prismatic_name = sPrismaticName})
+	CustomNetTables:SetTableValue("hero_prismatic", tostring(hUnit:GetEntityIndex()), { prismatic_name = sPrismaticName })
 end
 
 -- 移除棱彩宝石
 function Wearable:RemovePrismatic(hUnit)
---	print("RemovePrismatic")
+	--	print("RemovePrismatic")
 	hUnit.prismatic = nil
 
 	if not hUnit["prismatic_particles"] then
@@ -1378,7 +1390,7 @@ function Wearable:RemovePrismatic(hUnit)
 		end
 	end
 
-	CustomNetTables:SetTableValue("hero_prismatic", tostring(hUnit:GetEntityIndex()), {prismatic_name = nil})
+	CustomNetTables:SetTableValue("hero_prismatic", tostring(hUnit:GetEntityIndex()), { prismatic_name = nil })
 end
 
 -- 开关虚灵宝石
@@ -1526,7 +1538,7 @@ function Wearable:WearCombination(hUnit, sCombinationID)
 			local sStyle = hCombination["style" .. nSlotIndex]
 			local sSlotName = Wearable:GetSlotNameBySlotIndex(sHeroName, nSlotIndex)
 			if sSlotName and nItemDef ~= 0 and nItemDef ~= "0" then
-				hNewWears[sSlotName] = {sItemDef = tostring(nItemDef), sStyle = sStyle}
+				hNewWears[sSlotName] = { sItemDef = tostring(nItemDef), sStyle = sStyle }
 			end
 		end
 		Wearable:_WearItemsRespawn(hUnit, hNewWears)
@@ -1667,14 +1679,14 @@ end
 
 -- IMBA magic shit
 function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
---	print("SetHeroWearablesTable")
+	--	print("SetHeroWearablesTable")
 
---	print("Default Wearables:")
+	--	print("Default Wearables:")
 	for i, child in ipairs(hUnit:GetChildren()) do
 		if IsValidEntity(child) and child:GetClassname() == "dota_item_wearable" then
 			if child:GetModelName() ~= "" then
 				if IsInToolsMode() then
---					print("Wearable:", child, child:GetModelName())
+					--					print("Wearable:", child, child:GetModelName())
 				end
 
 				for key, value in pairs(Wearable.items_game["items"]) do
@@ -1685,12 +1697,12 @@ function Wearable:SetHeroWearablesTable(hUnit, sSlotName)
 							item_slot = "weapon"
 						end
 
---						print(key)
---						print(value["model_player"])
---						print(item_slot)
+						--						print(key)
+						--						print(value["model_player"])
+						--						print(item_slot)
 
 						if not hUnit.Slots[item_slot] then
---							print("Remove wearable:", child:GetModelName())
+							--							print("Remove wearable:", child:GetModelName())
 							UTIL_Remove(child)
 
 							if item_slot ~= "weapon" then

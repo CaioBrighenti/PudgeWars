@@ -1,16 +1,20 @@
 ListenToGameEvent('npc_spawned', function(keys)
-	local spawnedUnit = EntIndexToHScript( keys.entindex )
+	local spawnedUnit = EntIndexToHScript(keys.entindex)
 	local player = spawnedUnit:GetPlayerOwner()
+
+	if not spawnedUnit.first_spawn then
+		spawnedUnit.first_spawn = true
+
+		spawnedUnit:InitializeAbilities()
+	end
 
 	if spawnedUnit:GetUnitName() == "npc_dota_campfire" then
 		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_campfire", {})
 	elseif spawnedUnit:GetUnitName() == "npc_vision_dummy" then
-		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_tower_truesight_aura", {duration = 30})
+		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_tower_truesight_aura", { duration = 30 })
 		spawnedUnit:AddNewModifier(spawnedUnit, nil, "modifier_invisible", {})
 	elseif string.find(spawnedUnit:GetUnitName(), "npc_dota_mine") then
 		spawnedUnit:AddAbility('vision_dummy_passive')
-		local spawnedUnitPassive = spawnedUnit:FindAbilityByName('vision_dummy_passive')
-		spawnedUnitPassive:SetLevel(1)
 	elseif string.find(spawnedUnit:GetUnitName(), "npc_dummy_rune_") then
 		Timers:CreateTimer(0.4, function()
 			spawnedUnit:MoveToPosition(Vector(0, 2000, 0))
@@ -22,13 +26,14 @@ ListenToGameEvent('npc_spawned', function(keys)
 		GameMode:CreateTimer(DoUniqueString("clear_space"), {
 			endTime = GameRules:GetGameTime() + 0.07,
 			callback = function(reflex, args)
-			FindClearSpaceForUnit(spawnedUnit, spawnedUnit:GetAbsOrigin(), true ) 
-			return
-		end})
+				FindClearSpaceForUnit(spawnedUnit, spawnedUnit:GetAbsOrigin(), true)
+				return
+			end
+		})
 	elseif spawnedUnit:IsRealHero() then
 		if spawnedUnit:GetPlayerOwnerID() ~= -1 then
-			if PudgeArray[ spawnedUnit:GetPlayerOwnerID() ] == null then
-				GameMode:InitPudge( spawnedUnit )
+			if PudgeArray[spawnedUnit:GetPlayerOwnerID()] == null then
+				GameMode:InitPudge(spawnedUnit)
 			end
 
 			if not spawnedUnit:HasModifier("modifier_ability_points") then
@@ -43,7 +48,7 @@ ListenToGameEvent('dota_player_gained_level', function(keys)
 	local hero = player:GetAssignedHero()
 	local hero_level = hero:GetLevel()
 
-	local extra_ab_points = {17, 19, 21, 22, 23, 24, 26}
+	local extra_ab_points = { 17, 19, 21, 22, 23, 24, 26 }
 
 	for i = 0, #extra_ab_points do
 		if hero_level == extra_ab_points[i] then
@@ -79,7 +84,7 @@ ListenToGameEvent('entity_killed', function(keys)
 			if killedUnit and IsValidEntity(killedUnit) then
 				killedUnit:RemoveSelf()
 			end
-		end)   
+		end)
 
 		return
 	end
@@ -89,7 +94,7 @@ ListenToGameEvent('entity_killed', function(keys)
 			if killedUnit and IsValidEntity(killedUnit) then
 				killedUnit:RemoveSelf()
 			end
-		end) 
+		end)
 
 		return
 	end
@@ -107,7 +112,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		if killedUnit:GetTeam() == DOTA_TEAM_BADGUYS then
 			if killerEntity:GetTeam() == 2 then
 				self.scoreRadiant = self.scoreRadiant + kill_score
-				CustomNetTables:SetTableValue("game_score", "team_score", {radiant_score = self.scoreRadiant, dire_score = self.scoreDire})
+				CustomNetTables:SetTableValue("game_score", "team_score", { radiant_score = self.scoreRadiant, dire_score = self.scoreDire })
 
 				-- weird bug since Dota 7.28, requires manual score setup now
 				GameRules:GetGameModeEntity():SetCustomDireScore(GetTeamHeroKills(DOTA_TEAM_BADGUYS))
@@ -115,7 +120,7 @@ ListenToGameEvent('entity_killed', function(keys)
 		elseif killedUnit:GetTeam() == DOTA_TEAM_GOODGUYS then
 			if killerEntity:GetTeam() == 3 then
 				self.scoreDire = self.scoreDire + kill_score
-				CustomNetTables:SetTableValue("game_score", "team_score", {radiant_score = self.scoreRadiant, dire_score = self.scoreDire})
+				CustomNetTables:SetTableValue("game_score", "team_score", { radiant_score = self.scoreRadiant, dire_score = self.scoreDire })
 			end
 		end
 
@@ -123,12 +128,12 @@ ListenToGameEvent('entity_killed', function(keys)
 			GAME_WINNER_TEAM = 2
 			GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
 			GameRules:MakeTeamLose(DOTA_TEAM_GOODGUYS)
---			GameRules:Defeated()
+			--			GameRules:Defeated()
 		elseif self.scoreRadiant >= self.kills_to_win then
 			GAME_WINNER_TEAM = 3
 			GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
 			GameRules:MakeTeamLose(DOTA_TEAM_BADGUYS)
---			GameRules:Defeated()
+			--			GameRules:Defeated()
 		end
 
 		return
@@ -137,7 +142,7 @@ end, nil)
 
 ListenToGameEvent('player_chat', function(keys)
 	local text = keys.text
---	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
+	--	local caster = PlayerResource:GetSelectedHeroEntity(keys.playerid)
 
 	-- This Handler is only for commands, ends the function if first character is not "-"
 	if not (string.byte(text) == 45) then

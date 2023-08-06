@@ -1,11 +1,15 @@
 ItemsGame = ItemsGame or class({})
 
 function ItemsGame:Init()
-	ItemsGame.kv = LoadKeyValues("scripts/items/items_game.txt")
+	if IsInToolsMode() then
+		ItemsGame.kv = {}
+	else
+		ItemsGame.kv = LoadKeyValues("scripts/items/items_game.txt")
+	end
 
---	for k, v in pairs(ItemsGame.kv) do
---		print(k, v)
---	end
+	--	for k, v in pairs(ItemsGame.kv) do
+	--		print(k, v)
+	--	end
 end
 
 --[[

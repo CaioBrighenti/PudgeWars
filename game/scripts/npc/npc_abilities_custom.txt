@@ -327,11 +327,13 @@
 		//-------------------------------------------------------------------------------------------------------------
 		"ID"							"10245"														// unique ID number for this ability.  Do not change this once established or it will invalidate collected stats.
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_UNIT_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"AbilityUnitTargetTeam"				"DOTA_UNIT_TARGET_TEAM_BOTH"
+		"AbilityUnitTargetTeam"			"DOTA_UNIT_TARGET_TEAM_BOTH"
 		"AbilityUnitTargetType"			"DOTA_UNIT_TARGET_HERO | DOTA_UNIT_TARGET_BASIC"
 		"AbilityUnitDamageType"			"DAMAGE_TYPE_MAGICAL"	
-		"BaseClass"				"disruptor_thunder_strike"
-		"MaxLevel"				"1"
+		"BaseClass"						"disruptor_thunder_strike"
+		"MaxLevel"						"1"
+		"IsInnateAbility"				"1"
+
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
 		"AbilityCastPoint"				"0.0"
@@ -493,6 +495,7 @@
 		"AbilityUnitTargetsFlags"        "DOTA_UNIT_TARGET_FLAG_NOT_CREEP_HERO"
 		"AbilityUnitDamageType"         "DAMAGE_TYPE_MAGICAL"
 		"MaxLevel"                      "1"
+		"IsInnateAbility"               "1"
 
 		// Casting
 		//-------------------------------------------------------------------------------------------------------------
@@ -543,6 +546,7 @@
 		"AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"BaseClass"                     "ability_datadriven"
 		"AbilityTextureName"            "witch_doctor_voodoo_restoration"
+		"IsInnateAbility"               "1"
 
 		"precache"
 		{
@@ -690,6 +694,7 @@
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"AbilityTextureName"			"reveal"
 		"MaxLevel"						"1"
+		"IsInnateAbility"				"1"
 
 		// Modifiers
 		//-------------------------------------------------------------------------------------------------------------
@@ -1708,6 +1713,7 @@
 		"BaseClass"					"ability_datadriven"
 		"AbilityTextureName"		"rubick_empty1"
 		"MaxLevel"					"1"
+		"IsInnateAbility"			"1"
 
 		"Modifiers"
 		{
@@ -1865,6 +1871,48 @@
 				"ScriptFile"	"scripts/vscripts/hook.lua"
 				"Function"		"LaunchHook"
 			} 
+		}
+	}
+
+	"pudge_wars_meat_hook"
+	{
+		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+		"BaseClass"				"ability_lua"
+		"ScriptFile"			"scripts/vscripts/abilities/pudge_wars_meat_hook.lua"
+		"AbilityTextureName"	"pudge_meat_hook"
+		"MaxLevel"				"1"
+
+		"AbilityCooldown"		"3.0"
+		"AbilityCastPoint"		"0.3"
+
+		"precache"
+		{
+			"soundfile"			"particles/units/heroes/hero_pudge/pudge_meathook.vpcf"
+			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
+		}
+
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"base_damage"		"250"
+			}
+			"02"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"base_range"		"1500"
+			}
+			"03"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"base_speed"		"800"
+			}
+			"04"
+			{
+				"var_type"			"FIELD_INTEGER"
+				"base_radius"		"100"
+			}
 		}
 	}
 

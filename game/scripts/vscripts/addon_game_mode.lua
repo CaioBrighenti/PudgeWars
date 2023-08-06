@@ -16,7 +16,7 @@ require('pudgewars')
 require('constants')
 require('events')
 require('filters')
-require('hook')
+-- require('hook')
 --require('sf')
 require('util')
 --require('physics')
@@ -27,10 +27,7 @@ require('runes')
 
 require('trigger_rune')
 
-----Stats: By Jimmydorry/SinZ/Ash47
---require('lib.statcollection')
-----Load helper: By Ash47
---require('lib.loadhelper')
+require('extensions/cdota_basenpc')
 
 function Precache(context)
 	print("starting precache")
@@ -63,9 +60,9 @@ function Precache(context)
 	PrecacheUnitByNameAsync("npc_dota_hero_kunkka", context)
 	PrecacheUnitByNameAsync("npc_dota_hero_disruptor", context)
 	PrecacheUnitByNameAsync("npc_dota_hero_alchemist", context)
-	PrecacheUnitByNameAsync("npc_dota_hero_batrider", context)  
+	PrecacheUnitByNameAsync("npc_dota_hero_batrider", context)
 	PrecacheUnitByNameAsync("npc_precache_everything", context)
- 
+
 	-- Battlepass
 	PrecacheResource("model_folder", "models/items/pudge/arcana", context)
 	PrecacheResource("particle_folder", "particles/econ/items/pudge/pudge_arcana", context)

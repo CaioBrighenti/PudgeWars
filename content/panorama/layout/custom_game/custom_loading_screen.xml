@@ -73,7 +73,7 @@
 
 						<Label id="loading-description-text" />
 
-						<Button class="vote-button" onactivate="DOTADisplayURL('https://frostrose-studio.com')">
+						<Button class="vote-button" onactivate="DOTADisplayURL('https://mods.frostrose-studio.com')">
 							<Label class="vote-button-label" text="#loading_screen_button" />
 						</Button>
 					</Panel>
@@ -85,8 +85,9 @@
 					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(1)" text="Custom Games" />
 					<Label class="bottom-radio-separator" text="/" />
 					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(2)" text="Transifex" />
-					<Label class="bottom-radio-separator" text="/" />
-					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(3)" text="#loading_screen_patreon" />
+					<!-- <Label class="bottom-radio-separator" text="/" />
+					<RadioButton class="bottom-radio-button" onactivate="SwitchTab(3)" text="#loading_screen_patreon" /> -->
+					
 				</Panel>
 
 				<Label id="BottomLabel" class="bottom-label" text="#loading_screen_custom_games_1"/>
@@ -174,14 +175,13 @@
 						</Button>
 					</Panel>
 
-					<Panel class="bottom-patreon-container">
-						<!-- Filled Dynamically -->
+					<!-- <Panel class="bottom-patreon-container">
 						<Panel class="bottom-patreon-sub"/>
 
 						<Button class="loading-link-patreon" onactivate="DOTADisplayURL('https://www.patreon.com/bePatron?u=2533325')">
 							<Label class="vote-button-label" />
 						</Button>
-					</Panel>
+					</Panel> -->
 				</Panel>
 			</Panel>
 		</Panel>
