@@ -1819,9 +1819,10 @@
 	{
 		"ID"					"21045"
 		"AbilityBehavior"		"DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-		"BaseClass"				"ability_datadriven"
+		"BaseClass"				"ability_lua"
 		"AbilityTextureName"	"pudge_meat_hook"
 		"MaxLevel"				"1"
+		"ScriptFile"			"hook.lua"
 
 		"AbilityCooldown"		"3"
 		"AbilityCastPoint"		"0.3"
@@ -1854,17 +1855,6 @@
 				"var_type"			"FIELD_INTEGER"
 				"base_radius"		"100"
 			}
-		}
-
-		"OnSpellStart"
-		{
-			"RunScript"
-			{
-				"Caster"		"CASTER"
-				"Target"		"POINT"
-				"ScriptFile"	"scripts/vscripts/hook.lua"
-				"Function"		"LaunchHook"
-			} 
 		}
 	}
 
