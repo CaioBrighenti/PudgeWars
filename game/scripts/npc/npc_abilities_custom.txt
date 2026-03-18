@@ -780,13 +780,9 @@
 		"MaxLevel"				"10"
 		"LevelsBetweenUpgrades"	"1"
 
-		"AbilitySpecial"
+		"AbilityValues"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_damage"		"35 70 105 140 175 210 245 280 315 350"
-			}
+			"bonus_damage"		"35 70 105 140 175 210 245 280 315 350"
 		}
 	}
 
@@ -804,13 +800,9 @@
 		"MaxLevel"				"10"
 		"LevelsBetweenUpgrades"	"1"
 
-		"AbilitySpecial"
+		"AbilityValues"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_range"		"175 350 525 700 875 1050 1225 1400 1575 1750"
-			}
+			"bonus_range"		"175 350 525 700 875 1050 1225 1400 1575 1750"
 		}
 	}
 
@@ -828,13 +820,9 @@
 		"MaxLevel"				"10"
 		"LevelsBetweenUpgrades"	"1"
 
-		"AbilitySpecial"
+		"AbilityValues"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_speed"		"70 140 210 280 350 420 490 560 630 700"
-			}
+			"bonus_speed"		"70 140 210 280 350 420 490 560 630 700"
 		}
 	}
 
@@ -852,18 +840,10 @@
 		"MaxLevel"				"10"
 		"LevelsBetweenUpgrades"	"1"
 
-		"AbilitySpecial"
+		"AbilityValues"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"bonus_radius"		"15 30 45 60 75 90 105 120 135 150"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_FLOAT"
-				"hook_radius"		"0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0"
-			}
+			"bonus_radius"		"15 30 45 60 75 90 105 120 135 150"
+			"hook_radius"		"0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0"
 		}
 	}
 
@@ -1833,28 +1813,12 @@
 			"soundfile"			"soundevents/game_sounds_heroes/game_sounds_pudge.vsndevts"
 		}
 
-		"AbilitySpecial"
+		"AbilityValues"
 		{
-			"01"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"base_damage"		"250"
-			}
-			"02"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"base_range"		"1500"
-			}
-			"03"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"base_speed"		"800"
-			}
-			"04"
-			{
-				"var_type"			"FIELD_INTEGER"
-				"base_radius"		"100"
-			}
+			"base_damage"		"250"
+			"base_range"		"1500"
+			"base_speed"		"800"
+			"base_radius"		"100"
 		}
 	}
 

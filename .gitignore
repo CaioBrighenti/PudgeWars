@@ -34,3 +34,9 @@ content/dota_addons/dota_pvp_test/
 game/dota_addons/pudgewars/scripts/vscripts/components/api/backend_key.kv
 
 game/scripts/vscripts/components/api/backend_key.kv
+*.vxml_c
+*.vmdl_c
+*.vjs_c
+*.vcss_c
+*.vpcf_c
+*.vsndevts_c
